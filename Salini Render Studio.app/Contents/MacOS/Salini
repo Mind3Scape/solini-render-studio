@@ -1,0 +1,8 @@
+#!/bin/zsh
+ROOT="$(cd "$(dirname "$0")/../../.." && pwd)"
+cd "$ROOT"
+if [[ -x .venv/bin/python ]]; then
+  .venv/bin/python -m salini.launcher
+else
+  /usr/bin/open -a Terminal "$ROOT/Установить Salini.command"
+fi

@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ru">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Salini Render Studio</title><link rel="stylesheet" href="/style.css"></head>
+<body>
+  <header class="header">
+    <a class="brand" href="/" aria-label="Salini Render Studio">salini<span class="brand-line"></span><span class="brand-sub">RENDER<br>STUDIO</span></a>
+    <div class="header-right"><span class="local"><i></i> На вашем Mac</span><button class="icon-button" id="about-btn" aria-label="О программе"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10v1"/></svg></button></div>
+  </header>
+  <main>
+    <div class="intro"><div><p class="eyebrow">ОТ РЕНДЕРА К ФОТОГРАФИИ</p><h1>Материалы. Свет. Реальность.</h1></div><p class="intro-note">Ваше изделие —<br>в новом качестве.</p></div>
+    <div class="workspace">
+      <aside class="sidebar">
+        <section class="source-section"><h2><span class="step">01</span> Исходное изображение</h2>
+          <button id="upload-btn" class="upload-box"><svg viewBox="0 0 24 24"><path d="M12 16V4m-4 4 4-4 4 4M4 15v5h16v-5"/></svg><strong id="upload-title">Загрузить рендер</strong><span id="upload-sub">PNG, JPG, WebP, TIFF · до 40 МБ</span></button>
+          <input id="file" type="file" accept="image/png,image/jpeg,image/webp,image/tiff" hidden>
+          <div id="crop-controls" hidden><div class="file-info"><span id="image-size"></span><button class="text-button" id="replace-btn">Заменить</button></div><button class="secondary full" id="crop-btn"><svg viewBox="0 0 24 24"><path d="M7 3v14h14M3 7h14v14"/></svg> Выделить область рендера</button><p class="hint" id="crop-hint">Если загружен лист согласования, выделите только картинку изделия.</p><button class="text-button" id="reset-crop" hidden>Использовать всё изображение</button></div>
+        </section>
+        <section><h2><span class="step">02</span> Обработка</h2>
+          <label class="field-label" for="model">Модель</label><select id="model"><option value="klein9">Загрузка каталога…</option></select><p class="hint" id="model-info">Проверка моделей…</p><a id="model-source" class="text-button" target="_blank" rel="noreferrer">О модели ↗</a>
+          <label class="field-label">Свет при генерации</label><div class="light-grid" id="modes"><button data-mode="gentle" class="selected" aria-pressed="true">Бережный</button><button data-mode="studio" aria-pressed="false">Студийный</button><button data-mode="daylight" aria-pressed="false">Дневной</button><button data-mode="warm" aria-pressed="false">Тёплый свет</button><button data-mode="dramatic" aria-pressed="false">Контрастный</button><button data-mode="highkey" aria-pressed="false">Светлый каталог</button></div>
+          <p class="hint" id="mode-hint">Сохраняет направление исходного света. Новый свет применяется при следующей AI-обработке.</p>
+          <label class="field-label" for="note">Материал <span>необязательно</span></label><textarea id="note" rows="2" maxlength="600" placeholder="Например: матовая белая поверхность, натуральный дуб"></textarea>
+          <details class="settings"><summary>Размер и вариант <svg viewBox="0 0 24 24"><path d="m7 10 5 5 5-5"/></svg></summary><div class="settings-body">
+            <div class="field-pair"><label class="field-label" for="resolution">Размер обработки<select id="resolution"><option value="512">512 px · проба</option><option value="768" selected>768 px</option><option value="1024">1024 px</option></select></label><label class="field-label" for="seed">Вариант<input id="seed" type="number" min="0" max="4294967295" value="42"></label></div>
+            <p class="hint">Размер итогового изображения сохраняется. Другой номер варианта даёт новый результат.</p>
+          </div></details>
+        </section>
+        <div class="run-section"><button id="generate" class="primary full" disabled><svg viewBox="0 0 24 24"><path d="m12 3 2.4 6.6L21 12l-6.6 2.4L12 21l-2.4-6.6L3 12l6.6-2.4Z"/></svg><span>Сделать реалистичнее</span><span class="button-arrow">↗</span></button><button id="cancel" class="secondary full" hidden>Отменить обработку</button><p class="privacy"><svg viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg> Изображения остаются на этом Mac</p></div>
+      </aside>
+      <section class="editor">
+        <div class="editor-bar"><div class="view-tabs"><button id="view-crop" class="active">Изделие</button><button id="view-document" disabled>Весь лист</button></div><span class="image-label" id="image-label">Новый рендер</span><div class="zoom-controls"><button id="zoom-out" class="icon-button" aria-label="Уменьшить" disabled>−</button><button id="zoom-fit" class="zoom-value" disabled>Вписать</button><button id="zoom-in" class="icon-button" aria-label="Увеличить" disabled>+</button></div></div>
+        <div id="viewport" class="viewport">
+          <div id="empty" class="empty"><div class="empty-symbol"><svg viewBox="0 0 80 80"><path d="M17 29 40 17l23 12v29L40 70 17 58Z"/><path d="m17 29 23 12 23-12M40 41v29"/><path class="spark" d="m63 5 2 6 6 2-6 2-2 6-2-6-6-2 6-2Z"/></svg></div><h3>Новая перспектива вашего изделия</h3><p>Перетащите сюда изображение из конструктора<br>или выберите файл на компьютере.</p><button id="empty-upload" class="secondary">Выбрать изображение <span>↗</span></button><div class="empty-caption">Форма и материалы в фокусе. Без лишних деталей.</div></div>
+          <div id="plane" class="image-plane" hidden><img id="before-image" alt="Исходное изображение" draggable="false"><div id="after-layer" class="after-layer" hidden><img id="after-image" alt="Обработанное изображение" draggable="false"></div><div id="divider" class="divider" hidden><button id="divider-handle" aria-label="Перетащить разделитель до и после">‹ <span>›</span></button></div><div id="crop-overlay" hidden></div></div>
+          <div id="side-labels" class="side-labels" hidden><span>ДО</span><span>ПОСЛЕ</span></div>
+          <div id="crop-toolbar" class="crop-toolbar" hidden><span>Обведите рендер мышью</span><button id="crop-discard" class="secondary">Отмена</button><button id="crop-apply" class="primary">Применить</button></div>
+          <div class="drop-overlay" id="drop-overlay" hidden>Отпустите, чтобы загрузить</div>
+        </div>
+        <div class="editor-bottom"><div class="status-line" id="status-line" role="status" aria-live="polite"><span class="status-dot"></span><span id="status-text">Загрузите изображение для начала</span></div><span id="elapsed"></span></div>
+        <div class="comparison-controls" id="comparison-controls" hidden><span>До</span><input id="split-range" type="range" min="0" max="100" value="50" aria-label="Положение разделителя до и после"><span>После</span><button id="split-reset" class="text-button">50 / 50</button></div>
+        <section class="finish-panel" id="finish-panel"><div class="finish-heading"><h2>Цвет и сила эффекта</h2><span id="look-status">Настройки применятся к результату</span></div><div class="look-grid" id="looks"><button data-look="neutral" class="selected" aria-pressed="true"><i></i>Нейтральный</button><button data-look="warm" aria-pressed="false"><i></i>Тёплый</button><button data-look="cool" aria-pressed="false"><i></i>Холодный</button><button data-look="vivid" aria-pressed="false"><i></i>Насыщенный</button><button data-look="soft" aria-pressed="false"><i></i>Мягкий</button><button data-look="contrast" aria-pressed="false"><i></i>Контрастный</button></div><div class="finish-sliders"><label for="color-strength">Сила цвета <output id="color-value">60%</output><input id="color-strength" type="range" min="0" max="100" value="60"></label><label for="amount">Сила всей обработки <output id="amount-value">100%</output><input id="amount" type="range" min="0" max="100" value="100"></label></div><p class="hint" id="look-hint">Цвет можно менять на готовом результате без нового запуска AI. Сила всей обработки: 0% — оригинал, 100% — результат.</p></section>
+        <div id="error" class="error" role="alert" hidden></div>
+        <div id="repair-controls" class="repair-controls" hidden><button id="restore-btn" class="text-button">Вернуть деталь из оригинала</button><button id="restore-reset" class="text-button">Сбросить исправления</button><span>Обведите участок, который AI изменил.</span></div>
+        <div id="downloads" class="downloads" hidden><span class="result-note">Проверьте форму, стыки и материалы перед использованием.</span><div><a id="download-result" class="primary" download>Сохранить PNG <span>↓</span></a><button id="more-export" class="secondary">Поделиться <span>↗</span></button></div></div>
+      </section>
+    </div>
+    <section id="history-section" class="history-section" hidden><div class="history-heading"><h2>Последние результаты</h2><span>Сохранены на этом Mac</span></div><div id="history" class="history"></div></section>
+    <footer><span>salini <span class="footer-divider">/</span> Render Studio</span><span>AI-визуализация · 1.1</span></footer>
+  </main>
+  <dialog id="about"><button class="close icon-button" aria-label="Закрыть">×</button><p class="eyebrow">SALINI RENDER STUDIO · 1.1</p><h2>Реалистичный свет.<br>Знакомое изделие.</h2><p>Выберите модель в каталоге — недостающие файлы загрузятся при первой обработке. Изображения обрабатываются на этом Mac. Для вариантов GGUF и Real-ESRGAN нужна macOS 26 или новее.</p><p>Свет задаётся перед AI-обработкой. Цвет и его силу можно менять на готовом результате. Эти настройки сохраняются во всех форматах экспорта.</p><p>Сравните чашу, отверстия, стыки и рисунок материала с оригиналом: генеративные модели могут менять детали.</p><p class="hint">Программа использует MFLUX / Apple MLX и stable-diffusion.cpp. У моделей отдельные лицензии, в том числе некоммерческие. Источник выбранной модели доступен по ссылке «О модели».</p></dialog>
+  <dialog id="export-dialog"><button class="close icon-button" aria-label="Закрыть">×</button><p class="eyebrow">ПОДЕЛИТЬСЯ РЕЗУЛЬТАТОМ</p><h2>Выберите формат</h2><a id="export-compare" class="export-option" download><strong>Интерактивное сравнение <span>↗</span></strong><span>HTML-файл с разделителем. Открывается в любом браузере без установки программы.</span></a><a id="export-document" class="export-option" download><strong>Исходный лист с новым рендером <span>↓</span></strong><span>PNG. Содержимое за пределами выделенной области сохранено.</span></a><a id="export-settings" class="text-button" download>Параметры обработки · JSON</a></dialog>
+  <script src="/app.js"></script>
+</body></html>

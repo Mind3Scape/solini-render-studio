@@ -1,0 +1,10 @@
+.venv/
+.tools/
+.DS_Store
+__pycache__/
+.pytest_cache/
+dist/
+test-artifacts/
+examples/
+*.log
+.salini-port
