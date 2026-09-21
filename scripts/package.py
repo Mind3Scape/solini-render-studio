@@ -3,8 +3,8 @@ from pathlib import Path
 import zipfile
 
 ROOT = Path(__file__).resolve().parent.parent
-FILES = ["pyproject.toml", "uv.lock", "bootstrap.sh", "Запустить Salini.command", "Установить Salini.command", "README.md", "LICENSE", "THIRD_PARTY.md"]
-FOLDERS = ["salini", "web", "Salini Render Studio.app", "scripts", "tests"]
+FILES = ["pyproject.toml", "uv.lock", "bootstrap.sh", "Запустить Salini.command", "Установить Salini.command", "README.md", "ONLINE.md", "Запустить веб-студию.command", "Остановить веб-студию.command", "LICENSE", "THIRD_PARTY.md"]
+FOLDERS = ["salini", "web", "pages", "Salini Render Studio.app", "scripts", "tests"]
 
 if __name__ == "__main__":
     dist = ROOT / "dist"

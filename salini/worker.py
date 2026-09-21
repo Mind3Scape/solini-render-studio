@@ -85,6 +85,12 @@ def generate_mlx(spec, path, prepared_path, prepared, config, prompt):
 
 
 def run(job_dir):
+    from .gpu_lock import gpu_slot
+    with gpu_slot(event):
+        return _run(job_dir)
+
+
+def _run(job_dir):
     from PIL import Image
     from .imaging import prepare_input
     from .outputs import write_outputs
@@ -109,7 +115,7 @@ def run(job_dir):
     config.update(prompt=prompt,model_repo=spec.get('repo',spec.get('source')),model_revision=spec['revision'],
                   engine=spec['engine'],engine_version='c678dfe' if spec['engine']=='cpp' else '0.19.2',steps=spec['steps'],
                   processing_size=list(prepared.size),elapsed_seconds=round(time.monotonic()-started,1),peak_memory_gb=peak)
-    write_outputs(job_dir,config)
+    write_outputs(job_dir,config,data_dir=Path(os.environ.get('SALINI_RESULT_DATA_DIR',str(DATA))))
     (job_dir/'settings.json').write_text(json.dumps(config,ensure_ascii=False,indent=2))
     event('done','Готово. Проверьте детали изделия в сравнении.',elapsed=config['elapsed_seconds'],peak_memory_gb=peak)
 

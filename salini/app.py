@@ -49,7 +49,8 @@ def get_dir(kind, key):
 
 
 class JobManager:
-    def __init__(self):
+    def __init__(self, data_dir=None):
+        self.data_dir = data_dir or DATA
         self.lock = threading.RLock()
         self.active = None
         self.process = None
@@ -64,16 +65,17 @@ class JobManager:
 
     def update(self, job_id, **fields):
         with self.lock:
-            path = DATA / "jobs" / job_id / "status.json"
+            path = self.data_dir / "jobs" / job_id / "status.json"
             status = read_json(path)
             status.update(fields, updated_at=time.time())
             write_json(path, status)
 
     def run(self, job_id):
-        job_dir = DATA / "jobs" / job_id
+        job_dir = self.data_dir / "jobs" / job_id
         try:
             env = os.environ.copy()
-            env.update(PYTHONUNBUFFERED="1", HF_HUB_DISABLE_TELEMETRY="1", TOKENIZERS_PARALLELISM="false")
+            env.update(PYTHONUNBUFFERED="1", HF_HUB_DISABLE_TELEMETRY="1", TOKENIZERS_PARALLELISM="false",
+                       SALINI_RESULT_DATA_DIR=str(self.data_dir))
             with self.lock:
                 if job_id in self.cancelled:
                     return
@@ -180,7 +182,7 @@ def status():
                "ready": model_ready(k), "blocker": model_blocker(k)}
               for k, v in MODELS.items()]
     memory = memory_gb()
-    return {"app": "salini-render-studio", "version": "1.1.0", "models": models, "looks": LOOKS,
+    return {"app": "salini-render-studio", "version": "1.2.0", "models": models, "looks": LOOKS,
             "lights": {k:v[0] for k,v in LIGHTS.items()},
             "recommended_model": "klein9" if memory >= 24 else "klein4", "memory_gb": round(memory),
             "active_job": manager.active, "supported": platform.system() == "Darwin" and platform.machine() == "arm64"}

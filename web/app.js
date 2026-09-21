@@ -1,4 +1,5 @@
 const $ = id => document.getElementById(id);
+const ONLINE = document.documentElement.dataset.mode === 'online';
 const state = {upload:null, crop:null, original:null, job:null, mode:'gentle', busy:false, editing:false,
   draft:null, full:false, after:false, split:50, zoom:1, pan:{x:0,y:0}, width:1, height:1, models:[], token:0, revision:0, restored:0,
   colorStyle:'neutral', colorStrength:60, amount:100, lookSaving:false, lookPending:false, lookRevision:0};
@@ -106,7 +107,7 @@ async function acceptUpload(info){
 async function upload(file){
   if(!file||state.busy||state.lookSaving||state.lookPending)return;
   error();status('Загрузка изображения…');
-  if(file.size>40*1024*1024){error('Файл должен быть меньше 40 МБ.');return;}
+  if(file.size>(ONLINE?20:40)*1024*1024){error(`Файл должен быть меньше ${ONLINE?20:40} МБ.`);return;}
   const data=new FormData();data.append('file',file);
   try{await acceptUpload(await api('/api/uploads',{method:'POST',body:data}));}
   catch(e){error(e.message);status('Выберите другое изображение.');}
@@ -196,11 +197,11 @@ function fillModels(){
 }
 function modelInfo(){
   const m=state.models.find(m=>m.key===$('model').value);if(!m)return;
-  $('model-info').textContent=m.blocker||`${m.description}. ${m.ready?'Загружена · работает офлайн.':`При первой обработке загрузится до ${m.download_gb} ГБ.`}${m.tested?'':' Пробный режим: качество полного прогона ещё не проверено.'}`;
+  $('model-info').textContent=m.blocker||`${m.description}. ${m.ready?(ONLINE?'Готова на сервере.':'Загружена · работает офлайн.'):`При первой обработке загрузится до ${m.download_gb} ГБ.`}${m.tested?'':' Пробный режим: качество полного прогона ещё не проверено.'}`;
   $('model-info').classList.toggle('blocked',!!m.blocker);$('model-source').href=m.source;
   lightHint();controls();
 }
-$('model').onchange=()=>{const m=state.models.find(m=>m.key===$('model').value);if(m?.engine==='cpp')$('resolution').value=m.task==='upscale'?1024:512;modelInfo();};
+$('model').onchange=()=>{const m=state.models.find(m=>m.key===$('model').value);if(m?.engine==='cpp')$('resolution').value=m.task==='upscale'?(ONLINE?768:1024):512;modelInfo();};
 function lookValues(){return {color_style:state.colorStyle,color_strength:state.colorStrength,amount:state.amount};}
 function lookControls(){
   document.querySelectorAll('#looks button').forEach(b=>{b.classList.toggle('selected',b.dataset.look===state.colorStyle);b.setAttribute('aria-pressed',String(b.dataset.look===state.colorStyle));});
@@ -251,7 +252,7 @@ async function finish(data){
     status('Готово · перетащите разделитель, чтобы проверить детали');
     if(data.elapsed)$('elapsed').textContent=`${Math.round(data.elapsed)} сек`;
     await refreshHistory();const s=await api('/api/status');state.models=s.models;fillModels();modelInfo();$('look-status').textContent='Можно менять без нового запуска AI';
-  }else{status(data.message);if(data.status==='failed'){error(data.message);const link=document.createElement('a');link.href=`/api/jobs/${data.id}/files/worker.log?download=true`;link.textContent=' Скачать журнал';link.className='text-button';$('error').append(link);}state.job=null;remember();}
+  }else{status(data.message);if(data.status==='failed'){error(data.message);if(!ONLINE){const link=document.createElement('a');link.href=`/api/jobs/${data.id}/files/worker.log?download=true`;link.textContent=' Скачать журнал';link.className='text-button';$('error').append(link);}}state.job=null;remember();}
 }
 async function poll(){
   if(!state.busy||!state.job)return;
@@ -295,12 +296,13 @@ document.querySelectorAll('dialog .close').forEach(b=>b.onclick=()=>b.closest('d
 document.querySelectorAll('dialog').forEach(d=>d.addEventListener('click',e=>{if(e.target===d){const r=d.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)d.close();}}));
 async function init(){
   try{
+    if(ONLINE){await window.saliniOnlineReady;$('resolution').querySelector('option[value="1024"]')?.remove();}
     const config=await api('/api/status');state.models=config.models;fillModels();$('model').value=config.recommended_model;modelInfo();
     if(!config.supported)error('Для локальной AI-обработки нужен Mac с чипом Apple (M1 или новее).');
     await refreshHistory();
     if(config.active_job){await openJob(config.active_job,true);return;}
     let saved;try{saved=JSON.parse(localStorage.getItem('salini-session'));}catch{}
     if(saved?.upload){try{if(saved.job&&saved.after){await openJob(saved.job);return;}await acceptUpload(saved.upload);if(saved.crop){state.crop=saved.crop;await showImages();remember();}}catch{localStorage.removeItem('salini-session');}}
-  }catch(e){error('Не удалось подключиться к приложению. Откройте «Запустить Salini.command» и обновите страницу.');}
+  }catch(e){error(ONLINE?'Mac владельца сейчас недоступен. Вернитесь по постоянной ссылке студии и повторите позже.':'Не удалось подключиться к приложению. Откройте «Запустить Salini.command» и обновите страницу.');}
 }
 init();

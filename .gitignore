@@ -8,3 +8,8 @@ test-artifacts/
 examples/
 *.log
 .salini-port
+.env
+.env.*
+!.env.example
+*.pem
+*.key

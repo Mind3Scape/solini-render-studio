@@ -12,6 +12,7 @@
 | Pillow | https://github.com/python-pillow/Pillow | MIT-CMU |
 | NumPy | https://github.com/numpy/numpy | BSD-3-Clause |
 | uv | https://github.com/astral-sh/uv | MIT / Apache-2.0 |
+| cloudflared 2026.9.1 (только веб-служба) | https://github.com/cloudflare/cloudflared | Apache-2.0 |
 | FLUX.2 Klein 4B | https://huggingface.co/black-forest-labs/FLUX.2-klein-4B | Apache-2.0 |
 | FLUX.2 Klein 9B KV | https://huggingface.co/black-forest-labs/FLUX.2-klein-9b-kv | FLUX Non-Commercial License |
 | Qwen Image 2.1 | https://huggingface.co/Qwen/Qwen-Image-2.1 | Qwen Research License |
