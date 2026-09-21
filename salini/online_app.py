@@ -136,6 +136,9 @@ class QueueManager(JobManager):
             if self.active:
                 super().cancel(self.active)
             self.condition.notify_all()
+        # Let cancellation terminate native children before the server exits.
+        if self.pump_thread:
+            self.pump_thread.join(timeout=7)
 
 
 manager = QueueManager()
