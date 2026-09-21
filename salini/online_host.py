@@ -25,7 +25,7 @@ from .app import read_json, write_json
 
 REPOSITORY = 'Mind3Scape/solini-render-studio'
 SITE_BRANCH = 'codex/site'
-PORT = 8767
+PORT = 18767
 LABEL = 'local.salini.online'
 PLIST = Path.home()/'Library/LaunchAgents'/f'{LABEL}.plist'
 CF_URL = 'https://github.com/cloudflare/cloudflared/releases/download/2026.9.1/cloudflared-darwin-arm64.tgz'
