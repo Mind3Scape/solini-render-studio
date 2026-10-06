@@ -165,4 +165,28 @@ final class InsideOperationsTests: XCTestCase {
     scene.setPaused(true)
     XCTAssertEqual(scene.pointOfView!.orientation.w, orientation.w, accuracy: 0.0001)
   }
+  @MainActor func testMapFocusStaysInUsableViewportAboveGlass() throws {
+    let scene = FactorySceneView()
+    scene.frame = CGRect(x: 0, y: 0, width: 402, height: 874)
+    for insets in [
+      UIEdgeInsets(top: 238, left: 0, bottom: 220, right: 0),
+      UIEdgeInsets(top: 135, left: 0, bottom: 180, right: 0),
+      UIEdgeInsets(top: 135, left: 35, bottom: 330, right: 5),
+    ] {
+      scene.mapContentInsets = insets
+      scene.layoutIfNeeded()
+      scene.focusOn(.finishing, animated: false)
+      // An offscreen SCNView does not advance its presentation tree without a render.
+      SCNTransaction.flush()
+      _ = scene.snapshot()
+      let visible = scene.bounds.inset(by: insets)
+      let projected = scene.projectPoint(scene.mapCamera.focus)
+      XCTAssertEqual(CGFloat(projected.x), visible.midX, accuracy: 1)
+      XCTAssertEqual(CGFloat(projected.y), visible.midY, accuracy: 1)
+      let orientation = try XCTUnwrap(scene.pointOfView).orientation
+      scene.stepZoom(true)
+      XCTAssertEqual(scene.pointOfView!.orientation.w, orientation.w, accuracy: 0.0001)
+    }
+  }
+
 }

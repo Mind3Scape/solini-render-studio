@@ -23,6 +23,7 @@
 		52865D44CB6F34BBD75EA0C3 /* greca-editorial.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 91874D6C11CB47206527617E /* greca-editorial.jpg */; };
 		56B48C7F86569A1C65D45047 /* aria.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A3AD3AD462395F7627F0F9ED /* aria.jpg */; };
 		5A04D150B5857BBA96742663 /* oriente.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A177BC09A63FBF19E80DCF74 /* oriente.jpg */; };
+		622429E388CF81F64A0BEF38 /* InsideVisuals.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57996FF6A4B9A58C4F8C45E /* InsideVisuals.swift */; };
 		655CB7EC2997AD545FD46A7B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1C21E6FCCD97876F706ADB2E /* Assets.xcassets */; };
 		664F09813FAF7AEA8DA33A77 /* opera-top.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6C53D942770B336103058500 /* opera-top.jpg */; };
 		6A5FFEFDCD82D51ECE33C0B1 /* InsideOperationsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FAF20A36EDC10E0096E5FE /* InsideOperationsTests.swift */; };
@@ -92,6 +93,7 @@
 		A177BC09A63FBF19E80DCF74 /* oriente.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = oriente.jpg; sourceTree = "<group>"; };
 		A3AB58D801AACAB3369DA9D5 /* Design.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Design.swift; sourceTree = "<group>"; };
 		A3AD3AD462395F7627F0F9ED /* aria.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = aria.jpg; sourceTree = "<group>"; };
+		A57996FF6A4B9A58C4F8C45E /* InsideVisuals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsideVisuals.swift; sourceTree = "<group>"; };
 		A82AFE5054B9A5561CDAD645 /* salini-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "salini-logo.png"; sourceTree = "<group>"; };
 		B84ADB80CC317232BF921570 /* catalog.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = catalog.json; sourceTree = "<group>"; };
 		CEF9612034EAAC3B2E8AFDEE /* Aria-drawing.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "Aria-drawing.pdf"; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 				227902BDF40ADF52F72D7B54 /* Home.swift */,
 				7BAB34199B15CE6E53C954A2 /* Info.plist */,
 				FD95755374BE98F79C16C503 /* InsidePanels.swift */,
+				A57996FF6A4B9A58C4F8C45E /* InsideVisuals.swift */,
 				115177084A87D881A3F70994 /* MaterialStudio.swift */,
 				205C91FAD53CEC3928277F81 /* NinfeaCinema.swift */,
 				D4BD1EE31F7C199D6DAD475C /* NinfeaStory.swift */,
@@ -314,6 +317,7 @@
 				C919C35BF39AFCF7A2620366 /* FactoryScene.swift in Sources */,
 				C1E3CF871A14297CBBCB4D68 /* Home.swift in Sources */,
 				A7D8C823650DD7790B0917A3 /* InsidePanels.swift in Sources */,
+				622429E388CF81F64A0BEF38 /* InsideVisuals.swift in Sources */,
 				34D8442BABB4641EBEA5BB0C /* MaterialStudio.swift in Sources */,
 				01C959B14340E03E7D4D41B2 /* NinfeaCinema.swift in Sources */,
 				1A25BEA4CEBD7F396CEDDA60 /* NinfeaStory.swift in Sources */,

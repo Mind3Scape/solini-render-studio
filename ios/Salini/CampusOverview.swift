@@ -7,18 +7,21 @@ final class CampusOverview: UIControl {
   var onSelect: ((FactoryZone) -> Void)?
   override init(frame: CGRect) {
     super.init(frame: frame)
-    backgroundColor = UIColor.white.withAlphaComponent(0.7)
+    backgroundColor = InsideStyle.canvas.withAlphaComponent(0.96)
     layer.cornerRadius = 16
     clipsToBounds = true
-    layer.borderColor = UIColor.white.withAlphaComponent(0.9).cgColor
-    layer.borderWidth = 1
+    layer.borderColor = InsideStyle.ink.withAlphaComponent(0.12).cgColor
+    layer.borderWidth = 0.5
     accessibilityLabel = "Мини-карта территории"
     accessibilityHint = "Выберите корпус"
     addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(choose(_:))))
   }
   required init?(coder: NSCoder) { fatalError() }
+  private var modelScale: CGFloat { min((bounds.width - 14) / 180, (bounds.height - 12) / 106) }
   private func point(_ x: CGFloat, _ z: CGFloat) -> CGPoint {
-    CGPoint(x: bounds.midX + (x - z - 5) * 0.5, y: bounds.midY + (x + z) * 0.28)
+    CGPoint(
+      x: bounds.midX + (x - z - 5) / sqrt(2) * modelScale,
+      y: bounds.midY + (x + z - 5) / sqrt(6) * modelScale)
   }
   override func draw(_ rect: CGRect) {
     guard let context = UIGraphicsGetCurrentContext() else { return }
@@ -32,15 +35,16 @@ final class CampusOverview: UIControl {
       ]
       context.addLines(between: points)
       context.closePath()
-      context.setFillColor(UIColor(hex: selectedZone == zone ? 0x527E92 : 0xB7C5C9).cgColor)
+      context.setFillColor(
+        (selectedZone == zone ? InsideStyle.blue : UIColor(hex: 0xB7C5C9)).cgColor)
       context.fillPath()
     }
     if camera.scale < camera.overviewScale * 0.85 {
       let center = point(CGFloat(camera.focus.x), CGFloat(camera.focus.z))
       let width =
         CGFloat(camera.scale * 2) / max(0.1, camera.viewport.height / camera.viewport.width)
-        * 0.7071
-      let height = CGFloat(camera.scale * 2) * 0.686
+        * modelScale
+      let height = CGFloat(camera.scale * 2) * modelScale
       let rect = CGRect(
         x: center.x - width / 2, y: center.y - height / 2, width: width, height: height)
       context.setStrokeColor(UIColor(hex: 0x527E92).cgColor)

@@ -1,23 +1,18 @@
 import UIKit
 
-enum InsideStyle {
-  static let blue = UIColor(hex: 0x476E89)
-  static let amber = UIColor(hex: 0xA46D35)
-  static let green = UIColor(hex: 0x507867)
-  static func loadColor(_ value: Int) -> UIColor { value >= 85 ? amber : blue }
-}
-
 /// Solid content surfaces; glass is reserved for floating navigation and actions.
 func insideCard(_ views: [UIView], spacing: CGFloat = 16) -> UIView {
   let v = stack(views, spacing: spacing).inset(20)
   v.backgroundColor = .white
-  v.rounded(24)
+  v.rounded(18)
+  v.layer.borderWidth = 0.5
+  v.layer.borderColor = InsideStyle.ink.withAlphaComponent(0.06).cgColor
   return v
 }
 func insideMetric(_ value: String, _ caption: String, color: UIColor = Palette.ink) -> UIView {
   let number = label(value, 27, .medium, color)
   number.font = .monospacedDigitSystemFont(ofSize: 27, weight: .medium)
-  return stack([number, label(caption, 11, .medium, Palette.muted)], spacing: 5)
+  return stack([number, label(caption, 11, .medium, InsideStyle.muted)], spacing: 5)
 }
 func insideRow(
   _ title: String, _ subtitle: String, icon: String, color: UIColor = InsideStyle.blue,
@@ -43,14 +38,14 @@ func insideRow(
   c.subtitleTextAttributesTransformer = UIConfigurationTextAttributesTransformer {
     var a = $0
     a.font = .systemFont(ofSize: 12)
-    a.foregroundColor = Palette.muted
+    a.foregroundColor = InsideStyle.muted
     return a
   }
   c.imageColorTransformer = UIConfigurationColorTransformer { _ in color }
   button.configuration = c
   button.contentHorizontalAlignment = .leading
   button.backgroundColor = .white
-  button.rounded(19)
+  button.rounded(14)
   button.addAction(
     UIAction { _ in
       UISelectionFeedbackGenerator().selectionChanged()
@@ -92,6 +87,7 @@ final class InsidePanelController: ScrollController {
   deinit { if let observer { NotificationCenter.default.removeObserver(observer) } }
   override func viewDidLoad() {
     super.viewDidLoad()
+    view.backgroundColor = InsideStyle.canvas
     content.spacing = 0
     navigationItem.rightBarButtonItem = UIBarButtonItem(
       systemItem: .close, primaryAction: UIAction { [weak self] _ in self?.dismiss(animated: true) }
@@ -127,7 +123,7 @@ final class InsidePanelController: ScrollController {
   private func locate(_ zone: FactoryZone, _ order: InsideOrderID? = nil) {
     dismiss(animated: true) { [onLocate] in onLocate(zone, order) }
   }
-  private func section(_ title: String) { add(eyebrow(title), inset: 22) }
+  private func section(_ title: String) { add(insideEyebrow(title), inset: 22) }
   private func card(_ views: [UIView]) { add(insideCard(views), inset: 16) }
   private func row(
     _ title: String, _ subtitle: String, _ icon: String, color: UIColor = InsideStyle.blue,
@@ -139,8 +135,8 @@ final class InsidePanelController: ScrollController {
     add(
       stack(
         [
-          eyebrow(kicker), label(title, 32, .semibold),
-          label(subtitle, 14, .regular, Palette.muted),
+          insideEyebrow(kicker), label(title, 28, .medium, InsideStyle.ink),
+          label(subtitle, 14, .regular, InsideStyle.muted),
         ], spacing: 12))
   }
   private func render() {
@@ -162,7 +158,7 @@ final class InsidePanelController: ScrollController {
     add(
       label(
         "Демонстрационная смена. Данные и сценарии условные; действия меняют только эту модель.",
-        11, .regular, Palette.muted))
+        11, .regular, InsideStyle.muted))
     view.layoutIfNeeded()
     scroll.contentOffset = CGPoint(
       x: 0,
@@ -176,7 +172,7 @@ final class InsidePanelController: ScrollController {
   private func briefing() {
     title = "Обзор смены"
     heading(
-      "SALINI INSIDE · ДЕМО", "Всё начинается\nс ясности.",
+      "SALINI INSIDE · ДЕМО", "Смена в цифрах",
       "Производство, заказы и решения — в одном пространстве.")
     let metrics = stack(
       [
@@ -226,10 +222,11 @@ final class InsidePanelController: ScrollController {
     meter.trackTintColor = Palette.paper
     card([
       metrics, meter,
-      label("Загрузка доступной мощности · демонстрационная оценка", 11, .regular, Palette.muted),
+      label(
+        "Загрузка доступной мощности · демонстрационная оценка", 11, .regular, InsideStyle.muted),
     ])
     add(
-      ActionButton("Показать на территории", icon: "viewfinder") { [weak self] in self?.locate(zone)
+      insideAction("Показать на территории", icon: "viewfinder") { [weak self] in self?.locate(zone)
       }, inset: 16)
     section("ПОСТЫ И ПРОЦЕССЫ")
     for item in simulation.stations(zone) {
@@ -256,7 +253,8 @@ final class InsidePanelController: ScrollController {
     card([
       symbol(zone.icon, size: 34, color: InsideStyle.blue), label(station.status, 24, .semibold),
       label(
-        "Состояние поста связано с текущей демонстрационной сменой.", 13, .regular, Palette.muted),
+        "Состояние поста связано с текущей демонстрационной сменой.", 13, .regular,
+        InsideStyle.muted),
     ])
     if code == "F-04" {
       reserveDecision()
@@ -269,17 +267,17 @@ final class InsidePanelController: ScrollController {
         label("Процесс в штатном режиме", 19, .semibold),
         label(
           "Отклонений в текущем сценарии нет. Состав и загрузка доступны в карточке участка.", 14,
-          .regular, Palette.muted),
+          .regular, InsideStyle.muted),
       ])
     }
     add(
-      ActionButton("К участку на карте", icon: "viewfinder") { [weak self] in
+      insideAction("К участку на карте", icon: "viewfinder") { [weak self] in
         self?.locate(zone, station.order)
       }, inset: 16)
   }
   private func orders() {
     title = "Заказы"
-    heading("ПОРТФЕЛЬ · ДЕМО", "От замысла\nдо адреса.", "Пять проектов связывают всю компанию.")
+    heading("ПОРТФЕЛЬ · ДЕМО", "Заказы в работе", "Пять проектов связывают всю компанию.")
     let search = UISearchBar()
     search.placeholder = "Номер, коллекция или город"
     search.searchBarStyle = .minimal
@@ -298,7 +296,7 @@ final class InsidePanelController: ScrollController {
     if results.isEmpty {
       card([
         label("Заказов не найдено", 20, .semibold),
-        label("Попробуйте другую коллекцию, город или номер.", 14, .regular, Palette.muted),
+        label("Попробуйте другую коллекцию, город или номер.", 14, .regular, InsideStyle.muted),
       ])
     }
     for order in results { orderRow(order) }
@@ -332,10 +330,11 @@ final class InsidePanelController: ScrollController {
           ? "Готовность к погрузке: план 17:00 · прогноз \(simulation.ariaForecast). Москва · отдельный рейс, не рейс 02."
           : order == .marea
             ? "Рейс 02 · выезд после ОТК, упаковки и погрузки"
-            : "Текущий участок: \(simulation.zone(for: order).title)", 13, .regular, Palette.muted),
+            : "Текущий участок: \(simulation.zone(for: order).title)", 13, .regular,
+        InsideStyle.muted),
     ])
     add(
-      ActionButton("Найти заказ на карте", icon: "location", prominent: true) { [weak self] in
+      insideAction("Найти заказ на карте", icon: "location", prominent: true) { [weak self] in
         guard let self else { return }
         self.locate(self.simulation.zone(for: order), order)
       }, inset: 16)
@@ -348,7 +347,7 @@ final class InsidePanelController: ScrollController {
           simulation.quality == .departed
             ? "Комплекты отгружены вместе с раковинами."
             : "Комплектация и погрузка завершены. Выезд зависит от повторного контроля партии Marea.",
-          14, .regular, Palette.muted),
+          14, .regular, InsideStyle.muted),
       ])
       row("Открыть связанную партию", "S-2051 · Marea · 12 раковин", "link") { [weak self] in
         self?.push(.order(.marea))
@@ -376,7 +375,7 @@ final class InsidePanelController: ScrollController {
       for event in entries {
         card([
           label("\(event.time) · \(event.title)", 14, .semibold),
-          label(event.detail, 13, .regular, Palette.muted),
+          label(event.detail, 13, .regular, InsideStyle.muted),
         ])
       }
     }
@@ -397,15 +396,15 @@ final class InsidePanelController: ScrollController {
         label("Подключить пост F-04", 23, .semibold), metrics, line(),
         label(
           "Пост исправен. Квалифицированный оператор доступен. \(simulation.reserveForecast.reserveQuantity) из 4 ванн назначаются на F-04; остальные — на основную линию.",
-          14, .regular, Palette.muted),
+          14, .regular, InsideStyle.muted),
         label(
           "Цена решения · \(simulation.reserveForecast.reserveMinutes) минут F-04 + 10 минут подготовки.\nОператор откладывает подготовку форм на завтра. Другие заказы сохраняют очередь.",
           13, .medium),
         label(
           "Расчёт по доступности каждого поста и циклу 15 мин/ванна. Затем 40 минут на ОТК, упаковку и передачу. Решение доступно до 15:50.",
-          11, .regular, Palette.muted),
+          11, .regular, InsideStyle.muted),
       ])
-      let b = ActionButton("Подключить резерв", icon: "plus.circle", prominent: true) {
+      let b = insideAction("Подключить резерв", icon: "plus.circle", prominent: true) {
         [weak self] in self?.simulation.activateReserve()
       }
       b.isEnabled = simulation.canActivateReserve
@@ -416,7 +415,7 @@ final class InsidePanelController: ScrollController {
       }
       if simulation.ariaPlan == nil {
         add(
-          ActionButton("Оставить основную очередь", icon: "clock") { [weak self] in
+          insideAction("Оставить основную очередь", icon: "clock") { [weak self] in
             self?.simulation.keepMainQueue()
           }, inset: 16)
       } else if simulation.ariaPlan == .mainQueue {
@@ -424,7 +423,7 @@ final class InsidePanelController: ScrollController {
           label("Основная очередь сохранена", 18, .semibold),
           label(
             "Прогноз \(simulation.ariaForecast). План готовности 17:00 под риском. Резерв можно подключить до начала обработки.",
-            14, .regular, Palette.muted),
+            14, .regular, InsideStyle.muted),
         ])
       }
     } else {
@@ -435,7 +434,7 @@ final class InsidePanelController: ScrollController {
           done
             ? "Четыре ванны переданы на контроль качества. Прогноз готовности \(simulation.ariaForecast) сохранён."
             : "Подготовка поста → параллельная обработка → передача в ОТК. Основная очередь продолжает работу.",
-          14, .regular, Palette.muted),
+          14, .regular, InsideStyle.muted),
         label("96% → 72% · загрузка обработки после запуска", 14, .semibold),
       ])
       if !done { addProgress("Процесс по расчётному плану · 1 с = 2,5 мин") }
@@ -446,16 +445,16 @@ final class InsidePanelController: ScrollController {
     switch simulation.quality {
     case .held:
       card([
-        label("Сначала — уверенность\nв каждом изделии.", 23, .semibold),
+        label("Повторный контроль Marea", 23, .semibold),
         label(
           "Партия Marea удержана для перепроверки до упаковки. Дефект не установлен. В рейсе 02 уже ждут 6 мебельных комплектов Domino.",
-          14, .regular, Palette.muted), line(),
+          14, .regular, InsideStyle.muted), line(),
         label("Q-02 · инспектор доступен\n12 раковин · поверхность и геометрия", 14, .medium),
         label(
           "Назначение осмотра не разрешает отгрузку. Нужен положительный протокол и завершённая погрузка.",
-          12, .regular, Palette.muted),
+          12, .regular, InsideStyle.muted),
       ])
-      let b = ActionButton("Назначить повторный осмотр", icon: "checkmark.seal", prominent: true) {
+      let b = insideAction("Назначить повторный осмотр", icon: "checkmark.seal", prominent: true) {
         [weak self] in self?.simulation.startQualityCheck()
       }
       b.accessibilityIdentifier = "inside.quality.start"
@@ -465,7 +464,7 @@ final class InsidePanelController: ScrollController {
         label("Осмотр идёт", 23, .semibold),
         label(
           "Q-02 · проверяем поверхность и геометрию. Рейс 02 остаётся заблокированным.", 14,
-          .regular, Palette.muted),
+          .regular, InsideStyle.muted),
       ])
       addProgress("Осмотр · 30 мин · 12 секунд при ×150")
     case .packing:
@@ -473,7 +472,7 @@ final class InsidePanelController: ScrollController {
         label("12 из 12 — принято", 25, .semibold, InsideStyle.green),
         label(
           "Демо-исход: протокол Q-051 положительный. Партия перешла в упаковку: защита кромок и маркировка.",
-          14, .regular, Palette.muted),
+          14, .regular, InsideStyle.muted),
       ])
       addProgress("Упаковка · 15 мин · 6 секунд при ×150")
     case .loading:
@@ -481,7 +480,7 @@ final class InsidePanelController: ScrollController {
         label("Док 02 · погрузка", 25, .semibold),
         label(
           "12 упакованных мест перемещаются к машине. Разрешение на выезд появится после завершения погрузки.",
-          14, .regular, Palette.muted),
+          14, .regular, InsideStyle.muted),
       ])
       addProgress("Погрузка · 10 мин · 4 секунды при ×150")
     case .ready:
@@ -489,10 +488,10 @@ final class InsidePanelController: ScrollController {
         label("Можно отправляться", 25, .semibold, InsideStyle.green),
         label(
           "Marea и Domino загружены. Протокол ОТК и документы проверены. Решение о выезде — за диспетчером.",
-          14, .regular, Palette.muted),
+          14, .regular, InsideStyle.muted),
       ])
       add(
-        ActionButton("К рейсу 02", icon: "truck.box", prominent: true) { [weak self] in
+        insideAction("К рейсу 02", icon: "truck.box", prominent: true) { [weak self] in
           self?.push(.dispatch)
         }, inset: 16)
     case .departed:
@@ -500,7 +499,8 @@ final class InsidePanelController: ScrollController {
         symbol("checkmark.circle", size: 34, color: InsideStyle.green),
         label("На пути в Санкт-Петербург", 24, .semibold),
         label(
-          "Рейс 02 выпущен. Партии Marea и Domino отгружены вместе.", 14, .regular, Palette.muted),
+          "Рейс 02 выпущен. Партии Marea и Domino отгружены вместе.", 14, .regular,
+          InsideStyle.muted),
       ])
     }
   }
@@ -508,14 +508,14 @@ final class InsidePanelController: ScrollController {
     let meter = UIProgressView(progressViewStyle: .bar)
     meter.trackTintColor = UIColor(hex: 0xE3E8EA)
     meter.progressTintColor = InsideStyle.blue
-    let caption = label(text, 12, .medium, Palette.muted)
+    let caption = label(text, 12, .medium, InsideStyle.muted)
     progressView = meter
     progressCaption = caption
     card([
       caption, meter,
       label(
         "\(simulation.paused ? "На паузе" : "Время ×150 на базовой скорости") · пауза доступна на карте",
-        11, .regular, Palette.muted),
+        11, .regular, InsideStyle.muted),
     ])
   }
   private func updateProgress() {
@@ -537,13 +537,13 @@ final class InsidePanelController: ScrollController {
   private func dispatch() {
     title = "Отгрузки"
     heading(
-      "ДИСПЕТЧЕРСКАЯ · ДЕМО", "Последний этап.\nСледующий адрес.",
+      "ДИСПЕТЧЕРСКАЯ · ДЕМО", "План отгрузок",
       "Состав рейса и разрешение на выезд связаны с производством.")
     let passed = simulation.quality != .held && simulation.quality != .checking
     let ready = simulation.quality == .ready || simulation.quality == .departed
     card([
       label("02 · Санкт-Петербург", 24, .semibold),
-      label("12 раковин Marea + 6 комплектов Domino", 14, .regular, Palette.muted),
+      label("12 раковин Marea + 6 комплектов Domino", 14, .regular, InsideStyle.muted),
       dispatchCheck("Протокол Q-051", done: passed),
       dispatchCheck("Упаковка и погрузка", done: ready),
       dispatchCheck("Документы и комплектность", done: ready),
@@ -553,7 +553,7 @@ final class InsidePanelController: ScrollController {
           : ready ? "Все условия выполнены" : "Выезд заблокирован · ожидаем Marea", 14, .semibold,
         ready ? InsideStyle.green : InsideStyle.amber),
     ])
-    let release = ActionButton(
+    let release = insideAction(
       simulation.quality == .departed ? "Выезд подтверждён" : "Выпустить рейс 02",
       icon: "truck.box", prominent: true
     ) { [weak self] in
@@ -570,11 +570,12 @@ final class InsidePanelController: ScrollController {
     }
     card([
       label("01 · Москва", 22, .semibold),
-      label("S-2039 · 4 ванны Aria\nПогрузка и документы проверены", 14, .regular, Palette.muted),
+      label(
+        "S-2039 · 4 ванны Aria\nПогрузка и документы проверены", 14, .regular, InsideStyle.muted),
       label(
         simulation.dispatchReleased ? "В пути" : "Готов к выезду", 14, .semibold, InsideStyle.green),
     ])
-    let first = ActionButton(
+    let first = insideAction(
       simulation.dispatchReleased ? "Рейс 01 отправлен" : "Выпустить рейс 01", icon: "truck.box"
     ) { [weak self] in
       guard let self else { return }
@@ -587,7 +588,7 @@ final class InsidePanelController: ScrollController {
       label("03 · Казань", 22, .semibold),
       label(
         "Душевые поддоны · S-2057\nРейс планируется после завершения производства.", 14, .regular,
-        Palette.muted),
+        InsideStyle.muted),
     ])
   }
   private func dispatchCheck(_ title: String, done: Bool) -> UIView {
@@ -595,13 +596,13 @@ final class InsidePanelController: ScrollController {
       [
         symbol(
           done ? "checkmark.circle.fill" : "circle", size: 18,
-          color: done ? InsideStyle.green : Palette.muted), label(title, 14, .medium),
+          color: done ? InsideStyle.green : InsideStyle.muted), label(title, 14, .medium),
       ], axis: .horizontal, spacing: 10)
   }
   private func events() {
     title = "Журнал решений"
     heading(
-      "ДЕМО-СМЕНА / \(simulation.clockTime)", "Причина. Действие.\nРезультат.",
+      "ДЕМО-СМЕНА / \(simulation.clockTime)", "Журнал смены",
       "Время сценария · старт в 15:00. Нажмите событие, чтобы увидеть его контекст.")
     for event in simulation.journal {
       row("\(event.time) · \(event.title)", event.detail, event.zone.icon) { [weak self] in

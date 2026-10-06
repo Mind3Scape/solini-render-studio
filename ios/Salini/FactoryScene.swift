@@ -13,9 +13,9 @@ final class FactorySceneView: SCNView, UIGestureRecognizerDelegate {
   private var outboundTrucks: [Int: SCNNode] = [:]
   private var departures: Set<Int> = []
   private var loadFloors: [FactoryZone: SCNNode] = [:]
-  private var orderTags: [InsideOrderID: UIButton] = [:]
+  private var orderTags: [InsideOrderID: CampusAnnotation] = [:]
   private var orderMarkers: [InsideOrderID: SCNNode] = [:]
-  private var stationTags: [(FactoryZone, String, SCNVector3, UIButton)] = []
+  private var stationTags: [(FactoryZone, String, SCNVector3, CampusAnnotation)] = []
   private var reserveIndicator: SCNNode?
   private var qualityIndicator: SCNNode?
   private var reserveCover: SCNNode?
@@ -29,15 +29,33 @@ final class FactorySceneView: SCNView, UIGestureRecognizerDelegate {
   var onOrderSelect: ((InsideOrderID) -> Void)?
   var onStationSelect: ((FactoryZone, String) -> Void)?
   private var simulationPaused = false
+  private var buildingMaterials: [FactoryZone: [(SCNMaterial, UIColor)]] = [:]
+  var excludedAnnotationRects: [CGRect] = []
   private var roofs: [FactoryZone: SCNNode] = [:]
   private var outlines: [FactoryZone: SCNNode] = [:]
-  private var tags: [FactoryZone: UIButton] = [:]
+  private var tags: [FactoryZone: CampusAnnotation] = [:]
   private var clock: CADisplayLink?
   private let clockTarget = SceneClock()
   private(set) var mapCamera = CampusCamera()
   private var panOrigin = SCNVector3Zero
   private var pinchScale: Double = 0
   private var lastViewport = CGSize.zero
+  private var lastVisibleRect = CGRect.zero
+  var mapContentInsets: UIEdgeInsets = .zero {
+    didSet { if oldValue != mapContentInsets { setNeedsLayout() } }
+  }
+  private var visibleMapRect: CGRect {
+    let proposed = bounds.inset(by: mapContentInsets)
+    return proposed.width > 40 && proposed.height > 80 ? proposed : bounds
+  }
+  private var framingShift: SCNVector3 {
+    let rect = visibleMapRect
+    let units = Float(2 * mapCamera.scale / Double(max(1, rect.height)))
+    let right = Float(rect.midX - bounds.midX) * units / sqrt(2)
+    let forward = Float(rect.midY - bounds.midY) * units * sqrt(1.5)
+    return SCNVector3(-right - forward, 0, right - forward)
+  }
+  private var framingScale: Double { Double(bounds.height / max(1, visibleMapRect.height)) }
   private var activeZone: FactoryZone?
   private var explored = false
   var onSelect: ((FactoryZone) -> Void)?
@@ -56,10 +74,10 @@ final class FactorySceneView: SCNView, UIGestureRecognizerDelegate {
   init() {
     super.init(frame: .zero, options: nil)
     scene = world
-    backgroundColor = UIColor(hex: 0xEDF0F2)
-    world.background.contents = UIColor(hex: 0xEDF0F2)
+    backgroundColor = InsideStyle.canvas
+    world.background.contents = InsideStyle.canvas
     world.lightingEnvironment.contents = UIColor.white
-    world.lightingEnvironment.intensity = 0.4
+    world.lightingEnvironment.intensity = 0.24
     antialiasingMode = .multisampling4X
     preferredFramesPerSecond = 60
     isPlaying = true
@@ -76,22 +94,22 @@ final class FactorySceneView: SCNView, UIGestureRecognizerDelegate {
     let ambient = SCNNode()
     ambient.light = SCNLight()
     ambient.light?.type = .ambient
-    ambient.light?.intensity = 380
-    ambient.light?.color = UIColor(hex: 0xE5EAF0)
+    ambient.light?.intensity = 260
+    ambient.light?.color = UIColor(hex: 0xEFF2F6)
     world.rootNode.addChildNode(ambient)
     let sun = SCNNode()
     sun.light = SCNLight()
     sun.light?.type = .directional
-    sun.light?.intensity = 720
+    sun.light?.intensity = 980
     sun.light?.castsShadow = true
     sun.light?.shadowMode = .forward
     sun.light?.shadowBias = 0.6
-    sun.light?.shadowColor = UIColor(hex: 0x344851, alpha: 0.2)
-    sun.light?.shadowRadius = 4
+    sun.light?.shadowColor = UIColor(hex: 0x52616D, alpha: 0.43)
+    sun.light?.shadowRadius = 6
     sun.light?.shadowSampleCount = 8
     sun.light?.shadowMapSize = CGSize(width: 2048, height: 2048)
     sun.light?.orthographicScale = 150
-    sun.eulerAngles = SCNVector3(-0.95, -0.65, 0)
+    sun.eulerAngles = SCNVector3(-0.88, -0.9, 0)
     world.rootNode.addChildNode(sun)
     buildCampus()
     updateCamera(duration: 0)
@@ -119,21 +137,23 @@ final class FactorySceneView: SCNView, UIGestureRecognizerDelegate {
   }
   override func layoutSubviews() {
     super.layoutSubviews()
-    if bounds.width > 0, bounds.size != lastViewport {
+    if bounds.width > 0, bounds.size != lastViewport || visibleMapRect != lastVisibleRect {
+      let firstLayout = lastViewport == .zero
       lastViewport = bounds.size
-      mapCamera.viewport = bounds.size
+      lastVisibleRect = visibleMapRect
+      mapCamera.viewport = visibleMapRect.size
       if let activeZone { mapCamera.frame(activeZone) } else if !explored { mapCamera.overview() }
-      updateCamera(duration: 0)
+      updateCamera(duration: firstLayout ? 0 : 0.45)
     }
   }
   deinit { clock?.invalidate() }
-  private func material(_ color: UIColor, rough: CGFloat = 0.72, glow: Bool = false) -> SCNMaterial
+  private func material(_ color: UIColor, rough: CGFloat = 0.88, glow: Bool = false) -> SCNMaterial
   {
     let m = SCNMaterial()
     m.diffuse.contents = color
     m.lightingModel = .physicallyBased
     m.roughness.contents = rough
-    m.metalness.contents = 0.05
+    m.metalness.contents = 0.0
     if glow {
       m.emission.contents = color
       m.emission.intensity = 0.7
@@ -216,6 +236,8 @@ final class FactorySceneView: SCNView, UIGestureRecognizerDelegate {
       elements: [SCNGeometryElement(indices: indices, primitiveType: .triangles)])
     let m = material(UIColor(hex: 0xFAFAFC), rough: 0.22)
     m.isDoubleSided = true
+    m.clearCoat.contents = 0.65
+    m.clearCoatRoughness.contents = 0.16
     g.materials = [m]
     let n = SCNNode(geometry: g)
     n.position = SCNVector3(x, y, z)
@@ -227,12 +249,13 @@ final class FactorySceneView: SCNView, UIGestureRecognizerDelegate {
     let n = SCNNode()
     n.position = SCNVector3(x, 0.16, z)
     p.addChildNode(n)
-    cylinder(n, r: 0.14, h: 0.45, x: 0, y: 0.5, z: 0, color: UIColor(hex: 0x3F6AB6))
-    ball(n, r: 0.12, x: 0, y: 0.87, z: 0, color: UIColor(hex: 0xD7BAA0))
-    let left = box(n, 0.095, 0.35, 0.1, -0.075, 0.19, 0, UIColor(hex: 0x313B4F))
-    let right = box(n, 0.095, 0.35, 0.1, 0.075, 0.19, 0, UIColor(hex: 0x313B4F))
-    let armL = box(n, 0.09, 0.34, 0.09, -0.21, 0.49, 0, UIColor(hex: 0x3F6AB6))
-    let armR = box(n, 0.09, 0.34, 0.09, 0.21, 0.49, 0, UIColor(hex: 0x3F6AB6))
+    contactShadow(n, width: 0.9, depth: 0.8)
+    cylinder(n, r: 0.14, h: 0.45, x: 0, y: 0.5, z: 0, color: UIColor(hex: 0xA0A6AA))
+    ball(n, r: 0.12, x: 0, y: 0.87, z: 0, color: UIColor(hex: 0xD5D8D8))
+    let left = box(n, 0.095, 0.35, 0.1, -0.075, 0.19, 0, UIColor(hex: 0x727A7F))
+    let right = box(n, 0.095, 0.35, 0.1, 0.075, 0.19, 0, UIColor(hex: 0x727A7F))
+    let armL = box(n, 0.09, 0.34, 0.09, -0.21, 0.49, 0, UIColor(hex: 0xA0A6AA))
+    let armR = box(n, 0.09, 0.34, 0.09, 0.21, 0.49, 0, UIColor(hex: 0xA0A6AA))
     for (i, limb) in (walking ? [left, right, armR, armL] : [armL]).enumerated() {
       let a = SCNAction.rotateBy(x: i % 2 == 0 ? 0.42 : -0.42, y: 0, z: 0, duration: 0.42)
       limb.runAction(.repeatForever(.sequence([a, a.reversed()])), forKey: "motion")
@@ -248,10 +271,10 @@ final class FactorySceneView: SCNView, UIGestureRecognizerDelegate {
   }
   private func pallet(_ p: SCNNode, x: Float, z: Float, y: Float = 0, filled: Bool = true) {
     for i in 0..<4 {
-      box(p, 1.15, 0.07, 0.18, x, y + 0.12, z + Float(i) * 0.23 - 0.35, UIColor(hex: 0xB69C7E))
+      box(p, 1.15, 0.07, 0.18, x, y + 0.12, z + Float(i) * 0.23 - 0.35, UIColor(hex: 0xABA79D))
     }
     if filled {
-      box(p, 1.06, 0.73, 0.84, x, y + 0.52, z, UIColor(hex: 0xD8C6AE), r: 0.025)
+      box(p, 1.06, 0.73, 0.84, x, y + 0.52, z, UIColor(hex: 0xC8C4B9), r: 0.025)
       box(p, 0.035, 0.75, 0.86, x, y + 0.52, z, UIColor(hex: 0xF7ECDD), r: 0)
       box(p, 0.35, 0.23, 0.005, x - 0.24, y + 0.52, z + 0.424, UIColor.white, r: 0)
       for i in 0..<5 {
@@ -277,6 +300,17 @@ final class FactorySceneView: SCNView, UIGestureRecognizerDelegate {
     node.position = points[0]
     node.runAction(.repeatForever(.sequence(actions)), forKey: "travel")
   }
+  private static let plinthShadowTexture: UIImage = {
+    UIGraphicsImageRenderer(size: CGSize(width: 330, height: 252)).image { renderer in
+      let ctx = renderer.cgContext
+      ctx.setShadow(
+        offset: CGSize(width: 0, height: 5), blur: 18,
+        color: UIColor.black.withAlphaComponent(0.28).cgColor)
+      UIColor.black.withAlphaComponent(0.16).setFill()
+      UIBezierPath(roundedRect: CGRect(x: 19, y: 19, width: 292, height: 214), cornerRadius: 4)
+        .fill()
+    }
+  }()
   private static let contactTexture: UIImage = {
     UIGraphicsImageRenderer(size: CGSize(width: 64, height: 64)).image { renderer in
       let ctx = renderer.cgContext
@@ -306,9 +340,9 @@ final class FactorySceneView: SCNView, UIGestureRecognizerDelegate {
   private func vehicleTruck(moving: Bool = true) -> SCNNode {
     let n = SCNNode()
     contactShadow(n, width: 2.7, depth: 6.3)
-    let ink = UIColor(hex: 0x455779)
+    let ink = UIColor(hex: 0x4E565C)
     box(n, 1.45, 1.5, 3.6, 0, 1.05, -0.6, UIColor(hex: 0xFDFDFE), r: 0.09)
-    box(n, 1.42, 1.15, 1.15, 0, 0.91, 1.73, UIColor(hex: 0x7899D2), r: 0.16)
+    box(n, 1.42, 1.15, 1.15, 0, 0.91, 1.73, UIColor(hex: 0xD3D8DA), r: 0.16)
     box(n, 1.21, 0.5, 0.07, 0, 1.22, 2.31, UIColor(hex: 0x3C526B), r: 0.035)
     box(n, 1.55, 0.12, 0.17, 0, 0.38, 2.33, ink)
     for x: Float in [-0.53, 0.53] {
@@ -329,7 +363,7 @@ final class FactorySceneView: SCNView, UIGestureRecognizerDelegate {
     let logo = SCNPlane(width: 1.25, height: 0.51)
     let m = SCNMaterial()
     m.diffuse.contents = UIImage(named: "salini-logo.png")?.withTintColor(
-      UIColor(hex: 0x6581B0), renderingMode: .alwaysOriginal)
+      UIColor(hex: 0x45545D), renderingMode: .alwaysOriginal)
     m.isDoubleSided = true
     m.lightingModel = .constant
     logo.materials = [m]
@@ -343,7 +377,7 @@ final class FactorySceneView: SCNView, UIGestureRecognizerDelegate {
     let n = SCNNode()
     contactShadow(n, width: 1.7, depth: 3.3)
     let dark = UIColor(hex: 0x526079)
-    box(n, 0.92, 0.54, 1.32, 0, 0.54, 0, UIColor(hex: 0xD4B476), r: 0.12)
+    box(n, 0.92, 0.54, 1.32, 0, 0.54, 0, UIColor(hex: 0xAEB6B7), r: 0.12)
     for x: Float in [-0.43, 0.43] {
       box(n, 0.08, 1.25, 0.08, x, 1.08, -0.4, dark)
       box(n, 0.08, 1.7, 0.08, x, 1.0, 0.85, dark)
@@ -367,15 +401,27 @@ final class FactorySceneView: SCNView, UIGestureRecognizerDelegate {
         ])), forKey: "motion")
     return n
   }
-  private let chalk = UIColor(hex: 0xF3F3EE)
-  private let steel = UIColor(hex: 0x778C97)
-  private let accent = UIColor(hex: 0x597B87)
+  private let chalk = UIColor(hex: 0xF7F8F7)
+  private let steel = UIColor(hex: 0x7E898F)
+  private let accent = UIColor(hex: 0x647C87)
   private func buildCampus() {
     let root = world.rootNode
-    let ground = box(root, 440, 0.1, 440, 0, -1.2, 0, UIColor(hex: 0xEDF0F2), r: 0)
+    let ground = box(root, 440, 0.1, 440, 0, -2.7, 0, InsideStyle.canvas, r: 0)
     ground.geometry?.firstMaterial?.lightingModel = .constant
-    box(root, 146, 0.8, 108, 5, -0.7, 0, UIColor(hex: 0xD5DCDA), r: 1.8)
-    box(root, 143, 0.14, 105, 5, -0.24, 0, UIColor(hex: 0xCDD8D0), r: 1)
+    // The object has the weight and edge treatment of a physical architectural model.
+    let plinthShadow = SCNPlane(width: 165, height: 126)
+    let shadowMaterial = SCNMaterial()
+    shadowMaterial.lightingModel = .constant
+    shadowMaterial.diffuse.contents = Self.plinthShadowTexture
+    shadowMaterial.writesToDepthBuffer = false
+    plinthShadow.materials = [shadowMaterial]
+    let shadow = SCNNode(geometry: plinthShadow)
+    shadow.position = SCNVector3(5, -2.6, 0)
+    shadow.eulerAngles.x = -.pi / 2
+    shadow.castsShadow = false
+    root.addChildNode(shadow)
+    box(root, 146, 2.0, 108, 5, -1.2, 0, UIColor(hex: 0xC5CBCE), r: 0.35)
+    box(root, 143, 0.14, 105, 5, -0.24, 0, UIColor(hex: 0xDADDDC), r: 1)
     // A ring road and real circulation gaps keep the buildings from reading as tiles.
     road(x: 5, z: -45, w: 136, d: 6)
     road(x: 5, z: 47, w: 136, d: 7)
@@ -398,20 +444,18 @@ final class FactorySceneView: SCNView, UIGestureRecognizerDelegate {
       buildBuilding(zone, node: n)
       populate(zone, node: n)
       addProcessDetail(zone, node: n)
-      let tag = UIButton(type: .system)
-      var c = UIButton.Configuration.glass()
-      c.title = zone.shortTitle
-      c.baseForegroundColor = Palette.ink
-      c.cornerStyle = .capsule
-      c.contentInsets = NSDirectionalEdgeInsets(top: 9, leading: 12, bottom: 9, trailing: 12)
-      c.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer {
-        var a = $0
-        a.font = .systemFont(ofSize: 11, weight: .semibold)
-        return a
+      var originals: [(SCNMaterial, UIColor)] = []
+      n.enumerateChildNodes { child, _ in
+        if let m = child.geometry?.firstMaterial, let color = m.diffuse.contents as? UIColor {
+          originals.append((m, color))
+        }
       }
-      tag.configuration = c
+      buildingMaterials[zone] = originals
+      let tag = CampusAnnotation("\(zone.code)  \(zone.shortTitle)") { [weak self] in
+        self?.onSelect?(zone)
+      }
       tag.accessibilityIdentifier = "map.zone.\(zone.rawValue)"
-      tag.addAction(UIAction { [weak self] _ in self?.onSelect?(zone) }, for: .touchUpInside)
+      tag.accessibilityLabel = zone.title
       addSubview(tag)
       tags[zone] = tag
     }
@@ -458,13 +502,26 @@ final class FactorySceneView: SCNView, UIGestureRecognizerDelegate {
   }
   private func road(x: Float, z: Float, w: CGFloat, d: CGFloat) {
     box(world.rootNode, w + 0.8, 0.12, d + 0.8, x, -0.08, z, chalk, r: 0.15)
-    box(world.rootNode, w, 0.05, d, x, 0, z, UIColor(hex: 0xB7C2C9), r: 0.1)
+    box(world.rootNode, w, 0.05, d, x, 0, z, UIColor(hex: 0xADB5BA), r: 0.1)
   }
   private func tree(_ p: SCNNode, x: Float, z: Float) {
-    cylinder(p, r: 0.15, h: 2.3, x: x, y: 1.05, z: z, color: UIColor(hex: 0xA69E8F))
-    let crown = ball(p, r: 1.2, x: x, y: 3.1, z: z, color: UIColor(hex: 0x98ADA1))
-    crown.scale.y = 1.5
-    ball(p, r: 0.8, x: x + 0.5, y: 3.9, z: z, color: UIColor(hex: 0xACC0AE))
+    let seed = abs(Int(x * 13 + z * 7))
+    let size = Float(0.84 + Double(seed % 5) * 0.08)
+    let n = SCNNode()
+    n.position = SCNVector3(x, 0, z)
+    n.scale = SCNVector3(size, size, size)
+    p.addChildNode(n)
+    contactShadow(n, width: 4.2, depth: 3.8)
+    cylinder(n, r: 0.11, h: 2.1, x: 0, y: 1.05, z: 0, color: UIColor(hex: 0xA4ABA6))
+    for (i, offset) in [
+      SCNVector3(0, 2.7, 0), SCNVector3(-0.6, 3.15, 0.25), SCNVector3(0.6, 3.4, -0.1),
+      SCNVector3(0.1, 4, 0.2),
+    ].enumerated() {
+      let crown = ball(
+        n, r: i == 0 ? 1.1 : 0.85, x: offset.x, y: offset.y, z: offset.z,
+        color: UIColor(hex: i % 2 == 0 ? 0xA7B6AD : 0xBECBC2))
+      crown.scale = SCNVector3(1, 0.95, 0.9)
+    }
   }
   private func car(_ p: SCNNode, x: Float, z: Float) {
     box(p, 2, 0.75, 4.1, x, 0.6, z, UIColor(hex: 0xE5E8E5), r: 0.4)
@@ -484,7 +541,7 @@ final class FactorySceneView: SCNView, UIGestureRecognizerDelegate {
     let z = Float(d / 2)
     let h = zone.buildingHeight
     box(n, w + 1.2, 0.24, d + 1.2, 0, 0.12, 0, chalk, r: 0.2)
-    box(n, w, 0.08, d, 0, 0.28, 0, UIColor(hex: 0xDEE4E3), r: 0)
+    box(n, w, 0.08, d, 0, 0.28, 0, UIColor(hex: 0xDDDFDF), r: 0)
     let tint = box(n, w - 0.4, 0.025, d - 0.4, 0, 0.335, 0, UIColor(hex: 0x799BA8), r: 0)
     tint.opacity = 0
     loadFloors[zone] = tint
@@ -499,7 +556,9 @@ final class FactorySceneView: SCNView, UIGestureRecognizerDelegate {
     guard h > 0 else { return }
     // Back and west walls stay as an architectural section when the roof opens.
     box(n, w, CGFloat(h), 0.3, 0, h / 2 + 0.3, -z, chalk, r: 0)
-    box(n, 0.3, CGFloat(h), d, -x, h / 2 + 0.3, 0, UIColor(hex: 0xD6DFDF), r: 0)
+    box(n, 0.3, CGFloat(h), d, -x, h / 2 + 0.3, 0, UIColor(hex: 0xEFF1F1), r: 0)
+    box(n, w, 0.1, 0.32, 0, h + 0.32, -z, UIColor(hex: 0x69747C), r: 0)
+    box(n, 0.32, 0.1, d, -x, h + 0.32, 0, UIColor(hex: 0x69747C), r: 0)
     for columnX in stride(from: -x + 1, through: x - 0.5, by: 5) {
       box(n, 0.22, CGFloat(h), 0.4, columnX, h / 2, -z + 0.3, steel, r: 0)
       box(n, 4.2, 1.25, 0.08, columnX + 2.1, h - 1.1, -z + 0.2, UIColor(hex: 0xA7BDC3), r: 0)
@@ -511,11 +570,15 @@ final class FactorySceneView: SCNView, UIGestureRecognizerDelegate {
     box(roof, w + 0.6, 0.35, d * 0.64, 0, h + 0.4, -Float(d * 0.18), chalk, r: 0.08)
     for rib in stride(from: -x, through: x, by: 1.5) {
       box(
-        roof, 0.055, 0.045, d * 0.64, rib, h + 0.6, -Float(d * 0.18), UIColor(hex: 0xBFCBCF), r: 0)
+        roof, 0.038, 0.006, d * 0.64, rib, h + 0.579, -Float(d * 0.18), UIColor(hex: 0xEEF0F0), r: 0
+      )
     }
     for skylightX in stride(from: -x + 4, through: x - 3, by: 7) {
       box(
-        roof, 2.2, 0.22, d * 0.3, skylightX, h + 0.65, -Float(d * 0.16), UIColor(hex: 0x9FB5BE),
+        roof, 2.42, 0.13, d * 0.3 + 0.22, skylightX, h + 0.59, -Float(d * 0.16),
+        UIColor(hex: 0xABB5BA), r: 0.05)
+      box(
+        roof, 2.2, 0.22, d * 0.3, skylightX, h + 0.65, -Float(d * 0.16), UIColor(hex: 0xEAEEEE),
         r: 0.08)
     }
     box(n, w + 0.5, 0.5, 0.4, 0, h + 0.1, z, chalk, r: 0)
@@ -570,7 +633,11 @@ final class FactorySceneView: SCNView, UIGestureRecognizerDelegate {
     person(holder, x: 0, z: 0, walking: walking)
   }
   private func bench(_ p: SCNNode, x: Float, z: Float, kind: Int) {
-    box(p, 4.2, 0.18, 2.7, x, 1.3, z, UIColor(hex: 0xADBCC1))
+    let shadow = SCNNode()
+    shadow.position = SCNVector3(x, 0.35, z)
+    p.addChildNode(shadow)
+    contactShadow(shadow, width: 5.2, depth: 3.5)
+    box(p, 4.2, 0.18, 2.7, x, 1.3, z, UIColor(hex: 0x9BA6AA))
     for dx: Float in [-1.8, 1.8] { box(p, 0.2, 1.0, 2.3, x + dx, 0.75, z, steel) }
     product(p, kind: kind, x: x, y: 1.43, z: z)
   }
@@ -592,7 +659,7 @@ final class FactorySceneView: SCNView, UIGestureRecognizerDelegate {
       box(p, 2.5, 0.035, 1.75, x, y + 0.145, z, UIColor(hex: 0xE0E7E7), r: 0.07)
       cylinder(p, r: 0.09, h: 0.025, x: x + 1, y: y + 0.18, z: z + 0.65, color: steel)
     case 3:
-      box(p, 2.8, 1.15, 1.3, x, y + 0.6, z, UIColor(hex: 0xAD9D88), r: 0.06)
+      box(p, 2.8, 1.15, 1.3, x, y + 0.6, z, UIColor(hex: 0xA7A69F), r: 0.06)
       box(p, 2.9, 0.13, 1.45, x, y + 1.25, z, chalk)
       for dx: Float in [-0.7, 0.7] { box(p, 1.28, 0.035, 0.03, x + dx, y + 0.8, z + 0.665, steel) }
       let bowl = SCNNode()
@@ -617,7 +684,7 @@ final class FactorySceneView: SCNView, UIGestureRecognizerDelegate {
         }
       }
       worker(n, x: 2, z: 5, walking: true)
-      box(n, 4.4, 1.3, 1.4, -5, 0.9, 8, UIColor(hex: 0xAE9F89))
+      box(n, 4.4, 1.3, 1.4, -5, 0.9, 8, UIColor(hex: 0xA7AAA7))
     case .materials:
       for x: Float in [-6, 0, 6] {
         cylinder(n, r: 1.8, h: 4.5, x: x, y: 2.5, z: -5, color: UIColor(hex: 0xC0CBCB))
@@ -648,7 +715,7 @@ final class FactorySceneView: SCNView, UIGestureRecognizerDelegate {
         forKey: "motion")
       if zone == .finishing {
         for x: Float in [-7, 0, 7] {
-          box(n, 3.8, 2.6, 0.2, x, 2.2, -11, UIColor(hex: 0xB4C5CE))
+          box(n, 3.8, 2.6, 0.2, x, 2.2, -11, UIColor(hex: 0xC9CFD0))
           cylinder(n, r: 0.3, h: 3, x: x, y: 4.5, z: -11, color: steel)
         }
       }
@@ -830,21 +897,9 @@ final class FactorySceneView: SCNView, UIGestureRecognizerDelegate {
     }
   }
   private func stationMarker(_ zone: FactoryZone, _ code: String, _ position: SCNVector3) {
-    let button = UIButton(type: .system)
-    var c = UIButton.Configuration.glass()
-    c.title = code
-    c.baseForegroundColor = InsideStyle.blue
-    c.cornerStyle = .capsule
-    c.contentInsets = NSDirectionalEdgeInsets(top: 13, leading: 12, bottom: 13, trailing: 12)
-    c.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer {
-      var a = $0
-      a.font = .monospacedSystemFont(ofSize: 10, weight: .semibold)
-      return a
-    }
-    button.configuration = c
+    let button = CampusAnnotation(code) { [weak self] in self?.onStationSelect?(zone, code) }
+    button.color = InsideStyle.blue
     button.accessibilityLabel = "Пост \(code), \(zone.title)"
-    button.addAction(
-      UIAction { [weak self] _ in self?.onStationSelect?(zone, code) }, for: .touchUpInside)
     addSubview(button)
     stationTags.append((zone, code, position, button))
   }
@@ -878,27 +933,10 @@ final class FactorySceneView: SCNView, UIGestureRecognizerDelegate {
       world.rootNode.addChildNode(marker)
       orderMarkers[order] = marker
       marker.opacity = 0
-      let tag = UIButton(type: .system)
-      var c = UIButton.Configuration.glass()
-      c.title = order.product
-      c.subtitle = order.rawValue
-      c.cornerStyle = .capsule
-      c.baseForegroundColor = Palette.ink
-      c.contentInsets = NSDirectionalEdgeInsets(top: 9, leading: 13, bottom: 9, trailing: 13)
-      c.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer {
-        var a = $0
-        a.font = .systemFont(ofSize: 11, weight: .semibold)
-        return a
+      let tag = CampusAnnotation("\(order.product) · \(order.rawValue)") { [weak self] in
+        self?.onOrderSelect?(order)
       }
-      c.subtitleTextAttributesTransformer = UIConfigurationTextAttributesTransformer {
-        var a = $0
-        a.font = .monospacedSystemFont(ofSize: 8, weight: .medium)
-        a.foregroundColor = Palette.muted
-        return a
-      }
-      tag.configuration = c
       tag.accessibilityLabel = "Заказ \(order.rawValue), \(order.product)"
-      tag.addAction(UIAction { [weak self] _ in self?.onOrderSelect?(order) }, for: .touchUpInside)
       tag.isHidden = true
       addSubview(tag)
       orderTags[order] = tag
@@ -913,11 +951,13 @@ final class FactorySceneView: SCNView, UIGestureRecognizerDelegate {
     SCNTransaction.animationDuration = UIAccessibility.isReduceMotionEnabled ? 0 : 0.5
     for zone in FactoryZone.allCases {
       let load = simulation.load(zone)
-      loadFloors[zone]?.opacity = lens == .load ? 0.5 : 0
+      loadFloors[zone]?.opacity = lens == .load ? 0.12 : 0
       loadFloors[zone]?.geometry?.firstMaterial?.diffuse.contents = InsideStyle.loadColor(load)
-      tags[zone]?.configuration?.title =
-        lens == .load ? "\(zone.shortTitle) · \(load)%" : zone.shortTitle
-      tags[zone]?.configuration?.baseForegroundColor =
+      tags[zone]?.text =
+        lens == .load ? "\(zone.shortTitle)  \(load)%" : "\(zone.code)  \(zone.shortTitle)"
+      tags[zone]?.emphasized = activeZone == zone
+      tags[zone]?.accessibilityValue = lens == .load ? "Загрузка \(load) процентов" : nil
+      tags[zone]?.color =
         lens == .load ? InsideStyle.loadColor(load) : Palette.ink
     }
     for order in InsideOrderID.allCases {
@@ -931,7 +971,7 @@ final class FactorySceneView: SCNView, UIGestureRecognizerDelegate {
       if order == .marea && zone == .dispatch { p.z += 4 }
       orderMarkers[order]?.position = p
       orderMarkers[order]?.opacity = tracked == order || lens == .orders ? 1 : 0
-      orderTags[order]?.configuration?.baseForegroundColor =
+      orderTags[order]?.color =
         simulation.needsAttention(order) ? InsideStyle.amber : InsideStyle.blue
     }
     reserveCover?.opacity = simulation.reserve == .available ? 1 : 0
@@ -997,10 +1037,11 @@ final class FactorySceneView: SCNView, UIGestureRecognizerDelegate {
     for zone in priority {
       guard let b = tags[zone] else { continue }
       var p = zone.position
-      p.y = zone.buildingHeight + 3
+      p.y = zone.buildingHeight + 2
+      if zone == .dispatch { p.z += 7 }
       let point = projectPoint(p)
       b.sizeToFit()
-      b.center = CGPoint(x: CGFloat(point.x), y: CGFloat(point.y))
+      b.center = CGPoint(x: CGFloat(point.x), y: CGFloat(point.y) - 22)
       let frame = b.frame.insetBy(dx: -5, dy: -5)
       let major: Set<FactoryZone> =
         lens == .load
@@ -1011,6 +1052,7 @@ final class FactorySceneView: SCNView, UIGestureRecognizerDelegate {
         || (!overview && activeZone != nil && zone != activeZone) || point.z < 0 || point.z > 1
         || !bounds.insetBy(dx: 9, dy: 24).contains(frame)
         || occupied.contains(where: { $0.intersects(frame) })
+        || excludedAnnotationRects.contains(where: { $0.intersects(frame) })
       if !b.isHidden { occupied.append(frame) }
     }
     for order in InsideOrderID.allCases {
@@ -1038,6 +1080,7 @@ final class FactorySceneView: SCNView, UIGestureRecognizerDelegate {
         !visible || departedAndGone || !labelsVisible
         || !bounds.insetBy(dx: 10, dy: 50).contains(frame)
         || occupied.contains(where: { $0.intersects(frame) })
+        || excludedAnnotationRects.contains(where: { $0.intersects(frame) })
       if !tag.isHidden { occupied.append(frame) }
     }
     for (zone, _, local, tag) in stationTags {
@@ -1047,24 +1090,33 @@ final class FactorySceneView: SCNView, UIGestureRecognizerDelegate {
       p.y = local.y
       let point = projectPoint(p)
       tag.sizeToFit()
-      tag.center = CGPoint(x: CGFloat(point.x), y: CGFloat(point.y))
+      tag.center = CGPoint(x: CGFloat(point.x), y: CGFloat(point.y) - 22)
       let frame = tag.frame.insetBy(dx: -3, dy: -3)
       tag.isHidden =
         activeZone != zone || !labelsVisible || lens == .orders || trackedOrder != nil
         || mapCamera.scale > 65 || !bounds.insetBy(dx: 12, dy: 45).contains(frame)
         || occupied.contains(where: { $0.intersects(frame) })
+        || excludedAnnotationRects.contains(where: { $0.intersects(frame) })
       if !tag.isHidden { occupied.append(frame) }
     }
   }
   private func updateCamera(duration: Double) {
-    let focus = mapCamera.focus
+    let logical = mapCamera.focus
+    let shift = framingShift
+    let focus = SCNVector3(logical.x + shift.x, logical.y, logical.z + shift.z)
     let offset = CampusCamera.offset
+    let animated = duration > 0 && !UIAccessibility.isReduceMotionEnabled
+    if !animated {
+      cameraNode.removeAllAnimations()
+      cameraNode.camera?.removeAllAnimations()
+    }
     SCNTransaction.begin()
-    SCNTransaction.animationDuration = UIAccessibility.isReduceMotionEnabled ? 0 : duration
+    SCNTransaction.disableActions = !animated
+    SCNTransaction.animationDuration = animated ? duration : 0
     SCNTransaction.animationTimingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
     cameraNode.position = SCNVector3(focus.x + offset.x, focus.y + offset.y, focus.z + offset.z)
     cameraNode.look(at: focus)
-    cameraNode.camera?.orthographicScale = mapCamera.scale
+    cameraNode.camera?.orthographicScale = mapCamera.scale * framingScale
     SCNTransaction.commit()
     onViewport?(mapCamera)
   }
@@ -1103,6 +1155,21 @@ final class FactorySceneView: SCNView, UIGestureRecognizerDelegate {
   private func updateRoofs() {
     SCNTransaction.begin()
     SCNTransaction.animationDuration = UIAccessibility.isReduceMotionEnabled ? 0 : 0.8
+    for (zone, pairs) in buildingMaterials {
+      let fade: CGFloat = activeZone != nil && zone != activeZone ? 0.5 : 0
+      for (material, original) in pairs {
+        var r: CGFloat = 0
+        var g: CGFloat = 0
+        var b: CGFloat = 0
+        var a: CGFloat = 0
+        original.getRed(&r, green: &g, blue: &b, alpha: &a)
+        material.diffuse.contents = UIColor(
+          red: r + (0.94 - r) * fade, green: g + (0.945 - g) * fade, blue: b + (0.95 - b) * fade,
+          alpha: a)
+        material.emission.contents = fade > 0 ? InsideStyle.canvas : UIColor.black
+        material.emission.intensity = fade * 0.22
+      }
+    }
     for (zone, roof) in roofs {
       let visible = roofVisible && zone != activeZone
       roof.opacity = visible ? 1 : 0
@@ -1190,9 +1257,13 @@ final class FactorySceneView: SCNView, UIGestureRecognizerDelegate {
     if g.state == .began {
       // Adopt the presentation camera so a touch can interrupt a flight without jumping.
       let presented = cameraNode.presentation.position
+      mapCamera.scale =
+        (cameraNode.presentation.camera?.orthographicScale ?? (mapCamera.scale * framingScale))
+        / framingScale
+      let shift = framingShift
       mapCamera.focus = SCNVector3(
-        presented.x - CampusCamera.offset.x, 0, presented.z - CampusCamera.offset.z)
-      mapCamera.scale = cameraNode.presentation.camera?.orthographicScale ?? mapCamera.scale
+        presented.x - CampusCamera.offset.x - shift.x, 0,
+        presented.z - CampusCamera.offset.z - shift.z)
       cameraNode.removeAllAnimations()
       followingShipment = false
       panOrigin = mapCamera.focus

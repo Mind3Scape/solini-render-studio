@@ -7,12 +7,15 @@ final class OwnerController: UIViewController {
   private let minimap = CampusOverview()
   private let dock = GlassView()
   private let dockContent = UIStackView()
-  private let zoneRail = UIStackView()
-  private let zoneScroll = UIScrollView()
-  private let lensControl = UISegmentedControl(items: CampusLens.allCases.map(\.title))
-  private let contextLabel = label("12 000+ м² производства¹", 11, .medium, Palette.muted)
+  private let header = GlassView()
+  private let mapTools = GlassView()
+  private let metrics = UIStackView()
+  private let outputNumber = label("42", 31, .light, InsideStyle.ink)
+  private let attentionNumber = label("2", 31, .light, InsideStyle.amber)
+  private let contextLabel = label("ТЕРРИТОРИЯ · 9 УЧАСТКОВ", 10, .medium, InsideStyle.muted)
   private let live = label("ДЕМО · 00:00", 10, .semibold, InsideStyle.blue)
-  private let eventText = label("Два решения изменят ход этой смены", 10, .medium, Palette.muted)
+  private let eventText = label(
+    "Два решения изменят ход этой смены", 10, .medium, InsideStyle.muted)
   private var selected: FactoryZone?
   private var trackedOrder: InsideOrderID?
   private var lens: CampusLens = .campus
@@ -21,15 +24,13 @@ final class OwnerController: UIViewController {
   private var observers: [NSObjectProtocol] = []
   private var speed = 1
   private var compactMap = false
-  private var collapseButton: UIButton!
   private var lastRevision = -1
   private var pauseButton: UIButton!
   private var speedButton: UIButton!
-  private var zoneButtons: [UIButton] = []
   private var dockProgress: UIProgressView?
   override func viewDidLoad() {
     super.viewDidLoad()
-    view.backgroundColor = UIColor(hex: 0xEDF0F2)
+    view.backgroundColor = InsideStyle.canvas
     factory.translatesAutoresizingMaskIntoConstraints = false
     view.addSubview(factory)
     makeHeader()
@@ -37,24 +38,9 @@ final class OwnerController: UIViewController {
     NSLayoutConstraint.activate([
       factory.leadingAnchor.constraint(equalTo: view.leadingAnchor),
       factory.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-      factory.topAnchor.constraint(equalTo: lensControl.bottomAnchor, constant: 28),
-      factory.bottomAnchor.constraint(equalTo: zoneScroll.topAnchor, constant: -5),
+      factory.topAnchor.constraint(equalTo: view.topAnchor),
+      factory.bottomAnchor.constraint(equalTo: view.bottomAnchor),
     ])
-    let topFade = GradientView(colors: [UIColor(hex: 0xEDF0F2), UIColor(hex: 0xEDF0F2, alpha: 0)])
-    let bottomFade = GradientView(colors: [
-      UIColor(hex: 0xEDF0F2, alpha: 0), UIColor(hex: 0xEDF0F2),
-    ])
-    for fade in [topFade, bottomFade] {
-      fade.translatesAutoresizingMaskIntoConstraints = false
-      view.addSubview(fade)
-      NSLayoutConstraint.activate([
-        fade.leadingAnchor.constraint(equalTo: factory.leadingAnchor),
-        fade.trailingAnchor.constraint(equalTo: factory.trailingAnchor),
-        fade.heightAnchor.constraint(equalToConstant: 40),
-      ])
-    }
-    topFade.topAnchor.constraint(equalTo: factory.topAnchor).isActive = true
-    bottomFade.bottomAnchor.constraint(equalTo: factory.bottomAnchor).isActive = true
     makeMapControls()
     factory.onSelect = { [weak self] zone in self?.select(zone) }
     factory.onOrderSelect = { [weak self] order in self?.track(order) }
@@ -78,6 +64,18 @@ final class OwnerController: UIViewController {
         self.startClock()
       })
     refresh()
+  }
+  override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+    let top = metrics.isHidden ? header.frame.maxY + 28 : contextLabel.frame.maxY + 18
+    let bottom = view.bounds.height - mapTools.frame.minY + 8
+    factory.mapContentInsets = UIEdgeInsets(top: top, left: 0, bottom: bottom, right: 0)
+    let overlayViews: [UIView] =
+      metrics.isHidden
+      ? [header, minimap, mapTools, dock] : [header, metrics, contextLabel, mapTools, dock]
+    factory.excludedAnnotationRects = overlayViews.filter { !$0.isHidden }.map {
+      $0.convert($0.bounds, to: factory).insetBy(dx: -8, dy: -8)
+    }
   }
   deinit {
     timer?.invalidate()
@@ -118,48 +116,76 @@ final class OwnerController: UIViewController {
   }
   private func iconButton(_ icon: String, _ name: String, action: @escaping () -> Void) -> UIButton
   {
-    let b = ActionButton("", icon: icon, action: action)
+    let b = insideAction("", icon: icon, action: action)
     b.accessibilityLabel = name
     b.widthAnchor.constraint(equalToConstant: 44).isActive = true
     b.height(44)
     b.configuration?.contentInsets = NSDirectionalEdgeInsets(
-      top: 11, leading: 11, bottom: 11, trailing: 11)
+      top: 10, leading: 10, bottom: 10, trailing: 10)
+    b.configuration?.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(
+      pointSize: 17, weight: .regular)
     return b
   }
   private func compact(
-    _ title: String, _ icon: String, prominent: Bool = false, action: @escaping () -> Void
+    _ title: String, _ icon: String, prominent: Bool = false,
+    action: @escaping () -> Void
   ) -> UIButton {
-    let b = ActionButton(title, icon: icon, prominent: prominent, action: action)
-    b.configuration?.contentInsets = NSDirectionalEdgeInsets(
-      top: 14, leading: 15, bottom: 14, trailing: 15)
-    b.configuration?.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer {
-      var a = $0
-      a.font = .systemFont(ofSize: 13, weight: .semibold)
-      return a
-    }
-    return b
+    insideAction(title, icon: icon, prominent: prominent, action: action)
+  }
+  private func layersMenu() -> UIMenu {
+    UIMenu(
+      title: "Слой карты",
+      children: CampusLens.allCases.map { layer in
+        UIAction(title: layer.title) { [weak self] _ in
+          guard let self else { return }
+          self.lens = layer
+          self.factory.apply(self.simulation, lens: layer, tracked: self.trackedOrder)
+          self.renderDock(animated: true)
+        }
+      })
   }
   private func makeHeader() {
     let back = iconButton("chevron.left", "Закрыть Salini Inside") { [weak self] in
       self?.navigationController?.popViewController(animated: true)
     }
-    let title = stack(
-      [
-        label("Salini Inside", 21, .semibold),
-        label("Взгляд на всю компанию", 11, .regular, Palette.muted),
-      ], spacing: 3)
+    live.font = .monospacedDigitSystemFont(ofSize: 10, weight: .medium)
+    live.textColor = InsideStyle.muted
+    let title = stack([label("Salini Inside", 17, .semibold, InsideStyle.ink), live], spacing: 3)
+    pauseButton = iconButton("pause", "Приостановить демо") { [weak self] in
+      guard let self else { return }
+      self.simulation.paused.toggle()
+      self.factory.setPaused(self.simulation.paused)
+      self.pauseButton.configuration?.image = UIImage(
+        systemName: self.simulation.paused ? "play" : "pause")
+      self.pauseButton.accessibilityLabel =
+        self.simulation.paused ? "Продолжить демо" : "Приостановить демо"
+    }
+    speedButton = compact("×150", "") { [weak self] in
+      guard let self else { return }
+      self.speed = self.speed == 1 ? 3 : 1
+      self.speedButton.configuration?.title = "×\(self.speed * 150)"
+      self.speedButton.accessibilityLabel = "Время сценария ускорено в \(self.speed * 150) раз"
+      self.factory.simulationSpeed = CGFloat(self.speed)
+    }
+    speedButton.configuration?.contentInsets = NSDirectionalEdgeInsets(
+      top: 10, leading: 0, bottom: 10, trailing: 0)
+    speedButton.configuration?.titleTextAttributesTransformer =
+      UIConfigurationTextAttributesTransformer {
+        var a = $0
+        a.font = .monospacedDigitSystemFont(ofSize: 11, weight: .medium)
+        return a
+      }
+    speedButton.widthAnchor.constraint(equalToConstant: 43).isActive = true
+    speedButton.height(44)
     let more = iconButton("ellipsis", "Инструменты карты") {}
     more.showsMenuAsPrimaryAction = true
     more.menu = UIMenu(children: [
+      layersMenu(),
       UIMenu(
-        title: "Слой карты",
-        children: CampusLens.allCases.map { layer in
-          UIAction(title: layer.title) { [weak self] _ in
-            guard let self else { return }
-            self.lensControl.selectedSegmentIndex = layer.rawValue
-            self.lens = layer
-            self.factory.apply(self.simulation, lens: layer, tracked: self.trackedOrder)
-            self.renderDock(animated: true)
+        title: "Перейти к участку",
+        children: FactoryZone.allCases.map { zone in
+          UIAction(title: "\(zone.code) · \(zone.title)", image: UIImage(systemName: zone.icon)) {
+            [weak self] _ in self?.select(zone)
           }
         }),
       UIAction(title: "Открыть / закрыть крыши", image: UIImage(systemName: "square.3.layers.3d")) {
@@ -182,38 +208,43 @@ final class OwnerController: UIViewController {
         [weak self] _ in self?.sheet(AboutController())
       },
     ])
-    let heading = stack([back, title, UIView(), more], axis: .horizontal, spacing: 12)
+    let heading = stack(
+      [back, title, UIView(), pauseButton, speedButton, more], axis: .horizontal, spacing: 0)
     heading.alignment = .center
-    heading.translatesAutoresizingMaskIntoConstraints = false
-    view.addSubview(heading)
-    lensControl.selectedSegmentIndex = 0
-    lensControl.translatesAutoresizingMaskIntoConstraints = false
-    lensControl.selectedSegmentTintColor = UIColor.white.withAlphaComponent(0.95)
-    lensControl.setTitleTextAttributes(
-      [.font: UIFont.systemFont(ofSize: 12, weight: .semibold)], for: .normal)
-    lensControl.addAction(
-      UIAction { [weak self] _ in
-        guard let self else { return }
-        self.lens = CampusLens(rawValue: self.lensControl.selectedSegmentIndex) ?? .campus
-        self.factory.apply(self.simulation, lens: self.lens, tracked: self.trackedOrder)
-        self.renderDock(animated: true)
-        UISelectionFeedbackGenerator().selectionChanged()
-      }, for: .valueChanged)
-    view.addSubview(lensControl)
-    let status = stack([live, UIView(), contextLabel], axis: .horizontal)
-    status.translatesAutoresizingMaskIntoConstraints = false
-    view.addSubview(status)
+    header.translatesAutoresizingMaskIntoConstraints = false
+    view.addSubview(header)
+    header.contentView.pin(heading, inset: 4)
+    metrics.isUserInteractionEnabled = false
+    metrics.axis = .horizontal
+    metrics.distribution = .fillEqually
+    metrics.spacing = 20
+    let area = label("12 000+", 28, .light, InsideStyle.ink)
+    for number in [area, outputNumber, attentionNumber] {
+      number.font = .monospacedDigitSystemFont(ofSize: 28, weight: .light)
+      number.adjustsFontSizeToFitWidth = true
+      number.minimumScaleFactor = 0.65
+      number.numberOfLines = 1
+    }
+    for (number, caption) in [
+      (area, "м² производства¹"), (outputNumber, "принято ОТК / 68"),
+      (attentionNumber, "ждут решения"),
+    ] {
+      metrics.addArrangedSubview(
+        stack([number, label(caption, 10, .regular, InsideStyle.muted)], spacing: 5))
+    }
+    metrics.translatesAutoresizingMaskIntoConstraints = false
+    view.addSubview(metrics)
+    contextLabel.translatesAutoresizingMaskIntoConstraints = false
+    view.addSubview(contextLabel)
     NSLayoutConstraint.activate([
-      heading.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 5),
-      heading.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 18),
-      heading.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -18),
-      lensControl.topAnchor.constraint(equalTo: heading.bottomAnchor, constant: 19),
-      lensControl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 22),
-      lensControl.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -22),
-      lensControl.heightAnchor.constraint(equalToConstant: 36),
-      status.topAnchor.constraint(equalTo: lensControl.bottomAnchor, constant: 13),
-      status.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 26),
-      status.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -26),
+      header.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 4),
+      header.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+      header.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+      metrics.topAnchor.constraint(equalTo: header.bottomAnchor, constant: 24),
+      metrics.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 28),
+      metrics.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -28),
+      contextLabel.topAnchor.constraint(equalTo: header.bottomAnchor, constant: 103),
+      contextLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 28),
     ])
   }
   private func makeMapControls() {
@@ -224,91 +255,53 @@ final class OwnerController: UIViewController {
     let farther = iconButton("minus", "Отдалить карту") { [weak self] in
       self?.factory.stepZoom(false)
     }
-    let zoom = stack([closer, farther], spacing: 8)
-    zoom.translatesAutoresizingMaskIntoConstraints = false
-    view.addSubview(zoom)
-    reset.translatesAutoresizingMaskIntoConstraints = false
-    view.addSubview(reset)
-    pauseButton = iconButton("pause", "Приостановить демо") { [weak self] in
-      guard let self else { return }
-      self.simulation.paused.toggle()
-      self.factory.setPaused(self.simulation.paused)
-      self.pauseButton.configuration?.image = UIImage(
-        systemName: self.simulation.paused ? "play" : "pause")
-      self.pauseButton.accessibilityLabel =
-        self.simulation.paused ? "Продолжить демо" : "Приостановить демо"
-    }
-    speedButton = compact("×150", "") { [weak self] in
-      guard let self else { return }
-      self.speed = self.speed == 1 ? 3 : 1
-      self.speedButton.configuration?.title = "×\(self.speed * 150)"
-      self.speedButton.accessibilityLabel = "Время сценария ускорено в \(self.speed * 150) раз"
-      self.factory.simulationSpeed = CGFloat(self.speed)
-    }
-    speedButton.configuration?.image = nil
-    speedButton.height(44)
-    let playback = stack([pauseButton, speedButton], axis: .horizontal, spacing: 8)
-    playback.translatesAutoresizingMaskIntoConstraints = false
-    view.addSubview(playback)
+    let layers = iconButton("square.3.layers.3d", "Слой карты") {}
+    layers.showsMenuAsPrimaryAction = true
+    layers.menu = UIMenu(
+      children: CampusLens.allCases.map { layer in
+        UIAction(title: layer.title) { [weak self] _ in
+          guard let self else { return }
+          self.lens = layer
+          self.factory.apply(self.simulation, lens: layer, tracked: self.trackedOrder)
+          self.renderDock(animated: true)
+        }
+      })
+    let tools = mapTools
+    tools.rounded(22)
+    let sections = iconButton("building.2", "Все участки") {}
+    sections.showsMenuAsPrimaryAction = true
+    sections.menu = UIMenu(
+      children: FactoryZone.allCases.map { zone in
+        UIAction(title: "\(zone.code) · \(zone.title)") { [weak self] _ in self?.select(zone) }
+      })
+    let buttons = stack([farther, closer, reset, layers, sections], axis: .horizontal, spacing: 0)
+    tools.contentView.pin(buttons, inset: 0)
+    tools.translatesAutoresizingMaskIntoConstraints = false
+    view.addSubview(tools)
     minimap.translatesAutoresizingMaskIntoConstraints = false
     view.addSubview(minimap)
     NSLayoutConstraint.activate([
-      zoom.topAnchor.constraint(equalTo: factory.topAnchor, constant: 24),
-      zoom.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -18),
-      reset.bottomAnchor.constraint(equalTo: factory.bottomAnchor, constant: -13),
-      reset.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-      playback.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -18),
-      playback.bottomAnchor.constraint(equalTo: reset.bottomAnchor),
+      tools.bottomAnchor.constraint(equalTo: dock.topAnchor, constant: -12),
+      tools.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+      minimap.topAnchor.constraint(equalTo: header.bottomAnchor, constant: 18),
       minimap.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-      minimap.bottomAnchor.constraint(equalTo: reset.bottomAnchor),
-      minimap.widthAnchor.constraint(equalToConstant: 94),
-      minimap.heightAnchor.constraint(equalToConstant: 65),
+      minimap.widthAnchor.constraint(equalToConstant: 88),
+      minimap.heightAnchor.constraint(equalToConstant: 62),
     ])
   }
   private func makeDock() {
     dock.translatesAutoresizingMaskIntoConstraints = false
     view.addSubview(dock)
     dockContent.axis = .vertical
-    dockContent.spacing = 13
-    dock.contentView.pin(dockContent, inset: 20)
-    zoneScroll.showsHorizontalScrollIndicator = false
-    zoneScroll.translatesAutoresizingMaskIntoConstraints = false
-    view.addSubview(zoneScroll)
-    zoneRail.axis = .horizontal
-    zoneRail.spacing = 8
-    zoneRail.translatesAutoresizingMaskIntoConstraints = false
-    zoneScroll.addSubview(zoneRail)
+    dockContent.spacing = 10
+    dock.contentView.pin(dockContent, inset: 16)
+    NSLayoutConstraint.activate([
+      dock.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+      dock.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+      dock.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -12),
+    ])
     eventText.numberOfLines = 1
     eventText.lineBreakMode = .byTruncatingTail
-    eventText.translatesAutoresizingMaskIntoConstraints = false
-    view.addSubview(eventText)
-    NSLayoutConstraint.activate([
-      dock.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 14),
-      dock.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -14),
-      dock.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -24),
-      zoneScroll.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-      zoneScroll.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-      zoneScroll.heightAnchor.constraint(equalToConstant: 44),
-      zoneScroll.bottomAnchor.constraint(equalTo: dock.topAnchor, constant: -13),
-      zoneRail.leadingAnchor.constraint(
-        equalTo: zoneScroll.contentLayoutGuide.leadingAnchor, constant: 18),
-      zoneRail.trailingAnchor.constraint(
-        equalTo: zoneScroll.contentLayoutGuide.trailingAnchor, constant: -18),
-      zoneRail.topAnchor.constraint(equalTo: zoneScroll.contentLayoutGuide.topAnchor),
-      zoneRail.bottomAnchor.constraint(equalTo: zoneScroll.contentLayoutGuide.bottomAnchor),
-      zoneRail.heightAnchor.constraint(equalTo: zoneScroll.frameLayoutGuide.heightAnchor),
-      eventText.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 25),
-      eventText.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -25),
-      eventText.bottomAnchor.constraint(
-        equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -4),
-    ])
-    for zone in FactoryZone.allCases {
-      let button = compact(zone.shortTitle, zone.icon) { [weak self] in self?.select(zone) }
-      button.configuration?.image = nil
-      button.accessibilityIdentifier = "zone.\(zone.rawValue)"
-      zoneRail.addArrangedSubview(button)
-      zoneButtons.append(button)
-    }
   }
   private func refresh() {
     live.text = simulation.paused ? "ДЕМО · ПАУЗА" : "ДЕМО · \(simulation.clockTime)"
@@ -334,13 +327,14 @@ final class OwnerController: UIViewController {
     let update = { [self] in
       self.dockContent.arrangedSubviews.forEach { $0.removeFromSuperview() }
       self.dockProgress = nil
-      for (i, b) in self.zoneButtons.enumerated() {
-        b.configuration?.baseForegroundColor =
-          self.selected?.rawValue == i ? InsideStyle.blue : Palette.ink
-        b.configuration?.baseBackgroundColor =
-          self.selected?.rawValue == i ? UIColor(hex: 0xDCE8EE) : nil
-      }
       self.minimap.isHidden = self.selected == nil
+      self.metrics.isHidden = self.selected != nil
+      self.contextLabel.isHidden = self.selected != nil
+      self.outputNumber.text = "\(self.simulation.completed)"
+      self.attentionNumber.text = "\(self.simulation.attentionCount)"
+      self.contextLabel.text =
+        self.selected.map { "\($0.code) · \($0.shortTitle.uppercased())" }
+        ?? "\(self.lens.title.uppercased()) · 9 УЧАСТКОВ"
       let kicker: String
       let title: String
       let subtitle: String
@@ -358,11 +352,11 @@ final class OwnerController: UIViewController {
         subtitle =
           "\(zone.people) \(plural(zone.people, "человек", "человека", "человек")) · \(self.simulation.summary(zone))"
       } else {
-        kicker = "СМЕНА / ПРИНЯТО ОТК \(self.simulation.completed) ИЗ 68"
+        kicker = "СМЕНА · \(self.simulation.clockTime)"
         title =
           self.lens == .load
-          ? "Где нужен резерв"
-          : self.lens == .orders ? "Каждый заказ на виду" : "Вся компания. Здесь."
+          ? "Загрузка участков"
+          : self.lens == .orders ? "Заказы на карте" : "Вся компания"
         subtitle =
           self.simulation.attentionCount > 0
           ? "\(self.simulation.attentionCount) \(plural(self.simulation.attentionCount,"решение","решения","решений")) \(self.simulation.attentionCount == 1 ? "требует" : "требуют") внимания"
@@ -376,7 +370,7 @@ final class OwnerController: UIViewController {
         top: 8, leading: 12, bottom: 8, trailing: 0)
       fold.configuration = foldConfig
       fold.widthAnchor.constraint(equalToConstant: 44).isActive = true
-      fold.height(28)
+      fold.height(32)
       fold.accessibilityLabel = self.compactMap ? "Развернуть сводку" : "Больше пространства карте"
       fold.addAction(
         UIAction { [weak self] _ in
@@ -389,17 +383,19 @@ final class OwnerController: UIViewController {
             usingSpringWithDamping: 0.95, initialSpringVelocity: 0, options: [.allowUserInteraction]
           ) { self.view.layoutIfNeeded() }
         }, for: .touchUpInside)
-      let context = stack(
-        [eyebrow(kicker, color: InsideStyle.blue), UIView(), fold], axis: .horizontal, spacing: 5)
-      context.alignment = .center
-      self.dockContent.addArrangedSubview(context)
-      let name = label(title, 25, .semibold)
+      let name = label(title, 22, .medium, InsideStyle.ink)
       name.numberOfLines = 1
       name.adjustsFontSizeToFitWidth = true
       name.minimumScaleFactor = 0.75
       name.accessibilityIdentifier = "owner.selectedZone"
-      self.dockContent.addArrangedSubview(
-        stack([name, label(subtitle, 12, .regular, Palette.muted)], spacing: 6))
+      name.accessibilityHint = kicker
+      let description = self.tourIndex != nil ? "\(kicker) · \(subtitle)" : subtitle
+      let titles = stack(
+        self.selected == nil
+          ? [name] : [name, label(description, 12, .regular, InsideStyle.muted)], spacing: 5)
+      let context = stack([titles, UIView(), fold], axis: .horizontal, spacing: 8)
+      context.alignment = .center
+      self.dockContent.addArrangedSubview(context)
       if self.compactMap { return }
       let first: UIButton
       let second: UIButton
@@ -443,6 +439,7 @@ final class OwnerController: UIViewController {
       let actions = stack([first, second], axis: .horizontal, spacing: 9)
       actions.distribution = .fillEqually
       self.dockContent.addArrangedSubview(actions)
+      self.dockContent.addArrangedSubview(self.eventText)
       if let order = self.trackedOrder,
         (order == .aria && self.simulation.reserve == .processing)
           || (order == .marea && [.checking, .packing, .loading].contains(self.simulation.quality))
@@ -481,9 +478,6 @@ final class OwnerController: UIViewController {
     factory.focusOn(zone)
     factory.apply(simulation, lens: lens, tracked: trackedOrder)
     contextLabel.text = "\(zone.code) · \(zone.shortTitle)"
-    zoneScroll.scrollRectToVisible(
-      zoneButtons[zone.rawValue].convert(zoneButtons[zone.rawValue].bounds, to: zoneScroll).insetBy(
-        dx: -18, dy: 0), animated: !UIAccessibility.isReduceMotionEnabled)
     UISelectionFeedbackGenerator().selectionChanged()
     renderDock(animated: true)
   }
@@ -501,7 +495,7 @@ final class OwnerController: UIViewController {
     factory.resetCamera()
     factory.showRoute(false)
     factory.apply(simulation, lens: lens, tracked: nil)
-    contextLabel.text = "12 000+ м² производства¹"
+    contextLabel.text = "ТЕРРИТОРИЯ · 9 УЧАСТКОВ"
     renderDock(animated: true)
   }
   private func startTour() {
