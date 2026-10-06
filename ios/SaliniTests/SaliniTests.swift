@@ -135,4 +135,85 @@ final class SaliniTests: XCTestCase {
     XCTAssertTrue(texts(sense.view).contains(rubles(790000)))
     XCTAssertTrue(texts(sense.view).contains { $0.contains("1051101G") })
   }
+
+  func testGroundPanTracksFingerInBothScreenAxes() {
+    var camera = CampusCamera()
+    camera.viewport = CGSize(width: 402, height: 600)
+    camera.scale = 30
+    let origin = camera.focus
+    let gesture = CGPoint(x: 90, y: -35)
+    camera.pan(gesture, from: origin)
+    let dx = Double(camera.focus.x - origin.x)
+    let dz = Double(camera.focus.z - origin.z)
+    let unitsPerPoint = 2 * camera.scale / Double(camera.viewport.height)
+    let screenX = -(dx - dz) / sqrt(2) / unitsPerPoint
+    let screenY = -(dx + dz) / sqrt(6) / unitsPerPoint
+    XCTAssertEqual(screenX, gesture.x, accuracy: 0.001)
+    XCTAssertEqual(screenY, gesture.y, accuracy: 0.001)
+    XCTAssertEqual(camera.focus.y, 0)
+  }
+  func testCampusCameraBoundsZoomAndViewportFit() {
+    var camera = CampusCamera()
+    camera.viewport = CGSize(width: 402, height: 550)
+    camera.overview()
+    let width = 2 * camera.scale * Double(camera.viewport.width / camera.viewport.height)
+    XCTAssertGreaterThan(width, (146 + 108) / sqrt(2.0))
+    camera.pan(CGPoint(x: 100_000, y: -100_000), from: camera.focus)
+    XCTAssertTrue((-58...70).contains(camera.focus.x))
+    XCTAssertTrue((-45...49).contains(camera.focus.z))
+    camera.zoom(0.001)
+    XCTAssertEqual(camera.scale, 16)
+    camera.zoom(100_000)
+    XCTAssertEqual(camera.scale, camera.overviewScale * 1.15, accuracy: 0.001)
+  }
+  @MainActor func testSceneRetainsTrueIsometryAcrossEveryZoneAndZoom() throws {
+    let view = FactorySceneView()
+    view.frame = CGRect(x: 0, y: 0, width: 402, height: 550)
+    view.layoutIfNeeded()
+    let camera = try XCTUnwrap(view.pointOfView)
+    let original = camera.orientation
+    for zone in FactoryZone.allCases {
+      view.focusOn(zone, animated: false)
+      view.stepZoom(true)
+      XCTAssertEqual(camera.orientation.x, original.x, accuracy: 0.0001)
+      XCTAssertEqual(camera.orientation.y, original.y, accuracy: 0.0001)
+      XCTAssertEqual(camera.orientation.z, original.z, accuracy: 0.0001)
+      XCTAssertEqual(camera.orientation.w, original.w, accuracy: 0.0001)
+      let offset = SCNVector3(
+        camera.position.x - view.mapCamera.focus.x,
+        camera.position.y - view.mapCamera.focus.y, camera.position.z - view.mapCamera.focus.z)
+      XCTAssertEqual(offset.x, offset.y, accuracy: 0.0001)
+      XCTAssertEqual(offset.y, offset.z, accuracy: 0.0001)
+    }
+    view.resetCamera()
+    XCTAssertEqual(camera.orientation.x, original.x, accuracy: 0.0001)
+    view.setPaused(true)
+  }
+  func testCampusBuildingsDoNotOverlapAndRouteConnectsBusiness() {
+    for (i, a) in FactoryZone.allCases.enumerated() {
+      let ar = CGRect(
+        x: CGFloat(a.position.x) - a.footprint.width / 2,
+        y: CGFloat(a.position.z) - a.footprint.height / 2,
+        width: a.footprint.width, height: a.footprint.height)
+      for b in FactoryZone.allCases.dropFirst(i + 1) {
+        let br = CGRect(
+          x: CGFloat(b.position.x) - b.footprint.width / 2,
+          y: CGFloat(b.position.z) - b.footprint.height / 2,
+          width: b.footprint.width, height: b.footprint.height)
+        XCTAssertFalse(ar.intersects(br), "\(a.title) overlaps \(b.title)")
+      }
+    }
+    XCTAssertEqual(FactoryZone.orderRoute.first, .office)
+    XCTAssertEqual(FactoryZone.orderRoute.last, .dispatch)
+    XCTAssertEqual(Set(FactoryZone.orderRoute).count, FactoryZone.orderRoute.count)
+  }
+  func testDispatchReleaseIsIdempotentAndCreatesAnEvent() {
+    let simulation = FactorySimulation()
+    simulation.releaseDispatch()
+    let events = simulation.events
+    simulation.releaseDispatch()
+    XCTAssertTrue(simulation.dispatchReleased)
+    XCTAssertEqual(simulation.events, events)
+    XCTAssertTrue(simulation.events[0].contains("Москва"))
+  }
 }
