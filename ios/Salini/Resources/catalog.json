@@ -1,0 +1,58 @@
+[
+  {
+    "id": "aria",
+    "name": "Aria",
+    "category": "Ванны",
+    "subtitle": "Отдельностоящая ванна",
+    "dimensions": "1900 × 900 × 600 мм",
+    "image": "aria",
+    "price": 790000,
+    "stonePrice": 890000,
+    "article": "1051101G",
+    "stoneArticle": "1051201M",
+    "story": "Архитектурная чистота. Мягкий свет. Ванна, которая становится центром вашего пространства.",
+    "source": "https://salini-srl.com/vanny/otdelnostoyashchie/aria/"
+  },
+  {
+    "id": "opera",
+    "name": "Opera",
+    "category": "Ванны",
+    "subtitle": "Отдельностоящая ванна",
+    "dimensions": "1800 × 900 × 600 мм",
+    "image": "opera",
+    "price": 430000,
+    "stonePrice": null,
+    "article": "1052101G",
+    "stoneArticle": null,
+    "story": "Классическая линия в современном прочтении. Выразительный силуэт и спокойная монументальность.",
+    "source": "https://salini-srl.com/vanny/otdelnostoyashchie/opera/"
+  },
+  {
+    "id": "greca",
+    "name": "Greca",
+    "category": "Ванны",
+    "subtitle": "Отдельностоящая ванна",
+    "dimensions": "1800 × 800 × 610 мм",
+    "image": "greca",
+    "price": 473100,
+    "stonePrice": null,
+    "article": "103121M",
+    "stoneArticle": null,
+    "story": "Пластика камня и мягкая геометрия. Коллекция для пространств с собственным характером.",
+    "source": "https://salini-srl.com/vanny/otdelnostoyashchie/greca/180/"
+  },
+  {
+    "id": "opera-top",
+    "name": "Opera Top",
+    "category": "Раковины",
+    "subtitle": "Накладная раковина",
+    "dimensions": "750 × 500 × 160 мм",
+    "image": "opera-top",
+    "price": 54000,
+    "stonePrice": null,
+    "article": "1110101G",
+    "stoneArticle": null,
+    "story": "Скульптурная раковина. Продолжение коллекции Opera в каждой детали.",
+    "source": "https://salini-srl.com/rakoviny/nakladnye/opera-top/"
+  }
+]

@@ -1,0 +1,510 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1E422D8F743225E5DC1C6C4B /* production.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D857B43F6F8433444EA53ADE /* production.jpg */; };
+		1F8FF3ED9FDF09276E732A12 /* Projects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 319851BB55623979FE40C513 /* Projects.swift */; };
+		2E61A4C6273A18A65C3B1151 /* stone.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 200C0338C7066941F0D41381 /* stone.jpg */; };
+		36D45DA9DCA6EE81DFF950EB /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BF4C1CE6C2E47285FA6084 /* App.swift */; };
+		3B48D5B64C2CCE5E33479486 /* opera.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8B9E9451C86A79C46812A25D /* opera.jpg */; };
+		50A02DC7410C6D6D3381B045 /* interior.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3776267C1F0DB827DBEBB68A /* interior.jpg */; };
+		56B48C7F86569A1C65D45047 /* aria.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A3AD3AD462395F7627F0F9ED /* aria.jpg */; };
+		5A04D150B5857BBA96742663 /* oriente.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A177BC09A63FBF19E80DCF74 /* oriente.jpg */; };
+		655CB7EC2997AD545FD46A7B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1C21E6FCCD97876F706ADB2E /* Assets.xcassets */; };
+		664F09813FAF7AEA8DA33A77 /* opera-top.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6C53D942770B336103058500 /* opera-top.jpg */; };
+		70405BBE76779F4C563F7B32 /* Owner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9455A5104B42AB58A498F29C /* Owner.swift */; };
+		865AFC3CCA56E15332577F41 /* salini-logo.svg in Resources */ = {isa = PBXBuildFile; fileRef = 71A0945E0526B6B9D34EAD27 /* salini-logo.svg */; };
+		8CC5A6E694E7E63798777106 /* aria-red.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FF8CC4938E4FEB8C56D0CF20 /* aria-red.jpg */; };
+		8FCBD77FB5FBC3C00B8CE17A /* catalog.json in Resources */ = {isa = PBXBuildFile; fileRef = B84ADB80CC317232BF921570 /* catalog.json */; };
+		A8A3AAA247C5A742B2F740B7 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06B24C2D0832EF8D141B750A /* Profile.swift */; };
+		ADACB609C5431007F2257197 /* greca.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4942620F24A4D8F0728613FA /* greca.jpg */; };
+		B05E098BB5A23A647FB95239 /* Aria-drawing.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CEF9612034EAAC3B2E8AFDEE /* Aria-drawing.pdf */; };
+		B0E3B2108E0D6230BD79EAA5 /* Catalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEBE649A6A1619D469DD965A /* Catalog.swift */; };
+		C1E3CF871A14297CBBCB4D68 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227902BDF40ADF52F72D7B54 /* Home.swift */; };
+		C919C35BF39AFCF7A2620366 /* FactoryScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8533340A72EAF8A013360ECE /* FactoryScene.swift */; };
+		C991E2B1CE8AC1BE35990203 /* salini-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = A82AFE5054B9A5561CDAD645 /* salini-logo.png */; };
+		E0004C970033EB673136243D /* luce.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D91143AF411A90AC2958AC84 /* luce.jpg */; };
+		E3870384C2CE964391CDB5E5 /* Design.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3AB58D801AACAB3369DA9D5 /* Design.swift */; };
+		F0FB799DEC9C13A7C3DBAA4F /* opera-detail.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 672B74F0BCED01A47E534CD1 /* opera-detail.jpg */; };
+		F8C623113C63A0FB6739DD71 /* SaliniTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0151CE5C734FB58E9B195E9D /* SaliniTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		1386704BBD505E18028761C0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 99B683EC994CD1AD8491DF32 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 902AEBF3145C80E74D0B2645;
+			remoteInfo = Salini;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0151CE5C734FB58E9B195E9D /* SaliniTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaliniTests.swift; sourceTree = "<group>"; };
+		06B24C2D0832EF8D141B750A /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
+		1C21E6FCCD97876F706ADB2E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		200C0338C7066941F0D41381 /* stone.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = stone.jpg; sourceTree = "<group>"; };
+		227902BDF40ADF52F72D7B54 /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
+		319851BB55623979FE40C513 /* Projects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Projects.swift; sourceTree = "<group>"; };
+		3776267C1F0DB827DBEBB68A /* interior.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = interior.jpg; sourceTree = "<group>"; };
+		4942620F24A4D8F0728613FA /* greca.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = greca.jpg; sourceTree = "<group>"; };
+		50BF4C1CE6C2E47285FA6084 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
+		672B74F0BCED01A47E534CD1 /* opera-detail.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "opera-detail.jpg"; sourceTree = "<group>"; };
+		6C53D942770B336103058500 /* opera-top.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "opera-top.jpg"; sourceTree = "<group>"; };
+		71A0945E0526B6B9D34EAD27 /* salini-logo.svg */ = {isa = PBXFileReference; path = "salini-logo.svg"; sourceTree = "<group>"; };
+		7BAB34199B15CE6E53C954A2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		7D76CF44BE1C147E96251FD6 /* SaliniTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = SaliniTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		8533340A72EAF8A013360ECE /* FactoryScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactoryScene.swift; sourceTree = "<group>"; };
+		8B4382FB29F72EE1715DC2FF /* Salini.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Salini.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8B9E9451C86A79C46812A25D /* opera.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = opera.jpg; sourceTree = "<group>"; };
+		9455A5104B42AB58A498F29C /* Owner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Owner.swift; sourceTree = "<group>"; };
+		A177BC09A63FBF19E80DCF74 /* oriente.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = oriente.jpg; sourceTree = "<group>"; };
+		A3AB58D801AACAB3369DA9D5 /* Design.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Design.swift; sourceTree = "<group>"; };
+		A3AD3AD462395F7627F0F9ED /* aria.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = aria.jpg; sourceTree = "<group>"; };
+		A82AFE5054B9A5561CDAD645 /* salini-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "salini-logo.png"; sourceTree = "<group>"; };
+		B84ADB80CC317232BF921570 /* catalog.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = catalog.json; sourceTree = "<group>"; };
+		CEF9612034EAAC3B2E8AFDEE /* Aria-drawing.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "Aria-drawing.pdf"; sourceTree = "<group>"; };
+		D857B43F6F8433444EA53ADE /* production.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = production.jpg; sourceTree = "<group>"; };
+		D91143AF411A90AC2958AC84 /* luce.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = luce.jpg; sourceTree = "<group>"; };
+		EEBE649A6A1619D469DD965A /* Catalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Catalog.swift; sourceTree = "<group>"; };
+		FF8CC4938E4FEB8C56D0CF20 /* aria-red.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "aria-red.jpg"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		473248DAA580B315D4118726 = {
+			isa = PBXGroup;
+			children = (
+				C9DB1B2197F72D1B205509B6 /* Salini */,
+				644F17B23856E7F2B4AFAFC2 /* SaliniTests */,
+				AE383CBAEB7988EDD8856BEF /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		644F17B23856E7F2B4AFAFC2 /* SaliniTests */ = {
+			isa = PBXGroup;
+			children = (
+				0151CE5C734FB58E9B195E9D /* SaliniTests.swift */,
+			);
+			path = SaliniTests;
+			sourceTree = "<group>";
+		};
+		AE383CBAEB7988EDD8856BEF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8B4382FB29F72EE1715DC2FF /* Salini.app */,
+				7D76CF44BE1C147E96251FD6 /* SaliniTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C4DF24F3466449F744DDB0B7 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				CEF9612034EAAC3B2E8AFDEE /* Aria-drawing.pdf */,
+				FF8CC4938E4FEB8C56D0CF20 /* aria-red.jpg */,
+				A3AD3AD462395F7627F0F9ED /* aria.jpg */,
+				B84ADB80CC317232BF921570 /* catalog.json */,
+				4942620F24A4D8F0728613FA /* greca.jpg */,
+				3776267C1F0DB827DBEBB68A /* interior.jpg */,
+				D91143AF411A90AC2958AC84 /* luce.jpg */,
+				672B74F0BCED01A47E534CD1 /* opera-detail.jpg */,
+				6C53D942770B336103058500 /* opera-top.jpg */,
+				8B9E9451C86A79C46812A25D /* opera.jpg */,
+				A177BC09A63FBF19E80DCF74 /* oriente.jpg */,
+				D857B43F6F8433444EA53ADE /* production.jpg */,
+				A82AFE5054B9A5561CDAD645 /* salini-logo.png */,
+				71A0945E0526B6B9D34EAD27 /* salini-logo.svg */,
+				200C0338C7066941F0D41381 /* stone.jpg */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		C9DB1B2197F72D1B205509B6 /* Salini */ = {
+			isa = PBXGroup;
+			children = (
+				50BF4C1CE6C2E47285FA6084 /* App.swift */,
+				1C21E6FCCD97876F706ADB2E /* Assets.xcassets */,
+				EEBE649A6A1619D469DD965A /* Catalog.swift */,
+				A3AB58D801AACAB3369DA9D5 /* Design.swift */,
+				8533340A72EAF8A013360ECE /* FactoryScene.swift */,
+				227902BDF40ADF52F72D7B54 /* Home.swift */,
+				7BAB34199B15CE6E53C954A2 /* Info.plist */,
+				9455A5104B42AB58A498F29C /* Owner.swift */,
+				06B24C2D0832EF8D141B750A /* Profile.swift */,
+				319851BB55623979FE40C513 /* Projects.swift */,
+				C4DF24F3466449F744DDB0B7 /* Resources */,
+			);
+			path = Salini;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		902AEBF3145C80E74D0B2645 /* Salini */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 588542FB38A05B9A4FE1E160 /* Build configuration list for PBXNativeTarget "Salini" */;
+			buildPhases = (
+				CD4BD80E7117CF9FBF91241C /* Sources */,
+				894A00D2A58890AD3EADC174 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Salini;
+			packageProductDependencies = (
+			);
+			productName = Salini;
+			productReference = 8B4382FB29F72EE1715DC2FF /* Salini.app */;
+			productType = "com.apple.product-type.application";
+		};
+		F6FCEE7A15B1C12B284CE6FC /* SaliniTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E600D607A2B7A56DDD87D064 /* Build configuration list for PBXNativeTarget "SaliniTests" */;
+			buildPhases = (
+				5E72067C3F4CCE268C3486E0 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9F06E62A3B009FC55D922001 /* PBXTargetDependency */,
+			);
+			name = SaliniTests;
+			packageProductDependencies = (
+			);
+			productName = SaliniTests;
+			productReference = 7D76CF44BE1C147E96251FD6 /* SaliniTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		99B683EC994CD1AD8491DF32 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+				};
+			};
+			buildConfigurationList = B4F98E5A60BFB360489BFE7C /* Build configuration list for PBXProject "Salini" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 473248DAA580B315D4118726;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = AE383CBAEB7988EDD8856BEF /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				902AEBF3145C80E74D0B2645 /* Salini */,
+				F6FCEE7A15B1C12B284CE6FC /* SaliniTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		894A00D2A58890AD3EADC174 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B05E098BB5A23A647FB95239 /* Aria-drawing.pdf in Resources */,
+				655CB7EC2997AD545FD46A7B /* Assets.xcassets in Resources */,
+				8CC5A6E694E7E63798777106 /* aria-red.jpg in Resources */,
+				56B48C7F86569A1C65D45047 /* aria.jpg in Resources */,
+				8FCBD77FB5FBC3C00B8CE17A /* catalog.json in Resources */,
+				ADACB609C5431007F2257197 /* greca.jpg in Resources */,
+				50A02DC7410C6D6D3381B045 /* interior.jpg in Resources */,
+				E0004C970033EB673136243D /* luce.jpg in Resources */,
+				F0FB799DEC9C13A7C3DBAA4F /* opera-detail.jpg in Resources */,
+				664F09813FAF7AEA8DA33A77 /* opera-top.jpg in Resources */,
+				3B48D5B64C2CCE5E33479486 /* opera.jpg in Resources */,
+				5A04D150B5857BBA96742663 /* oriente.jpg in Resources */,
+				1E422D8F743225E5DC1C6C4B /* production.jpg in Resources */,
+				C991E2B1CE8AC1BE35990203 /* salini-logo.png in Resources */,
+				865AFC3CCA56E15332577F41 /* salini-logo.svg in Resources */,
+				2E61A4C6273A18A65C3B1151 /* stone.jpg in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		5E72067C3F4CCE268C3486E0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F8C623113C63A0FB6739DD71 /* SaliniTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CD4BD80E7117CF9FBF91241C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				36D45DA9DCA6EE81DFF950EB /* App.swift in Sources */,
+				B0E3B2108E0D6230BD79EAA5 /* Catalog.swift in Sources */,
+				E3870384C2CE964391CDB5E5 /* Design.swift in Sources */,
+				C919C35BF39AFCF7A2620366 /* FactoryScene.swift in Sources */,
+				C1E3CF871A14297CBBCB4D68 /* Home.swift in Sources */,
+				70405BBE76779F4C563F7B32 /* Owner.swift in Sources */,
+				A8A3AAA247C5A742B2F740B7 /* Profile.swift in Sources */,
+				1F8FF3ED9FDF09276E732A12 /* Projects.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		9F06E62A3B009FC55D922001 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 902AEBF3145C80E74D0B2645 /* Salini */;
+			targetProxy = 1386704BBD505E18028761C0 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		2BAAD86241FC545A0B0F5A06 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Salini/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Salini;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = NO;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleDefault;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = design.salini.experience;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		34B515F47510DDAF3D34A025 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = design.salini.SaliniTests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Salini.app/Salini";
+			};
+			name = Debug;
+		};
+		47C9768F4A2DCE36FD3045E8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = design.salini.SaliniTests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Salini.app/Salini";
+			};
+			name = Release;
+		};
+		52C7A791DA300352309A0E64 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_ALLOWED = NO;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		576056E7526DCD252908F5DD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_ALLOWED = NO;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		7926A48480390EEE66397C31 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Salini/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Salini;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = NO;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleDefault;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = design.salini.experience;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		588542FB38A05B9A4FE1E160 /* Build configuration list for PBXNativeTarget "Salini" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7926A48480390EEE66397C31 /* Debug */,
+				2BAAD86241FC545A0B0F5A06 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		B4F98E5A60BFB360489BFE7C /* Build configuration list for PBXProject "Salini" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				52C7A791DA300352309A0E64 /* Debug */,
+				576056E7526DCD252908F5DD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E600D607A2B7A56DDD87D064 /* Build configuration list for PBXNativeTarget "SaliniTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				34B515F47510DDAF3D34A025 /* Debug */,
+				47C9768F4A2DCE36FD3045E8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 99B683EC994CD1AD8491DF32 /* Project object */;
+}

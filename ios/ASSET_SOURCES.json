@@ -1,0 +1,78 @@
+[
+  {
+    "asset": "opera.jpg",
+    "source_url": "https://cdn-salini.storage.yandexcloud.net/iblock/473/473e0b500570e5bc27f8a8dc8aa3e37c/4_3840kh2160 _1_ _1_.jpg",
+    "source_page": "https://salini-srl.com/collection/opera/",
+    "usage": "Salini concept prototype; original brand image, resized without generative changes"
+  },
+  {
+    "asset": "opera-detail.jpg",
+    "source_url": "https://cdn-salini.storage.yandexcloud.net/iblock/b0e/b0e5978e4f7b8187156f733899c17c94/1_3840kh2160 _1_.jpg",
+    "source_page": "https://salini-srl.com/collection/opera/",
+    "usage": "Salini concept prototype; original brand image, resized without generative changes"
+  },
+  {
+    "asset": "opera-top.jpg",
+    "source_url": "https://cdn-salini.storage.yandexcloud.net/iblock/831/831b2158914dd610a9e5252fa3378cd9/3840na2160 _4_ _2_ _1_.jpg",
+    "source_page": "https://salini-srl.com/collection/opera/",
+    "usage": "Salini concept prototype; original brand image, resized without generative changes"
+  },
+  {
+    "asset": "greca.jpg",
+    "source_url": "https://cdn-salini.storage.yandexcloud.net/iblock/636/636f240358f77c7d74c49c503eced8a4/Greca_1.jpg",
+    "source_page": "https://salini-srl.com/collection/greca/",
+    "usage": "Salini concept prototype; original brand image, resized without generative changes"
+  },
+  {
+    "asset": "aria.jpg",
+    "source_url": "https://cdn-salini.storage.yandexcloud.net/iblock/7b6/7b60235210300ed384d6612ab8dbafad/1920.webp",
+    "source_page": "https://salini-srl.com/vanny/otdelnostoyashchie/aria/",
+    "usage": "Salini concept prototype; original brand image, resized without generative changes"
+  },
+  {
+    "asset": "aria-red.jpg",
+    "source_url": "https://cdn-salini.storage.yandexcloud.net/iblock/471/4713eed50c438c9af418f5956b2ab5fe/0002_3840 _2_.jpg",
+    "source_page": "https://salini-srl.com/vanny/otdelnostoyashchie/aria/",
+    "usage": "Salini concept prototype; original brand image, resized without generative changes"
+  },
+  {
+    "asset": "interior.jpg",
+    "source_url": "https://cdn-salini.storage.yandexcloud.net/iblock/74b/74b73245173c09d826ccec1b982a67ab/0001_2000kh2500_3.jpg",
+    "source_page": "https://salini-srl.com/gallery/klassika-v-detalyakh/",
+    "usage": "Salini concept prototype; original brand image, resized without generative changes"
+  },
+  {
+    "asset": "stone.jpg",
+    "source_url": "https://salini-srl.com/local/templates/main/assets/images/about-5.jpeg",
+    "source_page": "https://salini-srl.com/about-company/",
+    "usage": "Salini concept prototype; original brand image, resized without generative changes"
+  },
+  {
+    "asset": "production.jpg",
+    "source_url": "https://salini-srl.com/local/templates/main/assets/images/webp/production-modal-6.webp",
+    "source_page": "https://salini-srl.com/about-company/",
+    "usage": "Salini concept prototype; original brand image, resized without generative changes"
+  },
+  {
+    "asset": "luce.jpg",
+    "source_url": "https://cdn-salini.storage.yandexcloud.net/iblock/100/1007e0d4ca0dde026c0b70d6a889186e/luce-1.jpg",
+    "source_page": "https://salini-srl.com",
+    "usage": "Salini concept prototype; original brand image, resized without generative changes"
+  },
+  {
+    "asset": "oriente.jpg",
+    "source_url": "https://cdn-salini.storage.yandexcloud.net/iblock/480/480132f64457ab976501df3309d89e77/oriente-1.jpg",
+    "source_page": "https://salini-srl.com",
+    "usage": "Salini concept prototype; original brand image, resized without generative changes"
+  },
+  {
+    "asset": "salini-logo.png / salini-logo.svg / AppIcon.png",
+    "source_url": "https://salini-srl.com/local/templates/main/assets/images/svg/logo.svg",
+    "usage": "Original Salini wordmark. PNG rasterization and monochrome template tint; original paths preserved."
+  },
+  {
+    "asset": "Aria-drawing.pdf",
+    "source_page": "https://salini-srl.com/vanny/otdelnostoyashchie/aria/",
+    "usage": "Original public technical drawing."
+  }
+]
