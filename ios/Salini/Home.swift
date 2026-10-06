@@ -1,193 +1,306 @@
 import UIKit
 
 final class HomeController: ScrollController {
+  private var lastRole: Audience?
   override var preferredStatusBarStyle: UIStatusBarStyle { .darkContent }
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     navigationController?.setNavigationBarHidden(true, animated: animated)
+    render()
   }
   override func viewDidLoad() {
     super.viewDidLoad()
-    scroll.contentInsetAdjustmentBehavior = .always
     render()
   }
   private func render() {
     content.arrangedSubviews.forEach { $0.removeFromSuperview() }
+    let role = DemoStore.shared.role
     let logo = UIImageView(
       image: UIImage(named: "salini-logo.png")?.withRenderingMode(.alwaysTemplate))
     logo.tintColor = Palette.ink
     logo.contentMode = .scaleAspectFit
-    logo.widthAnchor.constraint(equalToConstant: 94).isActive = true
-    logo.height(39)
+    logo.widthAnchor.constraint(equalToConstant: 88).isActive = true
+    logo.height(36)
     logo.accessibilityLabel = "Salini"
     logo.isAccessibilityElement = true
-    let search = ActionButton("", icon: "magnifyingglass") { [weak self] in
-      self?.tabBarController?.selectedIndex = 1
+    let search = ActionButton("", icon: role == .partner ? "shippingbox" : "magnifyingglass") {
+      [weak self] in self?.tabBarController?.selectedIndex = 1
     }
-    search.accessibilityLabel = "Поиск коллекций"
-    search.widthAnchor.constraint(equalToConstant: 48).isActive = true
+    search.accessibilityLabel = role == .partner ? "Наличие на складе" : "Открыть каталог и файлы"
+    search.widthAnchor.constraint(equalToConstant: 46).isActive = true
     let profile = ActionButton("", icon: "person.crop.circle") { [weak self] in
       self?.tabBarController?.selectedIndex = 3
     }
     profile.accessibilityLabel = "Профиль"
-    profile.widthAnchor.constraint(equalToConstant: 48).isActive = true
+    profile.widthAnchor.constraint(equalToConstant: 46).isActive = true
     let top = stack([logo, UIView(), search, profile], axis: .horizontal, spacing: 10)
     top.alignment = .center
     add(top, inset: 22)
-    let modes = UISegmentedControl(items: Audience.allCases.map(\.title))
-    modes.selectedSegmentIndex = Audience.allCases.firstIndex(of: DemoStore.shared.role) ?? 0
-    modes.height(40)
-    modes.accessibilityIdentifier = "home.audience"
-    modes.setTitleTextAttributes(
-      [.font: UIFont.systemFont(ofSize: 13, weight: .medium)], for: .normal)
-    modes.addAction(
-      UIAction { [weak self, weak modes] _ in
-        guard let self, let modes else { return }
-        DemoStore.shared.role = Audience.allCases[modes.selectedSegmentIndex]
-        UISelectionFeedbackGenerator().selectionChanged()
-        self.render()
-        self.scroll.setContentOffset(
-          CGPoint(x: 0, y: -self.scroll.adjustedContentInset.top), animated: false)
-      }, for: .valueChanged)
-    let modeWrap = UIView()
-    modes.translatesAutoresizingMaskIntoConstraints = false
-    modeWrap.addSubview(modes)
+    let modes = stack([], axis: .horizontal, spacing: 4)
+    modes.distribution = .fillEqually
+    for audience in Audience.allCases {
+      let b = UIButton(type: .system)
+      var c = UIButton.Configuration.plain()
+      c.title = audience.title
+      c.baseForegroundColor = role == audience ? .white : Palette.ink
+      c.background.backgroundColor = role == audience ? Palette.ink : .clear
+      c.background.cornerRadius = 19
+      c.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer {
+        var a = $0
+        a.font = .systemFont(ofSize: 12, weight: .semibold)
+        return a
+      }
+      c.contentInsets = NSDirectionalEdgeInsets(top: 12, leading: 4, bottom: 12, trailing: 4)
+      b.configuration = c
+      b.accessibilityIdentifier = "audience.\(audience.rawValue)"
+      b.accessibilityTraits = role == audience ? [.button, .selected] : [.button]
+      b.addAction(
+        UIAction { [weak self] _ in
+          guard let self, DemoStore.shared.role != audience else { return }
+          DemoStore.shared.role = audience
+          (self.tabBarController as? MainTabs)?.applyAudience()
+          UISelectionFeedbackGenerator().selectionChanged()
+          UIView.transition(with: self.content, duration: 0.3, options: .transitionCrossDissolve) {
+            self.render()
+          }
+          self.scroll.setContentOffset(
+            CGPoint(x: 0, y: -self.scroll.adjustedContentInset.top), animated: false)
+        }, for: .touchUpInside)
+      modes.addArrangedSubview(b)
+    }
+    let modeWrap = modes.inset(4)
+    modeWrap.backgroundColor = UIColor(hex: 0xEDEEF1)
+    modeWrap.rounded(25)
+    let wrapper = UIView()
+    wrapper.pin(modeWrap, inset: 0)
+    section(wrapper, top: 0, bottom: 14, inset: 18)
+    switch role {
+    case .home: buyer()
+    case .atelier: designer()
+    case .partner: partner()
+    }
+    lastRole = role
+  }
+  private func buyer() {
+    add(
+      hero(
+        image: "aria", title: "Дизайн, который\nчувствуешь.", foot: "Aria",
+        detail: "Скульптура повседневности", height: 390
+      ) { [weak self] in
+        if let p = Product.all.first(where: { $0.id == "aria" }) { self?.showProduct(p) }
+      }, inset: 16)
+    let actions = stack(
+      [
+        ActionButton("Подобрать", icon: "slider.horizontal.3", prominent: true) { [weak self] in
+          self?.navigationController?.pushViewController(FinderController(), animated: true)
+        },
+        ActionButton("Сравнить", icon: "rectangle.split.2x1") { [weak self] in
+          self?.navigationController?.pushViewController(CompareController(), animated: true)
+        },
+      ], axis: .horizontal, spacing: 10)
+    actions.distribution = .fillEqually
+    add(actions, inset: 20)
+    add(
+      workspaceAction(
+        "Почувствуйте объём", subtitle: "Вращайте оригинальную 3D-модель Greca",
+        icon: "cube.transparent"
+      ) { [weak self] in self?.present(ObjectViewerController(), animated: true) }, inset: 20)
+    let title = stack(
+      [
+        label("Избранные формы", 27, .semibold), UIView(),
+        label("01 — 04", 10, .medium, Palette.muted),
+      ], axis: .horizontal)
+    title.alignment = .center
+    add(title)
+    add(
+      horizontal(
+        Product.all.map { p in ProductTile(product: p) { [weak self] in self?.showProduct(p) } },
+        width: 260, height: 345), inset: 0)
+    add(
+      hero(
+        image: "interior", title: "В деталях —\nхарактер.", foot: "Внутри интерьера",
+        detail: "Коллекция Opera", height: 320
+      ) { [weak self] in self?.sheet(InspirationController()) }, inset: 20)
+    add(
+      workspaceAction(
+        "Материя Salini", subtitle: "Разница, которую хочется ощутить",
+        icon: "circle.lefthalf.filled"
+      ) { [weak self] in self?.sheet(MaterialsController()) }, inset: 20)
+  }
+  private func designer() {
+    section(
+      stack(
+        [
+          eyebrow("РАБОЧЕЕ ПРОСТРАНСТВО ДИЗАЙНЕРА"),
+          label("Идеи становятся\nпроектами.", 30, .semibold),
+        ], spacing: 12))
+    let store = DemoStore.shared
+    let pic = photo("interior", height: 150)
+    pic.rounded(20)
+    let count = store.items.reduce(0) { $0 + $1.quantity }
+    section(
+      workspaceCard([
+        pic, eyebrow("ТЕКУЩИЙ ПРОЕКТ"), label(store.projectName, 26, .semibold),
+        label(
+          "\(count) \(plural(count, "изделие", "изделия", "изделий")) · \(rubles(store.total))", 14,
+          .medium, Palette.muted),
+        ActionButton("Продолжить комплектацию", icon: "arrow.up.right", prominent: true) {
+          [weak self] in self?.tabBarController?.selectedIndex = 2
+        },
+      ]))
+    section(
+      stack(
+        [
+          eyebrow("ИНСТРУМЕНТЫ ПРОЕКТА"),
+          workspaceAction(
+            "Добавить изделие", subtitle: "Выбрать форму и исполнение", icon: "plus.square"
+          ) { [weak self] in
+            self?.navigationController?.pushViewController(CatalogController(), animated: true)
+          },
+          workspaceAction(
+            "3D и технические файлы", subtitle: "USDZ, чертежи и размеры", icon: "cube"
+          ) { [weak self] in self?.tabBarController?.selectedIndex = 1 },
+          workspaceAction(
+            "Спецификация проекта", subtitle: "Количество, состав, стоимость и PDF",
+            icon: "doc.richtext"
+          ) { [weak self] in self?.tabBarController?.selectedIndex = 2 },
+        ], spacing: 14))
+    section(
+      workspaceCard([
+        eyebrow("ПАЛИТРА ПРОЕКТА"), label("Сначала — ощущение.", 26, .medium), swatches(),
+        ActionButton("Изучить поверхности", icon: "arrow.up.right") { [weak self] in
+          self?.sheet(MaterialsController())
+        },
+      ]))
+  }
+  private func partner() {
+    let orders = PartnerStore.shared.orders
+    let reserved = orders.filter { !$0.scheduled }.count
+    let scheduled = orders.filter { $0.scheduled }.count
+    section(
+      stack(
+        [eyebrow("ПАРТНЁРСКИЙ КАБИНЕТ · ДЕМО"), label("Всё для вашего салона.", 27, .semibold)],
+        spacing: 10))
+    let metrics = stack(
+      [
+        metric("В РЕЗЕРВЕ", "\(reserved)", plural(reserved, "заказ", "заказа", "заказов")),
+        metric("К ОТГРУЗКЕ", "\(scheduled)", plural(scheduled, "поставка", "поставки", "поставок")),
+      ], axis: .horizontal, spacing: 12)
+    metrics.distribution = .fillEqually
+    section(metrics)
+    let actions = stack(
+      [
+        ActionButton("Наличие", icon: "shippingbox", prominent: true) { [weak self] in
+          self?.tabBarController?.selectedIndex = 1
+        },
+        ActionButton("Поставки", icon: "truck.box") { [weak self] in
+          self?.tabBarController?.selectedIndex = 2
+        },
+      ], axis: .horizontal, spacing: 10)
+    actions.distribution = .fillEqually
+    section(actions)
+    if let last = orders.first {
+      section(
+        workspaceCard([
+          eyebrow("ПОСЛЕДНИЙ РЕЗЕРВ"),
+          label("\(last.id) · \(last.product?.name ?? "Salini")", 23, .semibold),
+          label(
+            "\(last.quantity) шт. · \(PartnerStore.warehouses[last.warehouse]) · \(last.scheduled ? "К отгрузке" : "В резерве")",
+            13, .regular, Palette.muted),
+          ActionButton("Открыть поставку", icon: "arrow.up.right") { [weak self] in
+            self?.navigationController?.pushViewController(
+              PartnerOrderController(last.id), animated: true)
+          },
+        ]))
+    } else {
+      section(
+        workspaceAction(
+          "Создать первый резерв", subtitle: "Выберите склад и количество изделий",
+          icon: "plus.square"
+        ) { [weak self] in self?.tabBarController?.selectedIndex = 1 })
+    }
+    section(
+      workspaceAction(
+        "Документы для экспозиции", subtitle: "3D-модели, размеры и чертежи", icon: "doc.text"
+      ) { [weak self] in
+        self?.navigationController?.pushViewController(ResourcesController(), animated: true)
+      })
+    let pic = photo("production", height: 170)
+    pic.rounded(24)
+    section(
+      stack([pic, label("За каждым изделием —\nточность производства.", 25, .medium)], spacing: 16))
+  }
+  private func section(_ v: UIView, top: CGFloat = 10, bottom: CGFloat = 10, inset: CGFloat = 20) {
+    let wrap = UIView()
+    v.translatesAutoresizingMaskIntoConstraints = false
+    wrap.addSubview(v)
     NSLayoutConstraint.activate([
-      modes.leadingAnchor.constraint(equalTo: modeWrap.leadingAnchor, constant: 22),
-      modes.trailingAnchor.constraint(equalTo: modeWrap.trailingAnchor, constant: -22),
-      modes.topAnchor.constraint(equalTo: modeWrap.topAnchor),
-      modes.bottomAnchor.constraint(equalTo: modeWrap.bottomAnchor, constant: -18),
+      v.topAnchor.constraint(equalTo: wrap.topAnchor, constant: top),
+      v.bottomAnchor.constraint(equalTo: wrap.bottomAnchor, constant: -bottom),
+      v.leadingAnchor.constraint(equalTo: wrap.leadingAnchor, constant: inset),
+      v.trailingAnchor.constraint(equalTo: wrap.trailingAnchor, constant: -inset),
     ])
-    add(modeWrap, inset: 0)
-    let role = DemoStore.shared.role
+    add(wrap, inset: 0)
+  }
+  private func metric(_ name: String, _ value: String, _ detail: String) -> UIView {
+    workspaceCard(
+      [eyebrow(name), label(value, 38, .medium), label(detail, 12, .regular, Palette.muted)],
+      spacing: 7)
+  }
+  private func swatches() -> UIView {
+    let shades: [(String, UIColor)] = [("S-Stone", UIColor(hex: 0xE9E7E2)), ("S-Sense", .white)]
+    let row = stack(
+      shades.map { name, color in
+        let chip = UIView()
+        chip.height(72)
+        chip.rounded(18)
+        chip.backgroundColor = color
+        chip.layer.borderWidth = 0.7
+        chip.layer.borderColor = Palette.line.cgColor
+        return stack([chip, label(name, 12, .medium)], spacing: 8)
+      }, axis: .horizontal, spacing: 14)
+    row.distribution = .fillEqually
+    return row
+  }
+  private func hero(
+    image: String, title: String, foot: String, detail: String, height: CGFloat,
+    action: @escaping () -> Void
+  ) -> UIView {
     let hero = UIView()
-    hero.height(446)
+    hero.height(height)
     hero.rounded(30)
-    hero.pin(photo("aria"))
+    hero.pin(photo(image))
     hero.pin(
       GradientView(
-        colors: [.black.withAlphaComponent(0.32), .clear, .black.withAlphaComponent(0.73)],
-        locations: [0, 0.46, 1]))
-    let topCopy = stack(
+        colors: [.black.withAlphaComponent(0.22), .clear, .black.withAlphaComponent(0.7)],
+        locations: [0, 0.4, 1]))
+    let top = stack(
       [
-        eyebrow("SALINI COLLECTION", color: .white.withAlphaComponent(0.7)),
-        label(
-          role == .home
-            ? "Дизайн, который\nчувствуешь."
-            : role == .atelier
-              ? "Пространство\nдля ваших идей." : "Новый взгляд\nна вашу экспозицию.", 32, .medium,
-          .white),
-      ], spacing: 12)
-    topCopy.translatesAutoresizingMaskIntoConstraints = false
-    hero.addSubview(topCopy)
-    NSLayoutConstraint.activate([
-      topCopy.topAnchor.constraint(equalTo: hero.topAnchor, constant: 26),
-      topCopy.leadingAnchor.constraint(equalTo: hero.leadingAnchor, constant: 24),
-      topCopy.trailingAnchor.constraint(equalTo: hero.trailingAnchor, constant: -24),
-    ])
-    let action = ActionButton("", icon: "arrow.up.right") { [weak self] in
-      if let p = Product.all.first(where: { $0.id == "aria" }) { self?.showProduct(p) }
-    }
-    action.configuration?.baseForegroundColor = .white
-    action.accessibilityLabel = "Открыть Aria"
-    action.widthAnchor.constraint(equalToConstant: 54).isActive = true
+        eyebrow("SALINI COLLECTION", color: .white.withAlphaComponent(0.8)),
+        label(title, 31, .medium, .white),
+      ], spacing: 13)
+    let b = ActionButton("", icon: "arrow.up.right", action: action)
+    b.configuration?.baseForegroundColor = .white
+    b.accessibilityLabel = "Открыть \(foot)"
+    b.widthAnchor.constraint(equalToConstant: 54).isActive = true
     let bottom = stack(
       [
         stack(
           [
-            label("Aria", 36, .regular, .white),
-            label("Скульптура повседневности", 13, .regular, .white.withAlphaComponent(0.72)),
-          ], spacing: 5), UIView(), action,
-      ], axis: .horizontal, spacing: 8)
+            label(foot, 32, .medium, .white),
+            label(detail, 12, .regular, .white.withAlphaComponent(0.75)),
+          ], spacing: 5), UIView(), b,
+      ], axis: .horizontal)
     bottom.alignment = .center
-    bottom.translatesAutoresizingMaskIntoConstraints = false
-    hero.addSubview(bottom)
-    NSLayoutConstraint.activate([
-      bottom.leadingAnchor.constraint(equalTo: hero.leadingAnchor, constant: 24),
-      bottom.trailingAnchor.constraint(equalTo: hero.trailingAnchor, constant: -22),
-      bottom.bottomAnchor.constraint(equalTo: hero.bottomAnchor, constant: -24),
-    ])
-    let heroWrap = UIView()
-    hero.translatesAutoresizingMaskIntoConstraints = false
-    heroWrap.addSubview(hero)
-    NSLayoutConstraint.activate([
-      hero.topAnchor.constraint(equalTo: heroWrap.topAnchor),
-      hero.bottomAnchor.constraint(equalTo: heroWrap.bottomAnchor),
-      hero.leadingAnchor.constraint(equalTo: heroWrap.leadingAnchor, constant: 16),
-      hero.trailingAnchor.constraint(equalTo: heroWrap.trailingAnchor, constant: -16),
-    ])
-    add(heroWrap, inset: 0)
-    let actionTitle =
-      role == .home
-      ? "Найти свою форму" : role == .atelier ? "Собрать проект" : "Подобрать коллекцию"
-    let roleAction = ActionButton(actionTitle, icon: role == .home ? "square.grid.2x2" : "plus") {
-      [weak self] in self?.tabBarController?.selectedIndex = role == .home ? 1 : 2
+    for sub in [top, bottom] {
+      sub.translatesAutoresizingMaskIntoConstraints = false
+      hero.addSubview(sub)
+      sub.leadingAnchor.constraint(equalTo: hero.leadingAnchor, constant: 24).isActive = true
+      sub.trailingAnchor.constraint(equalTo: hero.trailingAnchor, constant: -22).isActive = true
     }
-    add(roleAction, inset: 22)
-    if role != .home {
-      let pro = stack(
-        [
-          eyebrow(role == .atelier ? "ДЛЯ ДИЗАЙНЕРОВ" : "ДЛЯ ПАРТНЁРОВ"),
-          label(
-            role == .atelier ? "От идеи к спецификации." : "Всё для вашего салона.", 26, .medium),
-          label(
-            role == .atelier
-              ? "Изделия, материалы и технические файлы — в одном проекте."
-              : "Кураторская подборка для экспозиции. Сохраняйте состав и делитесь спецификацией.",
-            14, .regular, Palette.muted),
-        ], spacing: 12
-      ).inset(22)
-      pro.backgroundColor = .white
-      pro.rounded(25)
-      add(pro, inset: 22)
-    }
-    let heading = stack(
-      [
-        label("Избранные формы", 27, .semibold), UIView(),
-        label("01 — 04", 11, .medium, Palette.muted),
-      ], axis: .horizontal, spacing: 8)
-    heading.alignment = .center
-    add(heading, inset: 24)
-    let cards = Product.all.map { p -> UIView in
-      ProductTile(product: p) { [weak self] in self?.showProduct(p) }
-    }
-    add(horizontal(cards, width: 260, height: 345), inset: 0)
-    add(
-      stack(
-        [eyebrow("ВДОХНОВЕНИЕ SALINI"), label("Искусство\nличного пространства.", 31, .medium)],
-        spacing: 12), inset: 28)
-    let editorial = UIView()
-    editorial.height(360)
-    editorial.rounded(28)
-    editorial.pin(photo("interior"))
-    editorial.pin(GradientView(colors: [.clear, .black.withAlphaComponent(0.65)]))
-    let text = stack(
-      [
-        label("Классика\nв деталях.", 32, .medium, .white),
-        ActionButton("Внутри интерьера", icon: "arrow.up.right") { [weak self] in
-          self?.sheet(InspirationController())
-        },
-      ], spacing: 18)
-    (text.arrangedSubviews.last as? UIButton)?.configuration?.baseForegroundColor = .white
-    text.translatesAutoresizingMaskIntoConstraints = false
-    editorial.addSubview(text)
-    NSLayoutConstraint.activate([
-      text.leadingAnchor.constraint(equalTo: editorial.leadingAnchor, constant: 24),
-      text.trailingAnchor.constraint(equalTo: editorial.trailingAnchor, constant: -24),
-      text.bottomAnchor.constraint(equalTo: editorial.bottomAnchor, constant: -24),
-    ])
-    add(editorial, inset: 22)
-    add(
-      stack(
-        [
-          eyebrow("МАТЕРИЯ SALINI"), label("Совершенство\nна ощупь.", 31, .medium),
-          label(
-            "Литьевой камень. Чистая геометрия.\nВнимание к каждой поверхности.", 15, .regular,
-            Palette.muted),
-          ActionButton("О материалах", icon: "circle.lefthalf.filled") { [weak self] in
-            self?.sheet(MaterialsController())
-          },
-        ], spacing: 15))
+    top.topAnchor.constraint(equalTo: hero.topAnchor, constant: 25).isActive = true
+    bottom.bottomAnchor.constraint(equalTo: hero.bottomAnchor, constant: -24).isActive = true
+    return hero
   }
 }
 

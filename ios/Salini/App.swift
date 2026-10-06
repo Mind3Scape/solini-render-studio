@@ -168,17 +168,37 @@ func plural(_ count: Int, _ one: String, _ few: String, _ many: String) -> Strin
 }
 
 final class MainTabs: UITabBarController {
+  private let home = UINavigationController(rootViewController: HomeController())
+  private let profile = UINavigationController(rootViewController: ProfileController())
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = Palette.paper
-    let list: [(UIViewController, String, String)] = [
-      (HomeController(), "Мир Salini", "sparkles"),
-      (CatalogController(), "Коллекции", "square.grid.2x2"),
-      (ProjectsController(), "Проекты", "square.stack.3d.up"),
-      (ProfileController(), "Профиль", "person.crop.circle"),
+    tabBar.tintColor = Palette.ink
+    if #available(iOS 26.0, *) { tabBarMinimizeBehavior = .onScrollDown }
+    applyAudience()
+  }
+  func applyAudience() {
+    let role = DemoStore.shared.role
+    let second: UIViewController =
+      role == .home
+      ? CatalogController() : role == .atelier ? ResourcesController() : StockController()
+    let third: UIViewController =
+      role == .partner ? PartnerOrdersController() : ProjectsController()
+    let list: [(UINavigationController, String, String)] = [
+      (home, role == .home ? "Мир Salini" : "Главная", "sparkles"),
+      (
+        UINavigationController(rootViewController: second),
+        role == .home ? "Коллекции" : role == .atelier ? "Библиотека" : "Наличие",
+        role == .partner ? "shippingbox" : role == .atelier ? "cube" : "square.grid.2x2"
+      ),
+      (
+        UINavigationController(rootViewController: third),
+        role == .partner ? "Поставки" : role == .atelier ? "Спецификация" : "Проекты",
+        role == .partner ? "truck.box" : "square.stack.3d.up"
+      ),
+      (profile, "Профиль", "person.crop.circle"),
     ]
-    viewControllers = list.map { c, title, icon in
-      let nav = UINavigationController(rootViewController: c)
+    viewControllers = list.map { nav, title, icon in
       nav.tabBarItem = UITabBarItem(
         title: title, image: UIImage(systemName: icon),
         selectedImage: UIImage(systemName: icon + ".fill") ?? UIImage(systemName: icon))
@@ -186,7 +206,6 @@ final class MainTabs: UITabBarController {
       nav.navigationBar.tintColor = Palette.ink
       return nav
     }
-    tabBar.tintColor = Palette.ink
-    if #available(iOS 26.0, *) { tabBarMinimizeBehavior = .onScrollDown }
+    selectedIndex = 0
   }
 }

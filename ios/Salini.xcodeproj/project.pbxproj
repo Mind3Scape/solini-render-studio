@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		073AB33A6033AC73D703E608 /* ObjectViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC46B7DC8500987396D0C75D /* ObjectViewer.swift */; };
+		0C3BB687CDA086420032F89A /* Greca.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 922ABBCE95E286DB90AA532E /* Greca.usdz */; };
 		1E422D8F743225E5DC1C6C4B /* production.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D857B43F6F8433444EA53ADE /* production.jpg */; };
 		1F8FF3ED9FDF09276E732A12 /* Projects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 319851BB55623979FE40C513 /* Projects.swift */; };
 		2E61A4C6273A18A65C3B1151 /* stone.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 200C0338C7066941F0D41381 /* stone.jpg */; };
@@ -17,6 +19,7 @@
 		5A04D150B5857BBA96742663 /* oriente.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A177BC09A63FBF19E80DCF74 /* oriente.jpg */; };
 		655CB7EC2997AD545FD46A7B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1C21E6FCCD97876F706ADB2E /* Assets.xcassets */; };
 		664F09813FAF7AEA8DA33A77 /* opera-top.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6C53D942770B336103058500 /* opera-top.jpg */; };
+		6EC6836266FA7B8BAFDD4FF2 /* Workspaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA83A08C7BD246CAD8B10652 /* Workspaces.swift */; };
 		70405BBE76779F4C563F7B32 /* Owner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9455A5104B42AB58A498F29C /* Owner.swift */; };
 		865AFC3CCA56E15332577F41 /* salini-logo.svg in Resources */ = {isa = PBXBuildFile; fileRef = 71A0945E0526B6B9D34EAD27 /* salini-logo.svg */; };
 		8CC5A6E694E7E63798777106 /* aria-red.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FF8CC4938E4FEB8C56D0CF20 /* aria-red.jpg */; };
@@ -62,6 +65,7 @@
 		8533340A72EAF8A013360ECE /* FactoryScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactoryScene.swift; sourceTree = "<group>"; };
 		8B4382FB29F72EE1715DC2FF /* Salini.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Salini.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B9E9451C86A79C46812A25D /* opera.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = opera.jpg; sourceTree = "<group>"; };
+		922ABBCE95E286DB90AA532E /* Greca.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = Greca.usdz; sourceTree = "<group>"; };
 		9455A5104B42AB58A498F29C /* Owner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Owner.swift; sourceTree = "<group>"; };
 		A177BC09A63FBF19E80DCF74 /* oriente.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = oriente.jpg; sourceTree = "<group>"; };
 		A3AB58D801AACAB3369DA9D5 /* Design.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Design.swift; sourceTree = "<group>"; };
@@ -71,7 +75,9 @@
 		CEF9612034EAAC3B2E8AFDEE /* Aria-drawing.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "Aria-drawing.pdf"; sourceTree = "<group>"; };
 		D857B43F6F8433444EA53ADE /* production.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = production.jpg; sourceTree = "<group>"; };
 		D91143AF411A90AC2958AC84 /* luce.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = luce.jpg; sourceTree = "<group>"; };
+		DC46B7DC8500987396D0C75D /* ObjectViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectViewer.swift; sourceTree = "<group>"; };
 		EEBE649A6A1619D469DD965A /* Catalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Catalog.swift; sourceTree = "<group>"; };
+		FA83A08C7BD246CAD8B10652 /* Workspaces.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workspaces.swift; sourceTree = "<group>"; };
 		FF8CC4938E4FEB8C56D0CF20 /* aria-red.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "aria-red.jpg"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -110,6 +116,7 @@
 				A3AD3AD462395F7627F0F9ED /* aria.jpg */,
 				B84ADB80CC317232BF921570 /* catalog.json */,
 				4942620F24A4D8F0728613FA /* greca.jpg */,
+				922ABBCE95E286DB90AA532E /* Greca.usdz */,
 				3776267C1F0DB827DBEBB68A /* interior.jpg */,
 				D91143AF411A90AC2958AC84 /* luce.jpg */,
 				672B74F0BCED01A47E534CD1 /* opera-detail.jpg */,
@@ -134,9 +141,11 @@
 				8533340A72EAF8A013360ECE /* FactoryScene.swift */,
 				227902BDF40ADF52F72D7B54 /* Home.swift */,
 				7BAB34199B15CE6E53C954A2 /* Info.plist */,
+				DC46B7DC8500987396D0C75D /* ObjectViewer.swift */,
 				9455A5104B42AB58A498F29C /* Owner.swift */,
 				06B24C2D0832EF8D141B750A /* Profile.swift */,
 				319851BB55623979FE40C513 /* Projects.swift */,
+				FA83A08C7BD246CAD8B10652 /* Workspaces.swift */,
 				C4DF24F3466449F744DDB0B7 /* Resources */,
 			);
 			path = Salini;
@@ -219,6 +228,7 @@
 			files = (
 				B05E098BB5A23A647FB95239 /* Aria-drawing.pdf in Resources */,
 				655CB7EC2997AD545FD46A7B /* Assets.xcassets in Resources */,
+				0C3BB687CDA086420032F89A /* Greca.usdz in Resources */,
 				8CC5A6E694E7E63798777106 /* aria-red.jpg in Resources */,
 				56B48C7F86569A1C65D45047 /* aria.jpg in Resources */,
 				8FCBD77FB5FBC3C00B8CE17A /* catalog.json in Resources */,
@@ -256,9 +266,11 @@
 				E3870384C2CE964391CDB5E5 /* Design.swift in Sources */,
 				C919C35BF39AFCF7A2620366 /* FactoryScene.swift in Sources */,
 				C1E3CF871A14297CBBCB4D68 /* Home.swift in Sources */,
+				073AB33A6033AC73D703E608 /* ObjectViewer.swift in Sources */,
 				70405BBE76779F4C563F7B32 /* Owner.swift in Sources */,
 				A8A3AAA247C5A742B2F740B7 /* Profile.swift in Sources */,
 				1F8FF3ED9FDF09276E732A12 /* Projects.swift in Sources */,
+				6EC6836266FA7B8BAFDD4FF2 /* Workspaces.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

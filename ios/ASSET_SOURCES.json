@@ -19,9 +19,9 @@
   },
   {
     "asset": "greca.jpg",
-    "source_url": "https://cdn-salini.storage.yandexcloud.net/iblock/636/636f240358f77c7d74c49c503eced8a4/Greca_1.jpg",
-    "source_page": "https://salini-srl.com/collection/greca/",
-    "usage": "Salini concept prototype; original brand image, resized without generative changes"
+    "source_url": "https://cdn-salini.storage.yandexcloud.net/iblock/b77/ryi308cf93udj25g1u8ajlhfz73b40l5/грека3.jpg",
+    "source_page": "https://salini-srl.com/vanny/otdelnostoyashchie/greca/180/",
+    "usage": "Official white Greca product image, copied without changes"
   },
   {
     "asset": "aria.jpg",
@@ -74,5 +74,10 @@
     "asset": "Aria-drawing.pdf",
     "source_page": "https://salini-srl.com/vanny/otdelnostoyashchie/aria/",
     "usage": "Original public technical drawing."
+  },
+  {
+    "asset": "Greca.usdz",
+    "source_url": "https://cdn-salini.storage.yandexcloud.net/iblock/a52/a52d862ff28f502e981fa3450bae168c/Greca.usdz",
+    "usage": "Unmodified official Salini 3D geometry; native SceneKit preview with presentation materials and designer USDZ export"
   }
 ]
