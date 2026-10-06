@@ -25,11 +25,20 @@ final class HomeController: ScrollController, UIScrollViewDelegate {
     super.viewWillDisappear(animated)
     visible = false
     materials?.sceneView.active = false
+    gallery?.active = false
   }
   func scrollViewDidScroll(_ scrollView: UIScrollView) { updateMaterialPlayback() }
   private func updateMaterialPlayback() {
-    guard let scene = materials?.sceneView else { return }
-    scene.active = visible && scene.convert(scene.bounds, to: scroll).intersects(scroll.bounds)
+    if let scene = materials?.sceneView {
+      scene.active = visible && scene.convert(scene.bounds, to: scroll).intersects(scroll.bounds)
+    }
+    if let gallery {
+      let rect = gallery.convert(gallery.bounds, to: scroll)
+      let intersection = rect.intersection(scroll.bounds)
+      gallery.active =
+        visible && DemoStore.shared.role == .home
+        && !intersection.isNull && intersection.height > rect.height * 0.25
+    }
   }
   private func openMaterials(_ material: SaliniMaterial) {
     let nav = UINavigationController(rootViewController: MaterialStudioController(material))
@@ -67,6 +76,7 @@ final class HomeController: ScrollController, UIScrollViewDelegate {
   private func render() {
     materialChoice = materials?.selected ?? materialChoice
     materials?.sceneView.active = false
+    gallery?.active = false
     content.arrangedSubviews.forEach { $0.removeFromSuperview() }
     let role = DemoStore.shared.role
     let logo = UIImageView(
@@ -137,7 +147,19 @@ final class HomeController: ScrollController, UIScrollViewDelegate {
   }
   private func buyer() {
     let selected = gallery?.selectedIndex ?? 0
-    let covers = CollectionGallery { [weak self] id in
+    let progress = gallery?.cinemaProgress ?? 0
+    let covers = CollectionGallery(progress: progress, paused: gallery?.cinemaPaused ?? false) {
+      [weak self] id in
+      if id == "ninfea", let self {
+        let story = NinfeaStoryController(
+          progress: self.gallery?.cinemaProgress ?? 0,
+          paused: self.gallery?.cinemaPaused ?? false)
+        story.onClose = { [weak self] progress, paused in
+          self?.gallery?.restoreCinema(progress: progress, paused: paused)
+        }
+        self.present(story, animated: true)
+        return
+      }
       if let product = Product.all.first(where: { $0.id == id }) { self?.showProduct(product) }
     }
     gallery = covers

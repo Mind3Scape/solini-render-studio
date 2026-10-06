@@ -85,5 +85,47 @@
     "source_url": "https://cdn-salini.storage.yandexcloud.net/iblock/636/636f240358f77c7d74c49c503eced8a4/Greca_1.jpg",
     "source_page": "https://salini-srl.com/",
     "usage": "Original Salini interior image; editorial collection cover with responsive focal crop"
+  },
+  {
+    "asset": "ninfea-official.webp",
+    "source_url": "https://cdn-salini.storage.yandexcloud.net/iblock/dc6/dc630657433170a717b992cf780c316a/3840 _01_.webp",
+    "source_page": "https://salini-srl.com/collection/ninfea/",
+    "usage": "Unmodified official emerald Ninfea photograph in collection information; geometry reference for the concept campaign."
+  },
+  {
+    "asset": "ninfea-interior.png",
+    "source_page": "https://salini-srl.com/collection/ninfea/",
+    "reference_images": [
+      "https://cdn-salini.storage.yandexcloud.net/iblock/dc6/dc630657433170a717b992cf780c316a/3840 _01_.webp",
+      "https://cdn-salini.storage.yandexcloud.net/iblock/116/116145e9556abbe73a8eb7f96820573c/3840 _02_.webp"
+    ],
+    "generation_mode": "built-in imagegen",
+    "generated_on": "2026-10-06",
+    "prompts": "research/ninfea-cinema-2026-10-06/PROMPTS.md",
+    "usage": "AI campaign concept based on official Ninfea product references. Original product silhouette guided by photographs; generated environment, not official photography, exact CAD geometry or a color proof. Keyframes animated locally with Metal."
+  },
+  {
+    "asset": "ninfea-water.png",
+    "source_page": "https://salini-srl.com/collection/ninfea/",
+    "reference_images": [
+      "https://cdn-salini.storage.yandexcloud.net/iblock/dc6/dc630657433170a717b992cf780c316a/3840 _01_.webp",
+      "https://cdn-salini.storage.yandexcloud.net/iblock/116/116145e9556abbe73a8eb7f96820573c/3840 _02_.webp"
+    ],
+    "generation_mode": "built-in imagegen",
+    "generated_on": "2026-10-06",
+    "prompts": "research/ninfea-cinema-2026-10-06/PROMPTS.md",
+    "usage": "AI campaign concept based on official Ninfea product references. Original product silhouette guided by photographs; generated environment, not official photography, exact CAD geometry or a color proof. Keyframes animated locally with Metal."
+  },
+  {
+    "asset": "ninfea-garden.png",
+    "source_page": "https://salini-srl.com/collection/ninfea/",
+    "reference_images": [
+      "https://cdn-salini.storage.yandexcloud.net/iblock/dc6/dc630657433170a717b992cf780c316a/3840 _01_.webp",
+      "https://cdn-salini.storage.yandexcloud.net/iblock/116/116145e9556abbe73a8eb7f96820573c/3840 _02_.webp"
+    ],
+    "generation_mode": "built-in imagegen",
+    "generated_on": "2026-10-06",
+    "prompts": "research/ninfea-cinema-2026-10-06/PROMPTS.md",
+    "usage": "AI campaign concept based on official Ninfea product references. Original product silhouette guided by photographs; generated environment, not official photography, exact CAD geometry or a color proof. Keyframes animated locally with Metal."
   }
 ]

@@ -1,6 +1,6 @@
 import UIKit
 
-/// An editorial, manually paged collection cover. No timer interrupts browsing.
+/// Manually selected collections. Ninfea contains its own film; it never turns the page.
 final class CollectionGallery: UIView, UIScrollViewDelegate {
   struct Story {
     let id: String
@@ -11,6 +11,9 @@ final class CollectionGallery: UIView, UIScrollViewDelegate {
     let focus: CGFloat
   }
   static let stories = [
+    Story(
+      id: "ninfea", name: "Ninfea", image: "ninfea-garden", headline: "Природа\nобретает форму.",
+      caption: "Вдохновлена водяной лилией.", focus: 0.5),
     Story(
       id: "aria", name: "Aria", image: "aria", headline: "Архитектура\nспокойствия.",
       caption: "Чистота линии. Сила формы.", focus: 0.5),
@@ -26,7 +29,13 @@ final class CollectionGallery: UIView, UIScrollViewDelegate {
   private var selectors: [UIButton] = []
   private var previousWidth: CGFloat = 0
   private(set) var selectedIndex = 0
-  init(open: @escaping (String) -> Void) {
+  var active = false { didSet { updatePlayback() } }
+  var cinemaProgress: Double { pages.first?.cinema?.timeline.progress ?? 0 }
+  var cinemaPaused: Bool { pages.first?.cinema?.userPaused ?? false }
+  func restoreCinema(progress: Double, paused: Bool) {
+    pages.first?.cinema?.restore(progress: progress, paused: paused)
+  }
+  init(progress: Double = 0, paused: Bool = false, open: @escaping (String) -> Void) {
     super.init(frame: .zero)
     pager.isPagingEnabled = true
     pager.showsHorizontalScrollIndicator = false
@@ -37,20 +46,28 @@ final class CollectionGallery: UIView, UIScrollViewDelegate {
     pager.translatesAutoresizingMaskIntoConstraints = false
     addSubview(pager)
     for story in Self.stories {
-      let page = CollectionPage(story) { open(story.id) }
+      let page = CollectionPage(story, progress: progress, paused: paused) { open(story.id) }
       pages.append(page)
       pager.addSubview(page)
     }
-    let index = stack([], axis: .horizontal, spacing: 14)
+    let index = stack([], axis: .horizontal, spacing: 10)
     index.distribution = .fillEqually
     for (i, story) in Self.stories.enumerated() {
       let button = UIButton(type: .system)
       var configuration = UIButton.Configuration.plain()
-      configuration.title = "0\(i + 1)   \(story.name)"
+      configuration.title = story.name
+      configuration.subtitle = "0\(i + 1)"
+      configuration.titleAlignment = .leading
+      configuration.titlePadding = 5
       configuration.contentInsets = .init(top: 14, leading: 0, bottom: 13, trailing: 0)
       configuration.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer {
         var a = $0
         a.font = .systemFont(ofSize: 12, weight: .medium)
+        return a
+      }
+      configuration.subtitleTextAttributesTransformer = UIConfigurationTextAttributesTransformer {
+        var a = $0
+        a.font = .monospacedDigitSystemFont(ofSize: 9, weight: .regular)
         return a
       }
       button.configuration = configuration
@@ -66,7 +83,7 @@ final class CollectionGallery: UIView, UIScrollViewDelegate {
       pager.topAnchor.constraint(equalTo: topAnchor),
       pager.leadingAnchor.constraint(equalTo: leadingAnchor),
       pager.trailingAnchor.constraint(equalTo: trailingAnchor),
-      pager.heightAnchor.constraint(equalToConstant: 390),
+      pager.heightAnchor.constraint(equalTo: pager.widthAnchor, multiplier: 1.30),
       index.topAnchor.constraint(equalTo: pager.bottomAnchor, constant: 5),
       index.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 6),
       index.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -6),
@@ -123,18 +140,50 @@ final class CollectionGallery: UIView, UIScrollViewDelegate {
       }
       mark.backgroundColor = i == index ? Palette.ink : Palette.line
     }
+    updatePlayback()
+  }
+  private func updatePlayback() {
+    for (i, page) in pages.enumerated() { page.cinema?.active = active && i == selectedIndex }
   }
 }
 
 private final class CollectionPage: UIView {
   private let picture: UIImageView
   private let focus: CGFloat
+  let cinema: NinfeaCinemaView?
   var parallax: CGFloat = 0 { didSet { setNeedsLayout() } }
-  init(_ story: CollectionGallery.Story, open: @escaping () -> Void) {
+  init(_ story: CollectionGallery.Story, progress: Double, paused: Bool, open: @escaping () -> Void)
+  {
     picture = photo(story.image)
     focus = story.focus
+    cinema = story.id == "ninfea" ? NinfeaCinemaView(progress: progress, paused: paused) : nil
     super.init(frame: .zero)
     clipsToBounds = true
+    if let cinema {
+      pin(cinema)
+      pin(
+        GradientView(
+          colors: [
+            .black.withAlphaComponent(0.40), .clear, .clear, .black.withAlphaComponent(0.58),
+          ],
+          locations: [0, 0.36, 0.70, 1]))
+      let top = stack(
+        [
+          eyebrow("COLLEZIONE 01", color: .white.withAlphaComponent(0.78)),
+          label("Ninfea", 44, .light, .white),
+          label("Природа обретает форму.", 13, .regular, .white.withAlphaComponent(0.9)),
+        ], spacing: 8)
+      let controls = NinfeaCinemaControls(cinema: cinema, expand: open)
+      for v in [top, controls] {
+        v.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(v)
+        v.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 22).isActive = true
+        v.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -22).isActive = true
+      }
+      top.topAnchor.constraint(equalTo: topAnchor, constant: 26).isActive = true
+      controls.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20).isActive = true
+      return
+    }
     addSubview(picture)
     pin(
       GradientView(
@@ -172,6 +221,7 @@ private final class CollectionPage: UIView {
   required init?(coder: NSCoder) { fatalError() }
   override func layoutSubviews() {
     super.layoutSubviews()
+    guard cinema == nil else { return }
     guard let image = picture.image, bounds.height > 0 else { return }
     let ratio = image.size.width / image.size.height
     let h = max(bounds.height, bounds.width / ratio) * 1.025

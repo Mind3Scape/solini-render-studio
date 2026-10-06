@@ -216,4 +216,65 @@ final class SaliniTests: XCTestCase {
     XCTAssertEqual(simulation.events, events)
     XCTAssertTrue(simulation.events[0].contains("Москва"))
   }
+  func testNinfeaFilmHasDistinctScenesAndContinuousLoop() {
+    var film = NinfeaTimeline()
+    film.seek(NinfeaTimeline.chapterTimes[0] / NinfeaTimeline.duration)
+    XCTAssertEqual(film.water, 0)
+    XCTAssertEqual(film.garden, 0)
+    film.seek(NinfeaTimeline.chapterTimes[1] / NinfeaTimeline.duration)
+    XCTAssertEqual(film.water, 1)
+    XCTAssertEqual(film.garden, 0)
+    XCTAssertEqual(film.chapter, 1)
+    film.seek(NinfeaTimeline.chapterTimes[2] / NinfeaTimeline.duration)
+    XCTAssertEqual(film.garden, 1)
+    XCTAssertEqual(film.dissolve, 0)
+    XCTAssertEqual(film.chapter, 2)
+    film.seek(1)
+    XCTAssertEqual(film.dissolve, 1)
+    XCTAssertEqual(film.zoom, 1, accuracy: 0.0001)
+    film.advance(0.04)
+    XCTAssertEqual(film.seconds, 0.04, accuracy: 0.0001)
+    XCTAssertEqual(film.water, 0)
+    XCTAssertEqual(film.garden, 0)
+    film.seek(-2)
+    XCTAssertEqual(film.seconds, 0)
+    film.seek(.nan)
+    film.advance(.infinity)
+    XCTAssertEqual(film.seconds, 0)
+  }
+  @MainActor func testNinfeaFramesAndRealGPUPipelineLoad() throws {
+    let assets = NinfeaCinemaAssets.shared
+    XCTAssertNil(assets.error)
+    XCTAssertNotNil(assets.pipeline)
+    XCTAssertNotNil(assets.queue)
+    XCTAssertEqual(assets.textures.count, 3)
+    for texture in assets.textures {
+      XCTAssertEqual(texture.width, 1024)
+      XCTAssertEqual(texture.height, 1536)
+    }
+    XCTAssertNotNil(UIImage(named: "ninfea-official.webp"))
+    XCTAssertEqual(CollectionGallery.stories.first?.id, "ninfea")
+    let cinema = NinfeaCinemaView()
+    cinema.seek(0.5)
+    XCTAssertTrue(cinema.userPaused)
+    XCTAssertFalse(cinema.isPlaying)
+    cinema.chapter(2)
+    XCTAssertEqual(cinema.timeline.chapter, 2)
+    cinema.replay()
+    XCTAssertFalse(cinema.userPaused)
+    XCTAssertEqual(cinema.timeline.seconds, 0)
+    // A detached/recycled hero must never keep a display link running.
+    cinema.active = true
+    XCTAssertFalse(cinema.isPlaying)
+    let gallery = CollectionGallery(progress: 0.42, paused: true) { _ in }
+    XCTAssertEqual(gallery.cinemaProgress, 0.42, accuracy: 0.0001)
+    XCTAssertTrue(gallery.cinemaPaused)
+    gallery.restoreCinema(progress: 0.7, paused: false)
+    XCTAssertEqual(gallery.cinemaProgress, 0.7, accuracy: 0.0001)
+    XCTAssertFalse(gallery.cinemaPaused)
+    let fullScreen = NinfeaStoryController()
+    fullScreen.loadViewIfNeeded()
+    let info = NinfeaInformationController()
+    info.loadViewIfNeeded()
+  }
 }

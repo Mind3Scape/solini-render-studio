@@ -1,0 +1,36 @@
+# Ninfea — imagegen prompts
+
+Mode: built-in imagegen. Created 6 October 2026. Three sequential edits using official Salini product photography as geometry reference, then the preceding generated frame as the locked-camera reference. Images are campaign concepts, not official Salini photography or exact CAD renders.
+
+Official references: https://salini-srl.com/collection/ninfea/ and https://salini-srl.com/vanny/otdelnostoyashchie/ninfea/
+
+Assets: `ios/Salini/Resources/ninfea-interior.png`, `ninfea-water.png`, `ninfea-garden.png`.
+
+## Frame 1
+
+Create the FIRST KEYFRAME of a luxury SALINI NINFEA bathtub campaign, an exceptionally photorealistic architectural product visualization with Cinema 4D / Octane quality. Portrait 2:3 composition, high resolution.
+
+The two attached official product photographs are GEOMETRY REFERENCES for the SAME real bathtub. Faithfully preserve the emerald green NINFEA bathtub: broad, flat horizontal wing-like projecting rim with soft rectangular outer perimeter, elongated oval bathing cavity, sculpted rounded but almost vertical green side walls, narrow dark translucent recessed plinth at the base. The wings are a defining feature; this is NOT a generic egg-shaped freestanding bathtub. Do not change its proportions, shape, green color, or rim thickness. No brand marks added. The product should remain recognizable as the exact referenced real product.
+
+Re-stage this SAME bathtub in a new refined architectural space: tall quiet limestone pavilion, warm ivory mineral plaster, pale sand stone floor, a single large open portal in the back-right opening to softly out-of-focus green trees. A quiet vertical wall left, one monolithic low stone step. The emerald green bathtub is the only hero object, seen in fixed three-quarter view from slightly above, entire outline visible, centered horizontally, occupying about 80 percent of the frame width, rim at about 54 percent image height and base at about 73 percent. Keep generous architectural negative space in the upper third, breathing room below. Camera about 45mm architectural lens, absolutely straight verticals, restrained editorial asymmetry. Remove the source's busy marble, accessories, stools, toilet and fixtures; no faucet or plumbing visible. Empty dry tub, dry floor. No plants in foreground yet. The distant green outside the portal is just a subtle promise of nature.
+
+Soft early morning daylight from upper left, delicate sun shafts, immaculate microtextures and believable contact shadows, green glaze is matte satin mineral cast, NOT glossy plastic. Very expensive Italian design magazine / luxury fragrance film still; nuanced warm neutral highlights and deep bottle-green shadows. No oversaturated fantasy. Photoreal, no illustration, no text, no borders, no watermark, no humans. This is a locked-camera base frame that will later be edited into the exact same room gently flooded with reflective water and then into a water-lily garden. Prioritize impeccable bathtub geometry, clean architecture, and calm cinematic light.
+
+## Frame 2
+
+Edit the FIRST attached image into the SECOND KEYFRAME of the same luxury Salini Ninfea cinematic campaign: WATER AWAKENS. The second attachment is the official bathtub reference only for preserving product geometry.
+
+LOCK THE CAMERA AND ALL PIXEL POSITIONS from the first image. Same portrait 2:3 canvas, lens, identical architectural walls, portal, perspective, crop, tub location, tub outline and emerald green mineral finish. The green NINFEA tub must be exactly the same real object with its distinctive broad thin wing rim and dark recessed base. Do not move, redesign, stretch, enlarge or rotate it. Preserve the upper architecture and distant trees.
+
+Make ONLY the following environmental changes: the bathtub is now filled with exquisitely clear still water to just below the rim, reflecting soft green and daylight, with one subtle concentric ripple. The pale stone floor has become a shallow reflecting pool, just 3 cm of water, with the stone still visible underneath; mirror reflections of the green bathtub, walls and sunlight, extremely fine surface ripples. Water laps softly at the base; tub is still standing on the same level floor. A small group of realistic dark green round water-lily pads enters at the bottom-left edge, another two at the lower-right, and a restrained single fern frond at the far left margin. The middle and upper room stay empty and serene. No dense jungle yet. No flowers yet. No fountains, running taps, waterfalls, splashes or magic effects. It must feel like one continuous shot, only water and the first plants emerging. Photorealistic ultra high-end Cinema 4D / Octane frame, grounded sophisticated botanical luxury, precise contact shadows, subtle cinematic caustics on the floor. Keep exactly the same lighting direction and exposure. No text, labels, humans or watermark.
+
+## Frame 3
+
+Edit the first attached image into the THIRD AND FINAL KEYFRAME of a luxury Salini Ninfea film: THE WATER-LILY GARDEN. The second image is the original dry room for continuity; the third is the official product shape reference.
+
+EXACTLY LOCK the composition to the FIRST image: same portrait 2:3 canvas, same perspective, bathtub coordinates, emerald green bathtub silhouette, broad thin horizontal wing rim, dark recessed plinth, same stone architecture and portal positions. Do not rotate, move, rescale or redesign the tub. Preserve its complete defining upper rim and most of its green front face. Maintain the water inside the tub and the shallow reflective pool on the floor.
+
+Now let an extraordinary lush sculptural botanical garden inhabit the space, like a 250,000 euro Italian design brand Cinema4D campaign film. Real botanical sophistication, not generic jungle wallpaper. Large sculpted deep green philodendron leaves rise along the far LEFT side and lower RIGHT side, their graceful stems arc around the base and carefully embrace the OUTER ends of the bathtub, with a few small leaves gently overlapping only the bottom corners and outer edges. Ferns, delicate vines and a restrained group of water lilies with two creamy white blossoms float in the foreground pool. A luxuriant yet composed vertical plant grouping grows behind the bathtub at LEFT, tapering into negative space near the top. The back-right portal now frames a richer misty botanical garden, softly focused. Keep the center of the upper wall mostly calm limestone, a sunlit negative space for editorial typography. Do not cover the tub's bathing cavity or the broad wing rim with plants. NO plants growing from inside the basin: clear reflective bathing water inside, lush foliage OUTSIDE. A slight veil of low humid mist over the pool far behind. Subtle light shafts filtered by foliage and beautiful dappled shadows, photographic depth, dark forest greens contrasted with the luminous matte emerald mineral tub and warm limestone. No neon colors or impossible vegetation.
+
+Premium, restrained, atmospheric, exquisitely photoreal botanical still life. The visual story is that the architecture quietly becomes a living water garden while the exact real Salini product remains the protagonist. Preserve identical lighting direction, product dimensions and locked camera. No text, no watermark, no people, no butterflies, no magical sparkles.
+
