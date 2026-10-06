@@ -12,7 +12,7 @@ final class CollectionGallery: UIView, UIScrollViewDelegate {
   }
   static let stories = [
     Story(
-      id: "ninfea", name: "Ninfea", image: "ninfea-garden", headline: "Природа\nобретает форму.",
+      id: "ninfea", name: "Ninfea", image: "ninfea-poster-v2", headline: "Природа\nобретает форму.",
       caption: "Вдохновлена водяной лилией.", focus: 0.5),
     Story(
       id: "aria", name: "Aria", image: "aria", headline: "Архитектура\nспокойствия.",

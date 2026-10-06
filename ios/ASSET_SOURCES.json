@@ -102,7 +102,7 @@
     "generation_mode": "built-in imagegen",
     "generated_on": "2026-10-06",
     "prompts": "research/ninfea-cinema-2026-10-06/PROMPTS.md",
-    "usage": "AI campaign concept based on official Ninfea product references. Original product silhouette guided by photographs; generated environment, not official photography, exact CAD geometry or a color proof. Keyframes animated locally with Metal."
+    "usage": "AI campaign concept guided by official Ninfea photographs, not exact CAD geometry. Locked background and empty-water keyframe for the V2 offline film."
   },
   {
     "asset": "ninfea-water.png",
@@ -114,7 +114,7 @@
     "generation_mode": "built-in imagegen",
     "generated_on": "2026-10-06",
     "prompts": "research/ninfea-cinema-2026-10-06/PROMPTS.md",
-    "usage": "AI campaign concept based on official Ninfea product references. Original product silhouette guided by photographs; generated environment, not official photography, exact CAD geometry or a color proof. Keyframes animated locally with Metal."
+    "usage": "Historical V1 generated keyframe/reference. Replaced in the live experience by the V2 rendered film."
   },
   {
     "asset": "ninfea-garden.png",
@@ -126,6 +126,70 @@
     "generation_mode": "built-in imagegen",
     "generated_on": "2026-10-06",
     "prompts": "research/ninfea-cinema-2026-10-06/PROMPTS.md",
-    "usage": "AI campaign concept based on official Ninfea product references. Original product silhouette guided by photographs; generated environment, not official photography, exact CAD geometry or a color proof. Keyframes animated locally with Metal."
+    "usage": "Historical V1 generated keyframe/reference. Replaced in the live experience by the V2 rendered film."
+  },
+  {
+    "asset": "research/ninfea-cinema-2026-10-06/v2/assets/water-20.png",
+    "source_page": "https://salini-srl.com/collection/ninfea/",
+    "generation_mode": "built-in imagegen",
+    "generated_on": "2026-10-06",
+    "prompts": "research/ninfea-cinema-2026-10-06/v2/PROMPTS.md",
+    "usage": "Offline film source: low water level, locked camera"
+  },
+  {
+    "asset": "research/ninfea-cinema-2026-10-06/v2/assets/water-50.png",
+    "source_page": "https://salini-srl.com/collection/ninfea/",
+    "generation_mode": "built-in imagegen",
+    "generated_on": "2026-10-06",
+    "prompts": "research/ninfea-cinema-2026-10-06/v2/PROMPTS.md",
+    "usage": "Offline film source: middle water level, locked camera"
+  },
+  {
+    "asset": "research/ninfea-cinema-2026-10-06/v2/assets/water-75.png",
+    "source_page": "https://salini-srl.com/collection/ninfea/",
+    "generation_mode": "built-in imagegen",
+    "generated_on": "2026-10-06",
+    "prompts": "research/ninfea-cinema-2026-10-06/v2/PROMPTS.md",
+    "usage": "Offline film source: high water level, locked camera"
+  },
+  {
+    "asset": "research/ninfea-cinema-2026-10-06/v2/assets/water-pool.png",
+    "source_page": "https://salini-srl.com/collection/ninfea/",
+    "generation_mode": "built-in imagegen",
+    "generated_on": "2026-10-06",
+    "prompts": "research/ninfea-cinema-2026-10-06/v2/PROMPTS.md",
+    "usage": "Offline film source: full bath and shallow reflective floor, no vegetation"
+  },
+  {
+    "asset": "research/ninfea-cinema-2026-10-06/v2/assets/foliage-rear.png",
+    "source_page": "https://salini-srl.com/collection/ninfea/",
+    "generation_mode": "built-in imagegen",
+    "generated_on": "2026-10-06",
+    "prompts": "research/ninfea-cinema-2026-10-06/v2/PROMPTS.md",
+    "usage": "Offline film source: transparent rear canopy pass"
+  },
+  {
+    "asset": "research/ninfea-cinema-2026-10-06/v2/assets/foliage-front.png",
+    "source_page": "https://salini-srl.com/collection/ninfea/",
+    "generation_mode": "built-in imagegen",
+    "generated_on": "2026-10-06",
+    "prompts": "research/ninfea-cinema-2026-10-06/v2/PROMPTS.md",
+    "usage": "Offline film source: transparent foreground leaves and lilies pass"
+  },
+  {
+    "asset": "research/ninfea-cinema-2026-10-06/v2/assets/climbing-vine.png",
+    "source_page": "https://salini-srl.com/collection/ninfea/",
+    "generation_mode": "built-in imagegen",
+    "generated_on": "2026-10-06",
+    "prompts": "research/ninfea-cinema-2026-10-06/v2/PROMPTS.md",
+    "usage": "Offline film source: transparent vine pass, registered to the tub surface in the compositor"
+  },
+  {
+    "asset": "ninfea-film-v2.mp4 / ninfea-poster-v2.png",
+    "generated_on": "2026-10-06",
+    "generation_mode": "Local Swift + Metal composition and RifeMetal / Practical-RIFE 4.26 HQ interpolation",
+    "source": "scripts/ninfea-render",
+    "manifest": "research/ninfea-cinema-2026-10-06/v2/render.json",
+    "usage": "30-second 1024x1536 30fps conceptual campaign movie; not official footage or a physically simulated CAD scene. No neural runtime or weights shipped in the iOS app."
   }
 ]

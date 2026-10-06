@@ -1,0 +1,13 @@
+{
+  "duration" : 30,
+  "elapsed_seconds" : 48.955464005470276,
+  "fps" : 30,
+  "frames" : 900,
+  "gpu" : "Apple M4 Pro",
+  "height" : 1536,
+  "inferences" : 567,
+  "output" : "\/Users\/daviddoronin\/Documents\/ChatGPT\/Salini\/ios\/.build\/ninfea-v2\/ninfea-film-1791270937.mp4",
+  "rife" : "4.26 HQ",
+  "rife_metal_revision" : "1fef4869a44fca32848102b9f6a774a20eb50db6",
+  "width" : 1024
+}

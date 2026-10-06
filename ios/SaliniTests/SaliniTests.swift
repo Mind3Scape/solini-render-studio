@@ -1,3 +1,4 @@
+import AVFoundation
 import SceneKit
 import XCTest
 
@@ -216,42 +217,53 @@ final class SaliniTests: XCTestCase {
     XCTAssertEqual(simulation.events, events)
     XCTAssertTrue(simulation.events[0].contains("Москва"))
   }
-  func testNinfeaFilmHasDistinctScenesAndContinuousLoop() {
+  func testNinfeaClockHoldsTheGardenAndBoundsSeeking() {
     var film = NinfeaTimeline()
-    film.seek(NinfeaTimeline.chapterTimes[0] / NinfeaTimeline.duration)
-    XCTAssertEqual(film.water, 0)
-    XCTAssertEqual(film.garden, 0)
-    film.seek(NinfeaTimeline.chapterTimes[1] / NinfeaTimeline.duration)
-    XCTAssertEqual(film.water, 1)
-    XCTAssertEqual(film.garden, 0)
-    XCTAssertEqual(film.chapter, 1)
-    film.seek(NinfeaTimeline.chapterTimes[2] / NinfeaTimeline.duration)
-    XCTAssertEqual(film.garden, 1)
-    XCTAssertEqual(film.dissolve, 0)
-    XCTAssertEqual(film.chapter, 2)
-    film.seek(1)
-    XCTAssertEqual(film.dissolve, 1)
-    XCTAssertEqual(film.zoom, 1, accuracy: 0.0001)
-    film.advance(0.04)
-    XCTAssertEqual(film.seconds, 0.04, accuracy: 0.0001)
-    XCTAssertEqual(film.water, 0)
-    XCTAssertEqual(film.garden, 0)
+    for index in NinfeaTimeline.chapterTimes.indices {
+      film.seek(NinfeaTimeline.chapterTimes[index] / NinfeaTimeline.duration)
+      XCTAssertEqual(film.chapter, index)
+    }
+    film.seek(0.99)
+    film.advance(2)
+    XCTAssertEqual(film.seconds, 30)
+    XCTAssertTrue(film.ended)
+    film.advance(0.1)
+    XCTAssertEqual(film.seconds, 30)
     film.seek(-2)
     XCTAssertEqual(film.seconds, 0)
     film.seek(.nan)
     film.advance(.infinity)
     XCTAssertEqual(film.seconds, 0)
+    film.seek(5)
+    XCTAssertTrue(film.ended)
   }
-  @MainActor func testNinfeaFramesAndRealGPUPipelineLoad() throws {
-    let assets = NinfeaCinemaAssets.shared
-    XCTAssertNil(assets.error)
-    XCTAssertNotNil(assets.pipeline)
-    XCTAssertNotNil(assets.queue)
-    XCTAssertEqual(assets.textures.count, 3)
-    for texture in assets.textures {
-      XCTAssertEqual(texture.width, 1024)
-      XCTAssertEqual(texture.height, 1536)
+  func testBundledNinfeaMovieHasActualDecodableIntermediateFrames() async throws {
+    let url = try XCTUnwrap(NinfeaCinemaAssets.filmURL)
+    let asset = AVURLAsset(url: url)
+    let duration = try await asset.load(.duration)
+    XCTAssertEqual(duration.seconds, NinfeaTimeline.duration, accuracy: 0.04)
+    let tracks = try await asset.loadTracks(withMediaType: .video)
+    let track = try XCTUnwrap(tracks.first)
+    let size = try await track.load(.naturalSize)
+    let rate = try await track.load(.nominalFrameRate)
+    XCTAssertEqual(size, CGSize(width: 1024, height: 1536))
+    XCTAssertEqual(rate, 30, accuracy: 0.01)
+    let generator = AVAssetImageGenerator(asset: asset)
+    generator.requestedTimeToleranceBefore = .zero
+    generator.requestedTimeToleranceAfter = .zero
+    var samples: [Data] = []
+    for seconds in [4.0, 7.0, 21.0, 24.0, 29.9] {
+      let frame = try await generator.image(at: CMTime(seconds: seconds, preferredTimescale: 600))
+      XCTAssertEqual(frame.image.width, 1024)
+      XCTAssertEqual(frame.image.height, 1536)
+      samples.append(try XCTUnwrap(frame.image.dataProvider?.data) as Data)
     }
+    XCTAssertNotEqual(samples[0], samples[1], "Water filling must have distinct decoded frames")
+    XCTAssertNotEqual(samples[2], samples[3], "Vine growth must continue within the garden chapter")
+    XCTAssertNotEqual(samples[3], samples[4])
+  }
+  @MainActor func testNinfeaNativePlaybackAndPresentationState() throws {
+    XCTAssertNotNil(UIImage(named: NinfeaCinemaAssets.posterName))
     XCTAssertNotNil(UIImage(named: "ninfea-official.webp"))
     XCTAssertEqual(CollectionGallery.stories.first?.id, "ninfea")
     let cinema = NinfeaCinemaView()
@@ -263,7 +275,7 @@ final class SaliniTests: XCTestCase {
     cinema.replay()
     XCTAssertFalse(cinema.userPaused)
     XCTAssertEqual(cinema.timeline.seconds, 0)
-    // A detached/recycled hero must never keep a display link running.
+    // A detached/recycled hero must never keep its video playing.
     cinema.active = true
     XCTAssertFalse(cinema.isPlaying)
     let gallery = CollectionGallery(progress: 0.42, paused: true) { _ in }

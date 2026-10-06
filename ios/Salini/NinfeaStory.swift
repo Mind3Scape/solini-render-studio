@@ -9,6 +9,7 @@ final class NinfeaStoryController: UIViewController, UIAdaptivePresentationContr
   private let play = UIButton(type: .system)
   private var currentChapter = -1
   private var lastPlaying: Bool?
+  private var lastEnded: Bool?
   var onClose: ((Double, Bool) -> Void)?
   init(progress: Double = 0, paused: Bool = false) {
     cinema = NinfeaCinemaView(progress: progress, paused: paused)
@@ -168,14 +169,16 @@ final class NinfeaStoryController: UIViewController, UIAdaptivePresentationContr
   }
   private func update(_ timeline: NinfeaTimeline, playing: Bool) {
     if !scrubbing { slider.value = Float(timeline.progress) }
-    slider.accessibilityValue = "\(Int(timeline.seconds)) из 22 секунд"
+    slider.accessibilityValue = "\(Int(timeline.seconds)) из \(Int(NinfeaTimeline.duration)) секунд"
     play.isHidden = UIAccessibility.isReduceMotionEnabled || !cinema.available
-    let image = playing ? "pause.fill" : "play.fill"
-    if lastPlaying != playing {
+    let image = playing ? "pause.fill" : (timeline.ended ? "arrow.counterclockwise" : "play.fill")
+    if lastPlaying != playing || lastEnded != timeline.ended {
       lastPlaying = playing
+      lastEnded = timeline.ended
       play.configuration?.image = UIImage(systemName: image)
       play.accessibilityLabel =
-        playing ? "Приостановить историю Ninfea" : "Продолжить историю Ninfea"
+        playing ? "Приостановить историю Ninfea"
+        : (timeline.ended ? "Смотреть Ninfea с начала" : "Продолжить историю Ninfea")
     }
     guard currentChapter != timeline.chapter else { return }
     currentChapter = timeline.chapter
