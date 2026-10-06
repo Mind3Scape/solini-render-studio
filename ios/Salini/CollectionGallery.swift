@@ -12,7 +12,7 @@ final class CollectionGallery: UIView, UIScrollViewDelegate {
   }
   static let stories = [
     Story(
-      id: "ninfea", name: "Ninfea", image: "ninfea-poster-v2", headline: "Природа\nобретает форму.",
+      id: "ninfea", name: "Ninfea", image: "ninfea-poster-v3", headline: "Природа\nобретает форму.",
       caption: "Вдохновлена водяной лилией.", focus: 0.5),
     Story(
       id: "aria", name: "Aria", image: "aria", headline: "Архитектура\nспокойствия.",
@@ -30,12 +30,7 @@ final class CollectionGallery: UIView, UIScrollViewDelegate {
   private var previousWidth: CGFloat = 0
   private(set) var selectedIndex = 0
   var active = false { didSet { updatePlayback() } }
-  var cinemaProgress: Double { pages.first?.cinema?.timeline.progress ?? 0 }
-  var cinemaPaused: Bool { pages.first?.cinema?.userPaused ?? false }
-  func restoreCinema(progress: Double, paused: Bool) {
-    pages.first?.cinema?.restore(progress: progress, paused: paused)
-  }
-  init(progress: Double = 0, paused: Bool = false, open: @escaping (String) -> Void) {
+  init(open: @escaping (String) -> Void) {
     super.init(frame: .zero)
     pager.isPagingEnabled = true
     pager.showsHorizontalScrollIndicator = false
@@ -46,7 +41,7 @@ final class CollectionGallery: UIView, UIScrollViewDelegate {
     pager.translatesAutoresizingMaskIntoConstraints = false
     addSubview(pager)
     for story in Self.stories {
-      let page = CollectionPage(story, progress: progress, paused: paused) { open(story.id) }
+      let page = CollectionPage(story) { open(story.id) }
       pages.append(page)
       pager.addSubview(page)
     }
@@ -152,11 +147,11 @@ private final class CollectionPage: UIView {
   private let focus: CGFloat
   let cinema: NinfeaCinemaView?
   var parallax: CGFloat = 0 { didSet { setNeedsLayout() } }
-  init(_ story: CollectionGallery.Story, progress: Double, paused: Bool, open: @escaping () -> Void)
+  init(_ story: CollectionGallery.Story, open: @escaping () -> Void)
   {
     picture = photo(story.image)
     focus = story.focus
-    cinema = story.id == "ninfea" ? NinfeaCinemaView(progress: progress, paused: paused) : nil
+    cinema = story.id == "ninfea" ? NinfeaCinemaView() : nil
     super.init(frame: .zero)
     clipsToBounds = true
     if let cinema {
@@ -173,7 +168,12 @@ private final class CollectionPage: UIView {
           label("Ninfea", 44, .light, .white),
           label("Природа обретает форму.", 13, .regular, .white.withAlphaComponent(0.9)),
         ], spacing: 8)
-      let controls = NinfeaCinemaControls(cinema: cinema, expand: open)
+      let details = ActionButton("О коллекции", icon: "arrow.up.right", action: open)
+      details.configuration?.baseForegroundColor = .white
+      details.configuration?.contentInsets = .init(top: 13, leading: 18, bottom: 13, trailing: 18)
+      details.accessibilityLabel = "О коллекции Ninfea"
+      details.accessibilityIdentifier = "hero.open.ninfea"
+      let controls = stack([details, UIView()], axis: .horizontal, spacing: 0)
       for v in [top, controls] {
         v.translatesAutoresizingMaskIntoConstraints = false
         addSubview(v)

@@ -12,7 +12,13 @@ targets:
   Salini:
     type: application
     platform: iOS
-    sources: [Salini]
+    sources:
+      - path: Salini
+        excludes:
+          - Resources/ninfea-film-v2.mp4
+          - Resources/ninfea-poster-v2.png
+          - Resources/ninfea-water.png
+          - Resources/ninfea-garden.png
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: design.salini.experience

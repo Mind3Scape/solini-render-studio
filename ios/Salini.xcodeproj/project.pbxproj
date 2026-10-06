@@ -14,13 +14,11 @@
 		1E422D8F743225E5DC1C6C4B /* production.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D857B43F6F8433444EA53ADE /* production.jpg */; };
 		1F8FF3ED9FDF09276E732A12 /* Projects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 319851BB55623979FE40C513 /* Projects.swift */; };
 		2E61A4C6273A18A65C3B1151 /* stone.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 200C0338C7066941F0D41381 /* stone.jpg */; };
-		32EEF1ABC0C80890DFAFC836 /* ninfea-poster-v2.png in Resources */ = {isa = PBXBuildFile; fileRef = C81F6611165EDA42B210D2FD /* ninfea-poster-v2.png */; };
-		3435A4FCFED157E970B25B34 /* ninfea-garden.png in Resources */ = {isa = PBXBuildFile; fileRef = 680542CD905C5608F71DA666 /* ninfea-garden.png */; };
 		34D8442BABB4641EBEA5BB0C /* MaterialStudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115177084A87D881A3F70994 /* MaterialStudio.swift */; };
 		36D45DA9DCA6EE81DFF950EB /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BF4C1CE6C2E47285FA6084 /* App.swift */; };
+		3709133CD6994CCC37D19E05 /* ninfea-poster-v3.png in Resources */ = {isa = PBXBuildFile; fileRef = 8F5B5BC405FFFEBD6456F5A7 /* ninfea-poster-v3.png */; };
 		3B48D5B64C2CCE5E33479486 /* opera.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8B9E9451C86A79C46812A25D /* opera.jpg */; };
 		426862A0DEEFAB351CF95669 /* ninfea-interior.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ADD1F0B906AE70FBFC2933A /* ninfea-interior.png */; };
-		441EC70D7B70B8712B94B250 /* ninfea-film-v2.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 6DDC9AFDBFD1062E91ED5C95 /* ninfea-film-v2.mp4 */; };
 		50A02DC7410C6D6D3381B045 /* interior.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3776267C1F0DB827DBEBB68A /* interior.jpg */; };
 		52865D44CB6F34BBD75EA0C3 /* greca-editorial.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 91874D6C11CB47206527617E /* greca-editorial.jpg */; };
 		56B48C7F86569A1C65D45047 /* aria.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A3AD3AD462395F7627F0F9ED /* aria.jpg */; };
@@ -34,7 +32,6 @@
 		865AFC3CCA56E15332577F41 /* salini-logo.svg in Resources */ = {isa = PBXBuildFile; fileRef = 71A0945E0526B6B9D34EAD27 /* salini-logo.svg */; };
 		8CC5A6E694E7E63798777106 /* aria-red.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FF8CC4938E4FEB8C56D0CF20 /* aria-red.jpg */; };
 		8FCBD77FB5FBC3C00B8CE17A /* catalog.json in Resources */ = {isa = PBXBuildFile; fileRef = B84ADB80CC317232BF921570 /* catalog.json */; };
-		9A8AF74ECE4DC0485E1A4D2A /* ninfea-water.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FAC12702BFE1AE9F7662582 /* ninfea-water.png */; };
 		A8A3AAA247C5A742B2F740B7 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06B24C2D0832EF8D141B750A /* Profile.swift */; };
 		AC62A6C1BE86B01047A8D432 /* CollectionGallery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97971B66DFC9B7D96D9C8FFB /* CollectionGallery.swift */; };
 		ADACB609C5431007F2257197 /* greca.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4942620F24A4D8F0728613FA /* greca.jpg */; };
@@ -74,9 +71,7 @@
 		50BF4C1CE6C2E47285FA6084 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		632403708ED41F88A65A300E /* CampusOverview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusOverview.swift; sourceTree = "<group>"; };
 		672B74F0BCED01A47E534CD1 /* opera-detail.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "opera-detail.jpg"; sourceTree = "<group>"; };
-		680542CD905C5608F71DA666 /* ninfea-garden.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ninfea-garden.png"; sourceTree = "<group>"; };
 		6C53D942770B336103058500 /* opera-top.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "opera-top.jpg"; sourceTree = "<group>"; };
-		6DDC9AFDBFD1062E91ED5C95 /* ninfea-film-v2.mp4 */ = {isa = PBXFileReference; path = "ninfea-film-v2.mp4"; sourceTree = "<group>"; };
 		71A0945E0526B6B9D34EAD27 /* salini-logo.svg */ = {isa = PBXFileReference; path = "salini-logo.svg"; sourceTree = "<group>"; };
 		7BAB34199B15CE6E53C954A2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		7D76CF44BE1C147E96251FD6 /* SaliniTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = SaliniTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -86,17 +81,16 @@
 		8B26B8F45807277463ABB395 /* CampusModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusModel.swift; sourceTree = "<group>"; };
 		8B4382FB29F72EE1715DC2FF /* Salini.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Salini.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B9E9451C86A79C46812A25D /* opera.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = opera.jpg; sourceTree = "<group>"; };
+		8F5B5BC405FFFEBD6456F5A7 /* ninfea-poster-v3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ninfea-poster-v3.png"; sourceTree = "<group>"; };
 		91874D6C11CB47206527617E /* greca-editorial.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "greca-editorial.jpg"; sourceTree = "<group>"; };
 		922ABBCE95E286DB90AA532E /* Greca.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = Greca.usdz; sourceTree = "<group>"; };
 		9455A5104B42AB58A498F29C /* Owner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Owner.swift; sourceTree = "<group>"; };
 		97971B66DFC9B7D96D9C8FFB /* CollectionGallery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionGallery.swift; sourceTree = "<group>"; };
-		9FAC12702BFE1AE9F7662582 /* ninfea-water.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ninfea-water.png"; sourceTree = "<group>"; };
 		A177BC09A63FBF19E80DCF74 /* oriente.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = oriente.jpg; sourceTree = "<group>"; };
 		A3AB58D801AACAB3369DA9D5 /* Design.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Design.swift; sourceTree = "<group>"; };
 		A3AD3AD462395F7627F0F9ED /* aria.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = aria.jpg; sourceTree = "<group>"; };
 		A82AFE5054B9A5561CDAD645 /* salini-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "salini-logo.png"; sourceTree = "<group>"; };
 		B84ADB80CC317232BF921570 /* catalog.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = catalog.json; sourceTree = "<group>"; };
-		C81F6611165EDA42B210D2FD /* ninfea-poster-v2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ninfea-poster-v2.png"; sourceTree = "<group>"; };
 		CEF9612034EAAC3B2E8AFDEE /* Aria-drawing.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "Aria-drawing.pdf"; sourceTree = "<group>"; };
 		D4BD1EE31F7C199D6DAD475C /* NinfeaStory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NinfeaStory.swift; sourceTree = "<group>"; };
 		D857B43F6F8433444EA53ADE /* production.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = production.jpg; sourceTree = "<group>"; };
@@ -146,12 +140,9 @@
 				922ABBCE95E286DB90AA532E /* Greca.usdz */,
 				3776267C1F0DB827DBEBB68A /* interior.jpg */,
 				D91143AF411A90AC2958AC84 /* luce.jpg */,
-				6DDC9AFDBFD1062E91ED5C95 /* ninfea-film-v2.mp4 */,
-				680542CD905C5608F71DA666 /* ninfea-garden.png */,
 				8ADD1F0B906AE70FBFC2933A /* ninfea-interior.png */,
 				89B8733108E93D1F89BA90FA /* ninfea-official.webp */,
-				C81F6611165EDA42B210D2FD /* ninfea-poster-v2.png */,
-				9FAC12702BFE1AE9F7662582 /* ninfea-water.png */,
+				8F5B5BC405FFFEBD6456F5A7 /* ninfea-poster-v3.png */,
 				672B74F0BCED01A47E534CD1 /* opera-detail.jpg */,
 				6C53D942770B336103058500 /* opera-top.jpg */,
 				8B9E9451C86A79C46812A25D /* opera.jpg */,
@@ -275,12 +266,9 @@
 				ADACB609C5431007F2257197 /* greca.jpg in Resources */,
 				50A02DC7410C6D6D3381B045 /* interior.jpg in Resources */,
 				E0004C970033EB673136243D /* luce.jpg in Resources */,
-				441EC70D7B70B8712B94B250 /* ninfea-film-v2.mp4 in Resources */,
-				3435A4FCFED157E970B25B34 /* ninfea-garden.png in Resources */,
 				426862A0DEEFAB351CF95669 /* ninfea-interior.png in Resources */,
 				CA65FB0F5DD7B7B32972987F /* ninfea-official.webp in Resources */,
-				32EEF1ABC0C80890DFAFC836 /* ninfea-poster-v2.png in Resources */,
-				9A8AF74ECE4DC0485E1A4D2A /* ninfea-water.png in Resources */,
+				3709133CD6994CCC37D19E05 /* ninfea-poster-v3.png in Resources */,
 				F0FB799DEC9C13A7C3DBAA4F /* opera-detail.jpg in Resources */,
 				664F09813FAF7AEA8DA33A77 /* opera-top.jpg in Resources */,
 				3B48D5B64C2CCE5E33479486 /* opera.jpg in Resources */,

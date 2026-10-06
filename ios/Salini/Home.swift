@@ -147,17 +147,11 @@ final class HomeController: ScrollController, UIScrollViewDelegate {
   }
   private func buyer() {
     let selected = gallery?.selectedIndex ?? 0
-    let progress = gallery?.cinemaProgress ?? 0
-    let covers = CollectionGallery(progress: progress, paused: gallery?.cinemaPaused ?? false) {
-      [weak self] id in
+    let covers = CollectionGallery { [weak self] id in
       if id == "ninfea", let self {
-        let story = NinfeaStoryController(
-          progress: self.gallery?.cinemaProgress ?? 0,
-          paused: self.gallery?.cinemaPaused ?? false)
-        story.onClose = { [weak self] progress, paused in
-          self?.gallery?.restoreCinema(progress: progress, paused: paused)
-        }
-        self.present(story, animated: true)
+        let info = UINavigationController(rootViewController: NinfeaInformationController())
+        info.modalPresentationStyle = .fullScreen
+        self.present(info, animated: true)
         return
       }
       if let product = Product.all.first(where: { $0.id == id }) { self?.showProduct(product) }

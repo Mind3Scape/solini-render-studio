@@ -190,6 +190,18 @@
     "generation_mode": "Local Swift + Metal composition and RifeMetal / Practical-RIFE 4.26 HQ interpolation",
     "source": "scripts/ninfea-render",
     "manifest": "research/ninfea-cinema-2026-10-06/v2/render.json",
-    "usage": "30-second 1024x1536 30fps conceptual campaign movie; not official footage or a physically simulated CAD scene. No neural runtime or weights shipped in the iOS app."
+    "usage": "Rejected V2 iteration, retained in repository history/research and excluded from the iOS build. Layer deformation and RIFE are not the current production approach."
+  },
+  {
+    "asset": "ninfea-poster-v3.png / research/ninfea-cinema-2026-10-06/v3/assets/garden.png",
+    "generation_mode": "built-in imagegen",
+    "generated_on": "2026-10-06",
+    "reference_images": [
+      "ninfea-interior.png",
+      "ninfea-official.webp"
+    ],
+    "source_page": "https://salini-srl.com/collection/ninfea/",
+    "prompts": "research/ninfea-cinema-2026-10-06/v3/PROMPTS.md",
+    "usage": "Coherent final anchor and current still fallback. Unified vegetation, shadows and dry limestone floor. Not an official photo, exact CAD model or completed video."
   }
 ]
