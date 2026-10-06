@@ -79,5 +79,11 @@
     "asset": "Greca.usdz",
     "source_url": "https://cdn-salini.storage.yandexcloud.net/iblock/a52/a52d862ff28f502e981fa3450bae168c/Greca.usdz",
     "usage": "Unmodified official Salini 3D geometry; native SceneKit preview with presentation materials and designer USDZ export"
+  },
+  {
+    "asset": "greca-editorial.jpg",
+    "source_url": "https://cdn-salini.storage.yandexcloud.net/iblock/636/636f240358f77c7d74c49c503eced8a4/Greca_1.jpg",
+    "source_page": "https://salini-srl.com/",
+    "usage": "Original Salini interior image; editorial collection cover with responsive focal crop"
   }
 ]

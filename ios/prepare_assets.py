@@ -11,6 +11,7 @@ for name,index in [('opera',19),('opera-detail',20),('opera-top',23),('aria',30)
  a=candidates[index];image=Image.open(archive/a['local']).convert('RGB');image.thumbnail((2000,2000));image.save(dest/(name+'.jpg'),quality=90,optimize=True)
  manifest.append({'asset':name+'.jpg','source_url':a['url'],'source_page':a.get('source_page'),'usage':'Salini concept prototype; original brand image, resized without generative changes'})
 shutil.copy2(archive/'assets/images/a7aae562bd4c-_3.jpg',dest/'greca.jpg')
+shutil.copy2(archive/'assets/images/8f932eeda4cb-Greca_1.jpg',dest/'greca-editorial.jpg')
 shutil.copy2(archive/'assets/models/77daff33f314-Greca.usdz',dest/'Greca.usdz')
 # Preserve provenance for the original logo, drawing and separately curated Greca assets.
 generated={item['asset'] for item in manifest}

@@ -12,9 +12,11 @@
 		1E422D8F743225E5DC1C6C4B /* production.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D857B43F6F8433444EA53ADE /* production.jpg */; };
 		1F8FF3ED9FDF09276E732A12 /* Projects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 319851BB55623979FE40C513 /* Projects.swift */; };
 		2E61A4C6273A18A65C3B1151 /* stone.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 200C0338C7066941F0D41381 /* stone.jpg */; };
+		34D8442BABB4641EBEA5BB0C /* MaterialStudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115177084A87D881A3F70994 /* MaterialStudio.swift */; };
 		36D45DA9DCA6EE81DFF950EB /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BF4C1CE6C2E47285FA6084 /* App.swift */; };
 		3B48D5B64C2CCE5E33479486 /* opera.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8B9E9451C86A79C46812A25D /* opera.jpg */; };
 		50A02DC7410C6D6D3381B045 /* interior.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3776267C1F0DB827DBEBB68A /* interior.jpg */; };
+		52865D44CB6F34BBD75EA0C3 /* greca-editorial.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 91874D6C11CB47206527617E /* greca-editorial.jpg */; };
 		56B48C7F86569A1C65D45047 /* aria.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A3AD3AD462395F7627F0F9ED /* aria.jpg */; };
 		5A04D150B5857BBA96742663 /* oriente.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A177BC09A63FBF19E80DCF74 /* oriente.jpg */; };
 		655CB7EC2997AD545FD46A7B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1C21E6FCCD97876F706ADB2E /* Assets.xcassets */; };
@@ -25,6 +27,7 @@
 		8CC5A6E694E7E63798777106 /* aria-red.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FF8CC4938E4FEB8C56D0CF20 /* aria-red.jpg */; };
 		8FCBD77FB5FBC3C00B8CE17A /* catalog.json in Resources */ = {isa = PBXBuildFile; fileRef = B84ADB80CC317232BF921570 /* catalog.json */; };
 		A8A3AAA247C5A742B2F740B7 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06B24C2D0832EF8D141B750A /* Profile.swift */; };
+		AC62A6C1BE86B01047A8D432 /* CollectionGallery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97971B66DFC9B7D96D9C8FFB /* CollectionGallery.swift */; };
 		ADACB609C5431007F2257197 /* greca.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4942620F24A4D8F0728613FA /* greca.jpg */; };
 		B05E098BB5A23A647FB95239 /* Aria-drawing.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CEF9612034EAAC3B2E8AFDEE /* Aria-drawing.pdf */; };
 		B0E3B2108E0D6230BD79EAA5 /* Catalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEBE649A6A1619D469DD965A /* Catalog.swift */; };
@@ -50,6 +53,7 @@
 /* Begin PBXFileReference section */
 		0151CE5C734FB58E9B195E9D /* SaliniTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaliniTests.swift; sourceTree = "<group>"; };
 		06B24C2D0832EF8D141B750A /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
+		115177084A87D881A3F70994 /* MaterialStudio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaterialStudio.swift; sourceTree = "<group>"; };
 		1C21E6FCCD97876F706ADB2E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		200C0338C7066941F0D41381 /* stone.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = stone.jpg; sourceTree = "<group>"; };
 		227902BDF40ADF52F72D7B54 /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
@@ -65,8 +69,10 @@
 		8533340A72EAF8A013360ECE /* FactoryScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactoryScene.swift; sourceTree = "<group>"; };
 		8B4382FB29F72EE1715DC2FF /* Salini.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Salini.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B9E9451C86A79C46812A25D /* opera.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = opera.jpg; sourceTree = "<group>"; };
+		91874D6C11CB47206527617E /* greca-editorial.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "greca-editorial.jpg"; sourceTree = "<group>"; };
 		922ABBCE95E286DB90AA532E /* Greca.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = Greca.usdz; sourceTree = "<group>"; };
 		9455A5104B42AB58A498F29C /* Owner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Owner.swift; sourceTree = "<group>"; };
+		97971B66DFC9B7D96D9C8FFB /* CollectionGallery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionGallery.swift; sourceTree = "<group>"; };
 		A177BC09A63FBF19E80DCF74 /* oriente.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = oriente.jpg; sourceTree = "<group>"; };
 		A3AB58D801AACAB3369DA9D5 /* Design.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Design.swift; sourceTree = "<group>"; };
 		A3AD3AD462395F7627F0F9ED /* aria.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = aria.jpg; sourceTree = "<group>"; };
@@ -115,6 +121,7 @@
 				FF8CC4938E4FEB8C56D0CF20 /* aria-red.jpg */,
 				A3AD3AD462395F7627F0F9ED /* aria.jpg */,
 				B84ADB80CC317232BF921570 /* catalog.json */,
+				91874D6C11CB47206527617E /* greca-editorial.jpg */,
 				4942620F24A4D8F0728613FA /* greca.jpg */,
 				922ABBCE95E286DB90AA532E /* Greca.usdz */,
 				3776267C1F0DB827DBEBB68A /* interior.jpg */,
@@ -137,10 +144,12 @@
 				50BF4C1CE6C2E47285FA6084 /* App.swift */,
 				1C21E6FCCD97876F706ADB2E /* Assets.xcassets */,
 				EEBE649A6A1619D469DD965A /* Catalog.swift */,
+				97971B66DFC9B7D96D9C8FFB /* CollectionGallery.swift */,
 				A3AB58D801AACAB3369DA9D5 /* Design.swift */,
 				8533340A72EAF8A013360ECE /* FactoryScene.swift */,
 				227902BDF40ADF52F72D7B54 /* Home.swift */,
 				7BAB34199B15CE6E53C954A2 /* Info.plist */,
+				115177084A87D881A3F70994 /* MaterialStudio.swift */,
 				DC46B7DC8500987396D0C75D /* ObjectViewer.swift */,
 				9455A5104B42AB58A498F29C /* Owner.swift */,
 				06B24C2D0832EF8D141B750A /* Profile.swift */,
@@ -232,6 +241,7 @@
 				8CC5A6E694E7E63798777106 /* aria-red.jpg in Resources */,
 				56B48C7F86569A1C65D45047 /* aria.jpg in Resources */,
 				8FCBD77FB5FBC3C00B8CE17A /* catalog.json in Resources */,
+				52865D44CB6F34BBD75EA0C3 /* greca-editorial.jpg in Resources */,
 				ADACB609C5431007F2257197 /* greca.jpg in Resources */,
 				50A02DC7410C6D6D3381B045 /* interior.jpg in Resources */,
 				E0004C970033EB673136243D /* luce.jpg in Resources */,
@@ -263,9 +273,11 @@
 			files = (
 				36D45DA9DCA6EE81DFF950EB /* App.swift in Sources */,
 				B0E3B2108E0D6230BD79EAA5 /* Catalog.swift in Sources */,
+				AC62A6C1BE86B01047A8D432 /* CollectionGallery.swift in Sources */,
 				E3870384C2CE964391CDB5E5 /* Design.swift in Sources */,
 				C919C35BF39AFCF7A2620366 /* FactoryScene.swift in Sources */,
 				C1E3CF871A14297CBBCB4D68 /* Home.swift in Sources */,
+				34D8442BABB4641EBEA5BB0C /* MaterialStudio.swift in Sources */,
 				073AB33A6033AC73D703E608 /* ObjectViewer.swift in Sources */,
 				70405BBE76779F4C563F7B32 /* Owner.swift in Sources */,
 				A8A3AAA247C5A742B2F740B7 /* Profile.swift in Sources */,

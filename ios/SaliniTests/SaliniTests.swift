@@ -121,4 +121,18 @@ final class SaliniTests: XCTestCase {
     for product in Product.all { XCTAssertNotNil(UIImage(named: product.image + ".jpg")) }
     XCTAssertNotNil(Bundle.main.url(forResource: "Greca", withExtension: "usdz"))
   }
+  @MainActor func testMaterialStudioSelectionOpensMatchingAriaPriceAndArticle() throws {
+    let aria = try XCTUnwrap(Product.all.first { $0.id == "aria" })
+    func texts(_ view: UIView) -> [String] {
+      ([(view as? UILabel)?.text].compactMap { $0 }) + view.subviews.flatMap(texts)
+    }
+    let stone = ProductController(aria, stone: true)
+    stone.loadViewIfNeeded()
+    XCTAssertTrue(texts(stone.view).contains(rubles(890000)))
+    XCTAssertTrue(texts(stone.view).contains { $0.contains("1051201M") })
+    let sense = ProductController(aria, stone: false)
+    sense.loadViewIfNeeded()
+    XCTAssertTrue(texts(sense.view).contains(rubles(790000)))
+    XCTAssertTrue(texts(sense.view).contains { $0.contains("1051101G") })
+  }
 }

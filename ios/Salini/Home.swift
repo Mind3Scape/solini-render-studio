@@ -1,7 +1,10 @@
 import UIKit
 
-final class HomeController: ScrollController {
-  private var lastRole: Audience?
+final class HomeController: ScrollController, UIScrollViewDelegate {
+  private var gallery: CollectionGallery?
+  private var materials: MaterialShowcase?
+  private var materialChoice: SaliniMaterial = .stone
+  private var visible = false
   override var preferredStatusBarStyle: UIStatusBarStyle { .darkContent }
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
@@ -10,9 +13,60 @@ final class HomeController: ScrollController {
   }
   override func viewDidLoad() {
     super.viewDidLoad()
+    scroll.delegate = self
     render()
   }
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    visible = true
+    updateMaterialPlayback()
+  }
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    visible = false
+    materials?.sceneView.active = false
+  }
+  func scrollViewDidScroll(_ scrollView: UIScrollView) { updateMaterialPlayback() }
+  private func updateMaterialPlayback() {
+    guard let scene = materials?.sceneView else { return }
+    scene.active = visible && scene.convert(scene.bounds, to: scroll).intersects(scroll.bounds)
+  }
+  private func openMaterials(_ material: SaliniMaterial) {
+    let nav = UINavigationController(rootViewController: MaterialStudioController(material))
+    nav.modalPresentationStyle = .pageSheet
+    nav.sheetPresentationController?.detents = [.large()]
+    nav.sheetPresentationController?.prefersGrabberVisible = true
+    present(nav, animated: true)
+  }
+  private func materialFeature() {
+    let feature = MaterialShowcase { [weak self] material in self?.openMaterials(material) }
+    feature.select(materialChoice, animated: false)
+    let jump = ActionButton("", icon: "arrow.down.right") { [weak self, weak feature] in
+      guard let self, let feature else { return }
+      let y = feature.convert(feature.bounds, to: self.scroll).minY
+      self.scroll.setContentOffset(
+        CGPoint(x: 0, y: y - self.scroll.adjustedContentInset.top - 12),
+        animated: !UIAccessibility.isReduceMotionEnabled)
+    }
+    jump.accessibilityLabel = "Показать материалы"
+    jump.accessibilityIdentifier = "material.reveal"
+    jump.widthAnchor.constraint(equalToConstant: 48).isActive = true
+    let title = stack(
+      [label("Почувствуйте\nразницу.", 35, .regular), UIView(), jump], axis: .horizontal,
+      spacing: 10)
+    title.alignment = .center
+    section(
+      stack(
+        [
+          eyebrow("ДВА МАТЕРИАЛА. ДВА ХАРАКТЕРА."),
+          title,
+        ], spacing: 12), top: 23, bottom: 21, inset: 24)
+    materials = feature
+    section(feature, top: 0, bottom: 24, inset: 16)
+  }
   private func render() {
+    materialChoice = materials?.selected ?? materialChoice
+    materials?.sceneView.active = false
     content.arrangedSubviews.forEach { $0.removeFromSuperview() }
     let role = DemoStore.shared.role
     let logo = UIImageView(
@@ -79,16 +133,17 @@ final class HomeController: ScrollController {
     case .atelier: designer()
     case .partner: partner()
     }
-    lastRole = role
+    updateMaterialPlayback()
   }
   private func buyer() {
-    add(
-      hero(
-        image: "aria", title: "Дизайн, который\nчувствуешь.", foot: "Aria",
-        detail: "Скульптура повседневности", height: 390
-      ) { [weak self] in
-        if let p = Product.all.first(where: { $0.id == "aria" }) { self?.showProduct(p) }
-      }, inset: 16)
+    let selected = gallery?.selectedIndex ?? 0
+    let covers = CollectionGallery { [weak self] id in
+      if let product = Product.all.first(where: { $0.id == id }) { self?.showProduct(product) }
+    }
+    gallery = covers
+    section(covers, top: 0, bottom: 0, inset: 16)
+    covers.select(selected, animated: false)
+    materialFeature()
     let actions = stack(
       [
         ActionButton("Подобрать", icon: "slider.horizontal.3", prominent: true) { [weak self] in
@@ -121,11 +176,7 @@ final class HomeController: ScrollController {
         image: "interior", title: "В деталях —\nхарактер.", foot: "Внутри интерьера",
         detail: "Коллекция Opera", height: 320
       ) { [weak self] in self?.sheet(InspirationController()) }, inset: 20)
-    add(
-      workspaceAction(
-        "Материя Salini", subtitle: "Разница, которую хочется ощутить",
-        icon: "circle.lefthalf.filled"
-      ) { [weak self] in self?.sheet(MaterialsController()) }, inset: 20)
+
   }
   private func designer() {
     section(
@@ -165,13 +216,7 @@ final class HomeController: ScrollController {
             icon: "doc.richtext"
           ) { [weak self] in self?.tabBarController?.selectedIndex = 2 },
         ], spacing: 14))
-    section(
-      workspaceCard([
-        eyebrow("ПАЛИТРА ПРОЕКТА"), label("Сначала — ощущение.", 26, .medium), swatches(),
-        ActionButton("Изучить поверхности", icon: "arrow.up.right") { [weak self] in
-          self?.sheet(MaterialsController())
-        },
-      ]))
+    materialFeature()
   }
   private func partner() {
     let orders = PartnerStore.shared.orders
@@ -246,21 +291,6 @@ final class HomeController: ScrollController {
     workspaceCard(
       [eyebrow(name), label(value, 38, .medium), label(detail, 12, .regular, Palette.muted)],
       spacing: 7)
-  }
-  private func swatches() -> UIView {
-    let shades: [(String, UIColor)] = [("S-Stone", UIColor(hex: 0xE9E7E2)), ("S-Sense", .white)]
-    let row = stack(
-      shades.map { name, color in
-        let chip = UIView()
-        chip.height(72)
-        chip.rounded(18)
-        chip.backgroundColor = color
-        chip.layer.borderWidth = 0.7
-        chip.layer.borderColor = Palette.line.cgColor
-        return stack([chip, label(name, 12, .medium)], spacing: 8)
-      }, axis: .horizontal, spacing: 14)
-    row.distribution = .fillEqually
-    return row
   }
   private func hero(
     image: String, title: String, foot: String, detail: String, height: CGFloat,
@@ -345,25 +375,4 @@ final class InspirationController: ScrollController {
       ]))
   }
 }
-final class MaterialsController: ScrollController {
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    title = "Материя Salini"
-    add(photo("stone", height: 230), inset: 0)
-    add(
-      stack(
-        [
-          eyebrow("КАМЕНЬ. СВЕТ. ПРИКОСНОВЕНИЕ."), label("Природа формы.", 34, .medium),
-          label("S-Stone", 25, .medium),
-          label(
-            "Матовая поверхность и выразительная тактильность. Спокойное рассеивание света подчёркивает геометрию изделия.",
-            16, .regular, Palette.muted), line(), label("S-Sense", 25, .medium),
-          label(
-            "Глянцевая поверхность с глубокими отражениями. Один силуэт приобретает другой характер.",
-            16, .regular, Palette.muted),
-          label(
-            "Доступность материалов и отделок зависит от выбранной модели.", 13, .regular,
-            Palette.muted),
-        ], spacing: 18))
-  }
-}
+typealias MaterialsController = MaterialStudioController

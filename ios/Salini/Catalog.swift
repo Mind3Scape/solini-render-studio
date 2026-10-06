@@ -71,8 +71,9 @@ final class ProductController: ScrollController {
   private let price = label("", 29, .medium)
   private let sku = label("", 12, .regular, Palette.muted)
   private var heart: UIBarButtonItem!
-  init(_ product: Product) {
+  init(_ product: Product, stone: Bool = false) {
     self.product = product
+    self.stone = stone && product.canConfigure
     super.init(nibName: nil, bundle: nil)
   }
   required init?(coder: NSCoder) { fatalError() }
@@ -98,7 +99,7 @@ final class ProductController: ScrollController {
         ], spacing: 13))
     if product.canConfigure {
       let control = UISegmentedControl(items: ["S-Sense · глянец", "S-Stone · матовый"])
-      control.selectedSegmentIndex = 0
+      control.selectedSegmentIndex = stone ? 1 : 0
       control.accessibilityIdentifier = "product.material"
       control.addAction(
         UIAction { [weak self, weak control] _ in
