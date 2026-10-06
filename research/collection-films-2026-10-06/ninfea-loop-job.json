@@ -1,0 +1,44 @@
+{
+  "provider": "Higgsfield",
+  "costCredits": 6,
+  "params": {
+    "model": "kling3_0",
+    "mode": "pro",
+    "duration": 4,
+    "sound": "off",
+    "aspect_ratio": "9:16",
+    "count": 1,
+    "medias": [
+      {
+        "role": "start_image",
+        "value": "bff3d14c-acfc-4a5b-9134-cc9ab357acd0"
+      },
+      {
+        "role": "end_image",
+        "value": "bff3d14c-acfc-4a5b-9134-cc9ab357acd0"
+      }
+    ],
+    "prompt": "A seamlessly looping four-second luxury cinemagraph, continuing this exact completed botanical product scene. The supplied first and last images are intentionally identical: the whole scene must return naturally to its exact starting state at 4 seconds, with matched movement velocity across the seam. Camera and architecture are absolutely locked. Preserve the exact emerald bathtub, its broad wing-shaped rim, waterline, overflow slot, dark base, every vine and leaf, lighting, exposure and framing. NO new growth or filling. The water is already full and only tiny clear ripples and dancing reflected leaf-light move across its surface. Existing leaves make a very gentle 1-2 cm breeze oscillation, linked stems gently flex, with perfectly coherent soft shadows; no large swaying or deformation. A single slow subtle periodic breeze wave settles back into its initial phase over four seconds while fine water shimmer remains alive. The tub is rigid and its geometry never changes. Dry floor, stable sun and color. Understated photorealism, real physically integrated motion, not a still image zoom, not a dissolve, not frozen. No camera movement, cuts, transitions, object morphing, text or logos. Retain input 2:3 composition without stretching. Silent."
+  },
+  "submission": {
+    "results": [
+      {
+        "id": "7b146fdb-9a9b-4e25-9972-fa6ead86d8ff",
+        "type": "video",
+        "status": "pending",
+        "model": "kling3_0",
+        "params": {
+          "prompt": "A seamlessly looping four-second luxury cinemagraph, continuing this exact completed botanical product scene. The supplied first and last images are intentionally identical: the whole scene must return naturally to its exact starting state at 4 seconds, with matched movement velocity across the seam. Camera and architecture are absolutely locked. Preserve the exact emerald bathtub, its broad wing-shaped rim, waterline, overflow slot, dark base, every vine and leaf, lighting, exposure and framing. NO new growth or filling. The water is already full and only tiny clear ripples and dancing reflected leaf-light move across its surface. Existing leaves make a very gentle 1-2 cm breeze oscillation, linked stems gently flex, with perfectly coherent soft shadows; no large swaying or deformation. A single slow subtle periodic breeze wave settles back into its initial phase over four seconds while fine water shimmer remains alive. The tub is rigid and its geometry never changes. Dry floor, stable sun and color. Understated photorealism, real physically integrated motion, not a still image zoom, not a dissolve, not frozen. No camera movement, cuts, transitions, object morphing, text or logos. Retain input 2:3 composition without stretching. Silent.",
+          "aspect_ratio": "9:16",
+          "duration": 4,
+          "reference_images": [
+            "bff3d14c-acfc-4a5b-9134-cc9ab357acd0",
+            "bff3d14c-acfc-4a5b-9134-cc9ab357acd0"
+          ],
+          "mode": "pro",
+          "sound": "off"
+        }
+      }
+    ]
+  }
+}

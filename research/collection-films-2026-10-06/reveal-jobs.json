@@ -1,0 +1,105 @@
+{
+  "definitions": [
+    {
+      "index": 1,
+      "id": "aria",
+      "prompt": "An eight-second uninterrupted high-end architectural product film, starting precisely from the supplied image. Exact white Salini Aria bathtub with dark inner petal side wings, rigid and completely unchanged. Locked tripod camera and fixed focal length, no pan, zoom, push-in or reframing. In the first six seconds a slow coherent sea breeze gently lifts and parts BOTH tall ivory linen veils: the left edge rolls outward to the left and the right veil billows softly to the right, elegant broad fabric waves with real weight and beautiful fine folds, never obscuring the bathtub silhouette. At the same time soft moving sunlight from the unveiled opening travels across the limestone and creates subtle coherent fabric shadows on the floor; fine water ripples develop inside the bowl and the distant sea has restrained living glints. All motions overlap continuously from the beginning, never separate slideshow steps. The cloth movement peaks softly around second four then settles to a relaxed open composition by second seven. Last second the composition and light are stable but fine linen-edge movement, sea and water shimmer remain alive. Preserve the precise original tub, dark wings, limestone pavilion, floor, colors, water level and framing. Understated physical realism, expensive Cinema4D Redshift-quality slow motion, genuine moving fabric and water. No objects appear or disappear, no transformation of the architecture or tub, no white flashes, no dissolve, no text, people or logos. Dry floor. Preserve the supplied portrait 2:3 composition without stretching. Silent."
+    },
+    {
+      "index": 2,
+      "id": "opera",
+      "prompt": "An eight-second uninterrupted ultra-premium architectural product film, beginning exactly with the supplied image. Locked camera, no zoom, dolly, pan or composition shift. Preserve the exact ivory Salini Opera bathtub, rolled rim, classical stepped mouldings and base, perfectly rigid and unchanged. The oxblood heavy velvet curtains at the left and right slowly retreat outward with elegant real weight, inertia and rich vertical folds, revealing a little more of the travertine arch without ever hiding the bathtub. Simultaneously a soft warm shaft of afternoon sunlight from the high oculus slowly descends across the niche and grazes the bath, giving each sculptural moulding its own beautifully drawn light and shadow. The golden light broadens gradually rather than changing exposure abruptly; stable realistic color, deep burgundy fabric, rich warm stone. The water inside the bathtub remains clear with extremely subtle natural surface motion. Movement overlaps naturally through seconds zero to six; by second seven curtains and the main light have settled in their final position, with only faint residual movement of the lower velvet edges and water highlights. Physically coherent reflections and shadows, photorealistic luxury architectural cinema, refined slow motion. No people, particles, dust, sparkles, text, logos, cuts, dissolves or morphing. Keep the complete bathtub and its proportions unchanged and its exterior and floor dry. Match the input portrait 2:3 composition without stretching. Silent."
+    },
+    {
+      "index": 3,
+      "id": "greca",
+      "prompt": "An eight-second single-shot high-end architectural product film, starting precisely from the supplied image. The exact turquoise Salini Greca bathtub, broad ivory rim and low ivory plinth remain perfectly rigid and unchanged on their completely DRY dark stone dais. Locked tripod camera, fixed focal length, no camera motion, no zoom. Clear sea water slowly enters the existing shallow Greek-key meander channel from its distant connection beside the back opening, travels naturally along the carved channel on both sides of the dry dais and meets in the foreground. A continuous connected transparent water front fills only the recessed channel, turn by turn, with a beautiful fine meniscus and tiny physically realistic ripples. Never flood the surrounding floor or the dais, never raise water to bathtub height. This quiet tidal movement develops continuously throughout the first six seconds while the distant blue sea shimmers softly and linked sunlight reflections begin dancing subtly on the ivory rim, turquoise body and adjacent stone. Preserve all exact existing stone geometry and Greek-key pattern: water fills recesses, it does not turn stone into water. By the seventh second the channel is full to a stable shallow level and the scene settles into only delicate water ripples, coherent caustics and distant sea shimmer for the final second. The water already inside the tub stays at the same level. Extremely elegant understated natural motion, rich Aegean turquoise, ivory plaster and charcoal stone, sophisticated physically based Redshift-quality product film. No splashes, foam, animals, particles, people, text, logos, new objects, cuts, opacity fades or morphing. Exact original portrait 2:3 composition without stretching. Silent."
+    }
+  ],
+  "requests": [
+    {
+      "index": 1,
+      "params": {
+        "model": "kling3_0",
+        "mode": "pro",
+        "duration": 8,
+        "sound": "off",
+        "aspect_ratio": "9:16",
+        "count": 1,
+        "medias": [
+          {
+            "role": "start_image",
+            "value": "https://raw.githubusercontent.com/Mind3Scape/solini-render-studio/47f5d31/research/collection-films-2026-10-06/aria-anchor-v1.png"
+          }
+        ],
+        "prompt": "An eight-second uninterrupted high-end architectural product film, starting precisely from the supplied image. Exact white Salini Aria bathtub with dark inner petal side wings, rigid and completely unchanged. Locked tripod camera and fixed focal length, no pan, zoom, push-in or reframing. In the first six seconds a slow coherent sea breeze gently lifts and parts BOTH tall ivory linen veils: the left edge rolls outward to the left and the right veil billows softly to the right, elegant broad fabric waves with real weight and beautiful fine folds, never obscuring the bathtub silhouette. At the same time soft moving sunlight from the unveiled opening travels across the limestone and creates subtle coherent fabric shadows on the floor; fine water ripples develop inside the bowl and the distant sea has restrained living glints. All motions overlap continuously from the beginning, never separate slideshow steps. The cloth movement peaks softly around second four then settles to a relaxed open composition by second seven. Last second the composition and light are stable but fine linen-edge movement, sea and water shimmer remain alive. Preserve the precise original tub, dark wings, limestone pavilion, floor, colors, water level and framing. Understated physical realism, expensive Cinema4D Redshift-quality slow motion, genuine moving fabric and water. No objects appear or disappear, no transformation of the architecture or tub, no white flashes, no dissolve, no text, people or logos. Dry floor. Preserve the supplied portrait 2:3 composition without stretching. Silent."
+      }
+    },
+    {
+      "index": 2,
+      "params": {
+        "model": "kling3_0",
+        "mode": "pro",
+        "duration": 8,
+        "sound": "off",
+        "aspect_ratio": "9:16",
+        "count": 1,
+        "medias": [
+          {
+            "role": "start_image",
+            "value": "https://raw.githubusercontent.com/Mind3Scape/solini-render-studio/47f5d31/research/collection-films-2026-10-06/opera-anchor-v1.png"
+          }
+        ],
+        "prompt": "An eight-second uninterrupted ultra-premium architectural product film, beginning exactly with the supplied image. Locked camera, no zoom, dolly, pan or composition shift. Preserve the exact ivory Salini Opera bathtub, rolled rim, classical stepped mouldings and base, perfectly rigid and unchanged. The oxblood heavy velvet curtains at the left and right slowly retreat outward with elegant real weight, inertia and rich vertical folds, revealing a little more of the travertine arch without ever hiding the bathtub. Simultaneously a soft warm shaft of afternoon sunlight from the high oculus slowly descends across the niche and grazes the bath, giving each sculptural moulding its own beautifully drawn light and shadow. The golden light broadens gradually rather than changing exposure abruptly; stable realistic color, deep burgundy fabric, rich warm stone. The water inside the bathtub remains clear with extremely subtle natural surface motion. Movement overlaps naturally through seconds zero to six; by second seven curtains and the main light have settled in their final position, with only faint residual movement of the lower velvet edges and water highlights. Physically coherent reflections and shadows, photorealistic luxury architectural cinema, refined slow motion. No people, particles, dust, sparkles, text, logos, cuts, dissolves or morphing. Keep the complete bathtub and its proportions unchanged and its exterior and floor dry. Match the input portrait 2:3 composition without stretching. Silent."
+      }
+    },
+    {
+      "index": 3,
+      "params": {
+        "model": "kling3_0",
+        "mode": "pro",
+        "duration": 8,
+        "sound": "off",
+        "aspect_ratio": "9:16",
+        "count": 1,
+        "medias": [
+          {
+            "role": "start_image",
+            "value": "https://raw.githubusercontent.com/Mind3Scape/solini-render-studio/47f5d31/research/collection-films-2026-10-06/greca-anchor-v1.png"
+          }
+        ],
+        "prompt": "An eight-second single-shot high-end architectural product film, starting precisely from the supplied image. The exact turquoise Salini Greca bathtub, broad ivory rim and low ivory plinth remain perfectly rigid and unchanged on their completely DRY dark stone dais. Locked tripod camera, fixed focal length, no camera motion, no zoom. Clear sea water slowly enters the existing shallow Greek-key meander channel from its distant connection beside the back opening, travels naturally along the carved channel on both sides of the dry dais and meets in the foreground. A continuous connected transparent water front fills only the recessed channel, turn by turn, with a beautiful fine meniscus and tiny physically realistic ripples. Never flood the surrounding floor or the dais, never raise water to bathtub height. This quiet tidal movement develops continuously throughout the first six seconds while the distant blue sea shimmers softly and linked sunlight reflections begin dancing subtly on the ivory rim, turquoise body and adjacent stone. Preserve all exact existing stone geometry and Greek-key pattern: water fills recesses, it does not turn stone into water. By the seventh second the channel is full to a stable shallow level and the scene settles into only delicate water ripples, coherent caustics and distant sea shimmer for the final second. The water already inside the tub stays at the same level. Extremely elegant understated natural motion, rich Aegean turquoise, ivory plaster and charcoal stone, sophisticated physically based Redshift-quality product film. No splashes, foam, animals, particles, people, text, logos, new objects, cuts, opacity fades or morphing. Exact original portrait 2:3 composition without stretching. Silent."
+      }
+    }
+  ],
+  "submission": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Submitted 3/3 video generations.\n- index 1: aed6b635-2437-4d2c-a23f-dcfb9a1ed886 (pending)\n- index 2: 15d2937b-8bf8-4303-b38a-ea9b946f01db (pending)\n- index 3: b42ac902-dc13-4a19-b3a5-59d3100b6322 (pending)\nWait for the complete requested set with jobs_wait, then show it together with show_generation_by_ids using the collected indexed jobs. This includes jobs submitted across separate calls. job_display accepts only one id and cannot display a group; do not pass ids or call it once per job."
+      }
+    ],
+    "structuredContent": {
+      "jobs": [
+        {
+          "index": 1,
+          "job_id": "aed6b635-2437-4d2c-a23f-dcfb9a1ed886",
+          "status": "pending"
+        },
+        {
+          "index": 2,
+          "job_id": "15d2937b-8bf8-4303-b38a-ea9b946f01db",
+          "status": "pending"
+        },
+        {
+          "index": 3,
+          "job_id": "b42ac902-dc13-4a19-b3a5-59d3100b6322",
+          "status": "pending"
+        }
+      ],
+      "submitted_count": 3,
+      "failed_count": 0
+    },
+    "isError": false
+  }
+}

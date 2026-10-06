@@ -24,8 +24,31 @@ final class CampusOverview: UIControl {
       x: bounds.midX + (x - z - 5) / sqrt(2) * modelScale,
       y: bounds.midY + (x + z - 5) / sqrt(6) * modelScale)
   }
+  /// Path booleans are costly; the minimap redraws on every camera move.
+  private static let roads = CampusSite.roadSurfaces()
+  /// The same (x, z) → screen mapping as `point`, as an affine transform for whole paths.
+  private var isometric: CGAffineTransform {
+    let s = modelScale
+    return CGAffineTransform(
+      a: s / sqrt(2), b: s / sqrt(6), c: -s / sqrt(2), d: s / sqrt(6),
+      tx: bounds.midX - 5 * s / sqrt(2), ty: bounds.midY - 5 * s / sqrt(6))
+  }
   override func draw(_ rect: CGRect) {
     guard let context = UIGraphicsGetCurrentContext() else { return }
+    // The site and its road hierarchy give the zones their real context.
+    var transform = isometric
+    let site = CGPath(rect: CampusSite.bounds, transform: &transform)
+    context.addPath(site)
+    context.setFillColor(InsideStyle.paving.cgColor)
+    context.fillPath()
+    for (path, color) in [(Self.roads.primary, InsideStyle.asphalt),
+                          (Self.roads.service, InsideStyle.serviceRoad)] {
+      if let projected = path.copy(using: &transform) {
+        context.addPath(projected)
+        context.setFillColor(color.withAlphaComponent(0.55).cgColor)
+        context.fillPath()
+      }
+    }
     for zone in FactoryZone.allCases {
       let x = CGFloat(zone.position.x)
       let z = CGFloat(zone.position.z)
@@ -37,7 +60,7 @@ final class CampusOverview: UIControl {
       context.addLines(between: points)
       context.closePath()
       context.setFillColor(
-        (selectedZone == zone ? InsideStyle.blue : UIColor(hex: 0xB7C5C9)).cgColor)
+        (selectedZone == zone ? InsideStyle.blue : UIColor(hex: 0xF6F4EF)).cgColor)
       context.fillPath()
     }
     if camera.scale < camera.overviewScale * 0.85 {

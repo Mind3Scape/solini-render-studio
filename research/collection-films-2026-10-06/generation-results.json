@@ -1,0 +1,64 @@
+{
+  "reveals": [
+    {
+      "index": 1,
+      "job_id": "aed6b635-2437-4d2c-a23f-dcfb9a1ed886",
+      "status": "completed",
+      "type": "video",
+      "model": "kling3_0",
+      "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_2x37l8uuRLNjKyUzM7nmeqoSzVG/hf_20261006_160954_aed6b635-2437-4d2c-a23f-dcfb9a1ed886.mp4"
+    },
+    {
+      "index": 2,
+      "job_id": "15d2937b-8bf8-4303-b38a-ea9b946f01db",
+      "status": "completed",
+      "type": "video",
+      "model": "kling3_0",
+      "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_2x37l8uuRLNjKyUzM7nmeqoSzVG/hf_20261006_160953_15d2937b-8bf8-4303-b38a-ea9b946f01db.mp4"
+    },
+    {
+      "index": 3,
+      "job_id": "b42ac902-dc13-4a19-b3a5-59d3100b6322",
+      "status": "completed",
+      "type": "video",
+      "model": "kling3_0",
+      "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_2x37l8uuRLNjKyUzM7nmeqoSzVG/hf_20261006_160953_b42ac902-dc13-4a19-b3a5-59d3100b6322.mp4"
+    }
+  ],
+  "loops": [
+    {
+      "index": 4,
+      "job_id": "bc2a95c2-e4fe-4f3b-838a-56eebfde62f8",
+      "status": "completed",
+      "type": "video",
+      "model": "kling3_0",
+      "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_2x37l8uuRLNjKyUzM7nmeqoSzVG/hf_20261006_162042_bc2a95c2-e4fe-4f3b-838a-56eebfde62f8.mp4"
+    },
+    {
+      "index": 5,
+      "job_id": "3e51f26d-aa25-40f4-b972-d3f16454240b",
+      "status": "completed",
+      "type": "video",
+      "model": "kling3_0",
+      "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_2x37l8uuRLNjKyUzM7nmeqoSzVG/hf_20261006_162041_3e51f26d-aa25-40f4-b972-d3f16454240b.mp4"
+    },
+    {
+      "index": 6,
+      "job_id": "ae657133-5df1-4787-ad81-d1553dc267f5",
+      "status": "completed",
+      "type": "video",
+      "model": "kling3_0",
+      "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_2x37l8uuRLNjKyUzM7nmeqoSzVG/hf_20261006_162041_ae657133-5df1-4787-ad81-d1553dc267f5.mp4"
+    }
+  ],
+  "ninfea": {
+    "job_id": "7b146fdb-9a9b-4e25-9972-fa6ead86d8ff",
+    "status": "completed",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_2x37l8uuRLNjKyUzM7nmeqoSzVG/hf_20261006_153829_7b146fdb-9a9b-4e25-9972-fa6ead86d8ff.mp4"
+  },
+  "credits": {
+    "before": 67,
+    "spent": 60,
+    "after": 7
+  }
+}

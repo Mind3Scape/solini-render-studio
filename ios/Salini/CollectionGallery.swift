@@ -1,6 +1,6 @@
 import UIKit
 
-/// Manually selected collections. Ninfea contains its own film; it never turns the page.
+/// Manually selected collection films. Reveal once, then a living ambient loop.
 final class CollectionGallery: UIView, UIScrollViewDelegate {
   struct Story {
     let id: String
@@ -151,7 +151,7 @@ private final class CollectionPage: UIView {
   {
     picture = photo(story.image)
     focus = story.focus
-    cinema = story.id == "ninfea" ? NinfeaCinemaView() : nil
+    cinema = CollectionCinemaAssets(rawValue: story.id).map { NinfeaCinemaView(collection: $0) }
     super.init(frame: .zero)
     clipsToBounds = true
     if let cinema {
@@ -164,15 +164,16 @@ private final class CollectionPage: UIView {
           locations: [0, 0.36, 0.70, 1]))
       let top = stack(
         [
-          eyebrow("COLLEZIONE 01", color: .white.withAlphaComponent(0.78)),
-          label("Ninfea", 44, .light, .white),
-          label("Природа обретает форму.", 13, .regular, .white.withAlphaComponent(0.9)),
+          eyebrow(String(format: "COLLEZIONE %02d", (CollectionGallery.stories.firstIndex { $0.id == story.id } ?? 0) + 1),
+                  color: .white.withAlphaComponent(0.78)),
+          label(story.name, 44, .light, .white),
+          label(story.headline.replacingOccurrences(of: "\n", with: " "), 13, .regular, .white.withAlphaComponent(0.9)),
         ], spacing: 8)
       let details = ActionButton("О коллекции", icon: "arrow.up.right", action: open)
       details.configuration?.baseForegroundColor = .white
       details.configuration?.contentInsets = .init(top: 13, leading: 18, bottom: 13, trailing: 18)
-      details.accessibilityLabel = "О коллекции Ninfea"
-      details.accessibilityIdentifier = "hero.open.ninfea"
+      details.accessibilityLabel = "О коллекции \(story.name)"
+      details.accessibilityIdentifier = "hero.open.\(story.id)"
       let controls = stack([details, UIView()], axis: .horizontal, spacing: 0)
       for v in [top, controls] {
         v.translatesAutoresizingMaskIntoConstraints = false

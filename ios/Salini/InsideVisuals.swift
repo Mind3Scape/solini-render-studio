@@ -3,17 +3,36 @@ import UIKit
 /// Owner-only visual tokens. The collection experience keeps its own art direction.
 enum InsideStyle {
   static let canvas = UIColor(hex: 0xF3F4F5)
-  static let asphalt = UIColor(hex: 0x7B8588)
-  static let serviceRoad = UIColor(hex: 0xA0A9AA)
-  static let paving = UIColor(hex: 0xD4DAD9)
-  static let lawn = UIColor(hex: 0x91A88C)
-  static let foliage = UIColor(hex: 0x577B65)
+  // Cool concrete and asphalt let warm facades and living planting carry the colour.
+  static let asphalt = UIColor(hex: 0x6C787E)
+  static let serviceRoad = UIColor(hex: 0x98A4A9)
+  static let paving = UIColor(hex: 0xCDD6D8)
+  static let lawn = UIColor(hex: 0x8AB27B)
+  static let foliage = UIColor(hex: 0x4E8A5B)
   static let ink = UIColor(hex: 0x20262B)
   static let muted = UIColor(hex: 0x667079)
   static let blue = UIColor(hex: 0x355A6C)
   static let amber = UIColor(hex: 0x9A642A)
   static let green = UIColor(hex: 0x477460)
   static func loadColor(_ value: Int) -> UIColor { value >= 85 ? amber : blue }
+}
+
+/// Map-only architectural identity. Illustrative process colours, not Salini corporate data.
+extension FactoryZone {
+  /// A restrained, saturated tone used on equipment and the fascia band of each hall.
+  var accent: UIColor {
+    let tones: [UInt] = [
+      0x8B5E3F, 0xC08A35, 0x2C7C83, 0x3B6EA5, 0x8A5A3C, 0x3E8C68, 0xB7823F, 0x35597A, 0xC99A2E,
+    ]
+    return UIColor(hex: tones[rawValue])
+  }
+  /// Warm, near-white facade panels; each hall differs only slightly in temperature.
+  var facade: UIColor {
+    let tones: [UInt] = [
+      0xF3EEE6, 0xEFE8DC, 0xF2EDE5, 0xEEF0EE, 0xF1E9DF, 0xF4F3EF, 0xF0EAE0, 0xE7ECEE, 0xF1EEE8,
+    ]
+    return UIColor(hex: tones[rawValue])
+  }
 }
 
 func insideEyebrow(_ text: String, color: UIColor = InsideStyle.muted) -> UILabel {

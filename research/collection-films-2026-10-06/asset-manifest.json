@@ -1,0 +1,138 @@
+{
+  "ninfea": {
+    "intro": "ninfea-film-v3.mp4",
+    "loop": "ninfea-loop-v1.mp4",
+    "join_ssim": 0.99416,
+    "intro_sha256": "e5ee4ae033f0dc6e528ae7094c5c82d92d4f1a098cd3b0ca97f8d29bb8e06e65",
+    "loop_sha256": "3c09f0b422d8c145e5d6eff0247d486ddd3c1f084b8fceb65bc78a96e41bbf52",
+    "motion": {
+      "intro": {
+        "width": 1176,
+        "height": 1764,
+        "fps": "24/1",
+        "frames": 289,
+        "duration": 12.041667,
+        "audio": false
+      },
+      "loop": {
+        "width": 1176,
+        "height": 1764,
+        "fps": "24/1",
+        "frames": 96,
+        "duration": 4.0,
+        "audio": false
+      },
+      "luma_mad_0_255": {
+        "intro_to_loop": 0.197235107421875,
+        "loop_seam": 0.4526163637638092,
+        "median_step": 0.0658976212143898,
+        "p95_step": 0.182607963681221,
+        "max_step": 0.4241943359375,
+        "first_to_middle": 0.8835042119026184
+      },
+      "duplicate_adjacent_frames": 0
+    }
+  },
+  "aria": {
+    "intro": "aria-film-v1.mp4",
+    "loop": "aria-loop-v1.mp4",
+    "join_ssim": 0.995826,
+    "intro_sha256": "49cca3254a8364c96d2305c34aa52d0c2323e4cad155cacec91151f1aa7efa87",
+    "loop_sha256": "659cf8969ed3789da1d0dd80e17f80d703d8f8ab6b9e16d7456f42a62b92f29b",
+    "motion": {
+      "intro": {
+        "width": 1176,
+        "height": 1764,
+        "fps": "24/1",
+        "frames": 193,
+        "duration": 8.041667,
+        "audio": false
+      },
+      "loop": {
+        "width": 1176,
+        "height": 1764,
+        "fps": "24/1",
+        "frames": 96,
+        "duration": 4.0,
+        "audio": false
+      },
+      "luma_mad_0_255": {
+        "intro_to_loop": 0.1462605744600296,
+        "loop_seam": 0.32098388671875,
+        "median_step": 0.021484375,
+        "p95_step": 0.15823736786842346,
+        "max_step": 0.5413411259651184,
+        "first_to_middle": 0.8203023076057434
+      },
+      "duplicate_adjacent_frames": 0
+    }
+  },
+  "opera": {
+    "intro": "opera-film-v1.mp4",
+    "loop": "opera-loop-v1.mp4",
+    "join_ssim": 0.99481,
+    "intro_sha256": "6961083f6e2980959992e8b35e74a9025aefec9c418a9e5260065841cf8e0ff4",
+    "loop_sha256": "7dd267533b64770a5449710625f1184fd3764261a0787c555a06176eff0b5496",
+    "motion": {
+      "intro": {
+        "width": 1176,
+        "height": 1764,
+        "fps": "24/1",
+        "frames": 193,
+        "duration": 8.041667,
+        "audio": false
+      },
+      "loop": {
+        "width": 1176,
+        "height": 1764,
+        "fps": "24/1",
+        "frames": 96,
+        "duration": 4.0,
+        "audio": false
+      },
+      "luma_mad_0_255": {
+        "intro_to_loop": 0.1545613557100296,
+        "loop_seam": 0.2973531186580658,
+        "median_step": 0.03125,
+        "p95_step": 0.13077084720134735,
+        "max_step": 0.3147379457950592,
+        "first_to_middle": 0.4363606870174408
+      },
+      "duplicate_adjacent_frames": 0
+    }
+  },
+  "greca": {
+    "intro": "greca-film-v1.mp4",
+    "loop": "greca-loop-v1.mp4",
+    "join_ssim": 0.995647,
+    "intro_sha256": "234acf7e49757577e140b43610471673adbe8f082438b2226f1ce92ef4358519",
+    "loop_sha256": "7b27f59fcb85757e3aacc56d9a42f02064298eb18eda173a81ac162f525a985a",
+    "motion": {
+      "intro": {
+        "width": 1176,
+        "height": 1764,
+        "fps": "24/1",
+        "frames": 120,
+        "duration": 5.0,
+        "audio": false
+      },
+      "loop": {
+        "width": 1176,
+        "height": 1764,
+        "fps": "24/1",
+        "frames": 96,
+        "duration": 4.0,
+        "audio": false
+      },
+      "luma_mad_0_255": {
+        "intro_to_loop": 0.1532796174287796,
+        "loop_seam": 0.34356689453125,
+        "median_step": 0.0434672050178051,
+        "p95_step": 0.2007090002298355,
+        "max_step": 0.6424967646598816,
+        "first_to_middle": 0.7230224609375
+      },
+      "duplicate_adjacent_frames": 0
+    }
+  }
+}

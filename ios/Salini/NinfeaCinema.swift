@@ -1,21 +1,42 @@
 import AVFoundation
 import UIKit
 
-/// One visit, one uninterrupted scene. No transport state is carried across visits.
+/// The reveal plays once per visit; only the living ending repeats.
 struct NinfeaPlaybackState {
   private(set) var visit = 0
   private(set) var seconds: Double = 0
   private(set) var finished = false
+  private(set) var ambientCycles = 0
   mutating func beginVisit() {
     visit += 1
     seconds = 0
     finished = false
+    ambientCycles = 0
   }
   mutating func update(seconds: Double) {
     guard seconds.isFinite, seconds >= 0, !finished else { return }
     self.seconds = seconds
   }
   mutating func finish() { finished = true }
+  mutating func completeAmbientCycle() { ambientCycles += 1 }
+}
+
+enum CollectionCinemaAssets: String, CaseIterable {
+  case ninfea, aria, opera, greca
+  var name: String { rawValue.capitalized }
+  var introName: String { self == .ninfea ? "ninfea-film-v3" : "\(rawValue)-film-v1" }
+  var loopName: String { "\(rawValue)-loop-v1" }
+  var startPoster: String { self == .ninfea ? "ninfea-interior.png" : "\(rawValue)-start-v1.png" }
+  var finalPoster: String { self == .ninfea ? "ninfea-poster-v3.png" : "\(rawValue)-final-v1.png" }
+  var fallbackPoster: String {
+    switch self {
+    case .ninfea: return "ninfea-poster-v3.png"
+    case .greca: return "greca-editorial.jpg"
+    default: return "\(rawValue).jpg"
+    }
+  }
+  var introURL: URL? { Bundle.main.url(forResource: introName, withExtension: "mp4") }
+  var loopURL: URL? { Bundle.main.url(forResource: loopName, withExtension: "mp4") }
 }
 
 enum NinfeaCinemaAssets {
@@ -29,71 +50,54 @@ private final class CinemaPlayerSurface: UIView {
   var playerLayer: AVPlayerLayer { layer as! AVPlayerLayer }
 }
 
-/// Ambient product artwork: automatic entrance, final hold, no player chrome.
+/// One video surface, a queued reveal, then an AVPlayerLooper. No fades, seeks at
+/// the loop boundary, reverse playback or transport controls. Offscreen pages
+/// release their decoders; Reduce Motion shows the finished composition.
 final class NinfeaCinemaView: UIView {
-  private let player = AVPlayer()
+  let collection: CollectionCinemaAssets
+  private var player: AVQueuePlayer?
+  private var looper: AVPlayerLooper?
+  private var loadingTask: Task<Void, Never>?
   private let surface = CinemaPlayerSurface()
   private let poster = UIImageView()
   private var observers: [NSObjectProtocol] = []
   private var itemObservation: NSKeyValueObservation?
+  private var statusObservation: NSKeyValueObservation?
   private var displayObservation: NSKeyValueObservation?
+  private var loopObservation: NSKeyValueObservation?
   private var timeObserver: Any?
-  private var pendingStart = false
-  private var seeking = false
-  private var seekGeneration = 0
+  private var visitGeneration = 0
+  private var introItem: AVPlayerItem?
+  private var needsPreparation = true
   private(set) var playback = NinfeaPlaybackState()
   var active = false {
     didSet {
       guard active != oldValue else { return }
-      if active { beginVisit() } else { updatePlayback() }
+      if active { beginVisit() } else { releasePlayback() }
     }
   }
-  var isPlaying: Bool { player.rate > 0 }
+  var isPlaying: Bool { (player?.rate ?? 0) > 0 }
   var available: Bool {
-    NinfeaCinemaAssets.filmURL != nil && player.currentItem?.status != .failed
+    collection.introURL != nil && collection.loopURL != nil
   }
   private var reduceMotion: Bool { UIAccessibility.isReduceMotionEnabled }
 
-  init() {
+  init(collection: CollectionCinemaAssets = .ninfea) {
+    self.collection = collection
     super.init(frame: .zero)
     clipsToBounds = true
     backgroundColor = UIColor(hex: 0x172923)
     poster.contentMode = .scaleAspectFill
-    poster.image = UIImage(named: NinfeaCinemaAssets.posterName)
-    surface.playerLayer.player = player
+    poster.image = UIImage(named: collection.finalPoster) ?? UIImage(named: collection.fallbackPoster)
     surface.playerLayer.videoGravity = .resizeAspectFill
     pin(surface)
     pin(poster)
-    player.isMuted = true
-    player.actionAtItemEnd = .pause
-    player.preventsDisplaySleepDuringVideoPlayback = false
-    if let url = NinfeaCinemaAssets.filmURL {
-      let item = AVPlayerItem(url: url)
-      player.replaceCurrentItem(with: item)
-      itemObservation = item.observe(\.status, options: [.initial, .new]) { [weak self] _, _ in
-        DispatchQueue.main.async { self?.performPendingStart(); self?.updatePlayback() }
-      }
-      observers.append(NotificationCenter.default.addObserver(
-        forName: AVPlayerItem.didPlayToEndTimeNotification, object: item, queue: .main
-      ) { [weak self] _ in
-        guard let self, !self.seeking, !self.pendingStart else { return }
-        self.playback.finish()
-        self.player.pause()
-        // Keep the actual final decoded image. Do not dissolve or jump to a poster.
-      })
-    }
     displayObservation = surface.playerLayer.observe(\.isReadyForDisplay, options: [.new]) {
       [weak self] _, _ in
       DispatchQueue.main.async { self?.revealReadyFrame() }
     }
-    timeObserver = player.addPeriodicTimeObserver(
-      forInterval: CMTime(value: 1, timescale: 10), queue: .main
-    ) { [weak self] time in
-      guard let self, !self.pendingStart, !self.seeking else { return }
-      self.playback.update(seconds: time.seconds)
-    }
     isAccessibilityElement = true
-    accessibilityLabel = "Ninfea. Природа обретает форму"
+    accessibilityLabel = "\(collection.name). Живая коллекция"
     for name in [UIApplication.didBecomeActiveNotification, UIApplication.willResignActiveNotification,
                  UIAccessibility.reduceMotionStatusDidChangeNotification] {
       observers.append(NotificationCenter.default.addObserver(
@@ -101,7 +105,7 @@ final class NinfeaCinemaView: UIView {
       ) { [weak self] notification in
         guard let self else { return }
         if notification.name == UIApplication.willResignActiveNotification {
-          self.player.pause()
+          self.player?.pause()
         } else if self.active {
           self.beginVisit()
         }
@@ -110,50 +114,124 @@ final class NinfeaCinemaView: UIView {
   }
   required init?(coder: NSCoder) { fatalError() }
   deinit {
-    player.pause()
-    if let timeObserver { player.removeTimeObserver(timeObserver) }
+    loadingTask?.cancel()
+    player?.pause()
+    if let timeObserver { player?.removeTimeObserver(timeObserver) }
     observers.forEach(NotificationCenter.default.removeObserver)
   }
   override func didMoveToWindow() {
     super.didMoveToWindow()
-    performPendingStart()
-    updatePlayback()
+    if window == nil { releasePlayback() }
+    else if active { preparePlaybackIfNeeded(); updatePlayback() }
   }
   private func beginVisit() {
-    player.pause()
+    releasePlayback()
     playback.beginVisit()
-    seekGeneration += 1
-    pendingStart = available && !reduceMotion
-    seeking = false
-    poster.image = UIImage(named: pendingStart ? "ninfea-interior.png" : NinfeaCinemaAssets.posterName)
+    let posterName = available && !reduceMotion ? collection.startPoster : collection.finalPoster
+    poster.image = UIImage(named: posterName) ?? UIImage(named: collection.fallbackPoster)
     poster.isHidden = false
     surface.isHidden = reduceMotion || !available
-    performPendingStart()
-    updatePlayback()
+    preparePlaybackIfNeeded()
   }
-  private func performPendingStart() {
-    guard pendingStart, player.currentItem?.status == .readyToPlay else { return }
-    pendingStart = false
-    seeking = true
-    let generation = seekGeneration
-    player.seek(to: .zero, toleranceBefore: .zero, toleranceAfter: .zero) { [weak self] _ in
+  private func preparePlaybackIfNeeded() {
+    guard needsPreparation, active, window != nil, !reduceMotion,
+          let introURL = collection.introURL, let loopURL = collection.loopURL else { return }
+    needsPreparation = false
+    let generation = visitGeneration
+    loadingTask = Task { @MainActor [weak self] in
+      let introAsset = AVURLAsset(url: introURL)
+      let loopAsset = AVURLAsset(url: loopURL)
+      do {
+        async let introDuration = introAsset.load(.duration)
+        async let loopDuration = loopAsset.load(.duration)
+        let durations = try await (introDuration, loopDuration)
+        guard !Task.isCancelled, let self, self.visitGeneration == generation,
+              durations.0.seconds > 0, durations.1.seconds > 0 else { return }
+        let intro = AVPlayerItem(asset: introAsset)
+        let ambient = AVPlayerItem(asset: loopAsset)
+        let queue = AVQueuePlayer(items: [intro])
+        queue.isMuted = true
+        queue.preventsDisplaySleepDuringVideoPlayback = false
+        queue.automaticallyWaitsToMinimizeStalling = true
+        self.player = queue
+        self.introItem = intro
+        self.looper = AVPlayerLooper(player: queue, templateItem: ambient,
+          timeRange: .invalid, existingItemsOrdering: .loopingItemsFollowExistingItems)
+        self.surface.playerLayer.player = queue
+        self.itemObservation = queue.observe(\.currentItem, options: [.initial, .new]) { [weak self] _, _ in
+          DispatchQueue.main.async {
+            guard let self, self.visitGeneration == generation else { return }
+            if let item = self.player?.currentItem, item !== self.introItem {
+              self.playback.finish()
+            }
+            self.observeCurrentItem(generation: generation)
+          }
+        }
+        self.timeObserver = queue.addPeriodicTimeObserver(
+          forInterval: CMTime(value: 1, timescale: 10), queue: .main
+        ) { [weak self] time in
+          guard let self, self.visitGeneration == generation else { return }
+          self.playback.update(seconds: time.seconds)
+        }
+        self.loopObservation = self.looper?.observe(\.loopCount, options: [.new]) { [weak self] _, _ in
+          DispatchQueue.main.async {
+            guard let self, self.visitGeneration == generation else { return }
+            self.playback.completeAmbientCycle()
+          }
+        }
+        self.updatePlayback()
+      } catch {
+        guard let self, self.visitGeneration == generation else { return }
+        self.poster.image = UIImage(named: self.collection.finalPoster)
+          ?? UIImage(named: self.collection.fallbackPoster)
+        self.poster.isHidden = false
+      }
+    }
+  }
+  private func observeCurrentItem(generation: Int) {
+    statusObservation = player?.currentItem?.observe(\.status, options: [.initial, .new]) { [weak self] _, _ in
       DispatchQueue.main.async {
-        guard let self, generation == self.seekGeneration else { return }
-        self.seeking = false
+        guard let self, self.visitGeneration == generation else { return }
+        if self.player?.currentItem?.status == .failed {
+          self.releasePlayback()
+          self.poster.image = UIImage(named: self.collection.finalPoster)
+            ?? UIImage(named: self.collection.fallbackPoster)
+          self.surface.isHidden = true
+          return
+        }
         self.revealReadyFrame()
         self.updatePlayback()
       }
     }
   }
+  private func releasePlayback() {
+    visitGeneration += 1
+    loadingTask?.cancel()
+    loadingTask = nil
+    player?.pause()
+    if let timeObserver { player?.removeTimeObserver(timeObserver) }
+    timeObserver = nil
+    itemObservation = nil
+    statusObservation = nil
+    loopObservation = nil
+    looper?.disableLooping()
+    looper = nil
+    player?.removeAllItems()
+    surface.playerLayer.player = nil
+    player = nil
+    introItem = nil
+    needsPreparation = true
+    poster.isHidden = false
+  }
   private func revealReadyFrame() {
-    if available && !reduceMotion && !pendingStart && !seeking && surface.playerLayer.isReadyForDisplay {
+    if active && !reduceMotion && player?.currentItem?.status == .readyToPlay
+        && surface.playerLayer.isReadyForDisplay {
       poster.isHidden = true
     }
   }
   private func updatePlayback() {
     let run = active && window != nil && UIApplication.shared.applicationState == .active
-      && !reduceMotion && available && !playback.finished
-      && !pendingStart && !seeking && player.currentItem?.status == .readyToPlay
-    if run { player.play() } else { player.pause() }
+      && !reduceMotion && available && player?.currentItem?.status == .readyToPlay
+    if run { player?.play() } else { player?.pause() }
   }
 }

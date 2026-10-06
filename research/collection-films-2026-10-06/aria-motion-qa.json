@@ -1,0 +1,27 @@
+{
+  "intro": {
+    "width": 1176,
+    "height": 1764,
+    "fps": "24/1",
+    "frames": 193,
+    "duration": 8.041667,
+    "audio": false
+  },
+  "loop": {
+    "width": 1176,
+    "height": 1764,
+    "fps": "24/1",
+    "frames": 96,
+    "duration": 4.0,
+    "audio": false
+  },
+  "luma_mad_0_255": {
+    "intro_to_loop": 0.1462605744600296,
+    "loop_seam": 0.32098388671875,
+    "median_step": 0.021484375,
+    "p95_step": 0.15823736786842346,
+    "max_step": 0.5413411259651184,
+    "first_to_middle": 0.8203023076057434
+  },
+  "duplicate_adjacent_frames": 0
+}

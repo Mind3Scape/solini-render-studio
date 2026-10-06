@@ -208,6 +208,35 @@ final class SaliniTests: XCTestCase {
     XCTAssertEqual(FactoryZone.orderRoute.last, .dispatch)
     XCTAssertEqual(Set(FactoryZone.orderRoute).count, FactoryZone.orderRoute.count)
   }
+  @MainActor func testRenderedBuildingsRemainAlignedWithTheirLotsAfterMerging() throws {
+    let view = FactorySceneView()
+    let root = try XCTUnwrap(view.scene?.rootNode)
+    for zone in FactoryZone.allCases {
+      let building = try XCTUnwrap(root.childNodes.first { $0.name == "zone-\(zone.rawValue)" })
+      let box = building.boundingBox
+      let lot = CGRect(x: CGFloat(zone.position.x) - zone.footprint.width / 2,
+                       y: CGFloat(zone.position.z) - zone.footprint.height / 2,
+                       width: zone.footprint.width, height: zone.footprint.height).insetBy(dx: -4, dy: -4)
+      for x in [box.min.x, box.max.x] {
+        for y in [box.min.y, box.max.y] {
+          for z in [box.min.z, box.max.z] {
+            let point = building.convertPosition(SCNVector3(x, y, z), to: root)
+            XCTAssertTrue(lot.contains(CGPoint(x: CGFloat(point.x), y: CGFloat(point.z))),
+                          "\(zone.title): rendered geometry at \(point) escaped its lot \(lot)")
+          }
+        }
+      }
+    }
+    var machinery: [SCNNode] = []
+    root.enumerateChildNodes { node, _ in
+      if !node.actionKeys.isEmpty { machinery.append(node) }
+    }
+    XCTAssertGreaterThan(machinery.count, 10, "Process equipment must retain its live nodes after merging")
+    view.setPaused(true)
+    XCTAssertTrue(machinery.allSatisfy(\.isPaused))
+    view.setPaused(false)
+    XCTAssertTrue(machinery.allSatisfy { $0.isPaused == UIAccessibility.isReduceMotionEnabled })
+  }
   func testDispatchReleaseIsIdempotentAndCreatesAnEvent() {
     let simulation = FactorySimulation()
     simulation.releaseDispatch()
@@ -217,21 +246,51 @@ final class SaliniTests: XCTestCase {
     XCTAssertEqual(simulation.events, events)
     XCTAssertTrue(simulation.events[0].contains("Москва"))
   }
-  func testNinfeaVisitRestartsAndHoldsTheFinishedScene() {
+  func testCollectionVisitRestartsRevealAndResetsAmbientCycles() {
     var state = NinfeaPlaybackState()
     state.beginVisit()
     state.update(seconds: 6)
     state.finish()
+    state.completeAmbientCycle()
+    state.completeAmbientCycle()
     state.update(seconds: 0)
     XCTAssertEqual(state.seconds, 6)
     XCTAssertTrue(state.finished)
+    XCTAssertEqual(state.ambientCycles, 2)
     state.beginVisit()
     XCTAssertEqual(state.visit, 2)
     XCTAssertEqual(state.seconds, 0)
     XCTAssertFalse(state.finished)
+    XCTAssertEqual(state.ambientCycles, 0)
     state.update(seconds: .nan)
     state.update(seconds: -1)
     XCTAssertEqual(state.seconds, 0)
+  }
+  func testEveryCollectionShipsMatchingSilentRevealAndLivingLoop() async throws {
+    for collection in CollectionCinemaAssets.allCases {
+      let intro = AVURLAsset(url: try XCTUnwrap(collection.introURL, collection.name))
+      let loop = AVURLAsset(url: try XCTUnwrap(collection.loopURL, collection.name))
+      let introTracks = try await intro.loadTracks(withMediaType: .video)
+      let loopTracks = try await loop.loadTracks(withMediaType: .video)
+      let introTrack = try XCTUnwrap(introTracks.first)
+      let loopTrack = try XCTUnwrap(loopTracks.first)
+      let introSize = try await introTrack.load(.naturalSize)
+      let loopSize = try await loopTrack.load(.naturalSize)
+      XCTAssertEqual(introSize, loopSize, "The intro/loop junction must not reframe \(collection.name)")
+      let rate = try await loopTrack.load(.nominalFrameRate)
+      XCTAssertGreaterThanOrEqual(rate, 24)
+      let duration = try await loop.load(.duration).seconds
+      XCTAssertGreaterThan(duration, 2)
+      XCTAssertLessThan(duration, 9)
+      let audio = try await loop.loadTracks(withMediaType: .audio)
+      XCTAssertTrue(audio.isEmpty)
+      let generator = AVAssetImageGenerator(asset: loop)
+      generator.maximumSize = CGSize(width: 128, height: 192)
+      let first = try await generator.image(at: .zero)
+      let middle = try await generator.image(at: CMTime(seconds: duration / 2, preferredTimescale: 600))
+      XCTAssertNotEqual(first.image.dataProvider?.data as Data?, middle.image.dataProvider?.data as Data?,
+                        "The ending must retain actual motion: \(collection.name)")
+    }
   }
   func testBundledGenerativeNinfeaFilmDecodes() async throws {
     let url = try XCTUnwrap(NinfeaCinemaAssets.filmURL, "The selected generative film must ship in the app bundle")
@@ -285,5 +344,33 @@ final class SaliniTests: XCTestCase {
     XCTAssertTrue(buttons.contains { $0.accessibilityLabel == "О коллекции Ninfea" })
     let info = NinfeaInformationController()
     info.loadViewIfNeeded()
+  }
+  @MainActor func testVisibleCollectionAdvancesIntoLoopAndReleasesOffscreen() async throws {
+    let scene = try XCTUnwrap(UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.first)
+    let previousKey = scene.windows.first(where: \.isKeyWindow)
+    let window = UIWindow(windowScene: scene)
+    window.rootViewController = UIViewController()
+    let cinema = NinfeaCinemaView(collection: .greca)
+    window.rootViewController?.view.pin(cinema)
+    window.makeKeyAndVisible()
+    defer {
+      cinema.active = false
+      window.isHidden = true
+      previousKey?.makeKey()
+    }
+    cinema.active = true
+    let deadline = Date().addingTimeInterval(16)
+    while cinema.playback.ambientCycles == 0 && Date() < deadline {
+      try await Task.sleep(nanoseconds: 100_000_000)
+    }
+    XCTAssertTrue(cinema.playback.finished, "The reveal must hand off to the queued ending")
+    XCTAssertGreaterThan(cinema.playback.ambientCycles, 0, "The ending must actually repeat")
+    XCTAssertTrue(cinema.isPlaying)
+    cinema.active = false
+    XCTAssertFalse(cinema.isPlaying)
+    cinema.active = true
+    XCTAssertEqual(cinema.playback.visit, 2)
+    XCTAssertEqual(cinema.playback.ambientCycles, 0)
+    XCTAssertFalse(cinema.playback.finished)
   }
 }
