@@ -4,6 +4,84 @@ import XCTest
 @testable import Salini
 
 final class InsideOperationsTests: XCTestCase {
+  private func footprint(_ zone: FactoryZone) -> CGRect {
+    CGRect(x: CGFloat(zone.position.x) - zone.footprint.width / 2,
+           y: CGFloat(zone.position.z) - zone.footprint.height / 2,
+           width: zone.footprint.width, height: zone.footprint.height)
+  }
+  func testCampusHasRealClearancesAndRoadsDoNotCrossBuildings() {
+    for (index, zone) in FactoryZone.allCases.enumerated() {
+      let rect = footprint(zone)
+      XCTAssertTrue(CampusSite.bounds.contains(rect))
+      for other in FactoryZone.allCases.dropFirst(index + 1) {
+        let b = footprint(other)
+        let dx = max(0, max(rect.minX - b.maxX, b.minX - rect.maxX))
+        let dz = max(0, max(rect.minY - b.maxY, b.minY - rect.maxY))
+        XCTAssertGreaterThanOrEqual(hypot(dx, dz), 18,
+                                    "Insufficient open space: \(zone) / \(other)")
+      }
+      for road in CampusSite.roads {
+        XCTAssertFalse(rect.intersects(road.rect), "Road crosses \(zone)")
+      }
+    }
+    XCTAssertGreaterThanOrEqual(footprint(.dispatch).minY - footprint(.warehouse).maxY, 35)
+  }
+  func testRoadJunctionsHaveOneSurfaceAndKeepTheMainSpineContinuous() {
+    let surfaces = CampusSite.roadSurfaces()
+    for x in stride(from: -100.37, through: 110, by: 3) {
+      for z in stride(from: -80.23, through: 80, by: 3) {
+        let point = CGPoint(x: x, y: z)
+        XCTAssertFalse(surfaces.primary.contains(point) && surfaces.service.contains(point),
+                       "Road classes overlap and can flicker at \(point)")
+      }
+    }
+    for x: CGFloat in [-43, 58] {
+      let crossing = CGPoint(x: x, y: -5)
+      XCTAssertTrue(surfaces.primary.contains(crossing))
+      XCTAssertFalse(surfaces.service.contains(crossing))
+    }
+  }
+  func testRelocatedVehicleAndProcessRoutesAvoidUnrelatedBuildings() {
+    let routes = [CampusSite.transferRoute()] + [1, 2].map(CampusSite.departureRoute)
+    for points in routes {
+      for (a, b) in zip(points, points.dropFirst()) {
+        for step in 0...100 {
+          let t = CGFloat(step) / 100
+          let point = CGPoint(x: CGFloat(a.x) + CGFloat(b.x - a.x) * t,
+                              y: CGFloat(a.z) + CGFloat(b.z - a.z) * t)
+          for zone in FactoryZone.allCases where zone != .dispatch {
+            XCTAssertFalse(footprint(zone).insetBy(dx: -1.5, dy: -1.5).contains(point),
+                           "Vehicle crosses \(zone)")
+          }
+        }
+      }
+    }
+    let route = CampusSite.processRoute(FactoryZone.orderRoute)
+    for (a, b) in zip(route, route.dropFirst()) {
+      for step in 0...100 {
+        let t = CGFloat(step) / 100
+        let point = CGPoint(x: CGFloat(a.x) + CGFloat(b.x - a.x) * t,
+                            y: CGFloat(a.z) + CGFloat(b.z - a.z) * t)
+        for zone in FactoryZone.allCases {
+          XCTAssertFalse(footprint(zone).contains(point), "Process route crosses \(zone)")
+        }
+      }
+    }
+  }
+  @MainActor func testEntireCampusFallsInsideDirectionalShadowDistance() throws {
+    let scene = FactorySceneView()
+    scene.frame = CGRect(x: 0, y: 0, width: 402, height: 874)
+    scene.layoutIfNeeded()
+    let camera = try XCTUnwrap(scene.pointOfView).position
+    let sun = try XCTUnwrap(scene.scene?.rootNode.childNodes.compactMap(\.light)
+      .first { $0.type == .directional && $0.castsShadow })
+    for zone in FactoryZone.allCases {
+      let p = zone.position
+      let distance = sqrt(pow(camera.x - p.x, 2) + pow(camera.y - p.y, 2) + pow(camera.z - p.z, 2))
+      XCTAssertGreaterThan(sun.maximumShadowDistance, CGFloat(distance),
+                           "Camera distance silently disables shadows at \(zone)")
+    }
+  }
   func testForecastSchedulesEveryBathWithoutOverlappingPostWork() {
     let main = forecastAria(at: 900, plan: .mainQueue)
     let reserve = forecastAria(at: 900, plan: .reserve)

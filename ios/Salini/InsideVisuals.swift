@@ -2,7 +2,12 @@ import UIKit
 
 /// Owner-only visual tokens. The collection experience keeps its own art direction.
 enum InsideStyle {
-  static let canvas = UIColor(hex: 0xF0F1F2)
+  static let canvas = UIColor(hex: 0xF3F4F5)
+  static let asphalt = UIColor(hex: 0x7B8588)
+  static let serviceRoad = UIColor(hex: 0xA0A9AA)
+  static let paving = UIColor(hex: 0xD4DAD9)
+  static let lawn = UIColor(hex: 0x91A88C)
+  static let foliage = UIColor(hex: 0x577B65)
   static let ink = UIColor(hex: 0x20262B)
   static let muted = UIColor(hex: 0x667079)
   static let blue = UIColor(hex: 0x355A6C)
@@ -89,7 +94,7 @@ func insideAction(
   config.title = title
   config.baseForegroundColor = prominent ? .white : InsideStyle.ink
   config.baseBackgroundColor = prominent ? InsideStyle.ink : .clear
-  config.contentInsets = NSDirectionalEdgeInsets(top: 14, leading: 18, bottom: 14, trailing: 18)
+  config.contentInsets = NSDirectionalEdgeInsets(top: 14, leading: 14, bottom: 14, trailing: 14)
   config.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer {
     var value = $0
     value.font = .systemFont(ofSize: 14, weight: .medium)

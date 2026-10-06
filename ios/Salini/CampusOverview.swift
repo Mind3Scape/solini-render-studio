@@ -17,7 +17,8 @@ final class CampusOverview: UIControl {
     addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(choose(_:))))
   }
   required init?(coder: NSCoder) { fatalError() }
-  private var modelScale: CGFloat { min((bounds.width - 14) / 180, (bounds.height - 12) / 106) }
+  private var modelScale: CGFloat { min((bounds.width - 14) / CampusSite.projectedSize.width,
+        (bounds.height - 12) / CampusSite.projectedSize.height) }
   private func point(_ x: CGFloat, _ z: CGFloat) -> CGPoint {
     CGPoint(
       x: bounds.midX + (x - z - 5) / sqrt(2) * modelScale,

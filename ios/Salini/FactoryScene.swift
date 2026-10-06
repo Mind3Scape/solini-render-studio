@@ -77,7 +77,7 @@ final class FactorySceneView: SCNView, UIGestureRecognizerDelegate {
     backgroundColor = InsideStyle.canvas
     world.background.contents = InsideStyle.canvas
     world.lightingEnvironment.contents = UIColor.white
-    world.lightingEnvironment.intensity = 0.24
+    world.lightingEnvironment.intensity = 0.34
     antialiasingMode = .multisampling4X
     preferredFramesPerSecond = 60
     isPlaying = true
@@ -94,21 +94,26 @@ final class FactorySceneView: SCNView, UIGestureRecognizerDelegate {
     let ambient = SCNNode()
     ambient.light = SCNLight()
     ambient.light?.type = .ambient
-    ambient.light?.intensity = 260
+    ambient.light?.intensity = 350
     ambient.light?.color = UIColor(hex: 0xEFF2F6)
     world.rootNode.addChildNode(ambient)
     let sun = SCNNode()
     sun.light = SCNLight()
     sun.light?.type = .directional
-    sun.light?.intensity = 980
+    sun.light?.intensity = 870
     sun.light?.castsShadow = true
     sun.light?.shadowMode = .forward
-    sun.light?.shadowBias = 0.6
+    // The camera is >300 units from the site; SceneKit's default 100-unit shadow
+    // distance silently excluded the entire campus from shadow rendering.
+    sun.light?.maximumShadowDistance = 650
+    sun.light?.zFar = 700
+    sun.light?.shadowBias = 0.3
     sun.light?.shadowColor = UIColor(hex: 0x52616D, alpha: 0.43)
     sun.light?.shadowRadius = 6
     sun.light?.shadowSampleCount = 8
     sun.light?.shadowMapSize = CGSize(width: 2048, height: 2048)
-    sun.light?.orthographicScale = 150
+    sun.light?.orthographicScale = 240
+    sun.position = SCNVector3(0, 160, 80)
     sun.eulerAngles = SCNVector3(-0.88, -0.9, 0)
     world.rootNode.addChildNode(sun)
     buildCampus()
@@ -401,15 +406,15 @@ final class FactorySceneView: SCNView, UIGestureRecognizerDelegate {
         ])), forKey: "motion")
     return n
   }
-  private let chalk = UIColor(hex: 0xF7F8F7)
-  private let steel = UIColor(hex: 0x7E898F)
-  private let accent = UIColor(hex: 0x647C87)
+  private let chalk = UIColor(hex: 0xE9EEEC)
+  private let steel = UIColor(hex: 0x74817F)
+  private let accent = UIColor(hex: 0x526E6B)
   private func buildCampus() {
     let root = world.rootNode
     let ground = box(root, 440, 0.1, 440, 0, -2.7, 0, InsideStyle.canvas, r: 0)
     ground.geometry?.firstMaterial?.lightingModel = .constant
     // The object has the weight and edge treatment of a physical architectural model.
-    let plinthShadow = SCNPlane(width: 165, height: 126)
+    let plinthShadow = SCNPlane(width: 246, height: 191)
     let shadowMaterial = SCNMaterial()
     shadowMaterial.lightingModel = .constant
     shadowMaterial.diffuse.contents = Self.plinthShadowTexture
@@ -420,22 +425,40 @@ final class FactorySceneView: SCNView, UIGestureRecognizerDelegate {
     shadow.eulerAngles.x = -.pi / 2
     shadow.castsShadow = false
     root.addChildNode(shadow)
-    box(root, 146, 2.0, 108, 5, -1.2, 0, UIColor(hex: 0xC5CBCE), r: 0.35)
-    box(root, 143, 0.14, 105, 5, -0.24, 0, UIColor(hex: 0xDADDDC), r: 1)
-    // A ring road and real circulation gaps keep the buildings from reading as tiles.
-    road(x: 5, z: -45, w: 136, d: 6)
-    road(x: 5, z: 47, w: 136, d: 7)
-    road(x: -60, z: 0, w: 6, d: 96)
-    road(x: 72, z: 0, w: 6, d: 96)
-    road(x: -27, z: 0, w: 6, d: 90)
-    road(x: 42, z: 0, w: 6, d: 90)
-    road(x: 3, z: -4, w: 76, d: 6)
-    for x in stride(from: -55, through: 65, by: 7) {
-      for z: Float in [-45, 47] { box(root, 2.4, 0.018, 0.12, Float(x), 0.04, z, chalk, r: 0) }
+    box(root, CampusSite.bounds.width, 2, CampusSite.bounds.height, 5, -1.2, 0,
+        UIColor(hex: 0x62726F), r: 0.45)
+    box(root, 222, 0.14, 168, 5, -0.24, 0, InsideStyle.paving, r: 1)
+    // Roads and courtyards occupy real space between unchanged building footprints.
+    buildRoadNetwork()
+    landscape(x: -100, z: 0, width: 8, depth: 158)
+    landscape(x: 114, z: 0, width: 4, depth: 158)
+    landscape(x: 7, z: -82, width: 200, depth: 5)
+    landscape(x: 7, z: 82, width: 200, depth: 5)
+    landscape(x: -69, z: 12, width: 32, depth: 18)
+    landscape(x: -69, z: 58, width: 32, depth: 10)
+    landscape(x: -69, z: -61, width: 32, depth: 8)
+    landscape(x: 10, z: 35, width: 10, depth: 58)
+    landscape(x: 13.5, z: -40, width: 9, depth: 40)
+    // A 44-unit separation between warehouse and dispatch becomes a real freight yard.
+    box(root, 32, 0.08, 40, 83, 0.01, 10, UIColor(hex: 0xA4AFB0), r: 1.5)
+    for x in stride(from: 70.0, through: 97.0, by: 6) {
+      box(root, 0.035, 0.012, 40, Float(x), 0.058, 10, UIColor(hex: 0x98A4A5), r: 0)
     }
-    for z in stride(from: -39, through: 40, by: 7) {
-      for x: Float in [-60, 42, 72] { box(root, 0.12, 0.018, 2.4, x, 0.04, Float(z), chalk, r: 0) }
+    for z in stride(from: -8.0, through: 28.0, by: 6) {
+      box(root, 32, 0.012, 0.035, 83, 0.059, Float(z), UIColor(hex: 0x98A4A5), r: 0)
     }
+    for x: Float in [73, 83, 93] {
+      box(root, 0.12, 0.02, 12, x, 0.07, 15, chalk, r: 0)
+    }
+    for x: Float in [73, 93] {
+      box(root, 2.4, 0.18, 0.3, x, 0.16, 24, steel, r: 0.07)
+    }
+    // Three-unit pedestrian paths are visually separate from the freight network.
+    box(root, 26, 0.13, 3, -63, 0.04, 5, chalk, r: 0.25)
+    box(root, 40, 0.13, 3, -16, 0.04, 5, chalk, r: 0.25)
+    box(root, 3, 0.13, 57, 1, 0.04, 34, chalk, r: 0.25)
+    box(root, 3, 0.13, 25, -69, 0.04, 17, chalk, r: 0.25)
+    box(root, 28, 0.13, 6, -68, 0.04, 49, chalk, r: 0.25)
     for zone in FactoryZone.allCases {
       let n = SCNNode()
       n.name = "zone-\(zone.rawValue)"
@@ -459,37 +482,37 @@ final class FactorySceneView: SCNView, UIGestureRecognizerDelegate {
       addSubview(tag)
       tags[zone] = tag
     }
-    // Entrance plaza, parking, perimeter planting and utilities establish human scale.
-    for x: Float in [-51, -45, -39, -33] {
-      box(root, 0.1, 0.03, 7, x, 0.1, 43, chalk, r: 0)
-      if x != -33 { car(root, x: x + 2.6, z: 43) }
+    // Visitor parking stays on the office side; the freight court stays unobstructed.
+    for x: Float in [-79, -74, -69, -64, -59] {
+      box(root, 0.1, 0.03, 5.5, x, 0.1, 64, chalk, r: 0)
+      if x == -79 || x == -69 || x == -59 { car(root, x: x + 2, z: 64) }
     }
-    for z in stride(from: -40, through: 44, by: 12) {
-      tree(root, x: -65, z: Float(z))
-      tree(root, x: 77, z: Float(z))
+    for z in stride(from: -65, through: 65, by: 18) { tree(root, x: -100, z: Float(z)) }
+    for x in stride(from: -81, through: 99, by: 20) {
+      tree(root, x: Float(x), z: -82)
+      tree(root, x: Float(x), z: 82)
     }
-    for x in stride(from: -53, through: 64, by: 12) {
-      tree(root, x: Float(x), z: -50)
-      tree(root, x: Float(x), z: 53)
+    for z: Float in [13, 31, 50] { tree(root, x: 10, z: z) }
+    for z: Float in [-52, -34] { tree(root, x: 13.5, z: z) }
+    for x: Float in [-79, -60] {
+      tree(root, x: x, z: 13)
+      tree(root, x: x, z: 57)
+      // Minimal stone seating and a planted arrival court, at human scale.
+      box(root, 3.5, 0.45, 0.7, x, 0.28, 22, chalk, r: 0.15)
     }
-    for z: Float in [-8, 0, 8] { tree(root, x: -47, z: z) }
-    for x: Float in [-18, -9, 0] { tree(root, x: x, z: 38) }
-    for z: Float in [-33, 1, 35] {
-      for x: Float in [-56, 38, 68] {
+    for z: Float in [-59, 7, 62] {
+      for x: Float in [-50, 66, 96] {
         cylinder(root, r: 0.09, h: 6, x: x, y: 3, z: z, color: steel)
         box(root, 1.2, 0.12, 0.5, x + 0.45, 6, z, chalk)
       }
     }
-    // Gatehouse and an entrance barrier, not just trucks circling a room.
-    box(root, 4, 3, 4, -59, 1.5, 51, chalk)
-    box(root, 3, 1.2, 0.1, -59, 2, 53.03, accent)
-    box(root, 0.25, 1.7, 0.3, -55, 0.85, 47, steel)
-    _ = box(root, 5.5, 0.15, 0.2, -52.5, 1.7, 47, chalk)
+    box(root, 4, 3, 4, -80, 1.5, 77, chalk)
+    box(root, 3, 1.2, 0.1, -80, 2, 79.03, accent)
     let lift = forklift()
     lift.scale = SCNVector3(1.6, 1.6, 1.6)
-    lift.name = "zone-7"
+    lift.name = "zone-6"
     root.addChildNode(lift)
-    lift.position = SCNVector3(42, 0.1, 9)
+    lift.position = CampusSite.transferRoute()[0]
     batchTransfer = lift
     lift.removeAllActions()
     lift.enumerateChildNodes { node, _ in node.removeAllActions() }
@@ -500,28 +523,76 @@ final class FactorySceneView: SCNView, UIGestureRecognizerDelegate {
     flow.opacity = 0
     if UIAccessibility.isReduceMotionEnabled { setPaused(true) }
   }
-  private func road(x: Float, z: Float, w: CGFloat, d: CGFloat) {
-    box(world.rootNode, w + 0.8, 0.12, d + 0.8, x, -0.08, z, chalk, r: 0.15)
-    box(world.rootNode, w, 0.05, d, x, 0, z, UIColor(hex: 0xADB5BA), r: 0.1)
+  private func buildRoadNetwork() {
+    let paths = CampusSite.roadSurfaces()
+    let curb = paths.outline.copy(strokingWithWidth: 1, lineCap: .round, lineJoin: .round, miterLimit: 2)
+    for (path, color, elevation) in [(curb, chalk, Float(0.025)),
+                                    (paths.primary, InsideStyle.asphalt, Float(0.06)),
+                                    (paths.service, InsideStyle.serviceRoad, Float(0.06))] {
+      let outline = UIBezierPath(cgPath: path)
+      outline.flatness = 0.05
+      let geometry = SCNShape(path: outline, extrusionDepth: 0.025)
+      geometry.materials = [material(color)]
+      let node = SCNNode(geometry: geometry)
+      node.eulerAngles.x = .pi / 2
+      node.position.y = elevation
+      node.castsShadow = false
+      world.rootNode.addChildNode(node)
+    }
   }
-  private func tree(_ p: SCNNode, x: Float, z: Float) {
+  private func landscape(x: Float, z: Float, width: CGFloat, depth: CGFloat) {
+    box(world.rootNode, width + 0.35, 0.1, depth + 0.35, x, -0.07, z,
+        UIColor(hex: 0xB8C2B8), r: 0.6)
+    box(world.rootNode, width, 0.06, depth, x, 0, z, InsideStyle.lawn, r: 0.6)
+  }
+  private func tree(_ parent: SCNNode, x: Float, z: Float) {
     let seed = abs(Int(x * 13 + z * 7))
-    let size = Float(0.84 + Double(seed % 5) * 0.08)
+    let columnar = seed % 3 == 0
+    let variation = Float(0.9 + Double(seed % 5) * 0.055)
     let n = SCNNode()
     n.position = SCNVector3(x, 0, z)
-    n.scale = SCNVector3(size, size, size)
-    p.addChildNode(n)
-    contactShadow(n, width: 4.2, depth: 3.8)
-    cylinder(n, r: 0.11, h: 2.1, x: 0, y: 1.05, z: 0, color: UIColor(hex: 0xA4ABA6))
-    for (i, offset) in [
-      SCNVector3(0, 2.7, 0), SCNVector3(-0.6, 3.15, 0.25), SCNVector3(0.6, 3.4, -0.1),
-      SCNVector3(0.1, 4, 0.2),
-    ].enumerated() {
-      let crown = ball(
-        n, r: i == 0 ? 1.1 : 0.85, x: offset.x, y: offset.y, z: offset.z,
-        color: UIColor(hex: i % 2 == 0 ? 0xA7B6AD : 0xBECBC2))
-      crown.scale = SCNVector3(1, 0.95, 0.9)
+    n.scale = SCNVector3(variation, variation, variation)
+    n.eulerAngles.y = Float(seed % 12) * .pi / 6
+    parent.addChildNode(n)
+    contactShadow(n, width: 5.5, depth: 5)
+    cylinder(n, r: 0.12, h: 3.2, x: 0, y: 1.6, z: 0, color: UIColor(hex: 0x667869))
+    // One irregular, smooth crown avoids the repeated four-ball silhouette.
+    let rows = 14
+    let segments = 22
+    let radius: Float = columnar ? 1.2 : 2.05
+    let height: Float = columnar ? 3.2 : 2.35
+    var vertices: [SCNVector3] = []
+    var normals: [SCNVector3] = []
+    var indices: [Int32] = []
+    for row in 0...rows {
+      let theta = Float(row) / Float(rows) * .pi
+      for segment in 0...segments {
+        let phi = Float(segment) / Float(segments) * .pi * 2
+        let contour: Float = 1 + 0.07 * sin(phi * 3 + Float(seed)) * sin(theta * 2)
+        let px = radius * sin(theta) * cos(phi) * contour
+        let py = height * cos(theta)
+        let pz = radius * sin(theta) * sin(phi) * contour * 0.88
+        vertices.append(SCNVector3(px, py, pz))
+        let v = SCNVector3(px / (radius * radius), py / (height * height),
+                          pz / (radius * radius * 0.88 * 0.88))
+        let length = max(0.001, sqrt(v.x*v.x + v.y*v.y + v.z*v.z))
+        normals.append(SCNVector3(v.x / length, v.y / length, v.z / length))
+        if row < rows && segment < segments {
+          let a = Int32(row * (segments + 1) + segment)
+          let b = a + Int32(segments + 1)
+          indices += [a, a + 1, b, a + 1, b + 1, b]
+        }
+      }
     }
+    let geometry = SCNGeometry(sources: [SCNGeometrySource(vertices: vertices),
+                                        SCNGeometrySource(normals: normals)],
+                              elements: [SCNGeometryElement(indices: indices, primitiveType: .triangles)])
+    let leaf = material(UIColor(hex: seed % 2 == 0 ? 0x64846C : 0x78927A))
+    leaf.isDoubleSided = true
+    geometry.materials = [leaf]
+    let crown = SCNNode(geometry: geometry)
+    crown.position.y = columnar ? 4.5 : 4
+    n.addChildNode(crown)
   }
   private func car(_ p: SCNNode, x: Float, z: Float) {
     box(p, 2, 0.75, 4.1, x, 0.6, z, UIColor(hex: 0xE5E8E5), r: 0.4)
@@ -789,29 +860,7 @@ final class FactorySceneView: SCNView, UIGestureRecognizerDelegate {
       worker(n, x: -4, z: -5, walking: true)
     }
   }
-  private func buildFlow() {
-    let points = [
-      SCNVector3(-43, 0.45, 38), SCNVector3(-27, 0.45, 38), SCNVector3(-27, 0.45, -4),
-      SCNVector3(-7, 0.45, -4), SCNVector3(27, 0.45, -4), SCNVector3(42, 0.45, -4),
-      SCNVector3(42, 0.45, 31), SCNVector3(57, 0.45, 31),
-    ]
-    for i in 0..<(points.count - 1) {
-      let a = points[i]
-      let b = points[i + 1]
-      let part = box(
-        flow, CGFloat(max(0.18, abs(a.x - b.x))), 0.045, CGFloat(max(0.18, abs(a.z - b.z))),
-        (a.x + b.x) / 2, 0.45, (a.z + b.z) / 2, UIColor(hex: 0x588AA5), r: 0)
-      part.geometry?.firstMaterial = material(UIColor(hex: 0x588AA5), glow: true)
-    }
-    for i in 0..<4 {
-      let particle = ball(flow, r: 0.28, x: -43, y: 0.5, z: 38, color: UIColor(hex: 0x477C9B))
-      particle.runAction(
-        .sequence([
-          .wait(duration: Double(i) * 3),
-          .repeatForever(.sequence(points.map { .move(to: $0, duration: 2) })),
-        ]), forKey: "motion")
-    }
-  }
+  private func buildFlow() { showOrderRoute(FactoryZone.orderRoute) }
   private func addProcessDetail(_ zone: FactoryZone, node n: SCNNode) {
     let w = Float(zone.footprint.width / 2)
     let d = Float(zone.footprint.height / 2)
@@ -905,24 +954,27 @@ final class FactorySceneView: SCNView, UIGestureRecognizerDelegate {
   }
   private func addSiteDetail() {
     let root = world.rootNode
-    // Crossings belong to real circulation gaps, not arbitrary decoration.
-    for x: Float in [-27, 42] {
-      for offset in stride(from: -2.2, through: 2.2, by: 0.8) {
-        box(root, 0.42, 0.025, 4, x + Float(offset), 0.08, -4, chalk, r: 0)
+    // Crossings link the office pedestrian promenade across the service street.
+    for x: Float in [-43] {
+      for offset in stride(from: -4.0, through: 4.0, by: 1.2) {
+        box(root, 0.6, 0.025, 3, x + Float(offset), 0.08, 5, chalk, r: 0)
       }
     }
-    for z in stride(from: -46, through: 46, by: 5.5) {
-      cylinder(root, r: 0.07, h: 1.6, x: 79, y: 0.6, z: Float(z), color: steel)
+    // Fence and freight gate frame the widened eastern road without blocking the yard.
+    for z in stride(from: -57, through: 73, by: 8) {
+      cylinder(root, r: 0.07, h: 1.6, x: 112, y: 0.8, z: Float(z), color: steel)
     }
-    for z: Float in [-1, 0.7] { box(root, 0.06, 0.06, 99, 79, z + 0.8, 0, steel, r: 0) }
-    box(root, 5, 2.7, 4, 75.5, 1.3, -48, chalk)
-    box(root, 4.1, 0.9, 0.08, 75.5, 1.8, -45.98, accent)
+    for height: Float in [0.6, 1.5] {
+      box(root, 0.06, 0.06, 136, 112, height, 8, steel, r: 0)
+    }
+    box(root, 5, 2.7, 4, 112, 1.3, -65, chalk)
+    box(root, 4.1, 0.9, 0.08, 112, 1.8, -62.98, accent)
     let gatePivot = SCNNode()
-    gatePivot.position = SCNVector3(75, 1.5, -44)
+    gatePivot.position = SCNVector3(110, 1.5, -64)
     root.addChildNode(gatePivot)
-    box(gatePivot, 5.8, 0.16, 0.2, -2.9, 0, 0, chalk)
+    box(gatePivot, 12, 0.16, 0.2, -6, 0, 0, chalk)
     freightGate = gatePivot
-    text3D("SALINI", root, position: SCNVector3(-49, 0.08, 51), size: 1.25, color: steel)
+    text3D("SALINI", root, position: SCNVector3(-74, 0.08, 53), size: 1.4, color: steel)
   }
   private func buildOperationsMarkers() {
     for order in InsideOrderID.allCases {
@@ -985,31 +1037,27 @@ final class FactorySceneView: SCNView, UIGestureRecognizerDelegate {
     if simulation.quality == .departed { releaseDispatch(2) }
     if simulation.quality == .loading && !transferStarted, let transfer = batchTransfer {
       transferStarted = true
-      let move = SCNAction.sequence([
-        .move(to: SCNVector3(42, 0.1, 31), duration: 2),
-        .rotateTo(x: 0, y: .pi / 2, z: 0, duration: 0.3),
-        .move(to: SCNVector3(55, 0.1, 26), duration: 1.7),
-      ])
+      let points = CampusSite.transferRoute()
+      var steps: [SCNAction] = []
+      for (a, b) in zip(points, points.dropFirst()) {
+        steps.append(.group([
+          .rotateTo(x: 0, y: CGFloat(atan2(b.x - a.x, b.z - a.z)), z: 0,
+                    duration: 0.18, usesShortestUnitArc: true),
+          .move(to: b, duration: 0.85),
+        ]))
+      }
+      let move = SCNAction.sequence(steps)
       move.speed = simulationSpeed
       transfer.runAction(move, forKey: "marea-transfer")
       transfer.isPaused = simulationPaused || UIAccessibility.isReduceMotionEnabled
-      if UIAccessibility.isReduceMotionEnabled { transfer.position = SCNVector3(55, 0.1, 26) }
+      if UIAccessibility.isReduceMotionEnabled { transfer.position = CampusSite.transferRoute().last! }
     }
     placeLabels()
   }
   func showOrderRoute(_ zones: [FactoryZone]) {
     flow.childNodes.forEach { $0.removeFromParentNode() }
-    // Each stage connects through a service aisle. This is a process diagram on the ground,
-    // not a navigation route for vehicles through building walls.
-    var points: [SCNVector3] = []
-    for zone in zones {
-      var p = zone.position
-      p.y = 0.55
-      if let previous = points.last {
-        points.append(SCNVector3(p.x, 0.55, previous.z))
-      }
-      points.append(p)
-    }
+    // Draw along shared front-door spurs and actual service aisles.
+    let points = CampusSite.processRoute(zones)
     for i in 0..<max(0, points.count - 1) {
       let a = points[i]
       let b = points[i + 1]
@@ -1038,7 +1086,7 @@ final class FactorySceneView: SCNView, UIGestureRecognizerDelegate {
       guard let b = tags[zone] else { continue }
       var p = zone.position
       p.y = zone.buildingHeight + 2
-      if zone == .dispatch { p.z += 7 }
+      if zone == .dispatch { p.z += 19 }
       let point = projectPoint(p)
       b.sizeToFit()
       b.center = CGPoint(x: CGFloat(point.x), y: CGFloat(point.y) - 22)
@@ -1156,7 +1204,7 @@ final class FactorySceneView: SCNView, UIGestureRecognizerDelegate {
     SCNTransaction.begin()
     SCNTransaction.animationDuration = UIAccessibility.isReduceMotionEnabled ? 0 : 0.8
     for (zone, pairs) in buildingMaterials {
-      let fade: CGFloat = activeZone != nil && zone != activeZone ? 0.5 : 0
+      let fade: CGFloat = activeZone != nil && zone != activeZone ? 0.18 : 0
       for (material, original) in pairs {
         var r: CGFloat = 0
         var g: CGFloat = 0
@@ -1166,8 +1214,8 @@ final class FactorySceneView: SCNView, UIGestureRecognizerDelegate {
         material.diffuse.contents = UIColor(
           red: r + (0.94 - r) * fade, green: g + (0.945 - g) * fade, blue: b + (0.95 - b) * fade,
           alpha: a)
-        material.emission.contents = fade > 0 ? InsideStyle.canvas : UIColor.black
-        material.emission.intensity = fade * 0.22
+        material.emission.contents = InsideStyle.canvas
+        material.emission.intensity = 0.03 + fade * 0.07
       }
     }
     for (zone, roof) in roofs {
@@ -1189,15 +1237,19 @@ final class FactorySceneView: SCNView, UIGestureRecognizerDelegate {
       ]), forKey: "gate")
     freightGate?.action(forKey: "gate")?.speed = simulationSpeed
     freightGate?.isPaused = simulationPaused || UIAccessibility.isReduceMotionEnabled
-    let x = Float((number - 2) * 7)
-    let drive = SCNAction.sequence([
-      .move(to: SCNVector3(x, 0.4, 15), duration: 3),
-      .rotateTo(x: 0, y: .pi / 2, z: 0, duration: 0.7),
-      .move(to: SCNVector3(15, 0.4, 15), duration: 4),
-      .rotateTo(x: 0, y: .pi, z: 0, duration: 0.7),
-      .move(to: SCNVector3(15, 0.4, -77), duration: 18),
-      .fadeOut(duration: 0.5),
-    ])
+    let origin = FactoryZone.dispatch.position
+    let points = CampusSite.departureRoute(number).map {
+      SCNVector3($0.x - origin.x, $0.y, $0.z - origin.z)
+    }
+    var steps: [SCNAction] = []
+    let durations: [Double] = [3, 4, 18]
+    for (i, pair) in zip(points, points.dropFirst()).enumerated() {
+      steps.append(.rotateTo(x: 0, y: CGFloat(atan2(pair.1.x - pair.0.x, pair.1.z - pair.0.z)),
+                             z: 0, duration: 0.7, usesShortestUnitArc: true))
+      steps.append(.move(to: pair.1, duration: durations[i]))
+    }
+    steps.append(.fadeOut(duration: 0.5))
+    let drive = SCNAction.sequence(steps)
     drive.speed = simulationSpeed
     truck.runAction(drive, forKey: "departure")
     truck.isPaused = simulationPaused || UIAccessibility.isReduceMotionEnabled
