@@ -1,0 +1,78 @@
+{
+  "provider": "Higgsfield",
+  "requested": {
+    "model": "kling3_0",
+    "mode": "pro",
+    "duration": 12,
+    "sound": "off",
+    "aspect_ratio": "9:16",
+    "count": 1,
+    "prompt": "A 12-second single uninterrupted luxury product film. Use the supplied exact first and final frames, with the original 2:3 composition preserved. Camera is completely locked. The emerald sculptural bathtub, wide wing rim, overflow opening and dark base are rigid and absolutely unchanged in shape, scale, position and color. Warm limestone pavilion, same lighting direction, dry stone floor throughout.\nThe first frame is the empty interior. Motion begins immediately: by 0.5 seconds a clearly visible reflective water surface is rising from inside the cavity while the first small green plant tips emerge beside the base and at the rear wall. At 2 seconds BOTH the water and numerous living plant shoots are visibly moving. At 4 seconds the water is approximately halfway up and climbing stems are already exploring the outside of the tub. At 7 seconds the water is nearly full and several branching vines curl gently over the broad rim, with young leaves unfurling at different speeds. All botanical growth and filling overlap continuously. Finish reaching the garden composition by 10 seconds, then allow two seconds of very gentle water ripples and subtle leaf movement as growth settles.\nMake the mechanics of growth beautiful: fine stem tips advance, wrap the actual three-dimensional surface, branch, and form small buds that open into leaves. Five or more slender vines develop around left and right corners with elegant curved paths, never a row of straight stems. Fern fronds behind the tub gradually uncoil while the wall vegetation expands from connected stems. No plants teleporting, no dissolving masses, no fully formed leaves fading in, no elastic scaling of still images. The waterline rises smoothly at a steady slow pace, with clear moving reflections visible early; no flood, foam, fountain or water outside the tub.\nAll leaves cast coherent evolving shadows on the tub and architecture, reflected foliage responds in the water, leaf edges transmit soft sunlight. Art-directed photorealistic Cinema 4D / luxury furniture film quality, fine natural textures, physically integrated light, restrained natural greens. Keep most of the tub body and full distinctive rim silhouette visible. No camera movement, cuts, crossfades, scene transitions, material morphing, text or logos. Silent.",
+    "medias": [
+      {
+        "role": "start_image",
+        "value": "cc45199d-9028-48ac-94bc-a2cf2c7cc288"
+      },
+      {
+        "role": "end_image",
+        "value": "ec24a379-eea1-44a1-b993-9c56dc245b11"
+      }
+    ]
+  },
+  "submission": {
+    "results": [
+      {
+        "id": "63c05989-926e-4d1d-be8f-eea4a36c9b73",
+        "type": "video",
+        "status": "pending",
+        "model": "kling3_0",
+        "params": {
+          "prompt": "A 12-second single uninterrupted luxury product film. Use the supplied exact first and final frames, with the original 2:3 composition preserved. Camera is completely locked. The emerald sculptural bathtub, wide wing rim, overflow opening and dark base are rigid and absolutely unchanged in shape, scale, position and color. Warm limestone pavilion, same lighting direction, dry stone floor throughout.\nThe first frame is the empty interior. Motion begins immediately: by 0.5 seconds a clearly visible reflective water surface is rising from inside the cavity while the first small green plant tips emerge beside the base and at the rear wall. At 2 seconds BOTH the water and numerous living plant shoots are visibly moving. At 4 seconds the water is approximately halfway up and climbing stems are already exploring the outside of the tub. At 7 seconds the water is nearly full and several branching vines curl gently over the broad rim, with young leaves unfurling at different speeds. All botanical growth and filling overlap continuously. Finish reaching the garden composition by 10 seconds, then allow two seconds of very gentle water ripples and subtle leaf movement as growth settles.\nMake the mechanics of growth beautiful: fine stem tips advance, wrap the actual three-dimensional surface, branch, and form small buds that open into leaves. Five or more slender vines develop around left and right corners with elegant curved paths, never a row of straight stems. Fern fronds behind the tub gradually uncoil while the wall vegetation expands from connected stems. No plants teleporting, no dissolving masses, no fully formed leaves fading in, no elastic scaling of still images. The waterline rises smoothly at a steady slow pace, with clear moving reflections visible early; no flood, foam, fountain or water outside the tub.\nAll leaves cast coherent evolving shadows on the tub and architecture, reflected foliage responds in the water, leaf edges transmit soft sunlight. Art-directed photorealistic Cinema 4D / luxury furniture film quality, fine natural textures, physically integrated light, restrained natural greens. Keep most of the tub body and full distinctive rim silhouette visible. No camera movement, cuts, crossfades, scene transitions, material morphing, text or logos. Silent.",
+          "aspect_ratio": "9:16",
+          "duration": 12,
+          "reference_images": [
+            "cc45199d-9028-48ac-94bc-a2cf2c7cc288",
+            "ec24a379-eea1-44a1-b993-9c56dc245b11"
+          ],
+          "mode": "pro",
+          "sound": "off"
+        }
+      }
+    ]
+  },
+  "quotedCredits": 18,
+  "previousTakeCredits": 15,
+  "result": {
+    "status": "completed",
+    "selectedForApp": true,
+    "url": "https://d8j0ntlcm91z4.cloudfront.net/user_2x37l8uuRLNjKyUzM7nmeqoSzVG/hf_20261006_134349_63c05989-926e-4d1d-be8f-eea4a36c9b73.mp4",
+    "durationSeconds": 12.041667,
+    "width": 1176,
+    "height": 1764,
+    "fps": 24,
+    "audio": false,
+    "appPath": "ios/Salini/Resources/ninfea-film-v3.mp4",
+    "sha256": "e5ee4ae033f0dc6e528ae7094c5c82d92d4f1a098cd3b0ca97f8d29bb8e06e65"
+  },
+  "review": {
+    "evidence": "higgsfield/contact-2.jpg",
+    "observations": [
+      "Growth starts visibly earlier than take 1 and is distributed over a longer shot.",
+      "Several stems reach and curl across the rim; water and reflected foliage develop during the shot.",
+      "The broad rim, tub body and camera composition remain stable in sampled frames.",
+      "Floor remains dry, with coherent cast shadows."
+    ],
+    "limitations": [
+      "Early shoots are stylized time-lapse growth, not a validated biological simulation.",
+      "The waterline is less legible at the earliest low fill levels than requested in the prompt.",
+      "No claim of an exact CAD reconstruction or final client approval."
+    ],
+    "selection": "Take 2 improves pacing; retain the complete native 24 fps output without optical-flow interpolation, retiming or dissolves."
+  },
+  "credits": {
+    "take1": 15,
+    "take2": 18,
+    "total": 33,
+    "balanceAfterSubmissions": 67
+  }
+}

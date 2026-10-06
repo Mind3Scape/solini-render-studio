@@ -1,0 +1,63 @@
+{
+  "provider": "Higgsfield",
+  "requested": {
+    "model": "kling3_0",
+    "mode": "pro",
+    "duration": 10,
+    "sound": "off",
+    "aspect_ratio": "9:16",
+    "count": 1,
+    "prompt": "One continuous premium architectural product film between the supplied first and last frames. Locked tripod camera, identical framing and lighting throughout. The emerald Salini Ninfea bathtub is a rigid manufactured object: keep its exact silhouette, broad thin wing-shaped rim, cavity, overflow slot, recessed dark base, material and position unchanged in every frame.\nBeginning within the first second and continuing TOGETHER for the whole shot: transparent water rises slowly inside the cavity, producing small evolving ripples and reflected daylight, while several slender branching philodendron vines grow from the rear-left and front-right edges and floor seams. Plant tips visibly advance along the curved outside of the tub, branch and gently curl OVER both sides of the rim; small leaves progressively unfurl from buds and turn toward the sunlight. Behind the tub, fern fronds unfurl and climbing foliage spreads up the limestone wall. Organic growth follows individual stems, at staggered rates but simultaneously with the water rising. Never complete water first and plants second.\nAll living elements occupy this same three-dimensional scene. Leaves cast moving contact shadows on the satin emerald surface and limestone; fine stems occlude each other correctly; water reflections evolve with the foliage. Preserve the dry stone floor, original architecture and sun direction. No water on the floor. Keep most of the distinctive tub body and broad rim visible. Elegant restrained botanical time-lapse, high-end photoreal product cinematography, warm natural daylight, translucent leaf edges, subtle depth and physically consistent materials.\nReach the supplied final lush composition gradually around second nine. The last second settles gently: growth slows, fine leaves move slightly, water calms. No camera move, no cuts, no zoom, no dissolves, no opacity fades, no sudden foliage appearing fully grown, no elastic stretching, no morphing or melting of the tub, no floating decorations, no particles, no text. Silent.",
+    "medias": [
+      {
+        "role": "start_image",
+        "value": "https://raw.githubusercontent.com/Mind3Scape/solini-render-studio/41d5538afc1f44067c15074b68ebbf13bd1ddadb/research/ninfea-cinema-2026-10-06/v3/assets/interior.png"
+      },
+      {
+        "role": "end_image",
+        "value": "https://raw.githubusercontent.com/Mind3Scape/solini-render-studio/41d5538afc1f44067c15074b68ebbf13bd1ddadb/research/ninfea-cinema-2026-10-06/v3/assets/garden.png"
+      }
+    ]
+  },
+  "submission": {
+    "results": [
+      {
+        "id": "710cb5a9-52e8-47b0-ad6d-284c0353a1f9",
+        "type": "video",
+        "status": "pending",
+        "model": "kling3_0",
+        "params": {
+          "prompt": "One continuous premium architectural product film between the supplied first and last frames. Locked tripod camera, identical framing and lighting throughout. The emerald Salini Ninfea bathtub is a rigid manufactured object: keep its exact silhouette, broad thin wing-shaped rim, cavity, overflow slot, recessed dark base, material and position unchanged in every frame.\nBeginning within the first second and continuing TOGETHER for the whole shot: transparent water rises slowly inside the cavity, producing small evolving ripples and reflected daylight, while several slender branching philodendron vines grow from the rear-left and front-right edges and floor seams. Plant tips visibly advance along the curved outside of the tub, branch and gently curl OVER both sides of the rim; small leaves progressively unfurl from buds and turn toward the sunlight. Behind the tub, fern fronds unfurl and climbing foliage spreads up the limestone wall. Organic growth follows individual stems, at staggered rates but simultaneously with the water rising. Never complete water first and plants second.\nAll living elements occupy this same three-dimensional scene. Leaves cast moving contact shadows on the satin emerald surface and limestone; fine stems occlude each other correctly; water reflections evolve with the foliage. Preserve the dry stone floor, original architecture and sun direction. No water on the floor. Keep most of the distinctive tub body and broad rim visible. Elegant restrained botanical time-lapse, high-end photoreal product cinematography, warm natural daylight, translucent leaf edges, subtle depth and physically consistent materials.\nReach the supplied final lush composition gradually around second nine. The last second settles gently: growth slows, fine leaves move slightly, water calms. No camera move, no cuts, no zoom, no dissolves, no opacity fades, no sudden foliage appearing fully grown, no elastic stretching, no morphing or melting of the tub, no floating decorations, no particles, no text. Silent.",
+          "aspect_ratio": "9:16",
+          "duration": 10,
+          "reference_images": [
+            "cc45199d-9028-48ac-94bc-a2cf2c7cc288",
+            "ec24a379-eea1-44a1-b993-9c56dc245b11"
+          ],
+          "mode": "pro",
+          "sound": "off"
+        }
+      }
+    ]
+  },
+  "quotedCredits": 15,
+  "startingBalance": 100,
+  "result": {
+    "status": "completed",
+    "url": "https://d8j0ntlcm91z4.cloudfront.net/user_2x37l8uuRLNjKyUzM7nmeqoSzVG/hf_20261006_130727_710cb5a9-52e8-47b0-ad6d-284c0353a1f9.mp4",
+    "durationSeconds": 10.041667,
+    "width": 1176,
+    "height": 1764,
+    "fps": 24,
+    "audio": false
+  },
+  "review": {
+    "evidence": "higgsfield/contact-1.jpg",
+    "observations": [
+      "Individual stems extend and leaves unfold instead of an app crossfade.",
+      "The tub silhouette and 2:3 framing remain stable in sampled frames.",
+      "The first roughly two seconds have little visible growth; the water surface becomes prominent late."
+    ],
+    "nextTake": "Earlier visible water, more distributed curved branching growth, 12-second duration and a calmer final settle."
+  }
+}

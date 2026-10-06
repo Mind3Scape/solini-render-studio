@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		91AE48FC801A4FB9AD917FED /* ninfea-film-v3.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = B633723DE29443FE812DBDF0 /* ninfea-film-v3.mp4 */; };
 		01C959B14340E03E7D4D41B2 /* NinfeaCinema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205C91FAD53CEC3928277F81 /* NinfeaCinema.swift */; };
 		073AB33A6033AC73D703E608 /* ObjectViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC46B7DC8500987396D0C75D /* ObjectViewer.swift */; };
 		0C3BB687CDA086420032F89A /* Greca.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 922ABBCE95E286DB90AA532E /* Greca.usdz */; };
@@ -62,6 +63,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B633723DE29443FE812DBDF0 /* ninfea-film-v3.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ninfea-film-v3.mp4"; sourceTree = "<group>"; };
 		0151CE5C734FB58E9B195E9D /* SaliniTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaliniTests.swift; sourceTree = "<group>"; };
 		06B24C2D0832EF8D141B750A /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		115177084A87D881A3F70994 /* MaterialStudio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaterialStudio.swift; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 				3776267C1F0DB827DBEBB68A /* interior.jpg */,
 				D91143AF411A90AC2958AC84 /* luce.jpg */,
 				8ADD1F0B906AE70FBFC2933A /* ninfea-interior.png */,
+				B633723DE29443FE812DBDF0 /* ninfea-film-v3.mp4 */,
 				89B8733108E93D1F89BA90FA /* ninfea-official.webp */,
 				8F5B5BC405FFFEBD6456F5A7 /* ninfea-poster-v3.png */,
 				672B74F0BCED01A47E534CD1 /* opera-detail.jpg */,
@@ -279,6 +282,7 @@
 				50A02DC7410C6D6D3381B045 /* interior.jpg in Resources */,
 				E0004C970033EB673136243D /* luce.jpg in Resources */,
 				426862A0DEEFAB351CF95669 /* ninfea-interior.png in Resources */,
+				91AE48FC801A4FB9AD917FED /* ninfea-film-v3.mp4 in Resources */,
 				CA65FB0F5DD7B7B32972987F /* ninfea-official.webp in Resources */,
 				3709133CD6994CCC37D19E05 /* ninfea-poster-v3.png in Resources */,
 				F0FB799DEC9C13A7C3DBAA4F /* opera-detail.jpg in Resources */,

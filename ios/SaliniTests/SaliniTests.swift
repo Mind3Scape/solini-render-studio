@@ -234,9 +234,7 @@ final class SaliniTests: XCTestCase {
     XCTAssertEqual(state.seconds, 0)
   }
   func testBundledGenerativeNinfeaFilmDecodes() async throws {
-    guard let url = NinfeaCinemaAssets.filmURL else {
-      throw XCTSkip("V3 video generation is blocked by provider credits; the rejected V2 film is not substituted.")
-    }
+    let url = try XCTUnwrap(NinfeaCinemaAssets.filmURL, "The selected generative film must ship in the app bundle")
     let asset = AVURLAsset(url: url)
     let duration = try await asset.load(.duration)
     XCTAssertGreaterThan(duration.seconds, 7)
@@ -247,6 +245,10 @@ final class SaliniTests: XCTestCase {
     let rate = try await track.load(.nominalFrameRate)
     XCTAssertGreaterThanOrEqual(min(size.width, size.height), 720)
     XCTAssertGreaterThanOrEqual(rate, 24)
+    XCTAssertEqual(size.width / size.height, 2.0 / 3.0, accuracy: 0.001,
+                   "Preserve the source product composition without stretching")
+    let audioTracks = try await asset.loadTracks(withMediaType: .audio)
+    XCTAssertTrue(audioTracks.isEmpty, "The collection film is intentionally silent")
     let generator = AVAssetImageGenerator(asset: asset)
     generator.requestedTimeToleranceBefore = .zero
     generator.requestedTimeToleranceAfter = .zero

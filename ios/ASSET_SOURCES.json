@@ -93,7 +93,7 @@
     "usage": "Unmodified official emerald Ninfea photograph in collection information; geometry reference for the concept campaign."
   },
   {
-    "asset": "ninfea-interior.png",
+    "asset": "research/ninfea-cinema-2026-10-06/v3/assets/interior.png",
     "source_page": "https://salini-srl.com/collection/ninfea/",
     "reference_images": [
       "https://cdn-salini.storage.yandexcloud.net/iblock/dc6/dc630657433170a717b992cf780c316a/3840 _01_.webp",
@@ -102,7 +102,7 @@
     "generation_mode": "built-in imagegen",
     "generated_on": "2026-10-06",
     "prompts": "research/ninfea-cinema-2026-10-06/PROMPTS.md",
-    "usage": "AI campaign concept guided by official Ninfea photographs, not exact CAD geometry. Locked background and empty-water keyframe for the V2 offline film."
+    "usage": "Original generated interior anchor preserved in research. The app entrance image is now extracted from the selected generative film."
   },
   {
     "asset": "ninfea-water.png",
@@ -193,15 +193,30 @@
     "usage": "Rejected V2 iteration, retained in repository history/research and excluded from the iOS build. Layer deformation and RIFE are not the current production approach."
   },
   {
-    "asset": "ninfea-poster-v3.png / research/ninfea-cinema-2026-10-06/v3/assets/garden.png",
+    "asset": "research/ninfea-cinema-2026-10-06/v3/assets/garden.png",
     "generation_mode": "built-in imagegen",
     "generated_on": "2026-10-06",
     "reference_images": [
-      "ninfea-interior.png",
+      "research/ninfea-cinema-2026-10-06/v3/assets/interior.png",
       "ninfea-official.webp"
     ],
     "source_page": "https://salini-srl.com/collection/ninfea/",
     "prompts": "research/ninfea-cinema-2026-10-06/v3/PROMPTS.md",
-    "usage": "Coherent final anchor and current still fallback. Unified vegetation, shadows and dry limestone floor. Not an official photo, exact CAD model or completed video."
+    "usage": "Coherent final image anchor for the generative film. Not an official photograph or exact CAD reconstruction."
+  },
+  {
+    "asset": "ninfea-film-v3.mp4 / ninfea-interior.png / ninfea-poster-v3.png",
+    "generated_on": "2026-10-06",
+    "generation_mode": "Kling 3.0 Pro via the user-connected Higgsfield plugin",
+    "job_id": "63c05989-926e-4d1d-be8f-eea4a36c9b73",
+    "manifest": "research/ninfea-cinema-2026-10-06/v3/higgsfield-take-2.json",
+    "source_page": "https://salini-srl.com/collection/ninfea/",
+    "reference_images": [
+      "research/ninfea-cinema-2026-10-06/v3/assets/interior.png",
+      "research/ninfea-cinema-2026-10-06/v3/assets/garden.png"
+    ],
+    "format": "H.264, 1176 × 1764, 24 fps, 12.041667 seconds, silent",
+    "processing": "Lossless container remux with faststart; first frame and final frame extracted as PNG. No layer warping, retiming, frame interpolation or added transitions.",
+    "usage": "Automatic Ninfea collection artwork, final-frame hold and Reduce Motion still. AI visual concept guided by Salini photography, not official footage or a color proof."
   }
 ]
