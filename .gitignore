@@ -14,6 +14,7 @@ examples/
 *.pem
 *.key
 ios/.build/
+ios/.build-ipad/
 ios/build/
 ios/**/*.xcuserstate
 ios/**/xcuserdata/
