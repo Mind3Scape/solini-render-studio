@@ -48,4 +48,4 @@ Final iPhone screenshots cover the whole site, casting, finishing and warehouse.
 - `git diff --check` passed.
 - Physical-device rendering performance has not been profiled in this change. The existing simulator SceneKit FloorPass diagnostic remains; the reviewed scene renders correctly.
 
-This change is delivered in the simulator and GitHub branch. TestFlight build 1.0 (2), already submitted earlier, is not replaced by this work.
+This change was delivered in the simulator and GitHub branch, then published in TestFlight build **1.0 (3)** on 7 October 2026 (Asia/Bangkok). Build 3 is available internally and awaiting external Beta App Review; it replaces build 2 in the review queue. See `ios/release/preflight-status.json` for the release checkpoint.
