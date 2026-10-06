@@ -1,0 +1,53 @@
+{
+  "fetched_urls": 608,
+  "status_counts": {
+    "200": 573,
+    "404": 35
+  },
+  "page_types": {
+    "home": 2,
+    "catalog": 62,
+    "content": 110,
+    "article": 63,
+    "collection": 11,
+    "product_or_family": 360
+  },
+  "product_pages": 326,
+  "unique_product_ids": 300,
+  "product_ids_note": "Public card records, not full SKU count; includes options / accessories.",
+  "initial_dealer_records": 1240,
+  "external_yandex_links": 175,
+  "asset_urls": 6264,
+  "top_level_urls": {
+    "/": 2,
+    "aksessuary": 11,
+    "blog": 74,
+    "chistyashchie-sredstva": 2,
+    "collection": 11,
+    "dushevye-poddony": 12,
+    "komplektuyushchie": 33,
+    "mebel-dlya-vannoy": 9,
+    "rakoviny": 121,
+    "salini-essentials": 16,
+    "stoleshnitsy": 23,
+    "unitazy-i-bide": 9,
+    "vanny": 178,
+    "where-buy": 7,
+    "new": 19,
+    "about-company": 1,
+    "contacts": 1,
+    "contract-offer": 1,
+    "cookie": 1,
+    "cooperation": 1,
+    "dostavka-i-oplata": 1,
+    "e_learning": 3,
+    "faq": 1,
+    "gallery": 57,
+    "privacy-policy": 1,
+    "sale": 2,
+    "service": 1,
+    "www.konzept.ru": 1,
+    "zerkala": 8,
+    "auth": 1
+  }
+}

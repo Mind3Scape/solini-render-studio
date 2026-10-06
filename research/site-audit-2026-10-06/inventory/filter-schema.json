@@ -1,0 +1,2377 @@
+[
+  {
+    "url": "https://salini-srl.com/aksessuary/",
+    "fields": [],
+    "selects": []
+  },
+  {
+    "url": "https://salini-srl.com/aksessuary/gabbiano-basic/",
+    "fields": [
+      {
+        "data-container": "filter",
+        "data-filter-field": "city",
+        "data-get-type": "one"
+      },
+      {
+        "data-container": "filter",
+        "data-filter-field": "type",
+        "data-get-type": "many"
+      },
+      {
+        "data-container": "filter",
+        "data-filter-field": "city",
+        "data-get-type": "one"
+      },
+      {
+        "data-container": "filter",
+        "data-filter-field": "address",
+        "data-get-type": "one"
+      },
+      {
+        "data-container": "filter",
+        "data-filter-field": "exposition",
+        "data-get-type": "one"
+      }
+    ],
+    "selects": [
+      {
+        "label": "выберите свой город",
+        "options": [
+          "",
+          "Москва"
+        ]
+      },
+      {
+        "label": "выберите свой город",
+        "options": [
+          "",
+          "Москва"
+        ]
+      }
+    ]
+  },
+  {
+    "url": "https://salini-srl.com/aksessuary/gabbiano-in-plus/",
+    "fields": [],
+    "selects": []
+  },
+  {
+    "url": "https://salini-srl.com/aksessuary/gabbiano-in/",
+    "fields": [],
+    "selects": []
+  },
+  {
+    "url": "https://salini-srl.com/aksessuary/gabbiano/",
+    "fields": [
+      {
+        "data-container": "filter",
+        "data-filter-field": "city",
+        "data-get-type": "one"
+      },
+      {
+        "data-container": "filter",
+        "data-filter-field": "type",
+        "data-get-type": "many"
+      },
+      {
+        "data-container": "filter",
+        "data-filter-field": "city",
+        "data-get-type": "one"
+      },
+      {
+        "data-container": "filter",
+        "data-filter-field": "address",
+        "data-get-type": "one"
+      },
+      {
+        "data-container": "filter",
+        "data-filter-field": "exposition",
+        "data-get-type": "one"
+      }
+    ],
+    "selects": [
+      {
+        "label": "выберите свой город",
+        "options": [
+          "",
+          "Москва",
+          "Владивосток",
+          "Санкт-Петербург",
+          "Севастополь",
+          "Хабаровск",
+          "Новосибирск",
+          "Геленджик"
+        ]
+      },
+      {
+        "label": "выберите свой город",
+        "options": [
+          "",
+          "Москва",
+          "Владивосток",
+          "Санкт-Петербург",
+          "Севастополь",
+          "Хабаровск",
+          "Новосибирск",
+          "Геленджик"
+        ]
+      }
+    ]
+  },
+  {
+    "url": "https://salini-srl.com/aksessuary/mylnicy-gocce/",
+    "fields": [
+      {
+        "data-container": "filter",
+        "data-filter-field": "city",
+        "data-get-type": "one"
+      },
+      {
+        "data-container": "filter",
+        "data-filter-field": "type",
+        "data-get-type": "many"
+      },
+      {
+        "data-container": "filter",
+        "data-filter-field": "city",
+        "data-get-type": "one"
+      },
+      {
+        "data-container": "filter",
+        "data-filter-field": "address",
+        "data-get-type": "one"
+      },
+      {
+        "data-container": "filter",
+        "data-filter-field": "exposition",
+        "data-get-type": "one"
+      }
+    ],
+    "selects": [
+      {
+        "label": "выберите свой город",
+        "options": [
+          "",
+          "Москва",
+          "Владивосток",
+          "Санкт-Петербург",
+          "Севастополь",
+          "Новороссийск",
+          "Симферополь"
+        ]
+      },
+      {
+        "label": "выберите свой город",
+        "options": [
+          "",
+          "Москва",
+          "Владивосток",
+          "Санкт-Петербург",
+          "Севастополь",
+          "Новороссийск",
+          "Симферополь"
+        ]
+      }
+    ]
+  },
+  {
+    "url": "https://salini-srl.com/aksessuary/ofuro-step/",
+    "fields": [
+      {
+        "data-container": "filter",
+        "data-filter-field": "city",
+        "data-get-type": "one"
+      },
+      {
+        "data-container": "filter",
+        "data-filter-field": "type",
+        "data-get-type": "many"
+      },
+      {
+        "data-container": "filter",
+        "data-filter-field": "city",
+        "data-get-type": "one"
+      },
+      {
+        "data-container": "filter",
+        "data-filter-field": "address",
+        "data-get-type": "one"
+      },
+      {
+        "data-container": "filter",
+        "data-filter-field": "exposition",
+        "data-get-type": "one"
+      }
+    ],
+    "selects": [
+      {
+        "label": "выберите свой город",
+        "options": [
+          "",
+          "Москва",
+          "Владивосток",
+          "Воронеж"
+        ]
+      },
+      {
+        "label": "выберите свой город",
+        "options": [
+          "",
+          "Москва",
+          "Владивосток",
+          "Воронеж"
+        ]
+      }
+    ]
+  },
+  {
+    "url": "https://salini-srl.com/aksessuary/podushka-dlya-otdelnostoyashchey-vanny/",
+    "fields": [
+      {
+        "data-container": "filter",
+        "data-filter-field": "city",
+        "data-get-type": "one"
+      },
+      {
+        "data-container": "filter",
+        "data-filter-field": "type",
+        "data-get-type": "many"
+      },
+      {
+        "data-container": "filter",
+        "data-filter-field": "city",
+        "data-get-type": "one"
+      },
+      {
+        "data-container": "filter",
+        "data-filter-field": "address",
+        "data-get-type": "one"
+      },
+      {
+        "data-container": "filter",
+        "data-filter-field": "exposition",
+        "data-get-type": "one"
+      }
+    ],
+    "selects": [
+      {
+        "label": "выберите свой город",
+        "options": [
+          "",
+          "Москва"
+        ]
+      },
+      {
+        "label": "выберите свой город",
+        "options": [
+          "",
+          "Москва"
+        ]
+      }
+    ]
+  },
+  {
+    "url": "https://salini-srl.com/aksessuary/podushka-dlya-vstraivaemoy-vanny/",
+    "fields": [],
+    "selects": []
+  },
+  {
+    "url": "https://salini-srl.com/aksessuary/stakany-gocce/",
+    "fields": [
+      {
+        "data-container": "filter",
+        "data-filter-field": "city",
+        "data-get-type": "one"
+      },
+      {
+        "data-container": "filter",
+        "data-filter-field": "type",
+        "data-get-type": "many"
+      },
+      {
+        "data-container": "filter",
+        "data-filter-field": "city",
+        "data-get-type": "one"
+      },
+      {
+        "data-container": "filter",
+        "data-filter-field": "address",
+        "data-get-type": "one"
+      },
+      {
+        "data-container": "filter",
+        "data-filter-field": "exposition",
+        "data-get-type": "one"
+      }
+    ],
+    "selects": [
+      {
+        "label": "выберите свой город",
+        "options": [
+          "",
+          "Москва",
+          "Владивосток",
+          "Санкт-Петербург",
+          "Севастополь",
+          "Новороссийск",
+          "Симферополь"
+        ]
+      },
+      {
+        "label": "выберите свой город",
+        "options": [
+          "",
+          "Москва",
+          "Владивосток",
+          "Санкт-Петербург",
+          "Севастополь",
+          "Новороссийск",
+          "Симферополь"
+        ]
+      }
+    ]
+  },
+  {
+    "url": "https://salini-srl.com/chistyashchie-sredstva/",
+    "fields": [
+      {
+        "data-range-range": "",
+        "data-range-min": "1700",
+        "data-range-max": "1700",
+        "data-filter-price": "",
+        "data-range-event": "",
+        "data-field": "price"
+      },
+      {
+        "data-range-range": "",
+        "data-range-min": "110",
+        "data-range-max": "110",
+        "data-filter-range": "Ширина, мм"
+      },
+      {
+        "data-range-range": "",
+        "data-range-min": "250",
+        "data-range-max": "250",
+        "data-filter-range": "Высота, мм"
+      },
+      {
+        "data-range-range": "",
+        "data-range-min": "110",
+        "data-range-max": "110",
+        "data-filter-range": "Длина, мм"
+      },
+      {
+        "data-range-range": "",
+        "data-range-min": "1700",
+        "data-range-max": "1700",
+        "data-range-event": "",
+        "data-field": "price"
+      },
+      {
+        "data-range-event": "",
+        "data-field": "length",
+        "data-range-range": "",
+        "data-range-min": "110",
+        "data-range-max": "110"
+      },
+      {
+        "data-range-event": "",
+        "data-field": "width",
+        "data-range-range": "",
+        "data-range-min": "110",
+        "data-range-max": "110"
+      },
+      {
+        "data-range-event": "",
+        "data-field": "height",
+        "data-range-range": "",
+        "data-range-min": "250",
+        "data-range-max": "250"
+      }
+    ],
+    "selects": [
+      {
+        "label": null,
+        "options": [
+          "Цена по возрастанию",
+          "Цена по убыванию",
+          "по алфавиту (A-Z)",
+          "по алфавиту (Z-A)"
+        ]
+      }
+    ]
+  },
+  {
+    "url": "https://salini-srl.com/chistyashchie-sredstva/fresco/",
+    "fields": [
+      {
+        "data-container": "filter",
+        "data-filter-field": "city",
+        "data-get-type": "one"
+      },
+      {
+        "data-container": "filter",
+        "data-filter-field": "type",
+        "data-get-type": "many"
+      },
+      {
+        "data-container": "filter",
+        "data-filter-field": "city",
+        "data-get-type": "one"
+      },
+      {
+        "data-container": "filter",
+        "data-filter-field": "address",
+        "data-get-type": "one"
+      },
+      {
+        "data-container": "filter",
+        "data-filter-field": "exposition",
+        "data-get-type": "one"
+      }
+    ],
+    "selects": [
+      {
+        "label": "выберите свой город",
+        "options": [
+          "",
+          "Москва"
+        ]
+      },
+      {
+        "label": "выберите свой город",
+        "options": [
+          "",
+          "Москва"
+        ]
+      }
+    ]
+  },
+  {
+    "url": "https://salini-srl.com/dushevye-poddony/",
+    "fields": [],
+    "selects": []
+  },
+  {
+    "url": "https://salini-srl.com/dushevye-poddony/capri/",
+    "fields": [
+      {
+        "data-container": "filter",
+        "data-filter-field": "city",
+        "data-get-type": "one"
+      },
+      {
+        "data-container": "filter",
+        "data-filter-field": "type",
+        "data-get-type": "many"
+      },
+      {
+        "data-container": "filter",
+        "data-filter-field": "city",
+        "data-get-type": "one"
+      },
+      {
+        "data-container": "filter",
+        "data-filter-field": "address",
+        "data-get-type": "one"
+      },
+      {
+        "data-container": "filter",
+        "data-filter-field": "exposition",
+        "data-get-type": "one"
+      }
+    ],
+    "selects": [
+      {
+        "label": "выберите свой город",
+        "options": [
+          "",
+          "Санкт-Петербург",
+          "Москва"
+        ]
+      },
+      {
+        "label": "выберите свой город",
+        "options": [
+          "",
+          "Санкт-Петербург",
+          "Москва"
+        ]
+      }
+    ]
+  },
+  {
+    "url": "https://salini-srl.com/dushevye-poddony/dopolnitelnye-vozmozhnosti/",
+    "fields": [
+      {
+        "data-range-range": "",
+        "data-range-min": "7000",
+        "data-range-max": "7000",
+        "data-filter-price": "",
+        "data-range-event": "",
+        "data-field": "price"
+      },
+      {
+        "data-range-range": "",
+        "data-range-min": "",
+        "data-range-max": "",
+        "data-filter-range": "Ширина, мм"
+      },
+      {
+        "data-range-range": "",
+        "data-range-min": "",
+        "data-range-max": "",
+        "data-filter-range": "Высота, мм"
+      },
+      {
+        "data-range-range": "",
+        "data-range-min": "",
+        "data-range-max": "",
+        "data-filter-range": "Длина, мм"
+      },
+      {
+        "data-range-range": "",
+        "data-range-min": "7000",
+        "data-range-max": "7000",
+        "data-range-event": "",
+        "data-field": "price"
+      },
+      {
+        "data-range-event": "",
+        "data-field": "length",
+        "data-range-range": "",
+        "data-range-min": "",
+        "data-range-max": ""
+      },
+      {
+        "data-range-event": "",
+        "data-field": "width",
+        "data-range-range": "",
+        "data-range-min": "",
+        "data-range-max": ""
+      },
+      {
+        "data-range-event": "",
+        "data-field": "height",
+        "data-range-range": "",
+        "data-range-min": "",
+        "data-range-max": ""
+      }
+    ],
+    "selects": [
+      {
+        "label": null,
+        "options": [
+          "Цена по возрастанию",
+          "Цена по убыванию",
+          "по алфавиту (A-Z)",
+          "по алфавиту (Z-A)"
+        ]
+      }
+    ]
+  },
+  {
+    "url": "https://salini-srl.com/dushevye-poddony/oasi/",
+    "fields": [
+      {
+        "data-range-range": "",
+        "data-range-min": "62900",
+        "data-range-max": "77500",
+        "data-filter-price": "",
+        "data-range-event": "",
+        "data-field": "price"
+      },
+      {
+        "data-range-range": "",
+        "data-range-min": "800",
+        "data-range-max": "1000",
+        "data-filter-range": "Ширина, мм"
+      },
+      {
+        "data-range-range": "",
+        "data-range-min": "27",
+        "data-range-max": "30",
+        "data-filter-range": "Высота, мм"
+      },
+      {
+        "data-range-range": "",
+        "data-range-min": "800",
+        "data-range-max": "1200",
+        "data-filter-range": "Длина, мм"
+      },
+      {
+        "data-range-range": "",
+        "data-range-min": "62900",
+        "data-range-max": "77500",
+        "data-range-event": "",
+        "data-field": "price"
+      },
+      {
+        "data-range-event": "",
+        "data-field": "length",
+        "data-range-range": "",
+        "data-range-min": "800",
+        "data-range-max": "1200"
+      },
+      {
+        "data-range-event": "",
+        "data-field": "width",
+        "data-range-range": "",
+        "data-range-min": "800",
+        "data-range-max": "1000"
+      },
+      {
+        "data-range-event": "",
+        "data-field": "height",
+        "data-range-range": "",
+        "data-range-min": "27",
+        "data-range-max": "30"
+      }
+    ],
+    "selects": [
+      {
+        "label": null,
+        "options": [
+          "Цена по возрастанию",
+          "Цена по убыванию",
+          "по алфавиту (A-Z)",
+          "по алфавиту (Z-A)"
+        ]
+      }
+    ]
+  },
+  {
+    "url": "https://salini-srl.com/komplektuyushchie/",
+    "fields": [],
+    "selects": []
+  },
+  {
+    "url": "https://salini-srl.com/komplektuyushchie/kronshteyny/",
+    "fields": [
+      {
+        "data-range-range": "",
+        "data-range-min": "3700",
+        "data-range-max": "10100",
+        "data-filter-price": "",
+        "data-range-event": "",
+        "data-field": "price"
+      },
+      {
+        "data-range-range": "",
+        "data-range-min": "40",
+        "data-range-max": "50",
+        "data-filter-range": "Ширина, мм"
+      },
+      {
+        "data-range-range": "",
+        "data-range-min": "44",
+        "data-range-max": "120",
+        "data-filter-range": "Высота, мм"
+      },
+      {
+        "data-range-range": "",
+        "data-range-min": "400",
+        "data-range-max": "450",
+        "data-filter-range": "Длина, мм"
+      },
+      {
+        "data-range-range": "",
+        "data-range-min": "3700",
+        "data-range-max": "10100",
+        "data-range-event": "",
+        "data-field": "price"
+      },
+      {
+        "data-range-event": "",
+        "data-field": "length",
+        "data-range-range": "",
+        "data-range-min": "400",
+        "data-range-max": "450"
+      },
+      {
+        "data-range-event": "",
+        "data-field": "width",
+        "data-range-range": "",
+        "data-range-min": "40",
+        "data-range-max": "50"
+      },
+      {
+        "data-range-event": "",
+        "data-field": "height",
+        "data-range-range": "",
+        "data-range-min": "44",
+        "data-range-max": "120"
+      }
+    ],
+    "selects": [
+      {
+        "label": null,
+        "options": [
+          "Цена по возрастанию",
+          "Цена по убыванию",
+          "по алфавиту (A-Z)",
+          "по алфавиту (Z-A)"
+        ]
+      }
+    ]
+  },
+  {
+    "url": "https://salini-srl.com/komplektuyushchie/opora-dlya-dushevogo-poddona/",
+    "fields": [],
+    "selects": []
+  },
+  {
+    "url": "https://salini-srl.com/komplektuyushchie/sifony/",
+    "fields": [
+      {
+        "data-range-range": "",
+        "data-range-min": "1100",
+        "data-range-max": "11000",
+        "data-filter-price": "",
+        "data-range-event": "",
+        "data-field": "price"
+      },
+      {
+        "data-range-range": "",
+        "data-range-min": "400",
+        "data-range-max": "400",
+        "data-filter-range": "Ширина, мм"
+      },
+      {
+        "data-range-range": "",
+        "data-range-min": "40",
+        "data-range-max": "40",
+        "data-filter-range": "Высота, мм"
+      },
+      {
+        "data-range-range": "",
+        "data-range-min": "400",
+        "data-range-max": "400",
+        "data-filter-range": "Длина, мм"
+      },
+      {
+        "data-range-range": "",
+        "data-range-min": "1100",
+        "data-range-max": "11000",
+        "data-range-event": "",
+        "data-field": "price"
+      },
+      {
+        "data-range-event": "",
+        "data-field": "length",
+        "data-range-range": "",
+        "data-range-min": "400",
+        "data-range-max": "400"
+      },
+      {
+        "data-range-event": "",
+        "data-field": "width",
+        "data-range-range": "",
+        "data-range-min": "400",
+        "data-range-max": "400"
+      },
+      {
+        "data-range-event": "",
+        "data-field": "height",
+        "data-range-range": "",
+        "data-range-min": "40",
+        "data-range-max": "40"
+      }
+    ],
+    "selects": [
+      {
+        "label": null,
+        "options": [
+          "Цена по возрастанию",
+          "Цена по убыванию",
+          "по алфавиту (A-Z)",
+          "по алфавиту (Z-A)"
+        ]
+      }
+    ]
+  },
+  {
+    "url": "https://salini-srl.com/mebel-dlya-vannoy/",
+    "fields": [],
+    "selects": []
+  },
+  {
+    "url": "https://salini-srl.com/mebel-dlya-vannoy/armonia-l/",
+    "fields": [
+      {
+        "data-container": "filter",
+        "data-filter-field": "city",
+        "data-get-type": "one"
+      },
+      {
+        "data-container": "filter",
+        "data-filter-field": "type",
+        "data-get-type": "many"
+      },
+      {
+        "data-container": "filter",
+        "data-filter-field": "city",
+        "data-get-type": "one"
+      },
+      {
+        "data-container": "filter",
+        "data-filter-field": "address",
+        "data-get-type": "one"
+      },
+      {
+        "data-container": "filter",
+        "data-filter-field": "exposition",
+        "data-get-type": "one"
+      }
+    ],
+    "selects": [
+      {
+        "label": "выберите свой город",
+        "options": [
+          "",
+          "Москва"
+        ]
+      },
+      {
+        "label": "выберите свой город",
+        "options": [
+          "",
+          "Москва"
+        ]
+      }
+    ]
+  },
+  {
+    "url": "https://salini-srl.com/mebel-dlya-vannoy/domino-basic/",
+    "fields": [],
+    "selects": []
+  },
+  {
+    "url": "https://salini-srl.com/mebel-dlya-vannoy/velasca/",
+    "fields": [],
+    "selects": []
+  },
+  {
+    "url": "https://salini-srl.com/rakoviny/",
+    "fields": [],
+    "selects": []
+  },
+  {
+    "url": "https://salini-srl.com/rakoviny/dopolnitelnye-vozmozhnosti/",
+    "fields": [
+      {
+        "data-range-range": "",
+        "data-range-min": "2100",
+        "data-range-max": "49000",
+        "data-filter-price": "",
+        "data-range-event": "",
+        "data-field": "price"
+      },
+      {
+        "data-range-range": "",
+        "data-range-min": "250",
+        "data-range-max": "250",
+        "data-filter-range": "Ширина, мм"
+      },
+      {
+        "data-range-range": "",
+        "data-range-min": "700",
+        "data-range-max": "700",
+        "data-filter-range": "Высота, мм"
+      },
+      {
+        "data-range-range": "",
+        "data-range-min": "300",
+        "data-range-max": "300",
+        "data-filter-range": "Длина, мм"
+      },
+      {
+        "data-range-range": "",
+        "data-range-min": "2100",
+        "data-range-max": "49000",
+        "data-range-event": "",
+        "data-field": "price"
+      },
+      {
+        "data-range-event": "",
+        "data-field": "length",
+        "data-range-range": "",
+        "data-range-min": "300",
+        "data-range-max": "300"
+      },
+      {
+        "data-range-event": "",
+        "data-field": "width",
+        "data-range-range": "",
+        "data-range-min": "250",
+        "data-range-max": "250"
+      },
+      {
+        "data-range-event": "",
+        "data-field": "height",
+        "data-range-range": "",
+        "data-range-min": "700",
+        "data-range-max": "700"
+      }
+    ],
+    "selects": [
+      {
+        "label": null,
+        "options": [
+          "Цена по возрастанию",
+          "Цена по убыванию",
+          "по алфавиту (A-Z)",
+          "по алфавиту (Z-A)"
+        ]
+      }
+    ]
+  },
+  {
+    "url": "https://salini-srl.com/rakoviny/nakladnye/",
+    "fields": [],
+    "selects": [
+      {
+        "label": "Размер",
+        "options": [
+          "Размер",
+          "5 m2",
+          "5-10 m2",
+          "Более 10 m2"
+        ]
+      },
+      {
+        "label": "Название",
+        "options": [
+          "Название",
+          "ALDA",
+          "ARMONIA",
+          "CALLISTA",
+          "CARTELLA",
+          "CASCATA2",
+          "DOMINO",
+          "GEMELLI",
+          "GRECA",
+          "LUCE",
+          "MAREA",
+          "NINFEA",
+          "NOEMI",
+          "OMBRA",
+          "ONDA",
+          "OPERA",
+          "OPERETTA",
+          "ORIENTE",
+          "ORLANDA",
+          "ORNELLA",
+          "PAOLA",
+          "PERLA",
+          "PURO",
+          "SOFIA"
+        ]
+      },
+      {
+        "label": "Ванна",
+        "options": [
+          "Ванна",
+          "Пристенная",
+          "Встраиваемая",
+          "Отдельностоящая",
+          "Угловая"
+        ]
+      }
+    ]
+  },
+  {
+    "url": "https://salini-srl.com/rakoviny/napolnye/",
+    "fields": [],
+    "selects": [
+      {
+        "label": "Размер",
+        "options": [
+          "Размер",
+          "5 m2",
+          "5-10 m2",
+          "Более 10 m2"
+        ]
+      },
+      {
+        "label": "Название",
+        "options": [
+          "Название",
+          "ALDA",
+          "ARMONIA",
+          "CALLISTA",
+          "CARTELLA",
+          "CASCATA2",
+          "DOMINO",
+          "GEMELLI",
+          "GRECA",
+          "LUCE",
+          "MAREA",
+          "NINFEA",
+          "NOEMI",
+          "OMBRA",
+          "ONDA",
+          "OPERA",
+          "OPERETTA",
+          "ORIENTE",
+          "ORLANDA",
+          "ORNELLA",
+          "PAOLA",
+          "PERLA",
+          "PURO",
+          "SOFIA"
+        ]
+      },
+      {
+        "label": "Ванна",
+        "options": [
+          "Ванна",
+          "Пристенная",
+          "Встраиваемая",
+          "Отдельностоящая",
+          "Угловая"
+        ]
+      }
+    ]
+  },
+  {
+    "url": "https://salini-srl.com/rakoviny/podvesnye/",
+    "fields": [],
+    "selects": [
+      {
+        "label": "Размер",
+        "options": [
+          "Размер",
+          "5 m2",
+          "5-10 m2",
+          "Более 10 m2"
+        ]
+      },
+      {
+        "label": "Название",
+        "options": [
+          "Название",
+          "ALDA",
+          "ARMONIA",
+          "CALLISTA",
+          "CARTELLA",
+          "CASCATA2",
+          "DOMINO",
+          "GEMELLI",
+          "GRECA",
+          "LUCE",
+          "MAREA",
+          "NINFEA",
+          "NOEMI",
+          "OMBRA",
+          "ONDA",
+          "OPERA",
+          "OPERETTA",
+          "ORIENTE",
+          "ORLANDA",
+          "ORNELLA",
+          "PAOLA",
+          "PERLA",
+          "PURO",
+          "SOFIA"
+        ]
+      },
+      {
+        "label": "Ванна",
+        "options": [
+          "Ванна",
+          "Пристенная",
+          "Встраиваемая",
+          "Отдельностоящая",
+          "Угловая"
+        ]
+      }
+    ]
+  },
+  {
+    "url": "https://salini-srl.com/rakoviny/poluvstraivaemye/",
+    "fields": [],
+    "selects": [
+      {
+        "label": "Размер",
+        "options": [
+          "Размер",
+          "5 m2",
+          "5-10 m2",
+          "Более 10 m2"
+        ]
+      },
+      {
+        "label": "Название",
+        "options": [
+          "Название",
+          "ALDA",
+          "ARMONIA",
+          "CALLISTA",
+          "CARTELLA",
+          "CASCATA2",
+          "DOMINO",
+          "GEMELLI",
+          "GRECA",
+          "LUCE",
+          "MAREA",
+          "NINFEA",
+          "NOEMI",
+          "OMBRA",
+          "ONDA",
+          "OPERA",
+          "OPERETTA",
+          "ORIENTE",
+          "ORLANDA",
+          "ORNELLA",
+          "PAOLA",
+          "PERLA",
+          "PURO",
+          "SOFIA"
+        ]
+      },
+      {
+        "label": "Ванна",
+        "options": [
+          "Ванна",
+          "Пристенная",
+          "Встраиваемая",
+          "Отдельностоящая",
+          "Угловая"
+        ]
+      }
+    ]
+  },
+  {
+    "url": "https://salini-srl.com/rakoviny/vstraivaemye/",
+    "fields": [],
+    "selects": [
+      {
+        "label": "Размер",
+        "options": [
+          "Размер",
+          "5 m2",
+          "5-10 m2",
+          "Более 10 m2"
+        ]
+      },
+      {
+        "label": "Название",
+        "options": [
+          "Название",
+          "ALDA",
+          "ARMONIA",
+          "CALLISTA",
+          "CARTELLA",
+          "CASCATA2",
+          "DOMINO",
+          "GEMELLI",
+          "GRECA",
+          "LUCE",
+          "MAREA",
+          "NINFEA",
+          "NOEMI",
+          "OMBRA",
+          "ONDA",
+          "OPERA",
+          "OPERETTA",
+          "ORIENTE",
+          "ORLANDA",
+          "ORNELLA",
+          "PAOLA",
+          "PERLA",
+          "PURO",
+          "SOFIA"
+        ]
+      },
+      {
+        "label": "Ванна",
+        "options": [
+          "Ванна",
+          "Пристенная",
+          "Встраиваемая",
+          "Отдельностоящая",
+          "Угловая"
+        ]
+      }
+    ]
+  },
+  {
+    "url": "https://salini-srl.com/salini-essentials/",
+    "fields": [],
+    "selects": []
+  },
+  {
+    "url": "https://salini-srl.com/salini-essentials/mebel-dlya-vannoy/",
+    "fields": [],
+    "selects": []
+  },
+  {
+    "url": "https://salini-srl.com/stoleshnitsy/",
+    "fields": [],
+    "selects": []
+  },
+  {
+    "url": "https://salini-srl.com/stoleshnitsy/costa/",
+    "fields": [],
+    "selects": []
+  },
+  {
+    "url": "https://salini-srl.com/stoleshnitsy/dopolnitelnye-vozmozhnosti/",
+    "fields": [
+      {
+        "data-range-range": "",
+        "data-range-min": "4000",
+        "data-range-max": "25000",
+        "data-filter-price": "",
+        "data-range-event": "",
+        "data-field": "price"
+      },
+      {
+        "data-range-range": "",
+        "data-range-min": "",
+        "data-range-max": "",
+        "data-filter-range": "Ширина, мм"
+      },
+      {
+        "data-range-range": "",
+        "data-range-min": "",
+        "data-range-max": "",
+        "data-filter-range": "Высота, мм"
+      },
+      {
+        "data-range-range": "",
+        "data-range-min": "",
+        "data-range-max": "",
+        "data-filter-range": "Длина, мм"
+      },
+      {
+        "data-range-range": "",
+        "data-range-min": "4000",
+        "data-range-max": "25000",
+        "data-range-event": "",
+        "data-field": "price"
+      },
+      {
+        "data-range-event": "",
+        "data-field": "length",
+        "data-range-range": "",
+        "data-range-min": "",
+        "data-range-max": ""
+      },
+      {
+        "data-range-event": "",
+        "data-field": "width",
+        "data-range-range": "",
+        "data-range-min": "",
+        "data-range-max": ""
+      },
+      {
+        "data-range-event": "",
+        "data-field": "height",
+        "data-range-range": "",
+        "data-range-min": "",
+        "data-range-max": ""
+      }
+    ],
+    "selects": [
+      {
+        "label": null,
+        "options": [
+          "Цена по возрастанию",
+          "Цена по убыванию",
+          "по алфавиту (A-Z)",
+          "по алфавиту (Z-A)"
+        ]
+      }
+    ]
+  },
+  {
+    "url": "https://salini-srl.com/stoleshnitsy/gres/",
+    "fields": [
+      {
+        "data-range-range": "",
+        "data-range-min": "65600",
+        "data-range-max": "122000",
+        "data-filter-price": "",
+        "data-range-event": "",
+        "data-field": "price"
+      },
+      {
+        "data-range-range": "",
+        "data-range-min": "",
+        "data-range-max": "",
+        "data-filter-range": "Ширина, мм"
+      },
+      {
+        "data-range-range": "",
+        "data-range-min": "",
+        "data-range-max": "",
+        "data-filter-range": "Высота, мм"
+      },
+      {
+        "data-range-range": "",
+        "data-range-min": "",
+        "data-range-max": "",
+        "data-filter-range": "Длина, мм"
+      },
+      {
+        "data-range-range": "",
+        "data-range-min": "65600",
+        "data-range-max": "122000",
+        "data-range-event": "",
+        "data-field": "price"
+      },
+      {
+        "data-range-event": "",
+        "data-field": "length",
+        "data-range-range": "",
+        "data-range-min": "",
+        "data-range-max": ""
+      },
+      {
+        "data-range-event": "",
+        "data-field": "width",
+        "data-range-range": "",
+        "data-range-min": "",
+        "data-range-max": ""
+      },
+      {
+        "data-range-event": "",
+        "data-field": "height",
+        "data-range-range": "",
+        "data-range-min": "",
+        "data-range-max": ""
+      }
+    ],
+    "selects": [
+      {
+        "label": null,
+        "options": [
+          "Цена по возрастанию",
+          "Цена по убыванию",
+          "по алфавиту (A-Z)",
+          "по алфавиту (Z-A)"
+        ]
+      }
+    ]
+  },
+  {
+    "url": "https://salini-srl.com/unitazy-i-bide/",
+    "fields": [],
+    "selects": []
+  },
+  {
+    "url": "https://salini-srl.com/unitazy-i-bide/bide-gemelli/",
+    "fields": [
+      {
+        "data-container": "filter",
+        "data-filter-field": "city",
+        "data-get-type": "one"
+      },
+      {
+        "data-container": "filter",
+        "data-filter-field": "type",
+        "data-get-type": "many"
+      },
+      {
+        "data-container": "filter",
+        "data-filter-field": "city",
+        "data-get-type": "one"
+      },
+      {
+        "data-container": "filter",
+        "data-filter-field": "address",
+        "data-get-type": "one"
+      },
+      {
+        "data-container": "filter",
+        "data-filter-field": "exposition",
+        "data-get-type": "one"
+      }
+    ],
+    "selects": [
+      {
+        "label": "выберите свой город",
+        "options": [
+          "",
+          "Москва",
+          "Самара"
+        ]
+      },
+      {
+        "label": "выберите свой город",
+        "options": [
+          "",
+          "Москва",
+          "Самара"
+        ]
+      }
+    ]
+  },
+  {
+    "url": "https://salini-srl.com/unitazy-i-bide/dopolnitelnye-vozmozhnosti/",
+    "fields": [
+      {
+        "data-range-range": "",
+        "data-range-min": "10000",
+        "data-range-max": "10000",
+        "data-filter-price": "",
+        "data-range-event": "",
+        "data-field": "price"
+      },
+      {
+        "data-range-range": "",
+        "data-range-min": "",
+        "data-range-max": "",
+        "data-filter-range": "Ширина, мм"
+      },
+      {
+        "data-range-range": "",
+        "data-range-min": "",
+        "data-range-max": "",
+        "data-filter-range": "Высота, мм"
+      },
+      {
+        "data-range-range": "",
+        "data-range-min": "",
+        "data-range-max": "",
+        "data-filter-range": "Длина, мм"
+      },
+      {
+        "data-range-range": "",
+        "data-range-min": "10000",
+        "data-range-max": "10000",
+        "data-range-event": "",
+        "data-field": "price"
+      },
+      {
+        "data-range-event": "",
+        "data-field": "length",
+        "data-range-range": "",
+        "data-range-min": "",
+        "data-range-max": ""
+      },
+      {
+        "data-range-event": "",
+        "data-field": "width",
+        "data-range-range": "",
+        "data-range-min": "",
+        "data-range-max": ""
+      },
+      {
+        "data-range-event": "",
+        "data-field": "height",
+        "data-range-range": "",
+        "data-range-min": "",
+        "data-range-max": ""
+      }
+    ],
+    "selects": [
+      {
+        "label": null,
+        "options": [
+          "Цена по возрастанию",
+          "Цена по убыванию",
+          "по алфавиту (A-Z)",
+          "по алфавиту (Z-A)"
+        ]
+      }
+    ]
+  },
+  {
+    "url": "https://salini-srl.com/unitazy-i-bide/instalyacia/",
+    "fields": [
+      {
+        "data-container": "filter",
+        "data-filter-field": "city",
+        "data-get-type": "one"
+      },
+      {
+        "data-container": "filter",
+        "data-filter-field": "type",
+        "data-get-type": "many"
+      },
+      {
+        "data-container": "filter",
+        "data-filter-field": "city",
+        "data-get-type": "one"
+      },
+      {
+        "data-container": "filter",
+        "data-filter-field": "address",
+        "data-get-type": "one"
+      },
+      {
+        "data-container": "filter",
+        "data-filter-field": "exposition",
+        "data-get-type": "one"
+      }
+    ],
+    "selects": [
+      {
+        "label": "выберите свой город",
+        "options": [
+          "",
+          "Москва",
+          "Санкт-Петербург",
+          "Сочи"
+        ]
+      },
+      {
+        "label": "выберите свой город",
+        "options": [
+          "",
+          "Москва",
+          "Санкт-Петербург",
+          "Сочи"
+        ]
+      }
+    ]
+  },
+  {
+    "url": "https://salini-srl.com/unitazy-i-bide/knopka/",
+    "fields": [
+      {
+        "data-container": "filter",
+        "data-filter-field": "city",
+        "data-get-type": "one"
+      },
+      {
+        "data-container": "filter",
+        "data-filter-field": "type",
+        "data-get-type": "many"
+      },
+      {
+        "data-container": "filter",
+        "data-filter-field": "city",
+        "data-get-type": "one"
+      },
+      {
+        "data-container": "filter",
+        "data-filter-field": "address",
+        "data-get-type": "one"
+      },
+      {
+        "data-container": "filter",
+        "data-filter-field": "exposition",
+        "data-get-type": "one"
+      }
+    ],
+    "selects": [
+      {
+        "label": "выберите свой город",
+        "options": [
+          "",
+          "Москва",
+          "Петропавловск-Камчатский",
+          "Санкт-Петербург",
+          "Сочи",
+          "Ульяновск"
+        ]
+      },
+      {
+        "label": "выберите свой город",
+        "options": [
+          "",
+          "Москва",
+          "Петропавловск-Камчатский",
+          "Санкт-Петербург",
+          "Сочи",
+          "Ульяновск"
+        ]
+      }
+    ]
+  },
+  {
+    "url": "https://salini-srl.com/unitazy-i-bide/unitaz-gemelli-s/",
+    "fields": [
+      {
+        "data-container": "filter",
+        "data-filter-field": "city",
+        "data-get-type": "one"
+      },
+      {
+        "data-container": "filter",
+        "data-filter-field": "type",
+        "data-get-type": "many"
+      },
+      {
+        "data-container": "filter",
+        "data-filter-field": "city",
+        "data-get-type": "one"
+      },
+      {
+        "data-container": "filter",
+        "data-filter-field": "address",
+        "data-get-type": "one"
+      },
+      {
+        "data-container": "filter",
+        "data-filter-field": "exposition",
+        "data-get-type": "one"
+      }
+    ],
+    "selects": [
+      {
+        "label": "выберите свой город",
+        "options": [
+          "",
+          "Москва",
+          "Новая Адыгея",
+          "Петропавловск-Камчатский",
+          "Санкт-Петербург",
+          "Сочи",
+          "Самара",
+          "Ульяновск",
+          "Новороссийск"
+        ]
+      },
+      {
+        "label": "выберите свой город",
+        "options": [
+          "",
+          "Москва",
+          "Новая Адыгея",
+          "Петропавловск-Камчатский",
+          "Санкт-Петербург",
+          "Сочи",
+          "Самара",
+          "Ульяновск",
+          "Новороссийск"
+        ]
+      }
+    ]
+  },
+  {
+    "url": "https://salini-srl.com/unitazy-i-bide/unitazy-gemelli/",
+    "fields": [
+      {
+        "data-container": "filter",
+        "data-filter-field": "city",
+        "data-get-type": "one"
+      },
+      {
+        "data-container": "filter",
+        "data-filter-field": "type",
+        "data-get-type": "many"
+      },
+      {
+        "data-container": "filter",
+        "data-filter-field": "city",
+        "data-get-type": "one"
+      },
+      {
+        "data-container": "filter",
+        "data-filter-field": "address",
+        "data-get-type": "one"
+      },
+      {
+        "data-container": "filter",
+        "data-filter-field": "exposition",
+        "data-get-type": "one"
+      }
+    ],
+    "selects": [
+      {
+        "label": "выберите свой город",
+        "options": [
+          "",
+          "Москва",
+          "Симферополь",
+          "Псков",
+          "Санкт-Петербург",
+          "Севастополь"
+        ]
+      },
+      {
+        "label": "выберите свой город",
+        "options": [
+          "",
+          "Москва",
+          "Симферополь",
+          "Псков",
+          "Санкт-Петербург",
+          "Севастополь"
+        ]
+      }
+    ]
+  },
+  {
+    "url": "https://salini-srl.com/vanny/",
+    "fields": [
+      {
+        "data-range-range": "",
+        "data-range-min": "1400",
+        "data-range-max": "2100",
+        "data-filter-range": "Длина, мм"
+      },
+      {
+        "data-range-range": "",
+        "data-range-min": "690",
+        "data-range-max": "2000",
+        "data-filter-range": "Ширина, мм"
+      },
+      {
+        "data-range-event": "",
+        "data-field": "length",
+        "data-range-range": "",
+        "data-range-min": "1400",
+        "data-range-max": "2100"
+      },
+      {
+        "data-range-event": "",
+        "data-field": "width",
+        "data-range-range": "",
+        "data-range-min": "690",
+        "data-range-max": "2000"
+      }
+    ],
+    "selects": [
+      {
+        "label": "Тип",
+        "options": [
+          "",
+          "Встраиваемые",
+          "Отдельностоящие",
+          "Пристенные",
+          "Угловые",
+          "Дополнительные возможности"
+        ]
+      },
+      {
+        "label": null,
+        "options": [
+          "Цена по возрастанию",
+          "Цена по убыванию",
+          "по алфавиту(A-Z)",
+          "по алфавиту(Z-A)"
+        ]
+      },
+      {
+        "label": "Тип",
+        "options": [
+          "",
+          "Встраиваемые",
+          "Отдельностоящие",
+          "Пристенные",
+          "Угловые",
+          "Дополнительные возможности"
+        ]
+      },
+      {
+        "label": null,
+        "options": [
+          "Цена по возрастанию",
+          "Цена по убыванию",
+          "по алфавиту(A-Z)",
+          "по алфавиту(Z-A)"
+        ]
+      },
+      {
+        "label": "Размер",
+        "options": [
+          "Размер",
+          "5 m2",
+          "5-10 m2",
+          "Более 10 m2"
+        ]
+      },
+      {
+        "label": "Название",
+        "options": [
+          "Название",
+          "ALDA",
+          "ARMONIA",
+          "CALLISTA",
+          "CARTELLA",
+          "CASCATA2",
+          "DOMINO",
+          "GEMELLI",
+          "GRECA",
+          "LUCE",
+          "MAREA",
+          "NINFEA",
+          "NOEMI",
+          "OMBRA",
+          "ONDA",
+          "OPERA",
+          "OPERETTA",
+          "ORIENTE",
+          "ORLANDA",
+          "ORNELLA",
+          "PAOLA",
+          "PERLA",
+          "PURO",
+          "SOFIA"
+        ]
+      },
+      {
+        "label": "Ванна",
+        "options": [
+          "Ванна",
+          "Пристенная",
+          "Встраиваемая",
+          "Отдельностоящая",
+          "Угловая"
+        ]
+      }
+    ]
+  },
+  {
+    "url": "https://salini-srl.com/vanny/dopolnitelnye-vozmozhnosti/",
+    "fields": [],
+    "selects": []
+  },
+  {
+    "url": "https://salini-srl.com/vanny/otdelnostoyashchie/",
+    "fields": [
+      {
+        "data-range-range": "",
+        "data-range-min": "160800",
+        "data-range-max": "1332600",
+        "data-range-event": "",
+        "data-field": "price"
+      },
+      {
+        "data-range-event": "",
+        "data-field": "length",
+        "data-range-range": "",
+        "data-range-min": "1400",
+        "data-range-max": "2000"
+      },
+      {
+        "data-range-event": "",
+        "data-field": "width",
+        "data-range-range": "",
+        "data-range-min": "700",
+        "data-range-max": "2000"
+      },
+      {
+        "data-range-event": "",
+        "data-field": "height",
+        "data-range-range": "",
+        "data-range-min": "518",
+        "data-range-max": "960"
+      },
+      {
+        "data-range-range": "",
+        "data-range-min": "160800",
+        "data-range-max": "1332600",
+        "data-filter-price": "",
+        "data-range-event": "",
+        "data-field": "price"
+      },
+      {
+        "data-range-range": "",
+        "data-range-min": "700",
+        "data-range-max": "2000",
+        "data-filter-range": "Ширина, мм"
+      },
+      {
+        "data-range-range": "",
+        "data-range-min": "518",
+        "data-range-max": "960",
+        "data-filter-range": "Высота, мм"
+      },
+      {
+        "data-range-range": "",
+        "data-range-min": "1400",
+        "data-range-max": "2000",
+        "data-filter-range": "Длина, мм"
+      }
+    ],
+    "selects": [
+      {
+        "label": null,
+        "options": [
+          "Цена по возрастанию",
+          "Цена по убыванию",
+          "по алфавиту(A-Z)",
+          "по алфавиту(Z-A)"
+        ]
+      },
+      {
+        "label": "Размер",
+        "options": [
+          "Размер",
+          "5 m2",
+          "5-10 m2",
+          "Более 10 m2"
+        ]
+      },
+      {
+        "label": "Название",
+        "options": [
+          "Название",
+          "ALDA",
+          "ARMONIA",
+          "CALLISTA",
+          "CARTELLA",
+          "CASCATA2",
+          "DOMINO",
+          "GEMELLI",
+          "GRECA",
+          "LUCE",
+          "MAREA",
+          "NINFEA",
+          "NOEMI",
+          "OMBRA",
+          "ONDA",
+          "OPERA",
+          "OPERETTA",
+          "ORIENTE",
+          "ORLANDA",
+          "ORNELLA",
+          "PAOLA",
+          "PERLA",
+          "PURO",
+          "SOFIA"
+        ]
+      },
+      {
+        "label": "Ванна",
+        "options": [
+          "Ванна",
+          "Пристенная",
+          "Встраиваемая",
+          "Отдельностоящая",
+          "Угловая"
+        ]
+      }
+    ]
+  },
+  {
+    "url": "https://salini-srl.com/vanny/pristennye/",
+    "fields": [],
+    "selects": [
+      {
+        "label": "Размер",
+        "options": [
+          "Размер",
+          "5 m2",
+          "5-10 m2",
+          "Более 10 m2"
+        ]
+      },
+      {
+        "label": "Название",
+        "options": [
+          "Название",
+          "ALDA",
+          "ARMONIA",
+          "CALLISTA",
+          "CARTELLA",
+          "CASCATA2",
+          "DOMINO",
+          "GEMELLI",
+          "GRECA",
+          "LUCE",
+          "MAREA",
+          "NINFEA",
+          "NOEMI",
+          "OMBRA",
+          "ONDA",
+          "OPERA",
+          "OPERETTA",
+          "ORIENTE",
+          "ORLANDA",
+          "ORNELLA",
+          "PAOLA",
+          "PERLA",
+          "PURO",
+          "SOFIA"
+        ]
+      },
+      {
+        "label": "Ванна",
+        "options": [
+          "Ванна",
+          "Пристенная",
+          "Встраиваемая",
+          "Отдельностоящая",
+          "Угловая"
+        ]
+      }
+    ]
+  },
+  {
+    "url": "https://salini-srl.com/vanny/uglovye/",
+    "fields": [],
+    "selects": [
+      {
+        "label": "Размер",
+        "options": [
+          "Размер",
+          "5 m2",
+          "5-10 m2",
+          "Более 10 m2"
+        ]
+      },
+      {
+        "label": "Название",
+        "options": [
+          "Название",
+          "ALDA",
+          "ARMONIA",
+          "CALLISTA",
+          "CARTELLA",
+          "CASCATA2",
+          "DOMINO",
+          "GEMELLI",
+          "GRECA",
+          "LUCE",
+          "MAREA",
+          "NINFEA",
+          "NOEMI",
+          "OMBRA",
+          "ONDA",
+          "OPERA",
+          "OPERETTA",
+          "ORIENTE",
+          "ORLANDA",
+          "ORNELLA",
+          "PAOLA",
+          "PERLA",
+          "PURO",
+          "SOFIA"
+        ]
+      },
+      {
+        "label": "Ванна",
+        "options": [
+          "Ванна",
+          "Пристенная",
+          "Встраиваемая",
+          "Отдельностоящая",
+          "Угловая"
+        ]
+      }
+    ]
+  },
+  {
+    "url": "https://salini-srl.com/vanny/vstraivaemye/",
+    "fields": [
+      {
+        "data-range-range": "",
+        "data-range-min": "94500",
+        "data-range-max": "310000",
+        "data-range-event": "",
+        "data-field": "price"
+      },
+      {
+        "data-range-event": "",
+        "data-field": "length",
+        "data-range-range": "",
+        "data-range-min": "1500",
+        "data-range-max": "2100"
+      },
+      {
+        "data-range-event": "",
+        "data-field": "width",
+        "data-range-range": "",
+        "data-range-min": "690",
+        "data-range-max": "1100"
+      },
+      {
+        "data-range-event": "",
+        "data-field": "height",
+        "data-range-range": "",
+        "data-range-min": "590",
+        "data-range-max": "655"
+      },
+      {
+        "data-range-range": "",
+        "data-range-min": "94500",
+        "data-range-max": "310000",
+        "data-filter-price": "",
+        "data-range-event": "",
+        "data-field": "price"
+      },
+      {
+        "data-range-range": "",
+        "data-range-min": "690",
+        "data-range-max": "1100",
+        "data-filter-range": "Ширина, мм"
+      },
+      {
+        "data-range-range": "",
+        "data-range-min": "590",
+        "data-range-max": "655",
+        "data-filter-range": "Высота, мм"
+      },
+      {
+        "data-range-range": "",
+        "data-range-min": "1500",
+        "data-range-max": "2100",
+        "data-filter-range": "Длина, мм"
+      }
+    ],
+    "selects": [
+      {
+        "label": null,
+        "options": [
+          "Цена по возрастанию",
+          "Цена по убыванию",
+          "по алфавиту(A-Z)",
+          "по алфавиту(Z-A)"
+        ]
+      },
+      {
+        "label": "Размер",
+        "options": [
+          "Размер",
+          "5 m2",
+          "5-10 m2",
+          "Более 10 m2"
+        ]
+      },
+      {
+        "label": "Название",
+        "options": [
+          "Название",
+          "ALDA",
+          "ARMONIA",
+          "CALLISTA",
+          "CARTELLA",
+          "CASCATA2",
+          "DOMINO",
+          "GEMELLI",
+          "GRECA",
+          "LUCE",
+          "MAREA",
+          "NINFEA",
+          "NOEMI",
+          "OMBRA",
+          "ONDA",
+          "OPERA",
+          "OPERETTA",
+          "ORIENTE",
+          "ORLANDA",
+          "ORNELLA",
+          "PAOLA",
+          "PERLA",
+          "PURO",
+          "SOFIA"
+        ]
+      },
+      {
+        "label": "Ванна",
+        "options": [
+          "Ванна",
+          "Пристенная",
+          "Встраиваемая",
+          "Отдельностоящая",
+          "Угловая"
+        ]
+      }
+    ]
+  },
+  {
+    "url": "https://salini-srl.com/mebel-dlya-vannoy/domino/",
+    "fields": [
+      {
+        "data-range-range": "",
+        "data-range-min": "106300",
+        "data-range-max": "106300",
+        "data-filter-price": "",
+        "data-range-event": "",
+        "data-field": "price"
+      },
+      {
+        "data-range-range": "",
+        "data-range-min": "",
+        "data-range-max": "",
+        "data-filter-range": "Ширина, мм"
+      },
+      {
+        "data-range-range": "",
+        "data-range-min": "400",
+        "data-range-max": "400",
+        "data-filter-range": "Высота, мм"
+      },
+      {
+        "data-range-range": "",
+        "data-range-min": "500",
+        "data-range-max": "500",
+        "data-filter-range": "Длина, мм"
+      },
+      {
+        "data-range-range": "",
+        "data-range-min": "106300",
+        "data-range-max": "106300",
+        "data-range-event": "",
+        "data-field": "price"
+      },
+      {
+        "data-range-event": "",
+        "data-field": "length",
+        "data-range-range": "",
+        "data-range-min": "500",
+        "data-range-max": "500"
+      },
+      {
+        "data-range-event": "",
+        "data-field": "width",
+        "data-range-range": "",
+        "data-range-min": "",
+        "data-range-max": ""
+      },
+      {
+        "data-range-event": "",
+        "data-field": "height",
+        "data-range-range": "",
+        "data-range-min": "400",
+        "data-range-max": "400"
+      }
+    ],
+    "selects": [
+      {
+        "label": null,
+        "options": [
+          "Цена по возрастанию",
+          "Цена по убыванию",
+          "по алфавиту (A-Z)",
+          "по алфавиту (Z-A)"
+        ]
+      }
+    ]
+  },
+  {
+    "url": "https://salini-srl.com/zerkala/",
+    "fields": [],
+    "selects": []
+  },
+  {
+    "url": "https://salini-srl.com/zerkala/armonia-mirror/",
+    "fields": [
+      {
+        "data-range-range": "",
+        "data-range-min": "79000",
+        "data-range-max": "81600",
+        "data-filter-price": "",
+        "data-range-event": "",
+        "data-field": "price"
+      },
+      {
+        "data-range-range": "",
+        "data-range-min": "79000",
+        "data-range-max": "81600",
+        "data-range-event": "",
+        "data-field": "price"
+      }
+    ],
+    "selects": [
+      {
+        "label": null,
+        "options": [
+          "Цена по возрастанию",
+          "Цена по убыванию",
+          "по алфавиту (A-Z)",
+          "по алфавиту (Z-A)"
+        ]
+      }
+    ]
+  },
+  {
+    "url": "https://salini-srl.com/zerkala/ombra-mirror/",
+    "fields": [
+      {
+        "data-range-range": "",
+        "data-range-min": "61900",
+        "data-range-max": "94700",
+        "data-filter-price": "",
+        "data-range-event": "",
+        "data-field": "price"
+      },
+      {
+        "data-range-range": "",
+        "data-range-min": "61900",
+        "data-range-max": "94700",
+        "data-range-event": "",
+        "data-field": "price"
+      }
+    ],
+    "selects": [
+      {
+        "label": null,
+        "options": [
+          "Цена по возрастанию",
+          "Цена по убыванию",
+          "по алфавиту (A-Z)",
+          "по алфавиту (Z-A)"
+        ]
+      }
+    ]
+  },
+  {
+    "url": "https://salini-srl.com/komplektuyushchie/donnye-klapany/",
+    "fields": [
+      {
+        "data-range-range": "",
+        "data-range-min": "2900",
+        "data-range-max": "13900",
+        "data-filter-price": "",
+        "data-range-event": "",
+        "data-field": "price"
+      },
+      {
+        "data-range-range": "",
+        "data-range-min": "64",
+        "data-range-max": "75",
+        "data-filter-range": "Ширина, мм"
+      },
+      {
+        "data-range-range": "",
+        "data-range-min": "63",
+        "data-range-max": "111",
+        "data-filter-range": "Высота, мм"
+      },
+      {
+        "data-range-range": "",
+        "data-range-min": "64",
+        "data-range-max": "102",
+        "data-filter-range": "Длина, мм"
+      },
+      {
+        "data-range-range": "",
+        "data-range-min": "2900",
+        "data-range-max": "13900",
+        "data-range-event": "",
+        "data-field": "price"
+      },
+      {
+        "data-range-event": "",
+        "data-field": "length",
+        "data-range-range": "",
+        "data-range-min": "64",
+        "data-range-max": "102"
+      },
+      {
+        "data-range-event": "",
+        "data-field": "width",
+        "data-range-range": "",
+        "data-range-min": "64",
+        "data-range-max": "75"
+      },
+      {
+        "data-range-event": "",
+        "data-field": "height",
+        "data-range-range": "",
+        "data-range-min": "63",
+        "data-range-max": "111"
+      }
+    ],
+    "selects": [
+      {
+        "label": null,
+        "options": [
+          "Цена по возрастанию",
+          "Цена по убыванию",
+          "по алфавиту (A-Z)",
+          "по алфавиту (Z-A)"
+        ]
+      }
+    ]
+  }
+]

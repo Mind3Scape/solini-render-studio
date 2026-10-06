@@ -13,3 +13,13 @@ examples/
 !.env.example
 *.pem
 *.key
+ios/.build/
+ios/build/
+ios/**/*.xcuserstate
+ios/**/xcuserdata/
+research/site-audit-2026-10-06/.deps/
+research/site-audit-2026-10-06/assets/
+research/site-audit-2026-10-06/raw/
+research/site-audit-2026-10-06/text/
+research/site-audit-2026-10-06/brief/
+research/site-audit-2026-10-06/evidence/
