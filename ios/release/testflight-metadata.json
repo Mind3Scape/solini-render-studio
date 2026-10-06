@@ -1,0 +1,16 @@
+{
+  "appName": "Salini",
+  "bundleId": "design.salini.experience",
+  "sku": "SALINI-EXPERIENCE-IOS",
+  "primaryLanguage": "ru",
+  "version": "1.0",
+  "minimumOS": "iOS 27.0",
+  "betaDescription": "Salini — нативное приложение для знакомства с коллекциями, материалами и подбором изделий для интерьера. Исследуйте каталог, сравнивайте изделия, просматривайте Greca в 3D, сохраняйте комплектацию проекта и делитесь спецификацией PDF. Режимы покупателя, дизайнера и партнёра доступны на главной. Salini Inside — интерактивная демонстрация производства и маршрутов заказов. Проекты и настройки сохраняются на устройстве. Производственные данные, остатки, резервы и отгрузки являются демонстрационными; реальные заказы не отправляются.",
+  "whatToTest": "Новое в сборке 1.0 (2): фильм коллекции Ninfea с ростом растений и водой, автоматическим запуском при возвращении и удержанием финального кадра; просторная территория Salini Inside, обновлённые дороги, материалы и тени. Проверьте Ninfea → Aria → Ninfea и возврат из описания коллекции; форму ванны, плавность видео и отсутствие растяжения. В Профиль → Salini Inside проверьте переходы между корпусами, слои карты, масштабирование, сценарии Aria/Marea и выпуск рейса. Также проверьте переключение режимов покупателя/дизайнера/партнёра, каталог, Greca в 3D, проекты и экспорт PDF. Все производственные данные и партнёрские операции — локальная демонстрация.",
+  "reviewNotes": "No sign-in is required. Build 1.0 (2) adds a bundled silent 12-second AI-generated botanical film for the Ninfea collection. It plays automatically on Home and on returning to the collection, then holds the last frame; Reduce Motion uses a still image. The film runs locally without network requests. Switch Buyer, Designer and Partner modes at the top of Home. Catalog, Greca 3D viewing, project management, PDF export and local partner workflows work offline. Profile → Salini Inside opens an interactive manufacturing simulation with nine areas, fixed isometric navigation and linked order scenarios. All factory orders, stock, reservations, staff and shipping data are simulated; actions do not operate real equipment or submit real orders. Product images and reference data originate from salini-srl.com. Source attribution and data limitations are under Profile → Источники и данные. Generated imagery is identified in the Ninfea information screen. No purchases, advertising or third-party analytics SDKs. Requires iOS/iPadOS 27 or later.",
+  "signInRequired": false,
+  "collectsData": false,
+  "tracking": false,
+  "submissionStatus": "Build 1.0 (2) preparation in progress; supersedes previously submitted 1.0 (1).",
+  "build": "2"
+}

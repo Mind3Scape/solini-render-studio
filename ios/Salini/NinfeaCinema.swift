@@ -74,7 +74,7 @@ final class NinfeaCinemaView: UIView {
         DispatchQueue.main.async { self?.performPendingStart(); self?.updatePlayback() }
       }
       observers.append(NotificationCenter.default.addObserver(
-        forName: .AVPlayerItemDidPlayToEndTime, object: item, queue: .main
+        forName: AVPlayerItem.didPlayToEndTimeNotification, object: item, queue: .main
       ) { [weak self] _ in
         guard let self, !self.seeking, !self.pendingStart else { return }
         self.playback.finish()

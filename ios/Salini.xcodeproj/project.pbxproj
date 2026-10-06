@@ -18,6 +18,7 @@
 		34D8442BABB4641EBEA5BB0C /* MaterialStudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115177084A87D881A3F70994 /* MaterialStudio.swift */; };
 		36D45DA9DCA6EE81DFF950EB /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BF4C1CE6C2E47285FA6084 /* App.swift */; };
 		3709133CD6994CCC37D19E05 /* ninfea-poster-v3.png in Resources */ = {isa = PBXBuildFile; fileRef = 8F5B5BC405FFFEBD6456F5A7 /* ninfea-poster-v3.png */; };
+		3B13E9E2C9CA77013FD0D3B2 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = B002A96E28C44197F2418A95 /* PrivacyInfo.xcprivacy */; };
 		3B48D5B64C2CCE5E33479486 /* opera.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8B9E9451C86A79C46812A25D /* opera.jpg */; };
 		426862A0DEEFAB351CF95669 /* ninfea-interior.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ADD1F0B906AE70FBFC2933A /* ninfea-interior.png */; };
 		50A02DC7410C6D6D3381B045 /* interior.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3776267C1F0DB827DBEBB68A /* interior.jpg */; };
@@ -97,6 +98,7 @@
 		A3AD3AD462395F7627F0F9ED /* aria.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = aria.jpg; sourceTree = "<group>"; };
 		A57996FF6A4B9A58C4F8C45E /* InsideVisuals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsideVisuals.swift; sourceTree = "<group>"; };
 		A82AFE5054B9A5561CDAD645 /* salini-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "salini-logo.png"; sourceTree = "<group>"; };
+		B002A96E28C44197F2418A95 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		B84ADB80CC317232BF921570 /* catalog.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = catalog.json; sourceTree = "<group>"; };
 		CEF9612034EAAC3B2E8AFDEE /* Aria-drawing.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "Aria-drawing.pdf"; sourceTree = "<group>"; };
 		D4BD1EE31F7C199D6DAD475C /* NinfeaStory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NinfeaStory.swift; sourceTree = "<group>"; };
@@ -188,6 +190,7 @@
 				DC46B7DC8500987396D0C75D /* ObjectViewer.swift */,
 				9455A5104B42AB58A498F29C /* Owner.swift */,
 				E97669814B3D762675C197A2 /* OwnerOperations.swift */,
+				B002A96E28C44197F2418A95 /* PrivacyInfo.xcprivacy */,
 				06B24C2D0832EF8D141B750A /* Profile.swift */,
 				319851BB55623979FE40C513 /* Projects.swift */,
 				FA83A08C7BD246CAD8B10652 /* Workspaces.swift */,
@@ -244,6 +247,10 @@
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
+					902AEBF3145C80E74D0B2645 = {
+						DevelopmentTeam = TQ5SCF3KQZ;
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = B4F98E5A60BFB360489BFE7C /* Build configuration list for PBXProject "Salini" */;
@@ -274,6 +281,7 @@
 				B05E098BB5A23A647FB95239 /* Aria-drawing.pdf in Resources */,
 				655CB7EC2997AD545FD46A7B /* Assets.xcassets in Resources */,
 				0C3BB687CDA086420032F89A /* Greca.usdz in Resources */,
+				3B13E9E2C9CA77013FD0D3B2 /* PrivacyInfo.xcprivacy in Resources */,
 				8CC5A6E694E7E63798777106 /* aria-red.jpg in Resources */,
 				56B48C7F86569A1C65D45047 /* aria.jpg in Resources */,
 				8FCBD77FB5FBC3C00B8CE17A /* catalog.json in Resources */,
@@ -350,6 +358,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = TQ5SCF3KQZ;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Salini/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Salini;
@@ -361,6 +372,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = design.salini.experience;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -434,7 +446,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGNING_ALLOWED = NO;
+				"CODE_SIGNING_ALLOWED[sdk=iphonesimulator*]" = NO;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -499,7 +511,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGNING_ALLOWED = NO;
+				"CODE_SIGNING_ALLOWED[sdk=iphonesimulator*]" = NO;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -529,6 +541,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = TQ5SCF3KQZ;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Salini/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Salini;
@@ -540,6 +555,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = design.salini.experience;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";

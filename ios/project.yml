@@ -7,7 +7,7 @@ settings:
   base:
     SWIFT_VERSION: '5.0'
     TARGETED_DEVICE_FAMILY: '1,2'
-    CODE_SIGNING_ALLOWED: NO
+    CODE_SIGNING_ALLOWED[sdk=iphonesimulator*]: NO
 targets:
   Salini:
     type: application
@@ -22,6 +22,10 @@ targets:
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: design.salini.experience
+        DEVELOPMENT_TEAM: TQ5SCF3KQZ
+        CODE_SIGN_STYLE: Automatic
+        MARKETING_VERSION: '1.0'
+        CURRENT_PROJECT_VERSION: '2'
         INFOPLIST_KEY_CFBundleDisplayName: Salini
         GENERATE_INFOPLIST_FILE: YES
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
@@ -32,6 +36,8 @@ targets:
     info:
       path: Salini/Info.plist
       properties:
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         UIApplicationSceneManifest:
           UIApplicationSupportsMultipleScenes: false
           UISceneConfigurations:
@@ -39,7 +45,7 @@ targets:
               - UISceneConfigurationName: Default
                 UISceneDelegateClassName: $(PRODUCT_MODULE_NAME).SceneDelegate
         UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
-        UISupportedInterfaceOrientations~ipad: [UIInterfaceOrientationPortrait, UIInterfaceOrientationLandscapeLeft, UIInterfaceOrientationLandscapeRight]
+        UISupportedInterfaceOrientations~ipad: [UIInterfaceOrientationPortrait, UIInterfaceOrientationPortraitUpsideDown, UIInterfaceOrientationLandscapeLeft, UIInterfaceOrientationLandscapeRight]
   SaliniTests:
     type: bundle.unit-test
     platform: iOS
