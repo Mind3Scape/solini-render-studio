@@ -11,6 +11,6 @@
   "signInRequired": false,
   "collectsData": false,
   "tracking": false,
-  "submissionStatus": "Build 1.0 (5) prepared and tested; archive/upload pending. Build 4 upload receipt is retained separately.",
+  "submissionStatus": "Build 1.0 (5) uploaded successfully at 2026-10-07T16:21:41+07:00; Apple package processing confirmed. Processing completion, internal testing availability and external Beta App Review pending App Store Connect browser sign-in.",
   "build": "5"
 }
