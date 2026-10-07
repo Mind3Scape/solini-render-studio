@@ -218,5 +218,14 @@
     "format": "H.264, 1176 × 1764, 24 fps, 12.041667 seconds, silent",
     "processing": "Lossless container remux with faststart; first frame and final frame extracted as PNG. No layer warping, retiming, frame interpolation or added transitions.",
     "usage": "Automatic Ninfea collection artwork, final-frame hold and Reduce Motion still. AI visual concept guided by Salini photography, not official footage or a color proof."
+  },
+  {
+    "asset": "studio_small_09_2k.hdr",
+    "source_url": "https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/2k/studio_small_09_2k.hdr",
+    "source_page": "https://polyhaven.com/a/studio_small_09",
+    "author": "Sergej Majboroda",
+    "license": "CC0 1.0 (https://polyhaven.com/license)",
+    "md5": "b056fea247bc84b81d2e0987d44c87d8",
+    "usage": "Material studio image-based light; file unchanged in the bundle. At load the app turns it -48 degrees, dims walls (flags) and the floor below the horizon, and adds procedural strip softboxes (StudioLighting.swift)"
   }
 ]

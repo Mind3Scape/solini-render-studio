@@ -101,6 +101,8 @@ final class StudioSceneView: SCNView, UIGestureRecognizerDelegate {
     super.init(frame: frame, options: options)
     backgroundColor = StudioSceneView.backdrop
     antialiasingMode = .multisampling4X
+    // When the frame is still, SceneKit refines it with sub-pixel jitter (calm rims, no crawl).
+    isJitteringEnabled = true
     preferredFramesPerSecond = 30
     rendersContinuously = false
     isPlaying = false
@@ -139,6 +141,8 @@ final class StudioSceneView: SCNView, UIGestureRecognizerDelegate {
           studio.setLight(self.lightPosition)
         }
         self.studio = studio
+        // The physical look maps its half-float frame itself (nil for the legacy look).
+        self.technique = studio?.technique
         self.scene = studio?.scene
         self.pointOfView = studio?.camera
       }

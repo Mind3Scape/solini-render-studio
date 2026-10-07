@@ -611,6 +611,371 @@ final class SaliniTests: XCTestCase {
     XCTAssertEqual(studio.shot, .macro)
     XCTAssertEqual(studio.aspect, 373.0 / 440.0, accuracy: 0.001)
   }
+  // MARK: Material realism (8.1)
+
+  func testRadianceDecoderReadsRunLengthAndFlatScanlines() throws {
+    // Flat: two pixels. (128, 64, 32, e = 129) → value · 2^(129 − 136) = value / 128.
+    var flat = Data("#?RADIANCE\nFORMAT=32-bit_rle_rgbe\n\n-Y 1 +X 2\n".utf8)
+    flat.append(contentsOf: [128, 64, 32, 129, 0, 0, 0, 0])
+    let a = try XCTUnwrap(RadianceImage(data: flat))
+    XCTAssertEqual(a.width, 2)
+    XCTAssertEqual(a.pixels[0], 1.0, accuracy: 1e-6)
+    XCTAssertEqual(a.pixels[1], 0.5, accuracy: 1e-6)
+    XCTAssertEqual(a.pixels[2], 0.25, accuracy: 1e-6)
+    XCTAssertEqual(a.pixels[3], 0, "e = 0 is black")
+    // New-style RLE, width 8: R run of 8 × 200, G literal 0…7, B run 0, E run 136 (scale 1).
+    var rle = Data("#?RADIANCE\n\n-Y 1 +X 8\n".utf8)
+    let run: UInt8 = 128 + 8
+    let scanline: [UInt8] = [2, 2, 0, 8, run, 200, 8, 0, 1, 2, 3, 4, 5, 6, 7, run, 0, run, 136]
+    rle.append(contentsOf: scanline)
+    let b = try XCTUnwrap(RadianceImage(data: rle))
+    XCTAssertEqual(b.pixels[0], 200, "Values above 1 survive: this is radiance, not a picture")
+    XCTAssertEqual(b.pixels[7 * 3 + 1], 7)
+    XCTAssertNil(RadianceImage(data: Data("not an hdr".utf8)))
+    var truncated = Data("#?RADIANCE\n\n-Y 2 +X 8\n".utf8)
+    truncated.append(contentsOf: [2, 2, 0, 8, run])
+    XCTAssertNil(RadianceImage(data: truncated), "Broken files fail instead of crashing")
+  }
+  func testStudioHDRIIsTheBundledUnclippedRadianceLoadedOnce() throws {
+    let url = try XCTUnwrap(StudioHDRI.url, "CC0 HDRI is bundled")
+    XCTAssertEqual(url.lastPathComponent, "studio_small_09_2k.hdr")
+    let loaded = try XCTUnwrap(StudioHDRI.shared())
+    XCTAssertEqual(loaded.width, 2048)
+    XCTAssertEqual(loaded.height, 1024)
+    XCTAssertGreaterThan(loaded.sourcePeak / loaded.sourceMean, 100, "Real studio range, not an 8-bit image")
+    XCTAssertEqual(loaded.image.bitsPerComponent, 16)
+    XCTAssertTrue(loaded.image.bitmapInfo.contains(.floatComponents), "Half-float radiance reaches SceneKit")
+    XCTAssertTrue(StudioHDRI.shared()?.image === loaded.image, "Decoded once, shared by every studio")
+    // The softbox the key light stands for is the brightest thing above the horizon at its azimuth.
+    XCTAssertEqual(StudioHDRI.keyAzimuth, 168, accuracy: 0.5)
+  }
+  func testPhysicalStudioMaterialsLightsAndLifecycle() throws {
+    let noemi = try XCTUnwrap(StudioForm.noemi)
+    let studio = try XCTUnwrap(StudioScene(modelURL: noemi.modelURL, finish: .stoneMatte))
+    XCTAssertEqual(studio.look, .physical, "The live studio default")
+    XCTAssertNotNil(studio.technique, "PBR Neutral pass compiled")
+    let hdri = try XCTUnwrap(StudioHDRI.shared())
+    XCTAssertTrue((studio.scene.lightingEnvironment.contents as AnyObject) === hdri.image)
+    var lights: [SCNLight] = []
+    studio.scene.rootNode.enumerateHierarchy { n, _ in if let l = n.light { lights.append(l) } }
+    XCTAssertFalse(lights.contains { $0.type == .ambient }, "No unoccluded ambient wash")
+    XCTAssertEqual(lights.filter(\.castsShadow).count, 1, "One key, one coherent shadow")
+    func bathMaterials() -> [SCNMaterial] {
+      var out: [SCNMaterial] = []
+      studio.model.enumerateHierarchy { n, _ in out += n.geometry?.materials ?? [] }
+      return out
+    }
+    let green = try XCTUnwrap(RALPalette.colour("6005")).colour
+    for finish in StudioFinish.allCases {
+      // Twice: applying is idempotent, nothing accumulates.
+      studio.apply(finish: finish, colour: green)
+      studio.apply(finish: finish, colour: green)
+      for m in bathMaterials() {
+        XCTAssertEqual(m.lightingModel, .physicallyBased)
+        XCTAssertEqual((m.metalness.contents as? NSNumber)?.doubleValue, 0, "\(finish): mineral, never metallic")
+        XCTAssertEqual(m.diffuse.contents as? UIColor, green, "\(finish): colour unchanged")
+        XCTAssertEqual(m.shaderModifiers?.count, 1)
+        let coat = (m.clearCoat.contents as? NSNumber)?.doubleValue
+        let coatRoughness = (m.clearCoatRoughness.contents as? NSNumber)?.doubleValue ?? -1
+        switch finish {
+        case .stoneMatte: XCTAssertEqual(coat, 0, "S-Stone: one honed lobe")
+        case .senseMatte:
+          XCTAssertEqual(coat, 1, "S-Sense: separate Gelcoat lobe")
+          XCTAssertGreaterThan(coatRoughness, 0.2)
+        case .senseGloss:
+          XCTAssertEqual(coat, 1)
+          XCTAssertLessThan(coatRoughness, 0.06, "Smooth Gelcoat")
+        }
+        XCTAssertEqual((m.value(forKey: "hasCoat") as? NSNumber)?.floatValue, finish == .stoneMatte ? 0 : 1)
+      }
+    }
+    XCTAssertEqual(try XCTUnwrap(StudioScene(modelURL: noemi.modelURL, finish: .stoneMatte)).fittingCount, 0,
+                   "One-piece forms have no fittings")
+  }
+  /// Position indices an element actually draws, decoded from its real encoding.
+  ///
+  /// Official USDZ load as `.polygon` elements: first `primitiveCount` per-polygon corner counts,
+  /// then, per corner, one index per geometry source (position, normal, texcoord — in the order of
+  /// `geometry.sources`), because normals and UVs are indexed separately. The channel count is
+  /// derived from the data's real length; triangles / strips / lines / points are handled the same
+  /// way. Index width 1, 2 or 4 bytes. Nil when the data does not match its own description —
+  /// never a read past the buffer.
+  static func positionIndices(of element: SCNGeometryElement, in geometry: SCNGeometry) -> [Int]? {
+    let width = element.bytesPerIndex
+    guard [1, 2, 4].contains(width) else { return nil }
+    let data = element.data
+    let stored = data.count / width
+    func value(at i: Int) -> Int? {
+      guard i >= 0, i < stored else { return nil }
+      return data.withUnsafeBytes { raw in
+        switch width {
+        case 1: return Int(raw.load(fromByteOffset: i, as: UInt8.self))
+        case 2: return Int(raw.loadUnaligned(fromByteOffset: i * 2, as: UInt16.self))
+        default: return Int(raw.loadUnaligned(fromByteOffset: i * 4, as: UInt32.self))
+        }
+      }
+    }
+    let n = element.primitiveCount
+    var corners: Int
+    var first = 0
+    switch element.primitiveType {
+    case .triangles: corners = n * 3
+    case .triangleStrip: corners = n > 0 ? n + 2 : 0
+    case .line: corners = n * 2
+    case .point: corners = n
+    case .polygon:
+      corners = 0
+      for p in 0..<n {
+        guard let c = value(at: p), c >= 3 else { return nil }
+        corners += c
+      }
+      first = n
+    @unknown default: return nil
+    }
+    guard corners > 0, (stored - first) % corners == 0 else { return nil }
+    let channels = (stored - first) / corners
+    guard channels >= 1 else { return nil }
+    let position = channels > 1
+      ? (geometry.sources.firstIndex { $0.semantic == .vertex } ?? 0) : 0
+    guard position < channels else { return nil }
+    var out: [Int] = []
+    out.reserveCapacity(corners)
+    for corner in 0..<corners {
+      guard let v = value(at: first + corner * channels + position) else { return nil }
+      out.append(v)
+    }
+    return out
+  }
+  /// World-space bounds (scene units) of the vertices drawn with one material. Reads positions by
+  /// the source's own stride, offset and component size, bounds-checked.
+  static func bounds(of material: SCNMaterial, in model: SCNNode) -> (lo: SIMD3<Float>, hi: SIMD3<Float>)? {
+    var lo = SIMD3<Float>(repeating: .greatestFiniteMagnitude), hi = -lo
+    var found = false
+    var failed = false
+    model.enumerateHierarchy { node, _ in
+      guard let g = node.geometry, g.materials.contains(where: { $0 === material }) else { return }
+      guard let source = g.sources(for: .vertex).first, source.usesFloatComponents,
+        source.componentsPerVector >= 3, [4, 8].contains(source.bytesPerComponent)
+      else {
+        failed = true
+        return
+      }
+      let transform = node.simdWorldTransform
+      let data = source.data
+      func position(_ index: Int) -> SIMD3<Float>? {
+        guard index >= 0, index < source.vectorCount else { return nil }
+        let base = source.dataOffset + index * source.dataStride
+        let size = source.bytesPerComponent
+        guard base >= 0, base + 3 * size <= data.count else { return nil }
+        return data.withUnsafeBytes { raw in
+          size == 4
+            ? SIMD3((0..<3).map { raw.loadUnaligned(fromByteOffset: base + $0 * 4, as: Float.self) })
+            : SIMD3((0..<3).map { Float(raw.loadUnaligned(fromByteOffset: base + $0 * 8, as: Double.self)) })
+        }
+      }
+      for (i, element) in g.elements.enumerated() where i < g.materials.count && g.materials[i] === material {
+        // Anything undecodable fails the whole measurement instead of silently shrinking it.
+        guard let indices = Self.positionIndices(of: element, in: g) else {
+          failed = true
+          continue
+        }
+        for index in indices {
+          guard let v = position(index) else {
+            failed = true
+            continue
+          }
+          let p = transform * SIMD4<Float>(v, 1)
+          lo = simd_min(lo, SIMD3(p.x, p.y, p.z))
+          hi = simd_max(hi, SIMD3(p.x, p.y, p.z))
+          found = true
+        }
+      }
+    }
+    return found && !failed ? (lo, hi) : nil
+  }
+  /// Fittings are an explicit, verified list per model — not a size heuristic. Checked against the
+  /// real geometry: the built-ins' steel part reaches the floor (support feet) below the shell;
+  /// Sofia's is the small waste fitting; Ninfea's dark lower band and Greca's pedestal stay mineral.
+  func testOnlyVerifiedMetalPartsBecomeSteel() throws {
+    let green = try XCTUnwrap(RALPalette.colour("6005")).colour
+    func scene(_ siteName: String) throws -> StudioScene {
+      let form = try XCTUnwrap(StudioForm.all.first { $0.product.siteName == siteName }, siteName)
+      return try XCTUnwrap(StudioScene(modelURL: form.modelURL, finish: .stoneMatte, colour: green))
+    }
+    func materials(_ s: StudioScene) -> [SCNMaterial] {
+      var out: [SCNMaterial] = []
+      s.model.enumerateHierarchy { n, _ in
+        for m in n.geometry?.materials ?? [] where !out.contains(where: { $0 === m }) { out.append(m) }
+      }
+      return out
+    }
+    for name in ["КАСКАТА 180x80", "ОРНЕЛЛА 170х75", "ОРЛАНДА 160x70"] {
+      let s = try scene(name)
+      XCTAssertEqual(s.fittingCount, 1, name)
+      let steel = try XCTUnwrap(materials(s).first { s.isFitting($0) }, name)
+      let shell = try XCTUnwrap(materials(s).first { !s.isFitting($0) }, name)
+      XCTAssertEqual((steel.metalness.contents as? NSNumber)?.doubleValue, 1, "\(name): steel")
+      XCTAssertNotEqual(steel.diffuse.contents as? UIColor, green, "\(name): fittings are not painted RAL")
+      XCTAssertEqual(shell.diffuse.contents as? UIColor, green)
+      let feet = try XCTUnwrap(Self.bounds(of: steel, in: s.model))
+      let body = try XCTUnwrap(Self.bounds(of: shell, in: s.model))
+      XCTAssertLessThan(feet.lo.y, 0.01, "\(name): the steel part stands on the floor (support feet)")
+      XCTAssertGreaterThan(body.lo.y, feet.lo.y + 0.03, "\(name): the cast shell is above its feet")
+    }
+    let sofia = try scene("СОФИЯ 170")
+    XCTAssertEqual(sofia.fittingCount, 1)
+    let drain = try XCTUnwrap(materials(sofia).first { sofia.isFitting($0) })
+    let drainBox = try XCTUnwrap(Self.bounds(of: drain, in: sofia.model))
+    let sofiaBox = try XCTUnwrap(Self.bounds(of: try XCTUnwrap(materials(sofia).first { !sofia.isFitting($0) }), in: sofia.model))
+    let span = (drainBox.hi - drainBox.lo).max()
+    XCTAssertLessThan(span, (sofiaBox.hi - sofiaBox.lo).max() * 0.08, "Sofia's steel part is the small waste fitting")
+    let ninfea = try scene("НИНФЕЯ")
+    XCTAssertEqual(ninfea.fittingCount, 0, "Ninfea's dark lower band is not proven metal: it stays mineral")
+    XCTAssertTrue(materials(ninfea).allSatisfy { ($0.diffuse.contents as? UIColor) == green && $0.shaderModifiers != nil })
+    let greca = try scene("GRECA 180")
+    XCTAssertEqual(greca.fittingCount, 0, "Greca's pedestal is cast with the bath")
+    XCTAssertEqual(materials(greca).count, 1)
+  }
+  func testProductExposureKeepsWhiteShadedAndDarkReadableWithAStableSet() throws {
+    let white = StudioScene.productExposure(for: StudioScene.white)
+    let anthracite = StudioScene.productExposure(for: try XCTUnwrap(RALPalette.colour("7016")).colour)
+    XCTAssertLessThan(white, -0.2, "White is exposed down: its walls keep their shading")
+    XCTAssertGreaterThan(anthracite, 0.2, "Anthracite is exposed up: its form reads")
+    let noemi = try XCTUnwrap(StudioForm.noemi)
+    let studio = try XCTUnwrap(StudioScene(modelURL: noemi.modelURL, finish: .stoneMatte, colour: StudioScene.white))
+    let whiteEnvironment = studio.scene.lightingEnvironment.intensity
+    studio.apply(finish: .stoneMatte, colour: try XCTUnwrap(RALPalette.colour("7016")).colour)
+    XCTAssertEqual(studio.scene.lightingEnvironment.intensity / whiteEnvironment, CGFloat(exp2(anthracite - white)), accuracy: 0.001)
+    // The set does not change with the product: floor albedo × light stays constant.
+    var floor: SCNMaterial?
+    studio.scene.rootNode.enumerateHierarchy { n, _ in if n.geometry is SCNShape { floor = n.geometry?.firstMaterial } }
+    let f = try XCTUnwrap(floor)
+    XCTAssertEqual(f.diffuse.intensity * studio.scene.lightingEnvironment.intensity, StudioScene.physicalEnvironment, accuracy: 0.001)
+  }
+  func testThirdPartyNoticesShipWithTheApp() throws {
+    let url = try XCTUnwrap(Bundle.main.url(forResource: "third-party-notices", withExtension: "txt"))
+    let text = try String(contentsOf: url, encoding: .utf8)
+    XCTAssertTrue(text.contains("KhronosGroup/ToneMapping"))
+    XCTAssertTrue(text.contains("Copyright 2024 The Khronos Group, Inc."))
+    XCTAssertTrue(text.contains("ported to the Metal Shading Language"))
+    XCTAssertTrue(text.contains("Apache License"))
+    XCTAssertTrue(text.contains("TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION"), "Full licence text")
+    XCTAssertTrue(text.contains("studio_small_09") && text.contains("Sergej Majboroda") && text.contains("CC0"))
+  }
+  @MainActor func testLiveStudioShowsThePhysicalLookAndPrintKeepsTheAcceptedOne() throws {
+    let form = try XCTUnwrap(StudioForm.noemi)
+    let view = StudioSceneView(frame: CGRect(x: 0, y: 0, width: 373, height: 440))
+    XCTAssertTrue(view.isJitteringEnabled)
+    view.load(form, finish: .stoneMatte, colour: StudioScene.white, shot: .form)
+    let deadline = Date().addingTimeInterval(20)
+    while view.studio == nil, Date() < deadline { RunLoop.main.run(until: Date().addingTimeInterval(0.05)) }
+    let studio = try XCTUnwrap(view.studio)
+    XCTAssertEqual(studio.look, .physical)
+    XCTAssertTrue(view.technique === studio.technique, "The view maps the half-float frame with the studio's pass")
+    let print = try XCTUnwrap(ProposalComposer.PrintStudio(form: form, finish: .stoneMatte))
+    XCTAssertEqual(print.studio.look, .legacy, "Print studies keep their accepted look explicitly")
+    XCTAssertNil(print.studio.technique)
+  }
+  /// Visual A/B for review (Codex): Noemi and Greca, whole form and macro, white / RAL 6005 / RAL
+  /// 7016, every finish the form is sold in, legacy | physical side by side. Writes
+  /// `Salini-Material-AB/*.png`, a grid per model and `report.txt` to the temporary folder. The
+  /// assertions only catch broken renders; quality is judged by eye on the grid.
+  func testMaterialRealismABForReview() throws {
+    let device = try XCTUnwrap(MTLCreateSystemDefaultDevice())
+    let folder = FileManager.default.temporaryDirectory.appendingPathComponent("Salini-Material-AB")
+    try? FileManager.default.removeItem(at: folder)
+    try FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
+    let colours: [(String, UIColor)] = [
+      ("white", StudioScene.white), ("RAL6005", try XCTUnwrap(RALPalette.colour("6005")).colour),
+      ("RAL7016", try XCTUnwrap(RALPalette.colour("7016")).colour),
+    ]
+    let size = CGSize(width: 600, height: 460)
+    var report = ["model shot finish colour look burned% mean"]
+    for name in ["НОЭМИ 170", "GRECA 180"] {
+      let form = try XCTUnwrap(StudioForm.all.first { $0.product.siteName == name })
+      var cells: [(String, UIImage, UIImage)] = []
+      var renders: [StudioScene.Look: (StudioScene, SCNRenderer)] = [:]
+      for look in StudioScene.Look.allCases {
+        let studio = try XCTUnwrap(StudioScene(modelURL: form.modelURL, finish: form.finishes[0], look: look))
+        studio.aspect = size.width / size.height
+        studio.setLight(0.42)
+        let renderer = SCNRenderer(device: device, options: nil)
+        renderer.scene = studio.scene
+        renderer.pointOfView = studio.camera
+        renderer.technique = studio.technique
+        renders[look] = (studio, renderer)
+      }
+      for shot in [StudioScene.Shot.form, .macro] {
+        for finish in form.finishes {
+          var whiteMean: [StudioFinish: Double] = [:]
+          for (colourName, colour) in colours {
+            var pair: [StudioScene.Look: UIImage] = [:]
+            for look in StudioScene.Look.allCases {
+              let (studio, renderer) = try XCTUnwrap(renders[look])
+              studio.frame(shot, animated: false)
+              studio.apply(finish: finish, colour: colour)
+              let image = renderer.snapshot(atTime: 0, with: size, antialiasingMode: .multisampling4X)
+              pair[look] = image
+              let label = "\(form.product.model ?? name)-\(shot == .form ? "form" : "macro")-\(finish.rawValue)-\(colourName)-\(look.rawValue)"
+              try XCTUnwrap(image.pngData()).write(to: folder.appendingPathComponent(label + ".png"))
+              let stats = try XCTUnwrap(Self.lumaStats(image))
+              report.append("\(label) \(String(format: "%.2f %.1f", stats.burned * 100, stats.mean))")
+              XCTAssertGreaterThan(stats.mean, 8, "\(label): not a black frame")
+              XCTAssertGreaterThan(stats.deviation, 6, "\(label): not a flat frame")
+              if look == .physical, colourName == "white" {
+                XCTAssertLessThan(stats.burned, 0.005, "\(label): white keeps its inner-bowl gradient")
+                whiteMean[finish] = stats.mean
+              }
+            }
+            cells.append(("\(shot == .form ? "Форма" : "Борт") · \(finish.short) · \(colourName)",
+                          try XCTUnwrap(pair[.legacy]), try XCTUnwrap(pair[.physical])))
+          }
+        }
+      }
+      let grid = Self.abGrid(cells, cell: CGSize(width: 300, height: 230))
+      try XCTUnwrap(grid.jpegData(compressionQuality: 0.9))
+        .write(to: folder.appendingPathComponent("grid-\(form.product.model ?? name).jpg"))
+    }
+    try report.joined(separator: "\n").write(to: folder.appendingPathComponent("report.txt"), atomically: true, encoding: .utf8)
+    print("Salini material A/B: \(folder.path)")
+  }
+  static func lumaStats(_ image: UIImage) -> (mean: Double, deviation: Double, burned: Double)? {
+    guard let cg = image.cgImage else { return nil }
+    let w = cg.width, h = cg.height
+    var pixels = [UInt8](repeating: 0, count: w * h * 4)
+    guard let ctx = CGContext(data: &pixels, width: w, height: h, bitsPerComponent: 8, bytesPerRow: w * 4,
+                              space: CGColorSpaceCreateDeviceRGB(), bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)
+    else { return nil }
+    ctx.draw(cg, in: CGRect(x: 0, y: 0, width: w, height: h))
+    var sum = 0.0, sq = 0.0, burned = 0
+    for i in stride(from: 0, to: pixels.count, by: 4) {
+      let y = 0.2126 * Double(pixels[i]) + 0.7152 * Double(pixels[i + 1]) + 0.0722 * Double(pixels[i + 2])
+      sum += y
+      sq += y * y
+      if pixels[i] >= 250, pixels[i + 1] >= 250, pixels[i + 2] >= 250 { burned += 1 }
+    }
+    let n = Double(w * h)
+    let mean = sum / n
+    return (mean, sqrt(max(0, sq / n - mean * mean)), Double(burned) / n)
+  }
+  static func abGrid(_ cells: [(String, UIImage, UIImage)], cell: CGSize) -> UIImage {
+    let label: CGFloat = 18
+    let size = CGSize(width: cell.width * 2, height: (cell.height + label) * CGFloat(cells.count))
+    let format = UIGraphicsImageRendererFormat()
+    format.scale = 1
+    return UIGraphicsImageRenderer(size: size, format: format).image { _ in
+      UIColor.white.setFill()
+      UIRectFill(CGRect(origin: .zero, size: size))
+      for (i, (title, before, after)) in cells.enumerated() {
+        let y = CGFloat(i) * (cell.height + label)
+        ("\(title)    до | после" as NSString).draw(at: CGPoint(x: 4, y: y + 2), withAttributes: [
+          .font: UIFont.systemFont(ofSize: 11), .foregroundColor: UIColor.black,
+        ])
+        before.draw(in: CGRect(x: 0, y: y + label, width: cell.width, height: cell.height))
+        after.draw(in: CGRect(x: cell.width, y: y + label, width: cell.width, height: cell.height))
+      }
+    }
+  }
   @MainActor func testHomeAndMaterialStudioLayOutInAWindow() throws {
     for screen in [UINavigationController(rootViewController: HomeController()),
                    UINavigationController(rootViewController: MaterialStudioController())] {

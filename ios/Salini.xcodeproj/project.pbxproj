@@ -26,6 +26,7 @@
 		50A02DC7410C6D6D3381B045 /* interior.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3776267C1F0DB827DBEBB68A /* interior.jpg */; };
 		52865D44CB6F34BBD75EA0C3 /* greca-editorial.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 91874D6C11CB47206527617E /* greca-editorial.jpg */; };
 		556031AFBC01ED618E9F0D68 /* CatalogData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F35174F3897EDA5D14359707 /* CatalogData.swift */; };
+		5695363E9109B786A3732E98 /* third-party-notices.txt in Resources */ = {isa = PBXBuildFile; fileRef = 558AD04625AB6CC5577EDA54 /* third-party-notices.txt */; };
 		56B48C7F86569A1C65D45047 /* aria.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A3AD3AD462395F7627F0F9ED /* aria.jpg */; };
 		5807328559EB0FCB68D52279 /* InsightBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143757887A660060C31EEA9F /* InsightBoard.swift */; };
 		5A04D150B5857BBA96742663 /* oriente.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A177BC09A63FBF19E80DCF74 /* oriente.jpg */; };
@@ -37,6 +38,7 @@
 		679ACDD235D283B951AA5FF1 /* greca-loop-v1.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = CEB8C451F1AC325C0D6C1F27 /* greca-loop-v1.mp4 */; };
 		6A5FFEFDCD82D51ECE33C0B1 /* InsideOperationsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FAF20A36EDC10E0096E5FE /* InsideOperationsTests.swift */; };
 		6BA100206BD88C0C97502BDE /* MaterialStudioScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE7AB302AA433C80A3F4A14 /* MaterialStudioScene.swift */; };
+		6BC074B032EB288957F741A9 /* StudioLighting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC98A5F99D057EA8E7B64E9 /* StudioLighting.swift */; };
 		6EC6836266FA7B8BAFDD4FF2 /* Workspaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA83A08C7BD246CAD8B10652 /* Workspaces.swift */; };
 		70405BBE76779F4C563F7B32 /* Owner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9455A5104B42AB58A498F29C /* Owner.swift */; };
 		74EC55457697AA14155F9A3A /* CampusModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B26B8F45807277463ABB395 /* CampusModel.swift */; };
@@ -70,6 +72,7 @@
 		E4D822944844DA160F637E2B /* aria-film-v1.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 7D70130BE779A16D905D698D /* aria-film-v1.mp4 */; };
 		ED57E656CAA402EE7A42A859 /* ProposalPDF.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306929DD07FBFF39A6397AD6 /* ProposalPDF.swift */; };
 		F0FB799DEC9C13A7C3DBAA4F /* opera-detail.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 672B74F0BCED01A47E534CD1 /* opera-detail.jpg */; };
+		F3AC1E02D92CBCC6DA9B30B5 /* studio_small_09_2k.hdr in Resources */ = {isa = PBXBuildFile; fileRef = D80E2E88706C9C8634614E62 /* studio_small_09_2k.hdr */; };
 		F8C623113C63A0FB6739DD71 /* SaliniTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0151CE5C734FB58E9B195E9D /* SaliniTests.swift */; };
 		FA015C881E7880E0427FBCCA /* aria-loop-v1.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 0A3AABFA7EE65B9740755F4B /* aria-loop-v1.mp4 */; };
 		FAFE2D75CA1CAF51A39387B1 /* OwnerOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = E97669814B3D762675C197A2 /* OwnerOperations.swift */; };
@@ -93,6 +96,7 @@
 		0BDA4150E041906634BE2E98 /* ninfea-film-v3.mp4 */ = {isa = PBXFileReference; path = "ninfea-film-v3.mp4"; sourceTree = "<group>"; };
 		115177084A87D881A3F70994 /* MaterialStudio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaterialStudio.swift; sourceTree = "<group>"; };
 		143757887A660060C31EEA9F /* InsightBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightBoard.swift; sourceTree = "<group>"; };
+		1BC98A5F99D057EA8E7B64E9 /* StudioLighting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudioLighting.swift; sourceTree = "<group>"; };
 		1C21E6FCCD97876F706ADB2E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		200C0338C7066941F0D41381 /* stone.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = stone.jpg; sourceTree = "<group>"; };
 		205C91FAD53CEC3928277F81 /* NinfeaCinema.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NinfeaCinema.swift; sourceTree = "<group>"; };
@@ -106,6 +110,7 @@
 		4942620F24A4D8F0728613FA /* greca.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = greca.jpg; sourceTree = "<group>"; };
 		4F92CDB3890A5C91EF0EAC1E /* Support.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Support.swift; sourceTree = "<group>"; };
 		50BF4C1CE6C2E47285FA6084 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
+		558AD04625AB6CC5577EDA54 /* third-party-notices.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "third-party-notices.txt"; sourceTree = "<group>"; };
 		5F0F1FC1E86F2639CE0FDD3D /* opera-film-v1.mp4 */ = {isa = PBXFileReference; path = "opera-film-v1.mp4"; sourceTree = "<group>"; };
 		632403708ED41F88A65A300E /* CampusOverview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusOverview.swift; sourceTree = "<group>"; };
 		672B74F0BCED01A47E534CD1 /* opera-detail.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "opera-detail.jpg"; sourceTree = "<group>"; };
@@ -144,6 +149,7 @@
 		CEB8C451F1AC325C0D6C1F27 /* greca-loop-v1.mp4 */ = {isa = PBXFileReference; path = "greca-loop-v1.mp4"; sourceTree = "<group>"; };
 		CEF9612034EAAC3B2E8AFDEE /* Aria-drawing.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "Aria-drawing.pdf"; sourceTree = "<group>"; };
 		D4BD1EE31F7C199D6DAD475C /* NinfeaStory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NinfeaStory.swift; sourceTree = "<group>"; };
+		D80E2E88706C9C8634614E62 /* studio_small_09_2k.hdr */ = {isa = PBXFileReference; path = studio_small_09_2k.hdr; sourceTree = "<group>"; };
 		D855C3BB253AC297C2A5282C /* CatalogMedia */ = {isa = PBXFileReference; lastKnownFileType = folder; name = CatalogMedia; path = Salini/CatalogMedia; sourceTree = SOURCE_ROOT; };
 		D857B43F6F8433444EA53ADE /* production.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = production.jpg; sourceTree = "<group>"; };
 		D91143AF411A90AC2958AC84 /* luce.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = luce.jpg; sourceTree = "<group>"; };
@@ -225,6 +231,8 @@
 				A82AFE5054B9A5561CDAD645 /* salini-logo.png */,
 				71A0945E0526B6B9D34EAD27 /* salini-logo.svg */,
 				200C0338C7066941F0D41381 /* stone.jpg */,
+				D80E2E88706C9C8634614E62 /* studio_small_09_2k.hdr */,
+				558AD04625AB6CC5577EDA54 /* third-party-notices.txt */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -261,6 +269,7 @@
 				A6A75AF1C04E69E9DDAC5B69 /* ProjectStore.swift */,
 				306929DD07FBFF39A6397AD6 /* ProposalPDF.swift */,
 				293C35086983E07FB5BECC98 /* RALPalette.swift */,
+				1BC98A5F99D057EA8E7B64E9 /* StudioLighting.swift */,
 				4F92CDB3890A5C91EF0EAC1E /* Support.swift */,
 				FA83A08C7BD246CAD8B10652 /* Workspaces.swift */,
 				C4DF24F3466449F744DDB0B7 /* Resources */,
@@ -384,6 +393,8 @@
 				C991E2B1CE8AC1BE35990203 /* salini-logo.png in Resources */,
 				865AFC3CCA56E15332577F41 /* salini-logo.svg in Resources */,
 				2E61A4C6273A18A65C3B1151 /* stone.jpg in Resources */,
+				F3AC1E02D92CBCC6DA9B30B5 /* studio_small_09_2k.hdr in Resources */,
+				5695363E9109B786A3732E98 /* third-party-notices.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -429,6 +440,7 @@
 				1F8FF3ED9FDF09276E732A12 /* Projects.swift in Sources */,
 				ED57E656CAA402EE7A42A859 /* ProposalPDF.swift in Sources */,
 				9331D02F97215CADCBFC3871 /* RALPalette.swift in Sources */,
+				6BC074B032EB288957F741A9 /* StudioLighting.swift in Sources */,
 				D4F081D4382A5BE5549A09CF /* Support.swift in Sources */,
 				6EC6836266FA7B8BAFDD4FF2 /* Workspaces.swift in Sources */,
 			);
@@ -451,7 +463,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = TQ5SCF3KQZ;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Salini/Info.plist;
@@ -634,7 +646,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = TQ5SCF3KQZ;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Salini/Info.plist;

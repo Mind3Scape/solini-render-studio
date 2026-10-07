@@ -48,7 +48,61 @@ enum StudioFinish: String, CaseIterable, Codable {
     default: return nil
     }
   }
-  /// Applies the finish to a physically based material, keeping its colour.
+  /// Physically based look (checkpoint 8.1): S-Stone is one honed dielectric lobe; S-Sense is a
+  /// pigmented body under a separate Gelcoat lobe whose roughness alone makes matte or gloss.
+  /// Micro-structure is procedural in the model's own millimetres (no UVs), fades out below the
+  /// pixel footprint and hands its slope over to roughness, so nothing sparkles or reads as grain.
+  /// Starting values for visual review, not measured BRDF scans.
+  struct Surface: Equatable {
+    var roughness: Float
+    var coat: Float
+    var coatRoughness: Float
+    /// Fine grain on the surface that carries the reflection (wavelength mm, slope).
+    var grain: Float
+    var grainSlope: Float
+    /// Gelcoat «orange peel» and long waviness (wavelength mm, slope), applied to the coat normal.
+    var peel: Float
+    var peelSlope: Float
+    var wave: Float
+    var waveSlope: Float
+    /// Low-frequency roughness variation (wavelength mm, ± roughness).
+    var mottle: Float
+    var mottleRoughness: Float
+    /// Soft grazing lift of a honed mineral surface.
+    var grazing: Float
+  }
+  var surface: Surface {
+    switch self {
+    case .stoneMatte:
+      return Surface(roughness: 0.56, coat: 0, coatRoughness: 0, grain: 0.9, grainSlope: 0.03, peel: 0, peelSlope: 0,
+                     wave: 0, waveSlope: 0, mottle: 140, mottleRoughness: 0.035, grazing: 0.06)
+    case .senseMatte:
+      return Surface(roughness: 0.62, coat: 1, coatRoughness: 0.34, grain: 0.45, grainSlope: 0.02, peel: 0, peelSlope: 0,
+                     wave: 0, waveSlope: 0, mottle: 160, mottleRoughness: 0.02, grazing: 0)
+    case .senseGloss:
+      return Surface(roughness: 0.62, coat: 1, coatRoughness: 0.035, grain: 0, grainSlope: 0, peel: 3.5, peelSlope: 0.012,
+                     wave: 80, waveSlope: 0.0025, mottle: 200, mottleRoughness: 0.006, grazing: 0)
+    }
+  }
+  /// Physical look: no metalness on the mineral surface; colour unchanged.
+  func applyPhysical(to m: SCNMaterial, colour: StudioColor) {
+    let s = surface
+    m.lightingModel = .physicallyBased
+    m.diffuse.contents = colour
+    m.metalness.contents = 0.0
+    m.roughness.contents = CGFloat(s.roughness)
+    m.clearCoat.contents = CGFloat(s.coat)
+    m.clearCoatRoughness.contents = CGFloat(s.coatRoughness)
+    m.ambientOcclusion.contents = 1.0
+    m.shaderModifiers = [.surface: StudioMicro.surfaceModifier]
+    for (key, value) in [
+      ("grainSize", s.grain), ("grainSlope", s.grainSlope), ("peelSize", s.peel), ("peelSlope", s.peelSlope),
+      ("waveSize", s.wave), ("waveSlope", s.waveSlope), ("mottleSize", s.mottle), ("mottleRoughness", s.mottleRoughness),
+      ("grazing", s.grazing), ("hasCoat", s.coat > 0 ? 1 : 0),
+    ] { m.setValue(NSNumber(value: value), forKey: key) }
+  }
+  /// Applies the finish to a physically based material, keeping its colour (accepted look before
+  /// 8.1; still used by print studies and as the «before» of the A/B harness).
   func apply(to m: SCNMaterial, colour: StudioColor) {
     m.lightingModel = .physicallyBased
     m.diffuse.contents = colour
@@ -86,10 +140,40 @@ enum SCNStudioPath {
   }
 }
 
-/// A calm white studio around one official Salini model: cyclorama, soft key light with
-/// contact shadow, and a procedural environment whose softboxes show up in glossy reflections.
+/// A calm studio around one official Salini model.
+///
+/// Two looks share the model, framing and controls:
+/// - `.physical` (live studio since 8.1): real HDR light from a bundled CC0 studio HDRI, no flat
+///   ambient, one key light coherent with the HDRI's main softbox casting the only shadow, model
+///   contact occlusion, a restrained microcement floor, procedural micro-structure per finish and
+///   PBR Neutral tone mapping in a half-float pass.
+/// - `.legacy`: the accepted look before 8.1 (procedural 8-bit softboxes, SceneKit tone mapping).
+///   Print studies keep it explicitly — their accepted balance and matte compositing depend on it —
+///   and it is the «before» column of the A/B harness.
 final class StudioScene {
   enum Shot { case form, macro }
+  enum Look: String, CaseIterable { case legacy, physical }
+  let look: Look
+  /// Physical look only: the tone-mapping pass for the view or renderer that shows this scene.
+  private(set) var technique: SCNTechnique?
+  /// Physical look: exposure in stops before PBR Neutral.
+  static var physicalExposure: Float = 0.1
+  /// Physical look: HDRI intensity; the key adds the main softbox's share on the floor only.
+  static var physicalEnvironment: CGFloat = 1.0
+  static var physicalKey: CGFloat = 800
+  /// Physical look: share of the HDRI's light on the floor that the key light replaces (so the
+  /// key's shadow is as deep as the softbox it stands for). Measured from the HDRI: ≈ 0.5.
+  static var keyShareOnFloor: CGFloat = 0.5
+  /// Physical look: shadow softness — a soft penumbra that still reads as a cast shadow (a wider
+  /// filter dissolved it entirely); the contact occlusion keeps the base grounded.
+  static var physicalShadowRadius: CGFloat = 10
+  static var physicalShadowMap: CGFloat = 1024
+  /// Physical look: unshadowed light on the floor from above (the room's skylight), so the cast
+  /// shadow is a shade, not a hole.
+  static var physicalFill: CGFloat = 50
+  /// Physical look: strength of the broad, soft contact falloff under the form.
+  static var physicalBroadContact: CGFloat = 0.35
+  static var physicalShadowSamples = 32
   let scene = SCNScene()
   let model: SCNNode
   let camera = SCNNode()
@@ -102,9 +186,13 @@ final class StudioScene {
   static let white = StudioColor(red: 0.87, green: 0.868, blue: 0.86, alpha: 1)
   /// Graphite cyclorama: the white product reads as an object, reflections read as light.
   static let floorColour = StudioColor(red: 0.16, green: 0.165, blue: 0.175, alpha: 1)
+  /// Physical look: a real dark microcement albedo (the graphite above is a screen value that
+  /// a physically exposed render would show as black).
+  static var physicalFloorColour = StudioColor(red: 0.25, green: 0.25, blue: 0.255, alpha: 1)
 
-  init?(modelURL: URL, finish: StudioFinish, colour: StudioColor = StudioScene.white) {
+  init?(modelURL: URL, finish: StudioFinish, colour: StudioColor = StudioScene.white, look: Look = .physical) {
     guard let source = try? SCNScene(url: modelURL, options: nil) else { return nil }
+    self.look = look
     self.finish = finish
     self.colour = colour
     let holder = SCNNode()
@@ -128,7 +216,11 @@ final class StudioScene {
     let (wlo, whi) = wrapper.boundingBox
     size = SCNVector3(whi.x - wlo.x, whi.y - wlo.y, whi.z - wlo.z)
     scene.rootNode.addChildNode(wrapper)
-    build()
+    if look == .physical { findFittings(model: modelURL.deletingPathExtension().lastPathComponent) }
+    switch look {
+    case .legacy: build()
+    case .physical: buildPhysical()
+    }
     apply(finish: finish, colour: colour)
     frame(.form, animated: false)
   }
@@ -243,6 +335,7 @@ final class StudioScene {
   static var printExposure: CGFloat = -0.25
   static var printWhitePoint: CGFloat = 1.45
   func useLiveLighting(_ lighting: LiveLighting) {
+    guard look == .legacy else { return }
     camera.camera?.exposureOffset = lighting.exposure
     fillLight?.light?.intensity = lighting.fill
     scene.lightingEnvironment.intensity = lighting.environment
@@ -256,6 +349,7 @@ final class StudioScene {
     private var index: Int { Self.allCases.firstIndex(of: self)! }
   }
   func usePrintBackdrop(_ lighting: PrintLighting = .balanced) {
+    assert(look == .legacy, "Print studies are tuned on the legacy look")
     // HDR tone mapping rolls highlights off instead of clipping: a white bowl keeps its curve.
     // (The earlier dark iOS frames came from deferred shadows, not from HDR.)
     camera.camera?.wantsHDR = true
@@ -384,8 +478,175 @@ final class StudioScene {
     self.finish = finish
     self.colour = colour
     model.enumerateHierarchy { n, _ in
-      for m in n.geometry?.materials ?? [] { finish.apply(to: m, colour: colour) }
+      for m in n.geometry?.materials ?? [] {
+        switch look {
+        case .legacy: finish.apply(to: m, colour: colour)
+        case .physical:
+          if isFitting(m) {
+            Self.applyFitting(m)
+          } else {
+            finish.applyPhysical(to: m, colour: colour)
+          }
+        }
+      }
     }
+    if look == .physical { exposeFor(colour) }
+  }
+
+  /// Physical look: exposure for the product, as a photographer sets it — a white bath is exposed
+  /// down so its walls keep their shading, an anthracite one up so its form reads. In stops,
+  /// from the colour's linear luminance; applied by scaling every light (no shader recompile).
+  /// The floor's albedo is scaled inversely, so the set itself looks the same for every colour.
+  static func productExposure(for colour: StudioColor) -> Float {
+    var r: CGFloat = 0, g: CGFloat = 0, b: CGFloat = 0, alpha: CGFloat = 0
+    #if canImport(UIKit)
+      colour.getRed(&r, green: &g, blue: &b, alpha: &alpha)
+    #else
+      (colour.usingColorSpace(.sRGB) ?? colour).getRed(&r, green: &g, blue: &b, alpha: &alpha)
+    #endif
+    func linear(_ c: CGFloat) -> Float {
+      let v = Float(max(0, min(1, c)))
+      return v <= 0.04045 ? v / 12.92 : powf((v + 0.055) / 1.055, 2.4)
+    }
+    let y = 0.2126 * linear(r) + 0.7152 * linear(g) + 0.0722 * linear(b)
+    return max(-0.4, min(0.45, productExposureStrength * log2f(0.18 / max(y, 0.02))))
+  }
+  static var productExposureStrength: Float = 0.18
+  private(set) var exposureForProduct: Float = 0
+  private func exposeFor(_ colour: StudioColor) {
+    exposureForProduct = Self.productExposure(for: colour)
+    let gain = CGFloat(exp2(exposureForProduct))
+    scene.lightingEnvironment.intensity = Self.physicalEnvironment * gain
+    key.light?.intensity = Self.physicalKey * gain
+    fillLight?.light?.intensity = Self.physicalFill * gain
+    floorMaterial?.diffuse.intensity = 1 / gain
+  }
+
+  // MARK: Physical look
+
+  /// Metal fittings of the official meshes, verified by eye per model (the part rendered alone in
+  /// red): overflow cover and adjustable support feet of the built-ins, the waste fitting under
+  /// Sofia (a separate 75 × 75 × 26 mm node). Anything not listed stays mineral — including
+  /// Ninfea's dark lower band and Greca's pedestal — because a small part can still be cast stone.
+  static let metalFittings: [String: Set<String>] = [
+    "Cascata-180x80": ["pxrUsdPreviewSurface2SG"],
+    "Orlanda-160x70": ["pxrUsdPreviewSurface2SG"],
+    "Ornella-170x75": ["pxrUsdPreviewSurface2SG"],
+    "Sofia-150-2015-Corona-fbx": ["pxrUsdPreviewSurface1SG"],
+    "Sofia-165_Corona-fbx": ["pxrUsdPreviewSurface2SG"],
+    "Sofia-170_Corona-fbx": ["pxrUsdPreviewSurface1SG"],
+    "Sofia-185_Corona-fbx": ["pxrUsdPreviewSurface1SG"],
+  ]
+  private var fittings: Set<ObjectIdentifier> = []
+  private(set) var fittingCount = 0
+  private func findFittings(model name: String) {
+    guard let names = Self.metalFittings[name] else { return }
+    model.enumerateHierarchy { n, _ in
+      for m in n.geometry?.materials ?? [] where names.contains(m.name ?? "") { fittings.insert(ObjectIdentifier(m)) }
+    }
+    fittingCount = fittings.count
+  }
+  func isFitting(_ m: SCNMaterial) -> Bool { fittings.contains(ObjectIdentifier(m)) }
+  /// Satin stainless steel, the same whatever the bath's colour or finish.
+  static func applyFitting(_ m: SCNMaterial) {
+    m.lightingModel = .physicallyBased
+    m.shaderModifiers = nil
+    m.clearCoat.contents = 0.0
+    m.diffuse.contents = StudioColor(red: 0.78, green: 0.78, blue: 0.77, alpha: 1)
+    m.metalness.contents = 1.0
+    m.roughness.contents = 0.3
+  }
+
+  private func buildPhysical() {
+    let hdri = StudioHDRI.shared()
+    if let hdri {
+      scene.lightingEnvironment.contents = hdri.image
+    } else {
+      // Missing or broken file: the procedural environment keeps the studio usable.
+      scene.lightingEnvironment.contents = StudioScene.environment()
+    }
+    scene.lightingEnvironment.intensity = Self.physicalEnvironment
+    scene.background.contents = StudioScene.backdrop()
+    let profile = SCNStudioPath.cyclorama(depth: 9, height: 7, radius: 2.4)
+    let sweep = SCNShape(path: profile, extrusionDepth: 40)
+    let fm = SCNMaterial()
+    fm.lightingModel = .physicallyBased
+    fm.diffuse.contents = StudioScene.physicalFloorColour
+    fm.roughness.contents = 0.82
+    fm.metalness.contents = 0.0
+    // The key light carries the main softbox on the floor; the HDRI keeps the rest of the room.
+    fm.ambientOcclusion.contents = 1 - Self.keyShareOnFloor
+    fm.isDoubleSided = true
+    fm.shaderModifiers = [.surface: StudioMicro.floorModifier]
+    sweep.materials = [fm]
+    floorMaterial = fm
+    let cyc = SCNNode(geometry: sweep)
+    cyclorama = cyc
+    cyc.eulerAngles.y = .pi / 2
+    cyc.position = SCNVector3(0, 0, 4)
+    cyc.castsShadow = false
+    cyc.categoryBitMask = 1 | StudioScene.floorOnly
+    scene.rootNode.addChildNode(cyc)
+    // Contact: a tight dark line where the form meets the floor, and a broad soft falloff from the
+    // whole footprint (the penumbra of a large softbox) — both from the model's own geometry.
+    contactOcclusion(reach: 0.2, falloff: 0.035, radius: 3, passes: 3, strength: 0.85, margin: 0.1)
+    if Self.physicalBroadContact > 0 {
+      contactOcclusion(reach: 0.9, falloff: 0.35, radius: 9, passes: 4, strength: Self.physicalBroadContact, margin: 0.55)
+    }
+    scene.rootNode.addChildNode(rig)
+    // The key stands for the HDRI's main softbox (direction measured from the file), so the one
+    // cast shadow agrees with the reflections. It lights the floor only; the model gets that
+    // softbox through the HDRI itself.
+    key.light = SCNLight()
+    // A wide spot rather than a directional light: the floor gets a pool of light that falls off
+    // toward the edges of the frame, as under a real softbox.
+    key.light?.type = .spot
+    key.light?.spotInnerAngle = 18
+    key.light?.spotOuterAngle = 78
+    key.light?.attenuationStartDistance = 0
+    key.light?.attenuationEndDistance = 0
+    key.light?.categoryBitMask = StudioScene.floorOnly
+    key.light?.intensity = Self.physicalKey
+    key.light?.color = StudioColor(red: 1, green: 0.98, blue: 0.955, alpha: 1)
+    key.light?.castsShadow = true
+    key.light?.shadowMode = .forward
+    key.light?.shadowRadius = Self.physicalShadowRadius
+    key.light?.shadowSampleCount = Self.physicalShadowSamples
+    key.light?.shadowColor = StudioColor(white: 0, alpha: 1)
+    key.light?.shadowMapSize = CGSize(width: Self.physicalShadowMap, height: Self.physicalShadowMap)
+    key.light?.zNear = 1
+    key.light?.zFar = 16
+    let toLight = Self.keyDirection
+    key.position = SCNVector3(SceneFloat(toLight.x * 7), SceneFloat(toLight.y * 7), SceneFloat(toLight.z * 7))
+    key.look(at: SCNVector3Zero)
+    rig.addChildNode(key)
+    let sky = SCNNode()
+    sky.light = SCNLight()
+    sky.light?.type = .spot
+    sky.light?.categoryBitMask = StudioScene.floorOnly
+    sky.light?.intensity = Self.physicalFill
+    sky.light?.spotInnerAngle = 30
+    sky.light?.spotOuterAngle = 110
+    sky.light?.attenuationStartDistance = 0
+    sky.light?.attenuationEndDistance = 0
+    sky.light?.castsShadow = false
+    sky.position = SCNVector3(0, 4, 0.6)
+    sky.eulerAngles = SCNVector3(-SceneFloat.pi / 2, 0, 0)
+    fillLight = sky
+    scene.rootNode.addChildNode(sky)
+    camera.camera = SCNCamera()
+    camera.camera?.wantsHDR = false
+    camera.camera?.zNear = 0.02
+    camera.camera?.zFar = 40
+    scene.rootNode.addChildNode(camera)
+    technique = StudioToneMapping.technique(exposure: Self.physicalExposure)
+    setLight(0.42)
+  }
+  /// Direction toward the HDRI's main octabox in SceneKit's equirectangular mapping
+  /// (u = 0 → +X, u = 0.25 → +Z), before the studio light rotation.
+  static var keyDirection: SIMD3<Float> {
+    let azimuth = StudioHDRI.keyAzimuth * .pi / 180, elevation = StudioHDRI.keyElevation * .pi / 180
+    return SIMD3(cos(azimuth) * cos(elevation), sin(elevation), sin(azimuth) * cos(elevation))
   }
 
   /// 0…1 moves the key light and rotates the softbox environment together around the model.

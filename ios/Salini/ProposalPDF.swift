@@ -185,7 +185,9 @@ final class ProposalComposer {
     init?(form: StudioForm, finish: StudioFinish, lighting: StudioScene.PrintLighting = .balanced,
           size: CGSize = CGSize(width: 1200, height: 720)) {
       guard let device = MTLCreateSystemDefaultDevice(),
-        let studio = StudioScene(modelURL: form.modelURL, finish: finish)
+        // Print keeps the accepted legacy look explicitly: its balance, rim/bounce lights and the
+        // black/white difference matte were tuned on it. The live studio uses `.physical`.
+        let studio = StudioScene(modelURL: form.modelURL, finish: finish, look: .legacy)
       else { return nil }
       studio.usePrintBackdrop(lighting)
       studio.aspect = size.width / size.height
