@@ -1,67 +1,60 @@
 {
-  "checkedAt": "2026-10-07T16:23:59+07:00",
+  "checkedAt": "2026-10-07T17:02:03+07:00",
   "bundleId": "design.salini.experience",
   "teamId": "TQ5SCF3KQZ",
   "appStoreAppId": "6819688748",
   "version": "1.0",
-  "build": "5",
-  "sourceCommit": "c4138127e5116617443c6e78100ff710c970462b",
-  "appImplementationCommit": "c4138127e5116617443c6e78100ff710c970462b",
+  "build": "6",
+  "sourceCommit": "139570df456e9275bce1249df1e94d96344fe265",
+  "appImplementationCommit": "139570df456e9275bce1249df1e94d96344fe265",
   "gitBranch": "codex/salini-native-materials",
   "sourcePushed": true,
   "archive": {
-    "path": "ios/build/testflight/Salini-1.0-5.xcarchive",
+    "path": "ios/build/testflight/Salini-1.0-6.xcarchive",
     "signed": true,
     "signatureVerified": true,
     "buildSucceeded": true,
-    "verifiedBundleVersion": "5",
+    "verifiedBundleVersion": "6",
     "privacyManifest": true
   },
   "tests": {
-    "fullSuiteCheckpoint6_2": {
-      "passed": 79,
+    "fullSuiteCheckpoint7_3": {
+      "passed": 89,
       "failures": 0,
-      "resultBundle": "/tmp/salini-insight-6-2-20261007.xcresult"
+      "skipped": 0,
+      "durationSeconds": 68.1,
+      "resultBundle": "/tmp/salini-insight-reference-final-20261007.xcresult"
     },
-    "boardPolishCheckpoint6_4": {
-      "passed": 9,
-      "failures": 0,
-      "resultBundle": "/tmp/salini-insight-6-4-20261007.xcresult"
-    },
-    "finalCheckpoint6_6": {
-      "passed": 7,
-      "failures": 0,
-      "resultBundle": "/tmp/salini-insight-final-20261007.xcresult"
-    },
-    "sourceDeltaSinceTests": "Build number and release/QA documentation only. Debug tracing removed before final tests."
+    "resolvedRegression": "Checkpoint 7.2 failed the largest-text layout test (2 assertions); 7.3 fixes content compression priorities. The unchanged test passes in the full final run.",
+    "sourceDeltaSinceTests": "Build number and QA/release documentation only."
   },
   "buildUploaded": true,
   "uploadInProgress": false,
-  "uploadedAt": "2026-10-07T16:21:41+07:00",
+  "uploadedAt": "2026-10-07T17:00:30+07:00",
   "appStoreProcessingStatus": "Package processing confirmed by Xcode uploader; completion not verified",
   "internalBuildAvailable": null,
   "betaReviewSubmitted": false,
-  "betaReviewStatus": "Not submitted for build 5",
+  "betaReviewStatus": "Not submitted for build 6",
   "internalGroupId": "43fc6896-fa24-4dfd-bcf1-d1036ca29e8c",
   "externalGroupId": "07b546aa-e790-426c-a158-1425ed2a808f",
   "publicLink": "https://testflight.apple.com/join/mUb5H7bZ",
   "publicLinkAcceptingTesters": null,
-  "uploadReceipt": "ios/release/build-5-upload-receipt.txt",
+  "uploadReceipt": "ios/release/build-6-upload-receipt.txt",
   "blockers": [
-    "App Store Connect browser session was signed out; Chrome is now unavailable to browser automation. Browser sign-in is required to verify testing availability and manage external Beta App Review. Xcode upload succeeded independently."
+    "App Store Connect browser sign-in is required to verify processing completion, testing availability and external Beta App Review. A fresh in-app browser check returned the login page. Xcode upload succeeded independently."
   ],
   "previousBuild": {
     "version": "1.0",
-    "build": "4",
-    "sourceCommit": "7420ff7dcd00081fdaee9fe3231a95347aaeccab",
-    "uploadedAt": "2026-10-07T15:24:46+07:00",
-    "uploadReceipt": "ios/release/build-4-upload-receipt.txt",
-    "lastRecordedProcessingStatus": "Processing confirmed by Xcode uploader",
+    "build": "5",
+    "sourceCommit": "c4138127e5116617443c6e78100ff710c970462b",
+    "uploadedAt": "2026-10-07T16:21:41+07:00",
+    "uploadReceipt": "ios/release/build-5-upload-receipt.txt",
+    "lastRecordedProcessingStatus": "Package processing confirmed by Xcode uploader; completion not verified",
     "internalBuildAvailable": null,
-    "betaReviewStatus": "Not submitted for build 4"
+    "betaReviewStatus": "Not submitted for build 5"
   },
   "remaining": [
     "Verify processing completion and internal testing availability in App Store Connect after browser sign-in.",
-    "Add build 5 to the existing external group and submit Beta App Review if required."
+    "Add build 6 to the existing external group and submit Beta App Review if required."
   ]
 }
