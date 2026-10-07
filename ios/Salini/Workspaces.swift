@@ -389,14 +389,14 @@ final class ResourcesController: ScrollController {
     content.arrangedSubviews.forEach { $0.removeFromSuperview() }
     add(stack([
       eyebrow("ФАЙЛЫ ДЛЯ РАБОТЫ"), label("От замысла\nк точному проекту.", 34, .regular, serif: true),
-      label("Официальные 3D-модели Salini в приложении и документы карточек сайта.", 15, .regular, Palette.muted),
+      label("По каждому изделию объекта — отделка на самой форме, официальная 3D-модель, чертежи и паспорта карточки.", 15, .regular, Palette.muted),
     ], spacing: 12))
     // Project documents first: what the designer is working on right now.
     let project = ProjectStore.shared.current
     let projectProducts = project.lines.compactMap(\.product).reduce(into: [CatalogProduct]()) { list, p in
       if !list.contains(where: { $0.id == p.id }) { list.append(p) }
     }
-    var projectRows: [UIView] = [eyebrow("ПРОЕКТ «\(project.name.uppercased())»")]
+    var projectRows: [UIView] = [eyebrow("ОБЪЕКТ «\(project.name.uppercased())»")]
     if projectProducts.isEmpty {
       projectRows.append(label("Добавьте изделия в проект — здесь появятся их паспорта, чертежи и модели.", 14, .regular, Palette.muted))
     }
@@ -431,6 +431,13 @@ final class ResourcesController: ScrollController {
     let model = StudioForm.all.first { $0.product.id == p.id }
     var rows: [UIView] = [label(p.name, 20, .regular, serif: true)]
     if let model {
+      // The finish is judged on the form itself, in the execution the object uses.
+      let line = ProjectStore.shared.current.lines.first { $0.productId == p.id }
+      let finish = line?.variant.flatMap { StudioFinish(material: $0.material, finish: $0.finish) }
+      let ral = line?.colour.ral
+      rows.append(ActionButton("Отделка на изделии", icon: "circle.lefthalf.filled", prominent: true) { [weak self] in
+        self.map { MaterialStudioController.present(form: model, finish: finish, ral: ral, from: $0) }
+      })
       rows.append(ActionButton("3D-модель · \(ModelViewing.subtitle)", icon: "cube.transparent") { [weak self] in
         self.map { ModelViewing.open(model, from: $0) }
       })

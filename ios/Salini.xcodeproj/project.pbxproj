@@ -50,7 +50,9 @@
 		8FCBD77FB5FBC3C00B8CE17A /* catalog.json in Resources */ = {isa = PBXBuildFile; fileRef = B84ADB80CC317232BF921570 /* catalog.json */; };
 		91E66E3CEF0191412D36DC43 /* ChooseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A13434667EE01D075E390AA /* ChooseHelper.swift */; };
 		9331D02F97215CADCBFC3871 /* RALPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293C35086983E07FB5BECC98 /* RALPalette.swift */; };
+		9F12BE1700174BE037319AFC /* DesignerHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BAC5A124656A35A461B387B /* DesignerHome.swift */; };
 		A7D8C823650DD7790B0917A3 /* InsidePanels.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD95755374BE98F79C16C503 /* InsidePanels.swift */; };
+		A81D85D526685B827BFD87FA /* DesignerPassTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1378F961C27F7E433530BB7C /* DesignerPassTests.swift */; };
 		A823BA240D6C764060FC6057 /* ninfea-loop-v1.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = A9840AC7F48B35245329C6B8 /* ninfea-loop-v1.mp4 */; };
 		A8A3AAA247C5A742B2F740B7 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06B24C2D0832EF8D141B750A /* Profile.swift */; };
 		AAD5889CE203AD43F73A4EF6 /* greca-start-v1.png in Resources */ = {isa = PBXBuildFile; fileRef = B73464562E4E2B86A7D3EE4C /* greca-start-v1.png */; };
@@ -95,7 +97,9 @@
 		0A3AABFA7EE65B9740755F4B /* aria-loop-v1.mp4 */ = {isa = PBXFileReference; path = "aria-loop-v1.mp4"; sourceTree = "<group>"; };
 		0BDA4150E041906634BE2E98 /* ninfea-film-v3.mp4 */ = {isa = PBXFileReference; path = "ninfea-film-v3.mp4"; sourceTree = "<group>"; };
 		115177084A87D881A3F70994 /* MaterialStudio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaterialStudio.swift; sourceTree = "<group>"; };
+		1378F961C27F7E433530BB7C /* DesignerPassTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignerPassTests.swift; sourceTree = "<group>"; };
 		143757887A660060C31EEA9F /* InsightBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightBoard.swift; sourceTree = "<group>"; };
+		1BAC5A124656A35A461B387B /* DesignerHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignerHome.swift; sourceTree = "<group>"; };
 		1BC98A5F99D057EA8E7B64E9 /* StudioLighting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudioLighting.swift; sourceTree = "<group>"; };
 		1C21E6FCCD97876F706ADB2E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		200C0338C7066941F0D41381 /* stone.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = stone.jpg; sourceTree = "<group>"; };
@@ -179,6 +183,7 @@
 		644F17B23856E7F2B4AFAFC2 /* SaliniTests */ = {
 			isa = PBXGroup;
 			children = (
+				1378F961C27F7E433530BB7C /* DesignerPassTests.swift */,
 				E4FAF20A36EDC10E0096E5FE /* InsideOperationsTests.swift */,
 				0151CE5C734FB58E9B195E9D /* SaliniTests.swift */,
 			);
@@ -249,6 +254,7 @@
 				9A13434667EE01D075E390AA /* ChooseHelper.swift */,
 				97971B66DFC9B7D96D9C8FFB /* CollectionGallery.swift */,
 				A3AB58D801AACAB3369DA9D5 /* Design.swift */,
+				1BAC5A124656A35A461B387B /* DesignerHome.swift */,
 				8533340A72EAF8A013360ECE /* FactoryScene.swift */,
 				227902BDF40ADF52F72D7B54 /* Home.swift */,
 				7BAB34199B15CE6E53C954A2 /* Info.plist */,
@@ -405,6 +411,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A81D85D526685B827BFD87FA /* DesignerPassTests.swift in Sources */,
 				6A5FFEFDCD82D51ECE33C0B1 /* InsideOperationsTests.swift in Sources */,
 				F8C623113C63A0FB6739DD71 /* SaliniTests.swift in Sources */,
 			);
@@ -422,6 +429,7 @@
 				91E66E3CEF0191412D36DC43 /* ChooseHelper.swift in Sources */,
 				AC62A6C1BE86B01047A8D432 /* CollectionGallery.swift in Sources */,
 				E3870384C2CE964391CDB5E5 /* Design.swift in Sources */,
+				9F12BE1700174BE037319AFC /* DesignerHome.swift in Sources */,
 				C919C35BF39AFCF7A2620366 /* FactoryScene.swift in Sources */,
 				C1E3CF871A14297CBBCB4D68 /* Home.swift in Sources */,
 				E1E655189020B47085668945 /* InsideInsight.swift in Sources */,
@@ -463,7 +471,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = TQ5SCF3KQZ;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Salini/Info.plist;
@@ -646,7 +654,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = TQ5SCF3KQZ;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Salini/Info.plist;

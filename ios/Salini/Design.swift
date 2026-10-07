@@ -70,6 +70,18 @@ extension UIView {
     wrapper.pin(self, inset: amount)
     return wrapper
   }
+  func inset(_ insets: UIEdgeInsets) -> UIView {
+    let wrapper = UIView()
+    translatesAutoresizingMaskIntoConstraints = false
+    wrapper.addSubview(self)
+    NSLayoutConstraint.activate([
+      topAnchor.constraint(equalTo: wrapper.topAnchor, constant: insets.top),
+      bottomAnchor.constraint(equalTo: wrapper.bottomAnchor, constant: -insets.bottom),
+      leadingAnchor.constraint(equalTo: wrapper.leadingAnchor, constant: insets.left),
+      trailingAnchor.constraint(equalTo: wrapper.trailingAnchor, constant: -insets.right),
+    ])
+    return wrapper
+  }
   func rounded(_ radius: CGFloat = 24) {
     layer.cornerRadius = radius
     layer.cornerCurve = .continuous

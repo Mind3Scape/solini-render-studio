@@ -53,6 +53,15 @@ struct SaliniProject: Codable, Hashable, Identifiable {
   var client: String = ""
   var lines: [ProjectLine] = []
   var updated = Date()
+  /// When a proposal PDF was last prepared on this device, and the project version it was built
+  /// from (`updated` at that moment). Optional: projects saved before this field still decode.
+  var proposalAt: Date?
+  var proposalBasis: Date?
+  /// A proposal exists and the project has not changed since it was prepared.
+  var proposalIsCurrent: Bool {
+    guard let basis = proposalBasis, proposalAt != nil else { return false }
+    return updated <= basis
+  }
 
   /// Sum of the base prices that are known (white executions; coloured lines at base price).
   var knownTotal: Int { lines.compactMap(\.baseTotal).reduce(0, +) }
@@ -184,6 +193,14 @@ final class ProjectStore {
     var p = current
     p.lines.removeAll { $0.id == lineId }
     current = p
+  }
+  /// Records that a proposal was prepared from `basis` (the project's `updated` at that moment).
+  /// Does not touch `updated` itself, so the proposal stays current until the project changes.
+  func recordProposal(for projectId: String, basis: Date, at date: Date = Date()) {
+    guard let i = projects.firstIndex(where: { $0.id == projectId }) else { return }
+    projects[i].proposalAt = date
+    projects[i].proposalBasis = basis
+    save()
   }
   func newProject(name: String, client: String = "") {
     current = SaliniProject(name: name, client: client)

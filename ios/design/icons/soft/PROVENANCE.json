@@ -1,0 +1,74 @@
+{
+  "pack": "Soft by Gregor Cresnar (Noun Project)",
+  "copiedFrom": "/Users/daviddoronin/Documents/BalanceOS/balance-flutter/assets/icons/soft (read-only copy, BalanceOS untouched)",
+  "copiedOn": "2026-10-07",
+  "sourceManifest": "balance-flutter/docs/icons/soft-manifest.json",
+  "note": "Licence as recorded by BalanceOS for the same owner (Noun Project Pro — Royalty-Free License). Files are byte-identical copies; app assets are rendered from them by tools/export_brand_assets.swift.",
+  "icons": [
+    {
+      "id": "6153990",
+      "use": "TabCatalog — каталог изделий",
+      "term": "bathtub",
+      "url": "https://thenounproject.com/icon/bathtub-6153990/",
+      "author": "Gregor Cresnar",
+      "attribution": "bathtub by Gregor Cresnar from Noun Project",
+      "collection": "Soft: Home",
+      "downloadLicense": "Noun Project Pro — Royalty-Free License",
+      "catalogLicense": "creative-commons-attribution",
+      "balanceSourceSHA256": "f42d7b5cf96a305c3caca64233916d180e0ffb068ae3d1fa4af96b60c5608aa9",
+      "fileSHA256": "7e56f6020f953dc3e1b8ecf4531ab9a701f903900b257197f68ef535237cf35f"
+    },
+    {
+      "id": "6368500",
+      "use": "TabProject — проект / спецификация",
+      "term": "Document",
+      "url": "https://thenounproject.com/icon/document-6368500/",
+      "author": "Gregor Cresnar",
+      "attribution": "Document by Gregor Cresnar from Noun Project",
+      "collection": "Soft: UI & Essentials - 1",
+      "downloadLicense": "Noun Project Pro — Royalty-Free License",
+      "catalogLicense": "creative-commons-attribution",
+      "balanceSourceSHA256": "e4e11bc06d2f92e0ae2ff682605b93912b31b01dec28f6ed8fed59f4f4dcdd6f",
+      "fileSHA256": "5a82cc403a5600e69f6de6b43a274c036d9f0271fdaf68e2c716c9efaa8de9c9"
+    },
+    {
+      "id": "6136662",
+      "use": "TabLibrary — библиотека дизайнера",
+      "term": "open book",
+      "url": "https://thenounproject.com/icon/open-book-6136662/",
+      "author": "Gregor Cresnar",
+      "attribution": "open book by Gregor Cresnar from Noun Project",
+      "collection": "Soft: Education",
+      "downloadLicense": "Noun Project Pro — Royalty-Free License",
+      "catalogLicense": "creative-commons-attribution",
+      "balanceSourceSHA256": "ba2b01cceffee1b5f4ce85ac930a87c38158b1bdf3592c3c56f6925200b32e2a",
+      "fileSHA256": "c07e51d34c62a54af89dfef9b0746d8d985da9c2cf432951f6c6d81fd82fd08d"
+    },
+    {
+      "id": "6112921",
+      "use": "TabStock — наличие партнёра",
+      "term": "Suitcase",
+      "url": "https://thenounproject.com/icon/suitcase-6112921/",
+      "author": "Gregor Cresnar",
+      "attribution": "Suitcase by Gregor Cresnar from Noun Project",
+      "collection": "Soft: Business",
+      "downloadLicense": "Noun Project Pro — Royalty-Free License",
+      "catalogLicense": "creative-commons-attribution",
+      "balanceSourceSHA256": "6b13685d6f3792bc63947def1170d197af61b234fecfb02fc5f1bb3c83fafc4c",
+      "fileSHA256": "95567230602b17d4978002a730773fbead3e6953721b571d533db07fed43e758"
+    },
+    {
+      "id": "6449928",
+      "use": "TabProfile — профиль",
+      "term": "User",
+      "url": "https://thenounproject.com/icon/user-6449928/",
+      "author": "Gregor Cresnar",
+      "attribution": "User by Gregor Cresnar from Noun Project",
+      "collection": "Soft: UI & Essentials - 3",
+      "downloadLicense": "Noun Project Pro — Royalty-Free License",
+      "catalogLicense": "creative-commons-attribution",
+      "balanceSourceSHA256": "dbf034e8e9a2948b981a3cb70c37de295e51caea2b6e0d8650d43524e0cbf744",
+      "fileSHA256": "bbac57d2b0bc1cf433d0643c65afda180bac42c3f610fa3e57ce4e9560b6dab0"
+    }
+  ]
+}

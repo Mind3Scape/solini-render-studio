@@ -1,0 +1,5 @@
+{
+  "images" : [ { "filename" : "TabProfile.pdf", "idiom" : "universal" } ],
+  "info" : { "author" : "tools/export_brand_assets.swift", "version" : 1 },
+  "properties" : { "preserves-vector-representation" : true, "template-rendering-intent" : "template" }
+}

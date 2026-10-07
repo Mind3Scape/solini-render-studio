@@ -4,6 +4,7 @@ final class HomeController: ScrollController, UIScrollViewDelegate {
   private var gallery: CollectionGallery?
   private var materials: MaterialFeatureView?
   private var materialChoice: StudioFinish?
+  private var designerWorkspace: DesignerWorkspace?
   private var visible = false
   override var preferredStatusBarStyle: UIStatusBarStyle { .darkContent }
   override func viewWillAppear(_ animated: Bool) {
@@ -15,6 +16,13 @@ final class HomeController: ScrollController, UIScrollViewDelegate {
     super.viewDidLoad()
     scroll.delegate = self
     render()
+    // A proposal prepared from the home (a sheet, so no viewWillAppear) or a project changed
+    // elsewhere updates the designer's path at once.
+    NotificationCenter.default.addObserver(self, selector: #selector(projectsChanged), name: .demoChanged, object: nil)
+  }
+  @objc private func projectsChanged() {
+    guard visible, DemoStore.shared.role == .atelier else { return }
+    reloadDesigner()
   }
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
@@ -174,44 +182,29 @@ final class HomeController: ScrollController, UIScrollViewDelegate {
       ) { [weak self] in self?.sheet(InspirationController()) }, inset: 20)
 
   }
+  /// Designer home: the professional path for a client object (object → products and finishes →
+  /// technical package → proposal), built from the saved projects only. See DesignerHome.swift.
   private func designer() {
-    section(
-      stack(
-        [
-          eyebrow("РАБОЧЕЕ ПРОСТРАНСТВО ДИЗАЙНЕРА"),
-          label("Идеи становятся\nпроектами.", 30, .semibold),
-        ], spacing: 12))
-    let project = ProjectStore.shared.current
-    let pic = photo("interior", height: 150)
-    pic.rounded(20)
-    let count = project.pieces
-    section(
-      workspaceCard([
-        pic, eyebrow("ТЕКУЩИЙ ПРОЕКТ"), label(project.name, 26, .semibold),
-        label(
-          "\(count) \(plural(count, "изделие", "изделия", "изделий")) · \(rubles(project.knownTotal))"
-            + (project.isTotalComplete ? "" : " + по запросу"), 14,
-          .medium, Palette.muted),
-        ActionButton("Продолжить комплектацию", icon: "arrow.up.right", prominent: true) {
-          [weak self] in self?.tabBarController?.selectedIndex = MainTabs.projectTabIndex
-        },
-      ]))
-    section(
-      stack(
-        [
-          eyebrow("ИНСТРУМЕНТЫ ПРОЕКТА"),
-          workspaceAction(
-            "Добавить изделие", subtitle: "Выбрать форму и исполнение", icon: "plus.square"
-          ) { [weak self] in self?.tabBarController?.selectedIndex = MainTabs.catalogTabIndex },
-          workspaceAction(
-            "3D и технические файлы", subtitle: "USDZ, чертежи и размеры", icon: "cube"
-          ) { [weak self] in self?.tabBarController?.selectedIndex = MainTabs.toolTabIndex },
-          workspaceAction(
-            "Спецификация проекта", subtitle: "Количество, состав, стоимость и PDF",
-            icon: "doc.richtext"
-          ) { [weak self] in self?.tabBarController?.selectedIndex = MainTabs.projectTabIndex },
-        ], spacing: 14))
+    let workspace = DesignerWorkspace(host: self)
+    designerWorkspace = workspace
+    // First screen: the active object and its working next step.
+    section(workspace.entry(), top: 2, bottom: 20, inset: 16)
+    section(workspace.objects(), top: 0, bottom: 18, inset: 0)
+    section(workspace.path(), top: 0, bottom: 24, inset: 16)
+    if let executions = workspace.executions() { section(executions, top: 0, bottom: 24, inset: 16) }
+    if let technical = workspace.technical() { section(technical, top: 0, bottom: 22, inset: 16) }
+    section(workspace.club(), top: 0, bottom: 10, inset: 16)
     materialFeature()
+  }
+  /// Re-renders after an object is chosen or created, keeping the user at the object strip.
+  func reloadDesigner() {
+    guard DemoStore.shared.role == .atelier else { return }
+    let offset = scroll.contentOffset
+    render()
+    view.layoutIfNeeded()
+    scroll.setContentOffset(
+      CGPoint(x: 0, y: min(offset.y, max(-scroll.adjustedContentInset.top, scroll.contentSize.height - scroll.bounds.height))),
+      animated: false)
   }
   private func partner() {
     let orders = PartnerStore.shared.orders

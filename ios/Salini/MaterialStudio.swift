@@ -437,7 +437,7 @@ final class MaterialStudioController: UIViewController {
   private var rightFinish: StudioFinish = .senseGloss
   private var comparing = true
   private var shot: StudioScene.Shot = .form
-  private var ral: RALColour?
+  private(set) var ral: RALColour?
   private var panel: Panel = .surface
   private let seamSlider = UISlider()
   private let lightSlider = UISlider()
@@ -454,16 +454,20 @@ final class MaterialStudioController: UIViewController {
   private let panelScroll = UIScrollView()
   private let panelContent = UIStackView()
 
-  init(form: StudioForm? = StudioForm.noemi, finish: StudioFinish? = nil) {
+  /// `ral`: open on the colour a project line actually carries (screen approximation of RAL).
+  init(form: StudioForm? = StudioForm.noemi, finish: StudioFinish? = nil, ral: RALColour? = nil) {
     self.form = form
     super.init(nibName: nil, bundle: nil)
     if let form { reset(to: form, finish: finish) }
+    self.ral = ral
   }
   convenience init() { self.init(form: StudioForm.noemi) }
   /// Every entry opens the studio the same way: a large-only sheet with its own close button,
   /// so the scene and the bottom panel always have the full height.
-  static func present(form: StudioForm? = StudioForm.noemi, finish: StudioFinish? = nil, from host: UIViewController) {
-    let nav = UINavigationController(rootViewController: MaterialStudioController(form: form, finish: finish))
+  static func present(
+    form: StudioForm? = StudioForm.noemi, finish: StudioFinish? = nil, ral: RALColour? = nil, from host: UIViewController
+  ) {
+    let nav = UINavigationController(rootViewController: MaterialStudioController(form: form, finish: finish, ral: ral))
     nav.modalPresentationStyle = .pageSheet
     nav.sheetPresentationController?.detents = [.large()]
     nav.sheetPresentationController?.prefersGrabberVisible = true

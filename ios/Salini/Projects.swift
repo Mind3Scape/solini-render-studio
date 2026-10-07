@@ -5,7 +5,7 @@ final class ProjectsController: ScrollController {
   private var store: ProjectStore { .shared }
   override func viewDidLoad() {
     super.viewDidLoad()
-    navigationItem.title = DemoStore.shared.role == .atelier ? "Спецификация" : "Проект"
+    navigationItem.title = DemoStore.shared.role == .atelier ? "Проекты" : "Проект"
     navigationItem.rightBarButtonItem = UIBarButtonItem(
       image: UIImage(systemName: "ellipsis.circle"), menu: projectMenu())
     NotificationCenter.default.addObserver(self, selector: #selector(changed), name: .demoChanged, object: nil)
@@ -45,7 +45,10 @@ final class ProjectsController: ScrollController {
     let project = store.current
     let header = stack(
       [
-        eyebrow(project.client.isEmpty ? "ТЕКУЩИЙ ПРОЕКТ" : "ДЛЯ: \(project.client.uppercased())"),
+        eyebrow(
+          DemoStore.shared.role == .atelier
+            ? (project.client.isEmpty ? "СПЕЦИФИКАЦИЯ ОБЪЕКТА" : "СПЕЦИФИКАЦИЯ · ДЛЯ: \(project.client.uppercased())")
+            : (project.client.isEmpty ? "ТЕКУЩИЙ ПРОЕКТ" : "ДЛЯ: \(project.client.uppercased())")),
         label(project.name, 37, .regular, serif: true),
       ], spacing: 12)
     add(header)

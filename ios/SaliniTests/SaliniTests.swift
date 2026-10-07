@@ -339,7 +339,7 @@ final class SaliniTests: XCTestCase {
       for nav in tabs.viewControllers ?? [] { (nav as? UINavigationController)?.topViewController?.loadViewIfNeeded() }
       let after = tabs.viewControllers?.map { $0.tabBarItem.title } ?? []
       XCTAssertEqual(before, after, "\(role): opening a tab must not rename it")
-      if role == .atelier { XCTAssertTrue(after.contains("Библиотека") && after.contains("Спецификация")) }
+      if role == .atelier { XCTAssertTrue(after.contains("Библиотека") && after.contains("Проекты")) }
       window.isHidden = true
     }
   }

@@ -1,0 +1,45 @@
+{
+  "reviewed_on": "2026-10-07",
+  "scope": "Native Salini iOS experience; no Render Studio or Balance edits",
+  "sources": [
+    {
+      "url": "https://salini.club/",
+      "observed": "Public Designers Club offers technical drawings, DWG, 3D, moodboard PNGs, samples for bureaux by agreement, support, professional events and project publication.",
+      "apply": "Separate professional workspace with active client project, technical resources and a clearly identified link to actual club information. Do not invent membership, points or a connected manager."
+    },
+    {
+      "url": "https://landing.agapedesign.it/en/field-studies",
+      "observed": "Architectural project atlas; large photographic composition and restrained navigation, with material relationships and real spatial context central to the story. Desktop hero inspected in browser.",
+      "apply": "Use Salini's own architectural photography with generous scale, then useful project actions. Do not import competitors' imagery or imitate their identity."
+    },
+    {
+      "url": "https://www.antoniolupi.it/en/products/soffioni/tubo",
+      "observed": "Product story and imagery followed by exact variants and downloads; materials and downloads are distinct navigation destinations.",
+      "apply": "Connect chosen product executions to their actual technical files and finish decisions. Keep factual specification next to emotional presentation."
+    },
+    {
+      "url": "https://falper.it/en/the-new-site-with-configurator-is-online/",
+      "observed": "Official launch article describes finishes, colours and materials shown on the configured product for private and professional users. Search index accessible; direct page fetch timed out.",
+      "apply": "Continue existing native material configurator as a professional selection tool, with a route back to the active project."
+    },
+    {
+      "url": "https://falper.it/lavamani/",
+      "observed": "ArchiLAB described as one place for architects to obtain 2D/3D models, finishes, imagery and technical resources.",
+      "apply": "Prioritise a project's own files in the designer library; missing files must be stated rather than fabricated."
+    }
+  ],
+  "acceptance": [
+    "App icon contains official Salini geometry, visible at SpringBoard scale; opaque 1024px asset and contrast in supported appearances.",
+    "Home tab stays Salini; other tab artwork comes from the user's local Soft icon pack. Balance sources are read only; Salini bundle is self-contained.",
+    "Designer entry differs in purpose and actions: manage client objects, choose products and finishes, obtain project files and generate a proposal.",
+    "Empty and populated project states are both honest; existing stored projects survive upgrade and switching audiences.",
+    "Real external club pages open only on explicit taps. No fabricated authentication, membership or live business information.",
+    "Review implementation and run relevant tests; inspect simulator screens and important actions; commit and push; upload new TestFlight build and record server state separately."
+  ],
+  "collection_video_status": {
+    "bundled_films": "unchanged",
+    "new_worlds": "four still keyframes, not completed replacement films",
+    "higgsfield_recheck": "1 standard credit; 100 trial credits still shown, but previous 12-credit video submission rejected for insufficient credits. No new job submitted.",
+    "local_trial": "No renderer running; memory pressure warning at recheck. No generated video."
+  }
+}

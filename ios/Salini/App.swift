@@ -169,25 +169,30 @@ final class MainTabs: UITabBarController {
   }
   func applyAudience() {
     let role = DemoStore.shared.role
-    var list: [(UINavigationController, String, String)] = [
-      (home, role == .home ? "Мир Salini" : "Главная", "sparkles"),
-      (UINavigationController(rootViewController: CatalogController()), "Каталог", "square.grid.2x2"),
+    // Glyphs: the official Salini wordmark for the home tab and the «Soft» pack for the rest —
+    // vector template assets from tools/export_brand_assets.swift (provenance in ios/design/icons).
+    var list: [(UINavigationController, String, String, String)] = [
+      (home, "Главная", "TabSalini", "Salini, главная"),
+      (UINavigationController(rootViewController: CatalogController()), "Каталог", "TabCatalog", "Каталог"),
       (
         UINavigationController(rootViewController: ProjectsController()),
-        role == .atelier ? "Спецификация" : "Проект", "square.stack.3d.up"
+        role == .atelier ? "Проекты" : "Проект", "TabProject", role == .atelier ? "Проекты" : "Проект"
       ),
     ]
     // Designer library and partner stock/reserve tools stay as their own tabs.
     switch role {
-    case .atelier: list.append((UINavigationController(rootViewController: ResourcesController()), "Библиотека", "cube"))
-    case .partner: list.append((UINavigationController(rootViewController: StockController()), "Наличие", "shippingbox"))
+    case .atelier:
+      list.append((UINavigationController(rootViewController: ResourcesController()), "Библиотека", "TabLibrary", "Библиотека"))
+    case .partner:
+      list.append((UINavigationController(rootViewController: StockController()), "Наличие", "TabStock", "Наличие"))
     case .home: break
     }
-    list.append((profile, "Профиль", "person.crop.circle"))
-    viewControllers = list.map { nav, title, icon in
-      nav.tabBarItem = UITabBarItem(
-        title: title, image: UIImage(systemName: icon),
-        selectedImage: UIImage(systemName: icon + ".fill") ?? UIImage(systemName: icon))
+    list.append((profile, "Профиль", "TabProfile", "Профиль"))
+    viewControllers = list.map { nav, title, glyph, spoken in
+      let image = UIImage(named: glyph)?.withRenderingMode(.alwaysTemplate)
+      nav.tabBarItem = UITabBarItem(title: title, image: image, selectedImage: image)
+      nav.tabBarItem.accessibilityLabel = spoken
+      nav.tabBarItem.accessibilityIdentifier = "tab.\(glyph)"
       nav.navigationBar.prefersLargeTitles = false
       nav.navigationBar.tintColor = Palette.ink
       return nav

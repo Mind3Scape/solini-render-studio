@@ -1,0 +1,43 @@
+{
+  "build": "1.0 (8)",
+  "reviewer": "Codex",
+  "engineer": "Claude Code / Opus 5.5",
+  "tests": {
+    "result": "passed",
+    "total": 107,
+    "failures": 0,
+    "resultBundle": "/tmp/salini-designer-final8-tests.xcresult",
+    "simulator": "1917B285-7063-4C68-8096-8EB4F7318E2D",
+    "signing": "proper ad-hoc signing required; unsigned bootstrap attempt rejected by AMFI before tests"
+  },
+  "visualQA": [
+    "Official Salini wordmark visible on SpringBoard; porcelain icon background, no black square.",
+    "Designer first viewport includes active object and working next-step CTA above native glass tab bar.",
+    "Bottom tabs use Soft vector pack; official Salini wordmark remains the home glyph.",
+    "Created Вилла · проверка 8 with no client; empty state leads to actual product chooser.",
+    "Switched back to existing Дом у воды · демо without changing its lines.",
+    "Opened Noemi 170 from saved RAL 6005 execution; 3D comparison retained green colour."
+  ],
+  "automatedCoverage": [
+    "legacy project decoding",
+    "distinct executions and RAL",
+    "real technical-file coverage",
+    "optional client",
+    "proposal freshness",
+    "tab titles",
+    "collection loop playback",
+    "Insight"
+  ],
+  "limits": [
+    "Dark and tinted icon source assets reviewed; SpringBoard screenshot covers default light icon only.",
+    "New collection video generation is still outstanding; films and loop files unchanged in this build.",
+    "Saved objects and proposal metadata are local demo state; no live Salini account integration."
+  ],
+  "sources": [
+    "https://salini.club/",
+    "https://landing.agapedesign.it/en/field-studies",
+    "https://www.antoniolupi.it/en/products/soffioni/tubo",
+    "https://falper.it/en/the-new-site-with-configurator-is-online/",
+    "https://falper.it/lavamani/"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "reviewer": "Codex",
+  "status": "First implementation review; fix before release",
+  "findings": [
+    {"priority":"high","area":"Designer entry","problem":"468pt advertising hero plus existing role/header pushes every active object action below the first screen. This repeats the semantic problem.","request":"Make the first viewport useful: compact editorial image around 220–250pt or combine it with active object and a working primary CTA. Visible project identity and next action on entry. Long workflow can follow. Preserve visual breathing room rather than cramming everything."},
+    {"priority":"high","area":"DesignerJourney technical state","problem":"Technical step is marked done whenever product executions resolve, even when no documents or models exist.","request":"Do not equate choosing products with completing a technical package. Reflect actual file availability as available/partial/by request, never done for zero assets. Add a meaningful zero-document case."},
+    {"priority":"medium","area":"Optional client","problem":"Client is optional when creating a project, but next action requires it before proposal. This is inconsistent.","request":"Keep client optional throughout. Offer edit identity as a secondary action, not a gate to generating a proposal."},
+    {"priority":"high","area":"Products and finishes","problem":"Product cards deduplicate by product ID, so multiple chosen executions/colours disappear. Material Studio entry carries finish but not selected RAL.","request":"Show each distinct selected execution/colour, use line ID for accessibility and pass the actual chosen colour into material viewing. If color cannot be represented state that precisely, do not imply white is the selected finish."},
+    {"priority":"medium","area":"Layout and copy","problem":"Fixed 412pt cards may clip two actions and multiline metadata. Club copy repeatedly talks about missing app functions/backend and unverified absence of terms.","request":"Use sizing that survives long labels/Dynamic Type. Club copy should explain actual benefits and a short official-site handoff, not implementation caveats. Remove speculative 'terms not published'. Designer tab should be 'Проекты' to match the object workflow; specification remains inside."}
+  ],
+  "accepted": ["Official logo rendering is visually correct in the new PNG", "Use of original Soft SVG assets with provenance", "ProjectStore reuse and proposal version tracking direction", "Separate Designers Club destination"]
+}

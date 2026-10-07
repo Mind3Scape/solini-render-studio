@@ -972,6 +972,7 @@ final class ProposalController: UIViewController {
       status.text = "Не удалось сохранить файл: \(error.localizedDescription)"
       return
     }
+    ProjectStore.shared.recordProposal(for: composer.project.id, basis: composer.project.updated)
     UIAccessibility.post(notification: .announcement, argument: "Предложение готово, \(composer.pageCount) страниц")
     let preview = ProposalPreviewController(fileURL: url)
     let presenter = presentingViewController
