@@ -1,3 +1,74 @@
 <!doctype html>
-<html lang="ru"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex"><title>Salini Render Studio</title><link rel="stylesheet" href="./style.css"></head>
-<body><main><a class="brand" href="./">salini<span>RENDER STUDIO</span></a><p class="eyebrow">ОТ РЕНДЕРА К ФОТОГРАФИИ</p><h1>Ваше изделие.<br>Реалистичный свет.</h1><p class="lead">Загрузите рендер, выберите модель и сравните результат.<br>Программа работает прямо в браузере.</p><section class="connection"><span id="dot"></span><div><strong id="status">Подключение к студии…</strong><p id="detail">Проверяем, доступен ли Mac для обработки.</p></div></section><button id="retry">Проверить подключение</button><a id="open" hidden>Открыть студию ↗</a><p class="note">Обработку выполняет Mac владельца. Когда он выключен, спит или не подключён к интернету, студия временно недоступна. Изображения передаются на этот Mac и сохраняются у владельца.</p><footer>Salini Render Studio · доступ по приглашению</footer></main><script src="./connect.js"></script></body></html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f3f5f8">
+<title>Salini Render Studio</title>
+<link rel="preload" as="image" href="./assets/aria-1680.jpg" media="(min-width: 600px)">
+<link rel="preload" as="image" href="./assets/aria-square-820.jpg" media="(max-width: 599.98px)">
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<a class="skip" href="#connection">К подключению</a>
+<header class="bar">
+  <a class="brand" href="./" aria-label="Salini Render Studio">
+    <img src="./assets/salini-logo-graphite.svg" width="116" height="47" alt="Salini">
+    <span>Render Studio</span>
+  </a>
+  <nav aria-label="Разделы"><a href="#how">Как работает</a><a href="#access">Доступ</a></nav>
+</header>
+<main>
+  <section class="hero" aria-labelledby="hero-title">
+    <picture class="hero-photo">
+      <source media="(max-width: 599.98px)" srcset="./assets/aria-square-820.jpg" width="820" height="820">
+      <img src="./assets/aria-1680.jpg" width="1680" height="946" fetchpriority="high"
+           alt="Отдельностоящая ванна Salini Aria в интерьере с чёрно-белым мрамором">
+    </picture>
+    <div class="hero-copy">
+      <p class="eyebrow">От рендера к фотографии</p>
+      <h1 id="hero-title">Ваш рендер.<br>Новый свет.</h1>
+      <p class="lead">Загрузите рендер, выберите свет и сравните с оригиналом.</p>
+      <section class="connection" id="connection" aria-label="Подключение к студии" tabindex="-1">
+        <div class="connection-state" role="status" aria-live="polite">
+          <span id="dot" aria-hidden="true"></span>
+          <div><strong id="status">Подключение к студии…</strong><p id="detail">Проверяем, доступен ли Mac для обработки.</p></div>
+        </div>
+        <div class="connection-actions"><button id="retry" type="button">Проверить подключение</button><a id="open" hidden>Открыть студию ↗</a></div>
+      </section>
+    </div>
+  </section>
+
+  <section class="how" id="how" aria-labelledby="how-title">
+    <div class="how-copy">
+      <p class="eyebrow">Как работает</p>
+      <h2 id="how-title">Три шага к результату</h2>
+      <ol class="steps">
+        <li><span class="step-index">01</span><div><h3>Загрузить</h3><p>Рендер из конструктора — PNG, JPG, WebP или TIFF. Лист согласования можно обрезать до изделия.</p></div></li>
+        <li><span class="step-index">02</span><div><h3>Выбрать свет</h3><p>Бережный, студийный, дневной, тёплый, контрастный или светлый каталог. Модель работает на Mac владельца.</p></div></li>
+        <li><span class="step-index">03</span><div><h3>Проверить и сохранить</h3><p>Разделитель «до / после», увеличение и возврат детали из оригинала. Затем PNG или интерактивное сравнение.</p></div></li>
+      </ol>
+    </div>
+    <figure class="how-photo">
+      <img src="./assets/interior-900.jpg" width="900" height="1126" loading="lazy" decoding="async"
+           alt="Интерьер ванной с отдельностоящей ванной и раковиной на пьедестале Salini">
+      <figcaption>Фотография из каталога Salini. Пример уровня света, к которому стремится студия, а не результат обработки.</figcaption>
+    </figure>
+  </section>
+
+  <section class="access" id="access" aria-labelledby="access-title">
+    <h2 id="access-title">Доступ по приглашению</h2>
+    <div class="access-grid">
+      <p>Студия открывается по полной ссылке-приглашению от владельца. Для работы нужен только браузер: устанавливать программу и модели не требуется.</p>
+      <p>Обработку выполняет Mac владельца. Когда он выключен, спит или не подключён к интернету, студия временно недоступна.</p>
+      <p>Изображения передаются на этот Mac и сохраняются у владельца. Генеративная модель может изменить детали — сравните результат с оригиналом перед использованием.</p>
+    </div>
+  </section>
+</main>
+<footer class="foot"><span>Salini Render Studio</span><span>Доступ по приглашению</span></footer>
+<script src="./connect.js"></script>
+</body>
+</html>

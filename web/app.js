@@ -104,12 +104,18 @@ async function acceptUpload(info){
   $('elapsed').textContent='';error();await showImages();remember();
   status('Выделите рендер внутри листа или обработайте изображение целиком.');
 }
+// Phones show the form above the image: bring the image into view when it needs the user.
+// The sticky header and quick navigation are covered by scroll-margin-top in style.css.
+function revealImage(){
+  if(!matchMedia('(max-width: 760px)').matches)return;
+  $('editor').scrollIntoView({block:'start',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
+}
 async function upload(file){
   if(!file||state.busy||state.lookSaving||state.lookPending)return;
   error();status('Загрузка изображения…');
   if(file.size>(ONLINE?20:40)*1024*1024){error(`Файл должен быть меньше ${ONLINE?20:40} МБ.`);return;}
   const data=new FormData();data.append('file',file);
-  try{await acceptUpload(await api('/api/uploads',{method:'POST',body:data}));}
+  try{await acceptUpload(await api('/api/uploads',{method:'POST',body:data}));revealImage();}
   catch(e){error(e.message);status('Выберите другое изображение.');}
   $('file').value='';
 }
@@ -129,8 +135,8 @@ function drawCrop(){
   const minimum=state.editing==='restore'?4:64;
   $('crop-apply').disabled=w<minimum||h<minimum;
 }
-$('crop-btn').onclick=async()=>{state.editing='crop';state.full=false;state.draft=[...state.crop];error();await showImages();};
-$('restore-btn').onclick=async()=>{state.editing='restore';state.full=false;state.draft=[0,0,0,0];error();await showImages();status('Обведите изменённую деталь. Её пиксели будут взяты из исходного рендера.');};
+$('crop-btn').onclick=async()=>{state.editing='crop';state.full=false;state.draft=[...state.crop];error();await showImages();revealImage();};
+$('restore-btn').onclick=async()=>{state.editing='restore';state.full=false;state.draft=[0,0,0,0];error();await showImages();revealImage();status('Обведите изменённую деталь. Её пиксели будут взяты из исходного рендера.');};
 $('restore-reset').onclick=()=>restore(null,true);
 async function restore(box,reset=false){
   $('crop-apply').disabled=true;$('restore-reset').disabled=true;

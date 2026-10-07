@@ -1,15 +1,16 @@
 <!doctype html>
 <html lang="ru">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Salini Render Studio</title><link rel="stylesheet" href="/style.css"></head>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="color-scheme" content="light"><meta name="theme-color" content="#f3f5f8"><title>Salini Render Studio</title><link rel="stylesheet" href="/style.css"></head>
 <body>
   <header class="header">
-    <a class="brand" href="/" aria-label="Salini Render Studio">salini<span class="brand-line"></span><span class="brand-sub">RENDER<br>STUDIO</span></a>
+    <a class="brand" href="/" aria-label="Salini Render Studio"><img src="/assets/salini-logo-graphite.svg" width="116" height="47" alt=""><span class="brand-sub">Render Studio</span></a>
     <div class="header-right"><span class="local"><i></i> На вашем Mac</span><button class="icon-button" id="about-btn" aria-label="О программе"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10v1"/></svg></button></div>
   </header>
+  <nav class="quick-nav" aria-label="Быстрый переход"><a href="#editor">Изображение</a><a href="#controls">Настройки</a><a href="#finish-panel">Цвет</a></nav>
   <main>
     <div class="intro"><div><p class="eyebrow">ОТ РЕНДЕРА К ФОТОГРАФИИ</p><h1>Материалы. Свет. Реальность.</h1></div><p class="intro-note">Ваше изделие —<br>в новом качестве.</p></div>
     <div class="workspace">
-      <aside class="sidebar">
+      <aside class="sidebar" id="controls" aria-label="Настройки обработки">
         <section class="source-section"><h2><span class="step">01</span> Исходное изображение</h2>
           <button id="upload-btn" class="upload-box"><svg viewBox="0 0 24 24"><path d="M12 16V4m-4 4 4-4 4 4M4 15v5h16v-5"/></svg><strong id="upload-title">Загрузить рендер</strong><span id="upload-sub">PNG, JPG, WebP, TIFF · до 40 МБ</span></button>
           <input id="file" type="file" accept="image/png,image/jpeg,image/webp,image/tiff" hidden>
@@ -27,10 +28,10 @@
         </section>
         <div class="run-section"><button id="generate" class="primary full" disabled><svg viewBox="0 0 24 24"><path d="m12 3 2.4 6.6L21 12l-6.6 2.4L12 21l-2.4-6.6L3 12l6.6-2.4Z"/></svg><span>Сделать реалистичнее</span><span class="button-arrow">↗</span></button><button id="cancel" class="secondary full" hidden>Отменить обработку</button><p class="privacy"><svg viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg> Изображения остаются на этом Mac</p></div>
       </aside>
-      <section class="editor">
+      <section class="editor" id="editor" aria-label="Изображение и сравнение">
         <div class="editor-bar"><div class="view-tabs"><button id="view-crop" class="active">Изделие</button><button id="view-document" disabled>Весь лист</button></div><span class="image-label" id="image-label">Новый рендер</span><div class="zoom-controls"><button id="zoom-out" class="icon-button" aria-label="Уменьшить" disabled>−</button><button id="zoom-fit" class="zoom-value" disabled>Вписать</button><button id="zoom-in" class="icon-button" aria-label="Увеличить" disabled>+</button></div></div>
         <div id="viewport" class="viewport">
-          <div id="empty" class="empty"><div class="empty-symbol"><svg viewBox="0 0 80 80"><path d="M17 29 40 17l23 12v29L40 70 17 58Z"/><path d="m17 29 23 12 23-12M40 41v29"/><path class="spark" d="m63 5 2 6 6 2-6 2-2 6-2-6-6-2 6-2Z"/></svg></div><h3>Новая перспектива вашего изделия</h3><p>Перетащите сюда изображение из конструктора<br>или выберите файл на компьютере.</p><button id="empty-upload" class="secondary">Выбрать изображение <span>↗</span></button><div class="empty-caption">Форма и материалы в фокусе. Без лишних деталей.</div></div>
+          <div id="empty" class="empty"><img class="empty-photo" src="/assets/aria-1200.jpg" width="1200" height="675" alt="" decoding="async"><div class="empty-symbol"><svg viewBox="0 0 80 80"><path d="M17 29 40 17l23 12v29L40 70 17 58Z"/><path d="m17 29 23 12 23-12M40 41v29"/><path class="spark" d="m63 5 2 6 6 2-6 2-2 6-2-6-6-2 6-2Z"/></svg></div><h3>Новая перспектива вашего изделия</h3><p>Перетащите сюда изображение из конструктора<br>или выберите файл на компьютере.</p><button id="empty-upload" class="secondary">Выбрать изображение <span>↗</span></button><div class="empty-caption">Форма и материалы в фокусе. Без лишних деталей.</div></div>
           <div id="plane" class="image-plane" hidden><img id="before-image" alt="Исходное изображение" draggable="false"><div id="after-layer" class="after-layer" hidden><img id="after-image" alt="Обработанное изображение" draggable="false"></div><div id="divider" class="divider" hidden><button id="divider-handle" aria-label="Перетащить разделитель до и после">‹ <span>›</span></button></div><div id="crop-overlay" hidden></div></div>
           <div id="side-labels" class="side-labels" hidden><span>ДО</span><span>ПОСЛЕ</span></div>
           <div id="crop-toolbar" class="crop-toolbar" hidden><span>Обведите рендер мышью</span><button id="crop-discard" class="secondary">Отмена</button><button id="crop-apply" class="primary">Применить</button></div>
