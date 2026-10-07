@@ -1,0 +1,89 @@
+{
+  "date": "2026-10-07",
+  "tool": "built-in imagegen",
+  "briefs": [
+    {
+      "id": "aria",
+      "ref": "/Users/daviddoronin/.codex/worktrees/salini-native-materials/Salini/ios/Salini/Resources/aria.jpg",
+      "prompt": "Use case: product-mockup. New high-end Salini ARIA campaign keyframe, vertical 3:4. Supplied photo is exact product identity reference: preserve the white sculptural suspended U-shaped deep bath body, sharp rectangular rim, broad flat near side, and two distinctive thin dark curved side supports. Do not substitute an ordinary oval bath. New setting: a vast open-air travertine pavilion in luminous pale morning sky. The bathtub on a dry monolithic honed limestone dais, occupying center-lower middle, fully visible, 65% image width. Behind it two immense translucent ivory linen sails hang from a discreet horizontal stone beam, continuously sculpted by the wind: pronounced sweeping curves and billowing three-dimensional folds, large enough to occupy 40 percent of the picture. They hang clear of the tub and never cover its outline. A third slim veil far to the right adds depth. Blue pale atmospheric horizon through the open pavilion, airy architectural asymmetry, almost no furniture. Pale silver/ivory/sky blue palette, real warm edges to stone, soft sunshine penetrates linen with visible thread microstructure and soft corresponding shadows. Locked camera 3/4 view but reference silhouette invariant. Leave top 15 percent calm for app title. Captured mid wind wave, NOT lifeless straight curtains. Photoreal luxury architecture advertising, physically correct manufactured surface and cloth weight, no generic glossy plastic, no overdecorating, no people, text, logos, particles, watery floor, blur, fake lens flare. Designed as source for continuous wind loop with overlapping cloth phases, not a curtain opening to stop."
+    },
+    {
+      "id": "ninfea",
+      "ref": "/Users/daviddoronin/.codex/worktrees/salini-native-materials/Salini/ios/Salini/Resources/ninfea-official.webp",
+      "prompt": "Use case: product-mockup. Create new ultra-photoreal Salini NINFEA cinematic campaign keyframe, vertical 3:4. Product reference photograph is exact identity: keep its very wide thin horizontal wing-shaped emerald rim extending beyond the tub, elongated rounded-rectangle deep bowl, narrow shadow plinth, front smooth satin emerald body and black overflow. Preserve rigid geometry. New environment: serene sculptural garden atrium, a dark emerald architectural lily pond around a warm limestone island supporting the tub. The fully visible bathtub occupies central 65 percent width, at 52 percent height, clean and luxurious. Lush mature philodendron and broad fern fronds in THREE spatial layers: 1) large leaves across lower left and right edges in front of the stone island, 2) mature leafy vines attached to existing side garden branches gently drape over just one side of the wing rim, 3) layered ferns and moving light through foliage behind. Leaves occupy 35-45% frame yet keep most of the bathtub outline and front visible. No bare seedlings or sticks emerging from tub. Clear water inside bath with visible soft ripples and leaf reflections; pond foreground shows broad lily leaves and broken foliage reflection. Warm pale honed-stone curved wall behind, high daylight shaft, dappled leaf shadows, realistic transmission through young leaf edges. Sophisticated deep forest/emerald/warm mineral palette, detailed but restrained editorial composition, high-end C4D/Redshift realism. Top 15 percent gentle stone negative space. Capture an ongoing coherent breeze through all leaves, not motion blur; source for living loop, no permanent growing event. Bath is heavy and firmly planted. No faucets, bottles, text, humans, labels, logos, vines obscuring rim geometry, floating product, oversaturation or fantasy glow."
+    },
+    {
+      "id": "opera",
+      "ref": "ios/Salini/Resources/opera.jpg",
+      "prompt": "Use case: product-mockup. Create a sophisticated Salini OPERA luxury campaign keyframe, vertical 3:4. Use the supplied official product photo as exact identity reference: ivory elongated classical oval bathtub, raised rolled rim with stepped horizontal moldings under it, straight broad near wall, curved ends, and sculptural stepped plinth. Preserve all profile details, no generic oval bath. New world is a monumental warm travertine loggia like a quiet sculptural theatre. Bath fully visible centered on a dry pale limestone platform at 50 percent height, 70 percent frame width. Behind it two very tall broad stone arches and a deep wine-colored recess, almost black burgundy. A large shallow dark reflective pool occupies the foreground lower third and continues beside the dry platform. It catches sunlight from an unseen tree-lined courtyard at left, showing broad overlapping clean water rings and warm moving caustic reflections on the massive right-hand wall. Big soft-edged shadows from plane-tree leaves fall diagonally across the upper arches, the platform and part of the bath; those shadows make sculptural daylight feel alive. The intended movie movement is continuously overlapping water ripples and their dancing reflected light on stone, along with coherent slowly shifting leaf shadows; NO CURTAINS, NO FABRIC. Cinematic warm ivory / oxblood / tobacco / deep reflective water palette, warm side light at late afternoon, extreme photoreal material detail and soft GI, high-end C4D editorial campaign. Top 15 percent restrained dark architectural negative space for white title. Locked camera, product planted with real contact, restrained asymmetry. No human figures, statues, lamps, faucets, lettering, logos, fantasy glow, particles, mist, deforming moldings, foam, flooding or water inside platform."
+    }
+  ],
+  "video": {
+    "params": {
+      "model": "kling3_0",
+      "mode": "pro",
+      "duration": 8,
+      "sound": "off",
+      "aspect_ratio": "9:16",
+      "count": 1,
+      "medias": [
+        {
+          "role": "start_image",
+          "value": "https://raw.githubusercontent.com/Mind3Scape/solini-render-studio/02bf542bc928903660886d07d0c12f8f88f32383/research/collection-worlds-2026-10-07/greca-tidal-keyframe-v2.png"
+        }
+      ],
+      "prompt": "A continuous locked-camera photoreal architectural film of this exact turquoise and ivory Salini Greca bathtub on its limestone tidal island. Preserve absolutely rigid product geometry, rim, pedestal, island, cliff, perspective and framing. Water occupies a major part of the picture and MUST already move in frame one, continue without pause throughout, and still move at full steady speed in the final frame. Overlapping gentle sea wavelets travel through the foreground, wrap around the island and animate the background sea simultaneously. Clearly readable 5–10 cm wave amplitudes, no storm. Broken golden reflections glide across crests; the reflected bathtub continuously breaks and recombines naturally in the water; restrained physically connected water caustics drift over the island and lower turquoise bowl. Natural low Mediterranean swell, calm luxury, not flat water. Constant exposure, steady sunlight, locked camera. One long ambient take with no introductory action, no easing in or out, no stopping, no still tail. The last seconds must be just as alive as the middle. This is source material for a seamless ambient loop. Silent. No zoom, cut, dissolve, morph, bubbling, foam, splash, object movement, glowing particles, product changes, text, logos or watermark."
+    },
+    "quote": {
+      "cost": {
+        "credits": 12,
+        "credits_exact": 12
+      }
+    },
+    "status": {
+      "error": "Out of credits on plus (monthly) plan in Private workspace.",
+      "error_code": "INVALID_ARGUMENT"
+    }
+  },
+  "balance": {
+    "credits": 1,
+    "subscription_plan_type": "plus",
+    "free_trial": {
+      "status": "active",
+      "eligible": false,
+      "offered_kind": null,
+      "kind": "mcp",
+      "trial_credits": 100,
+      "ends_at": "2026-10-09T12:50:45Z",
+      "unlim_available": false,
+      "unlim_remaining": null,
+      "unlim_expires_at": null
+    },
+    "free_gens": [
+      {
+        "job_set_types": [
+          "ai_influencer_motion_control",
+          "ai_influencer_replace_object",
+          "hf_mult_motion_control",
+          "hf_mult_replace_object"
+        ],
+        "remaining": 1,
+        "parameters": {
+          "resolution": [
+            "480p",
+            "720p"
+          ]
+        },
+        "max_duration": 30
+      },
+      {
+        "job_set_types": [
+          "ai_influencer_sheet"
+        ],
+        "remaining": 5,
+        "parameters": {},
+        "max_duration": null
+      }
+    ]
+  }
+}
