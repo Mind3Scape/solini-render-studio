@@ -8,7 +8,8 @@
     "failures": 0,
     "resultBundle": "/tmp/salini-designer-final8-tests.xcresult",
     "simulator": "1917B285-7063-4C68-8096-8EB4F7318E2D",
-    "signing": "proper ad-hoc signing required; unsigned bootstrap attempt rejected by AMFI before tests"
+    "signing": "proper ad-hoc signing required; unsigned bootstrap attempt rejected by AMFI before tests",
+    "runtimeWarnings": "XCTest reported internal QoS priority-inversion warnings; 0 failures and 0 skips."
   },
   "visualQA": [
     "Official Salini wordmark visible on SpringBoard; porcelain icon background, no black square.",
@@ -16,7 +17,8 @@
     "Bottom tabs use Soft vector pack; official Salini wordmark remains the home glyph.",
     "Created Вилла · проверка 8 with no client; empty state leads to actual product chooser.",
     "Switched back to existing Дом у воды · демо without changing its lines.",
-    "Opened Noemi 170 from saved RAL 6005 execution; 3D comparison retained green colour."
+    "Opened Noemi 170 from saved RAL 6005 execution; 3D comparison retained green colour.",
+    "Generated and visually opened the personal PDF from designer CTA; home changed to Предложение актуально with preparation time."
   ],
   "automatedCoverage": [
     "legacy project decoding",

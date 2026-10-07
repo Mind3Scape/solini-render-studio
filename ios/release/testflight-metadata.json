@@ -11,6 +11,6 @@
   "signInRequired": false,
   "collectsData": false,
   "tracking": false,
-  "submissionStatus": "Build 1.0 (8) under final Codex QA. Not yet uploaded; build 7 was successfully uploaded previously.",
+  "submissionStatus": "Build 1.0 (8) uploaded successfully 2026-10-07 23:15:26 UTC+7 from commit 92e132d. App Store Connect confirms Processing. Internal availability and external/public review pending verification.",
   "build": "8"
 }

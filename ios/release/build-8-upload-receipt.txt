@@ -1,0 +1,22 @@
+Salini 1.0 (8) — TestFlight upload receipt
+Date: 2026-10-07 (Asia/Bangkok)
+Source commit: 92e132d
+Branch: codex/salini-native-materials
+Bundle: design.salini.experience
+Team: TQ5SCF3KQZ
+Archive: Salini-1.0-8.xcarchive
+Archive signature verified with codesign --verify --deep --strict.
+Full simulator tests: 107 passed, 0 failed, 0 skipped.
+
+2026-10-07 23:15:25.411 xcodebuild[32616:245418] Progress 0 %: Uploading “Salini.ipa” is complete.
+2026-10-07 23:15:25.412 xcodebuild[32616:245418] Progress 0 %: Uploading “Salini.ipa” is complete.
+2026-10-07 23:15:25.412 xcodebuild[32616:245418] Progress 100 %: Uploading “Salini.ipa” is complete.
+2026-10-07 23:15:25.413 xcodebuild[32616:245418] Progress 100 %: Uploading “Salini.ipa” is complete.
+2026-10-07 23:15:25.989 xcodebuild[32616:245418] Progress 100 %: Uploaded package is processing.
+2026-10-07 23:15:26.003 xcodebuild[32616:245418] Progress 100 %: Upload succeeded.
+Uploaded Salini
+** EXPORT SUCCEEDED **
+
+App Store Connect UI independently confirms Version 1.0 Build (8): Processing.
+Internal availability and public beta review not yet confirmed at this snapshot.
+First export failed due to ITunesSoftwareService XPC connection error; retry after opening Xcode account settings succeeded.
