@@ -11,6 +11,6 @@
   "signInRequired": false,
   "collectsData": false,
   "tracking": false,
-  "submissionStatus": "Build 1.0 (4) prepared from fe0265e; archive and upload pending.",
+  "submissionStatus": "Build 1.0 (4) uploaded successfully at 2026-10-07T15:24:46+07:00; Apple package processing confirmed. Internal testing availability and external Beta App Review pending App Store Connect browser sign-in.",
   "build": "4"
 }
