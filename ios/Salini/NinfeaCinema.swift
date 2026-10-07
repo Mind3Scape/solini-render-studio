@@ -77,6 +77,8 @@ final class NinfeaCinemaView: UIView {
     }
   }
   var isPlaying: Bool { (player?.rate ?? 0) > 0 }
+  /// Position inside the current item (reveal or one loop replica); NaN without a player.
+  var playheadSeconds: Double { player?.currentTime().seconds ?? .nan }
   var available: Bool {
     collection.introURL != nil && collection.loopURL != nil
   }
@@ -107,7 +109,14 @@ final class NinfeaCinemaView: UIView {
         if notification.name == UIApplication.willResignActiveNotification {
           self.player?.pause()
         } else if self.active {
-          self.beginVisit()
+          // Returning from Control Center or a system alert is not a new visit: the living
+          // ending resumes where it was. Only a released/failed player restarts the reveal.
+          if notification.name == UIApplication.didBecomeActiveNotification, self.player != nil,
+             self.player?.currentItem?.status != .failed {
+            self.updatePlayback()
+          } else {
+            self.beginVisit()
+          }
         }
       })
     }
@@ -230,8 +239,10 @@ final class NinfeaCinemaView: UIView {
     }
   }
   private func updatePlayback() {
+    // A queued loop replica can initially have `.unknown` status. Keep playback intent
+    // across that transition and let AVPlayer wait for media instead of adding a pause.
     let run = active && window != nil && UIApplication.shared.applicationState == .active
-      && !reduceMotion && available && player?.currentItem?.status == .readyToPlay
+      && !reduceMotion && available && player != nil && player?.currentItem?.status != .failed
     if run { player?.play() } else { player?.pause() }
   }
 }

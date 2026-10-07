@@ -1,0 +1,150 @@
+{
+  "loop": {
+    "file": "ios/Salini/Resources/greca-loop-v1.mp4",
+    "width": 1176,
+    "height": 1764,
+    "fps": 24.0,
+    "duration": 4.0,
+    "audio": false,
+    "frames": 96,
+    "median_window_alive": 0.0,
+    "min_window_alive": 0.0,
+    "dead_windows": 23,
+    "windows": 23,
+    "mean_lagged_change": 0.21219603717327118,
+    "median_step": 0.036556921899318695,
+    "seam_step": 0.26646095514297485,
+    "seam_ratio": 7.288933020040203,
+    "alive_tile_map": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ]
+  },
+  "regions": {
+    "tub": {
+      "kind": "rigid",
+      "mean": 0.1752929985523224,
+      "min_window": 0.06700637936592102,
+      "max_window": 0.32274171710014343
+    },
+    "meander": {
+      "kind": "alive",
+      "mean": 0.2311173528432846,
+      "min_window": 0.15019595623016357,
+      "max_window": 0.3483233153820038
+    },
+    "sea": {
+      "kind": "alive",
+      "mean": 0.20792967081069946,
+      "min_window": 0.07963686436414719,
+      "max_window": 0.43935444951057434
+    }
+  },
+  "intro": {
+    "file": "ios/Salini/Resources/greca-film-v1.mp4",
+    "width": 1176,
+    "height": 1764,
+    "fps": 24.0,
+    "duration": 5.0,
+    "audio": false,
+    "frames": 120,
+    "alive_by_window": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.021,
+      0.021,
+      0.021,
+      0.021,
+      0.021
+    ],
+    "tail_alive": 0.020833333333333332,
+    "loop_median_alive": 0.0,
+    "handoff_step_ratio": 2.0105509757995605,
+    "handoff_min_window_alive": 0.0,
+    "median_alive": 0.020833333333333332
+  },
+  "heatmap": "research/collection-motion-2026-10-07/audit/greca-heat.png",
+  "thresholds": {
+    "width": 360,
+    "lag_s": 0.25,
+    "window_s": 0.5,
+    "alive": 1.5,
+    "min_alive_fraction": 0.18,
+    "min_median_fraction": 0.3
+  },
+  "result": "FAIL",
+  "failures": [
+    "loop has 23 of 23 half-second windows with <18% live tiles (min 0%)",
+    "loop median live share 0% < 30% — motion too small to read in the hero",
+    "region meander stalls (min window 0.15 < 1.5)",
+    "region sea stalls (min window 0.08 < 1.5)",
+    "reveal eases out: last 1.5 s live share 2% (loop 0%, floor 18%)",
+    "reveal is mostly a still image: median live share 2%",
+    "handoff step is 2.01× the surrounding median",
+    "a half-second around the handoff is nearly still (0%)"
+  ]
+}

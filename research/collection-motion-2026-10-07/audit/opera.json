@@ -1,0 +1,154 @@
+{
+  "loop": {
+    "file": "ios/Salini/Resources/opera-loop-v1.mp4",
+    "width": 1176,
+    "height": 1764,
+    "fps": 24.0,
+    "duration": 4.0,
+    "audio": false,
+    "frames": 96,
+    "median_window_alive": 0.0,
+    "min_window_alive": 0.0,
+    "dead_windows": 23,
+    "windows": 23,
+    "mean_lagged_change": 0.14420662820339203,
+    "median_step": 0.024475041776895523,
+    "seam_step": 0.2196924090385437,
+    "seam_ratio": 8.97618116615162,
+    "alive_tile_map": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ]
+  },
+  "regions": {
+    "tub": {
+      "kind": "rigid",
+      "mean": 0.15414348244667053,
+      "min_window": 0.04185343161225319,
+      "max_window": 0.2845481038093567
+    },
+    "water": {
+      "kind": "alive",
+      "mean": 0.13331381976604462,
+      "min_window": 0.04459207132458687,
+      "max_window": 0.19581545889377594
+    },
+    "floor": {
+      "kind": "alive",
+      "mean": 0.15501895546913147,
+      "min_window": 0.058191318064928055,
+      "max_window": 0.22439749538898468
+    }
+  },
+  "intro": {
+    "file": "ios/Salini/Resources/opera-film-v1.mp4",
+    "width": 1176,
+    "height": 1764,
+    "fps": 24.0,
+    "duration": 8.041667,
+    "audio": false,
+    "frames": 193,
+    "alive_by_window": [
+      0.479,
+      0.771,
+      0.833,
+      0.771,
+      0.75,
+      0.75,
+      0.625,
+      0.5,
+      0.417,
+      0.229,
+      0.062,
+      0.042,
+      0.042,
+      0.021,
+      0.0
+    ],
+    "tail_alive": 0.020833333333333332,
+    "loop_median_alive": 0.0,
+    "handoff_step_ratio": 2.8038108348846436,
+    "handoff_min_window_alive": 0.0,
+    "median_alive": 0.4791666666666667
+  },
+  "heatmap": "research/collection-motion-2026-10-07/audit/opera-heat.png",
+  "thresholds": {
+    "width": 360,
+    "lag_s": 0.25,
+    "window_s": 0.5,
+    "alive": 1.5,
+    "min_alive_fraction": 0.18,
+    "min_median_fraction": 0.3
+  },
+  "result": "FAIL",
+  "failures": [
+    "loop has 23 of 23 half-second windows with <18% live tiles (min 0%)",
+    "loop median live share 0% < 30% — motion too small to read in the hero",
+    "region water stalls (min window 0.04 < 1.5)",
+    "region floor stalls (min window 0.06 < 1.5)",
+    "reveal eases out: last 1.5 s live share 2% (loop 0%, floor 18%)",
+    "a half-second around the handoff is nearly still (0%)"
+  ]
+}

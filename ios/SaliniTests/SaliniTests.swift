@@ -373,4 +373,60 @@ final class SaliniTests: XCTestCase {
     XCTAssertEqual(cinema.playback.ambientCycles, 0)
     XCTAssertFalse(cinema.playback.finished)
   }
+  /// The ending must keep running through three complete loop cycles: the player never
+  /// pauses at the reveal handoff or at a loop boundary, and the playhead never stalls.
+  @MainActor func testLivingLoopRunsThreeFullCyclesWithoutStalling() async throws {
+    let scene = try XCTUnwrap(UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.first)
+    let previousKey = scene.windows.first(where: \.isKeyWindow)
+    let window = UIWindow(windowScene: scene)
+    window.rootViewController = UIViewController()
+    // Greca has the shortest reveal, so three 4 s cycles fit in a reasonable test.
+    let cinema = NinfeaCinemaView(collection: .greca)
+    window.rootViewController?.view.pin(cinema)
+    window.makeKeyAndVisible()
+    defer {
+      cinema.active = false
+      window.isHidden = true
+      previousKey?.makeKey()
+    }
+    cinema.active = true
+    var loopSamples = 0
+    var pausedSamples = 0
+    var stalledRun = 0
+    var longestStall = 0
+    var previousPlayhead = Double.nan
+    let deadline = Date().addingTimeInterval(45)
+    while cinema.playback.ambientCycles < 3 && Date() < deadline {
+      try await Task.sleep(nanoseconds: 100_000_000)
+      guard cinema.playback.finished else { continue }
+      loopSamples += 1
+      if !cinema.isPlaying { pausedSamples += 1 }
+      let playhead = cinema.playheadSeconds
+      if playhead == previousPlayhead {
+        stalledRun += 1
+        longestStall = max(longestStall, stalledRun)
+      } else {
+        stalledRun = 0
+      }
+      previousPlayhead = playhead
+    }
+    XCTAssertGreaterThanOrEqual(cinema.playback.ambientCycles, 3, "Three full loop cycles must complete")
+    XCTAssertGreaterThan(loopSamples, 75, "Most of three 4 s cycles must have been observed")
+    XCTAssertEqual(pausedSamples, 0, "The living ending paused during \(pausedSamples) samples")
+    XCTAssertLessThanOrEqual(longestStall, 4,
+                             "The playhead stood still for \(longestStall * 100) ms inside the loop")
+    XCTAssertTrue(cinema.isPlaying)
+    // A system interruption is not a new page visit. Preserve the living ending
+    // instead of replaying the entire growth sequence when the app becomes active.
+    let visitBeforeInterruption = cinema.playback.visit
+    let cyclesBeforeInterruption = cinema.playback.ambientCycles
+    NotificationCenter.default.post(name: UIApplication.willResignActiveNotification, object: nil)
+    XCTAssertFalse(cinema.isPlaying)
+    NotificationCenter.default.post(name: UIApplication.didBecomeActiveNotification, object: nil)
+    try await Task.sleep(nanoseconds: 300_000_000)
+    XCTAssertEqual(cinema.playback.visit, visitBeforeInterruption)
+    XCTAssertTrue(cinema.playback.finished)
+    XCTAssertGreaterThanOrEqual(cinema.playback.ambientCycles, cyclesBeforeInterruption)
+    XCTAssertTrue(cinema.isPlaying)
+  }
 }

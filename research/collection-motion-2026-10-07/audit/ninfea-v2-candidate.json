@@ -1,0 +1,169 @@
+{
+  "loop": {
+    "file": "research/collection-motion-2026-10-07/ninfea-loop-v2-candidate.mp4",
+    "width": 1176,
+    "height": 1764,
+    "fps": 24.0,
+    "duration": 4.0,
+    "audio": false,
+    "frames": 96,
+    "median_window_alive": 0.0625,
+    "min_window_alive": 0.0,
+    "dead_windows": 23,
+    "windows": 23,
+    "mean_lagged_change": 0.6312738656997681,
+    "median_step": 0.14106057584285736,
+    "seam_step": 0.33217060565948486,
+    "seam_ratio": 2.3548082352189295,
+    "alive_tile_map": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        1,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ]
+  },
+  "regions": {
+    "tub": {
+      "kind": "rigid",
+      "mean": 0.17199581861495972,
+      "min_window": 0.08961093425750732,
+      "max_window": 0.2730697989463806
+    },
+    "water": {
+      "kind": "alive",
+      "mean": 0.18178154528141022,
+      "min_window": 0.07799968868494034,
+      "max_window": 0.23427696526050568
+    },
+    "foreground": {
+      "kind": "alive",
+      "mean": 0.231918603181839,
+      "min_window": 0.1313340812921524,
+      "max_window": 0.31243714690208435
+    },
+    "garden": {
+      "kind": "alive",
+      "mean": 2.091580867767334,
+      "min_window": 0.25119760632514954,
+      "max_window": 4.2833380699157715
+    }
+  },
+  "intro": {
+    "file": "ios/Salini/Resources/ninfea-film-v3.mp4",
+    "width": 1176,
+    "height": 1764,
+    "fps": 24.0,
+    "duration": 12.041667,
+    "audio": false,
+    "frames": 289,
+    "alive_by_window": [
+      0.042,
+      0.125,
+      0.146,
+      0.188,
+      0.188,
+      0.208,
+      0.229,
+      0.25,
+      0.25,
+      0.208,
+      0.292,
+      0.333,
+      0.417,
+      0.458,
+      0.5,
+      0.479,
+      0.458,
+      0.438,
+      0.375,
+      0.292,
+      0.271,
+      0.208,
+      0.104
+    ],
+    "tail_alive": 0.19444444444444442,
+    "loop_median_alive": 0.0625,
+    "handoff_step_ratio": 0.6541423201560974,
+    "handoff_min_window_alive": 0.0,
+    "median_alive": 0.25
+  },
+  "heatmap": "research/collection-motion-2026-10-07/audit/ninfea-heat.png",
+  "thresholds": {
+    "width": 360,
+    "lag_s": 0.25,
+    "window_s": 0.5,
+    "alive": 1.5,
+    "min_alive_fraction": 0.18,
+    "min_median_fraction": 0.3
+  },
+  "result": "FAIL",
+  "failures": [
+    "loop has 23 of 23 half-second windows with <18% live tiles (min 0%)",
+    "loop median live share 6% < 30% — motion too small to read in the hero",
+    "seam step is 2.35× the median step (allowed 0.5–2.0)",
+    "region water stalls (min window 0.08 < 1.5)",
+    "region foreground stalls (min window 0.13 < 1.5)",
+    "region garden stalls (min window 0.25 < 1.5)",
+    "a half-second around the handoff is nearly still (0%)"
+  ]
+}

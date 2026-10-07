@@ -1,0 +1,112 @@
+{
+  "date": "2026-10-07",
+  "provider": "Higgsfield",
+  "ninfeaIntro": {
+    "params": {
+      "model": "kling3_0",
+      "mode": "pro",
+      "duration": 12,
+      "sound": "off",
+      "aspect_ratio": "9:16",
+      "count": 1,
+      "medias": [
+        {
+          "role": "start_image",
+          "value": "cc45199d-9028-48ac-94bc-a2cf2c7cc288"
+        },
+        {
+          "role": "end_image",
+          "value": "bff3d14c-acfc-4a5b-9134-cc9ab357acd0"
+        }
+      ],
+      "prompt": "A continuous twelve-second high-end botanical architectural film between the supplied first and last frames. Locked tripod, exact unchanged 2:3 framing. Preserve the exact emerald Salini Ninfea bathtub, wide thin wing-shaped rim, cavity, overflow and dark base: rigid manufactured geometry, no movement or deformation. Warm limestone and dry floor stay unchanged.\nThe garden enters FROM THE PERIMETER TOWARD THE CENTER, as ONE COORDINATED OVERLAPPING EVENT. From the very first second, broad mature foliage advances into view simultaneously from the lower-right foreground edge, the rear-left stone planter, and the upper-left wall boundary; several connected supple leafy vines extend inward from those established peripheral plants. Large lush heart-shaped philodendron leaves and fern fronds roll open continuously along their linked stems, every plant at a slightly different phase. This is a mature architectural garden unfurling, not seedlings sprouting in a row from the bathtub base. Never start with upright bare sticks or isolated baby shoots beside the bathtub. The background, foreground and water are already visibly alive together in the first two seconds, never finish one zone then reveal the next.\nClear water rises steadily INSIDE the basin from the first second, with visible travelling ripples, moving foliage reflections and a continuous meniscus. At seconds 3-6 the perimeter garden is already well developed and advancing toward the bath while the bath remains mostly bare. During seconds 6-9, two or three long fully LEAFY vines finally reach the bath from the established garden, follow its exterior curvature and gently curl over its left and right wing rims. Their leaves are broad, mature and connected; no seedling phase, no rows of shoots. Keep most of the product silhouette and front satin-green body visible. All growth unfolds continuously rather than appearing or fading in.\nBy second 9 the garden composition is complete and water level stabilizes. From seconds 9-12 movement MUST CONTINUE CLEARLY: a coherent breeze makes broad leaves and fern fronds sway in gentle 5-10 cm arcs, linked stems flex, soft leaf shadows travel in sync on the stone and bath, and clear overlapping water ripples and reflected leaf highlights keep moving. Do not ease all motion to a stop at the end. Maintain living motion right through the final frame, matching the supplied finished garden composition. Same exposure and warm sun direction throughout. Cohesive photorealistic C4D/Redshift quality, correct occlusion and contact shadows, natural leaf translucency. Silent. No camera motion, zoom, cuts, dissolves, opacity reveals, rubbery geometry, water on floor, foam, people, lettering or logos."
+    },
+    "quote": 18,
+    "status": "rejected",
+    "reason": "Out of credits on plus (monthly) plan in Private workspace; available 7; trial credits reported 100 but not accepted for this request."
+  },
+  "ninfeaLoop": {
+    "params": {
+      "model": "kling3_0",
+      "mode": "pro",
+      "duration": 4,
+      "sound": "off",
+      "aspect_ratio": "9:16",
+      "count": 1,
+      "medias": [
+        {
+          "role": "start_image",
+          "value": "bff3d14c-acfc-4a5b-9134-cc9ab357acd0"
+        },
+        {
+          "role": "end_image",
+          "value": "bff3d14c-acfc-4a5b-9134-cc9ab357acd0"
+        }
+      ],
+      "prompt": "Four seconds of clearly visible continuous living motion in this finished botanical product scene. A seamless repeating cycle, NOT an introduction and NOT a still photograph. The matching endpoint images specify one full periodic movement: movement is already in progress at frame zero and is still in progress through the final frame, with matching direction and speed across the repeat. No ease-in, no ease-out, no stopping, no freeze.\nLocked camera and rigid unchanged emerald Salini Ninfea bathtub, broad wing-shaped rim and architectural stone. The mature garden remains fully grown. A steady gentle breeze passes through all three layers of foliage AT ONCE: large foreground leaves in the lower-right corner sway in clearly readable 8-12 cm arcs, rear-left fern fronds bend and spring smoothly in broad 5-8 cm waves, the leafy vines already draped over the rim flutter and their stems flex coherently. The motion must remain visible when the entire scene is viewed only 350 pixels wide. Let different leaves have overlapping phases so they never all pause simultaneously. The water inside the basin has continuous travelling ripples and shifting reflected leaf highlights, plainly visible across its whole surface. Water and leaf shadows respond naturally to the same breeze. The thin moving leaf shadows on the stone and satin emerald body remain physically attached to their leaves. Exact stable product, fixed exposure, stable sunlight, dry floor, full stable water level, no new leaves, no growth, no filling, no large gust, no material changes. Luxurious natural slow-motion realism, coherent photorealistic C4D quality, rich green translucent leaves and clear water. Maintain the original portrait 2:3 composition without stretching. Silent. No camera move, zoom, dissolves, crossfades, pulses of global brightness, motionless endpoints or frozen patches."
+    },
+    "quote": 6,
+    "submission": {
+      "content": [
+        {
+          "type": "text",
+          "text": "This tool provides an auto-updating generation widget for these jobs. Do not call job_display, show_generations, or show_generation_by_ids to display these jobs again, either before or after completion, unless the user explicitly requests a separate display. If you need to await completion, use jobs_wait with timeout_seconds <= 15. Use job_display only if the user explicitly requests a separate re-display of one specific job."
+        },
+        {
+          "type": "text",
+          "text": "Submitted 1 job. If a widget is visible, it polls automatically — do not call job_status or show_generations as a follow-up poll. In text-only clients, use job_status with sync:true to poll for completion.\n- f9fbebc1-f36f-4cf6-b56e-0e9f516cce4c  \"Four seconds of clearly visible continuous living motion in this finished botanical product scene. A seamless repeating cycle, NOT an introduction and NOT a still photograph. The matching endpoint images specify one full periodic movement: movement is already in progress at frame zero and is still in progress through the final frame, with matching direction and speed across the repeat. No ease-in, no ease-out, no stopping, no freeze.\nLocked camera and rigid unchanged emerald Salini Ninfea bathtub, broad wing-shaped rim and architectural stone. The mature garden remains fully grown. A steady gentle breeze passes through all three layers of foliage AT ONCE: large foreground leaves in the lower-right corner sway in clearly readable 8-12 cm arcs, rear-left fern fronds bend and spring smoothly in broad 5-8 cm waves, the leafy vines already draped over the rim flutter and their stems flex coherently. The motion must remain visible when the entire scene is viewed only 350 pixels wide. Let different leaves have overlapping phases so they never all pause simultaneously. The water inside the basin has continuous travelling ripples and shifting reflected leaf highlights, plainly visible across its whole surface. Water and leaf shadows respond naturally to the same breeze. The thin moving leaf shadows on the stone and satin emerald body remain physically attached to their leaves. Exact stable product, fixed exposure, stable sunlight, dry floor, full stable water level, no new leaves, no growth, no filling, no large gust, no material changes. Luxurious natural slow-motion realism, coherent photorealistic C4D quality, rich green translucent leaves and clear water. Maintain the original portrait 2:3 composition without stretching. Silent. No camera move, zoom, dissolves, crossfades, pulses of global brightness, motionless endpoints or frozen patches.\""
+        },
+        {
+          "type": "text",
+          "text": "If the user requests a combined display of multiple generations, including jobs submitted through separate generate_* calls, collect all requested job IDs, wait for the complete set with jobs_wait, then call show_generation_by_ids with jobs: [{\"index\":0,\"job_id\":\"<first actual job ID>\"},{\"index\":1,\"job_id\":\"<second actual job ID>\"}, ...]. job_display accepts only one id: never pass ids to it or loop over it to show a group. Do not create an extra display when the existing generation widgets already satisfy the request."
+        }
+      ],
+      "structuredContent": {
+        "results": [
+          {
+            "id": "f9fbebc1-f36f-4cf6-b56e-0e9f516cce4c",
+            "type": "video",
+            "status": "pending",
+            "model": "kling3_0",
+            "params": {
+              "prompt": "Four seconds of clearly visible continuous living motion in this finished botanical product scene. A seamless repeating cycle, NOT an introduction and NOT a still photograph. The matching endpoint images specify one full periodic movement: movement is already in progress at frame zero and is still in progress through the final frame, with matching direction and speed across the repeat. No ease-in, no ease-out, no stopping, no freeze.\nLocked camera and rigid unchanged emerald Salini Ninfea bathtub, broad wing-shaped rim and architectural stone. The mature garden remains fully grown. A steady gentle breeze passes through all three layers of foliage AT ONCE: large foreground leaves in the lower-right corner sway in clearly readable 8-12 cm arcs, rear-left fern fronds bend and spring smoothly in broad 5-8 cm waves, the leafy vines already draped over the rim flutter and their stems flex coherently. The motion must remain visible when the entire scene is viewed only 350 pixels wide. Let different leaves have overlapping phases so they never all pause simultaneously. The water inside the basin has continuous travelling ripples and shifting reflected leaf highlights, plainly visible across its whole surface. Water and leaf shadows respond naturally to the same breeze. The thin moving leaf shadows on the stone and satin emerald body remain physically attached to their leaves. Exact stable product, fixed exposure, stable sunlight, dry floor, full stable water level, no new leaves, no growth, no filling, no large gust, no material changes. Luxurious natural slow-motion realism, coherent photorealistic C4D quality, rich green translucent leaves and clear water. Maintain the original portrait 2:3 composition without stretching. Silent. No camera move, zoom, dissolves, crossfades, pulses of global brightness, motionless endpoints or frozen patches.",
+              "aspect_ratio": "9:16",
+              "duration": 4,
+              "reference_images": [
+                "bff3d14c-acfc-4a5b-9134-cc9ab357acd0",
+                "bff3d14c-acfc-4a5b-9134-cc9ab357acd0"
+              ],
+              "mode": "pro",
+              "sound": "off"
+            }
+          }
+        ]
+      },
+      "isError": false
+    },
+    "status": "completed_rejected_in_quality_review",
+    "jobId": "f9fbebc1-f36f-4cf6-b56e-0e9f516cce4c",
+    "resultURL": "https://d8j0ntlcm91z4.cloudfront.net/user_2x37l8uuRLNjKyUzM7nmeqoSzVG/hf_20261007_035523_f9fbebc1-f36f-4cf6-b56e-0e9f516cce4c.mp4",
+    "localSource": "ninfea-loop-v2-source.mp4",
+    "integrated": false,
+    "rejection": "More movement than v1, but water and much of the foreground remain nearly still at phone size; candidate seam is 2.35 times the median step. Not accepted as a final living loop."
+  },
+  "remainingCredits": 1,
+  "trial": {
+    "reportedCredits": 100,
+    "status": "active",
+    "unlimAvailable": false,
+    "usableForAttemptedIntro": false,
+    "note": "The provider rejected the 18-credit intro when the regular balance was 7. No purchase or plan change performed."
+  },
+  "perimeterKeyframe": {
+    "provider": "built-in imagegen",
+    "file": "ninfea-perimeter-keyframe.png",
+    "references": [
+      "../../ios/Salini/Resources/ninfea-interior.png",
+      "../../ios/Salini/Resources/ninfea-poster-v3.png"
+    ],
+    "status": "direction_reference_only_not_integrated",
+    "direction": "Mature greenery simultaneously occupies the perimeter of the stone interior; the same emerald wing-rim tub remains bare, without vines or seedlings on the product; water is partially filled. Future video must connect this intermediate stage with continuous growth, coherent shadows and unchanged product geometry."
+  }
+}
