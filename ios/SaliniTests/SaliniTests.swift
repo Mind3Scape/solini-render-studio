@@ -5,6 +5,18 @@ import XCTest
 
 @testable import Salini
 
+/// A pan recognizer with a scripted state and translation, to drive the scene's real handler.
+final class ScriptedPan: UIPanGestureRecognizer {
+  var scriptedState: UIGestureRecognizer.State = .began
+  var scriptedTranslation: CGPoint = .zero
+  override var state: UIGestureRecognizer.State {
+    get { scriptedState }
+    set { scriptedState = newValue }
+  }
+  override func translation(in view: UIView?) -> CGPoint { scriptedTranslation }
+  override func velocity(in view: UIView?) -> CGPoint { .zero }
+}
+
 final class SaliniTests: XCTestCase {
   func testCuratedCatalogHasSourcesAndMatchingAriaVariants() throws {
     XCTAssertEqual(Product.all.count, 4)
@@ -858,6 +870,278 @@ final class SaliniTests: XCTestCase {
     XCTAssertEqual(view.mapCamera.scale, view.mapCamera.overviewScale, accuracy: 0.001,
                    "«Вся территория» keeps both complexes after the next layout pass")
     view.setPaused(true)
+  }
+  // MARK: Insight board
+
+  private func runUntil(_ sim: FactorySimulation, _ done: () -> Bool, limit: Int = 400) {
+    var n = 0
+    while !done() && n < limit { sim.advance(); n += 1 }
+  }
+  func testOpeningPriorityFollowsBlockingThenUrgencyThenLiveProcess() {
+    let sim = FactorySimulation()
+    XCTAssertEqual(sim.primaryFocus.id, "marea-held", "Blocking first: Marea stops trip 02")
+    XCTAssertEqual(sim.primaryFocus.target, .zone(.quality))
+    XCTAssertEqual(sim.primaryFocus.decision, .order(.marea))
+    XCTAssertTrue(sim.startQualityCheck())
+    XCTAssertEqual(sim.primaryFocus.id, "aria-late", "Then urgency with a closing window")
+    XCTAssertTrue(sim.primaryFocus.reason.contains("+20 мин"), sim.primaryFocus.reason)
+    XCTAssertTrue(sim.activateReserve())
+    XCTAssertEqual(sim.primaryFocus.kind, .live, "No decision left: a live process, not the busiest hall")
+    XCTAssertFalse(sim.focuses.contains { $0.kind == .load }, "Load is only the last fallback")
+  }
+  func testBoardNumbersAgreeWithTheModelAcrossTheScenario() {
+    let sim = FactorySimulation()
+    func check(_ stage: String) {
+      let board = InsideBoard(simulation: sim)
+      let m = Dictionary(uniqueKeysWithValues: board.metrics.map { ($0.id, $0) })
+      XCTAssertEqual(board.portfolio, InsideOrderID.allCases.reduce(0) { $0 + $1.quantity * $1.demoUnitPrice }, stage)
+      XCTAssertEqual(board.portfolio, 6_254_000, "Fixed demo orders: 3 560 000 + 768 000 + 1 110 000 + 576 000 + 240 000")
+      XCTAssertEqual(m[.decisions]?.value, "\(sim.attentionCount)", stage)
+      XCTAssertEqual(m[.accepted]?.value, "\(sim.completed)/68", stage)
+      XCTAssertEqual(m[.production]?.value, "\(board.inProduction.reduce(0) { $0 + $1.0.quantity })", stage)
+      XCTAssertEqual(m[.road]?.value, "\(InsideTrip.allCases.filter { sim.tripState($0).onRoad }.count)", stage)
+      XCTAssertEqual(InsideMetricID.allCases.count, board.metrics.count, "One card per metric, no duplicates")
+    }
+    check("open")
+    XCTAssertEqual(InsideBoard(simulation: sim).inProductionPieces, 4 + 12 + 8, "Aria, Marea, trays")
+    sim.startQualityCheck(); check("quality check")
+    sim.activateReserve(); check("reserve")
+    runUntil(sim) { sim.quality == .loading }; check("loading")
+    XCTAssertEqual(InsideBoard(simulation: sim).readyPieces, 5 + 4 + 6 + 12, "Mirrors, trip 01, Domino, Marea")
+    runUntil(sim) { sim.quality == .ready }
+    XCTAssertTrue(sim.releaseMareaDispatch()); check("trip 02 out")
+    sim.releaseDispatch(); check("trip 01 out")
+    XCTAssertEqual(InsideBoard(simulation: sim).tripsOnRoad, [.moscow, .petersburg])
+    XCTAssertEqual(InsideBoard(simulation: sim).readyPieces, 5)
+  }
+  @MainActor private func ownerInWindow() -> (OwnerController, UIWindow) {
+    let owner = OwnerController()
+    let window = UIWindow(frame: CGRect(x: 0, y: 0, width: 402, height: 874))
+    window.rootViewController = owner
+    window.makeKeyAndVisible()
+    owner.view.layoutIfNeeded()
+    return (owner, window)
+  }
+  @MainActor func testOpensOnTheTopFocusWithoutAFlight() {
+    let (owner, window) = ownerInWindow()
+    XCTAssertEqual(owner.activeFocus.id, "marea-held")
+    XCTAssertEqual(owner.factory.cameraMode, .event)
+    XCTAssertEqual(owner.factory.mapCamera.focus.x, FactoryZone.quality.position.x, accuracy: 0.01)
+    XCTAssertEqual(owner.factory.mapCamera.focus.z, FactoryZone.quality.position.z, accuracy: 0.01)
+    XCTAssertTrue(owner.returnPill.isHidden)
+    XCTAssertTrue(owner.board.cards[.decisions]?.isSelected == true)
+    owner.factory.setPaused(true)
+    window.isHidden = true
+  }
+  @MainActor func testManualExplorationSurvivesModelRevisions() {
+    let (owner, window) = ownerInWindow()
+    owner.factory.stepZoom(false)
+    XCTAssertEqual(owner.factory.cameraMode, .manual)
+    let focus = owner.factory.mapCamera.focus
+    let scale = owner.factory.mapCamera.scale
+    XCTAssertFalse(owner.returnPill.isHidden, "«К событию» offered while exploring")
+    owner.simulation.startQualityCheck()
+    for _ in 0..<40 { owner.simulation.advance() }
+    owner.refresh()
+    XCTAssertEqual(owner.factory.cameraMode, .manual, "No snap-back on revisions")
+    XCTAssertEqual(owner.factory.mapCamera.focus.x, focus.x, accuracy: 0.001)
+    XCTAssertEqual(owner.factory.mapCamera.scale, scale, accuracy: 0.001)
+    XCTAssertTrue(owner.activeFocus.id.hasPrefix("marea-held"), "The chosen focus is kept, not replaced by the next one")
+    XCTAssertEqual(owner.activeFocus.subject, .order(.marea))
+    XCTAssertTrue(owner.activeFocus.reason.hasPrefix("Решение принято"))
+    owner.factory.setPaused(true)
+    window.isHidden = true
+  }
+  @MainActor func testStatTapFollowsTripsAndReturnsFromManual() {
+    let (owner, window) = ownerInWindow()
+    owner.choose(.road)
+    XCTAssertEqual(owner.factory.cameraMode, .follow(.trip(.moscow)), "Trip 01 has a moving anchor too")
+    XCTAssertFalse(owner.simulation.dispatchReleased, "A tap never releases a truck")
+    owner.factory.stepZoom(true)
+    XCTAssertEqual(owner.factory.cameraMode, .manual)
+    owner.choose(.road)
+    XCTAssertEqual(owner.factory.cameraMode, .follow(.trip(.moscow)), "Second tap returns to the event")
+    XCTAssertTrue(owner.returnPill.isHidden)
+    // Both trips can be followed; a departed truck rests the camera at the exit gate.
+    owner.factory.follow(.trip(.petersburg), animated: false)
+    XCTAssertEqual(owner.factory.cameraMode, .follow(.trip(.petersburg)))
+    let docked = owner.factory.followPoint(.trip(.petersburg))
+    XCTAssertGreaterThan(docked.z, 20, "Docked truck, not the gate")
+    owner.factory.releaseDispatch(1, immediate: true)
+    XCTAssertTrue(owner.factory.tripLeftCampus(.moscow))
+    XCTAssertEqual(owner.factory.followPoint(.trip(.moscow)).z, FactorySceneView.exitGate.z, accuracy: 0.01)
+    XCTAssertFalse(owner.factory.tripLeftCampus(.petersburg))
+    owner.factory.setPaused(true)
+    window.isHidden = true
+  }
+  @MainActor func testChosenBatchIsFollowedAlongItsOwnRoute() {
+    let (owner, window) = ownerInWindow()
+    let sim = owner.simulation
+    XCTAssertEqual(owner.activeFocus.subject, .order(.marea))
+    sim.startQualityCheck()
+    runUntil(sim) { sim.quality == .packing }
+    owner.refresh()
+    XCTAssertEqual(owner.shownTarget, .zone(.packing), "OTK → packing with the same batch")
+    XCTAssertEqual(owner.factory.cameraMode, .event)
+    runUntil(sim) { sim.quality == .loading }
+    owner.refresh()
+    XCTAssertEqual(owner.shownTarget, .transfer, "Packing → the forklift carrying it")
+    XCTAssertEqual(owner.factory.cameraMode, .follow(.transfer))
+    runUntil(sim) { sim.quality == .ready }
+    owner.refresh()
+    XCTAssertEqual(owner.shownTarget, .trip(.petersburg), "Forklift → truck 02 at the dock")
+    XCTAssertEqual(owner.activeFocus.subject, .order(.marea), "Never swapped for another order")
+    owner.factory.setPaused(true)
+    window.isHidden = true
+  }
+  @MainActor func testManualOnlyUpdatesTextAndReturnGoesToTheCurrentPosition() {
+    let (owner, window) = ownerInWindow()
+    let sim = owner.simulation
+    owner.factory.stepZoom(false)
+    sim.startQualityCheck()
+    runUntil(sim) { sim.quality == .packing }
+    owner.refresh()
+    XCTAssertEqual(owner.factory.cameraMode, .manual)
+    XCTAssertEqual(owner.shownTarget, .zone(.quality), "Manual: the camera stays where the owner left it")
+    XCTAssertEqual(owner.activeFocus.target, .zone(.packing), "…while the text already knows the batch moved")
+    owner.showActiveFocus()
+    XCTAssertEqual(owner.shownTarget, .zone(.packing), "«К событию» goes to where the batch is now")
+    XCTAssertEqual(owner.factory.cameraMode, .event)
+    owner.factory.setPaused(true)
+    window.isHidden = true
+  }
+  @MainActor func testReleasedTripFromThePanelIsFollowed() throws {
+    let (owner, window) = ownerInWindow()
+    owner.simulation.releaseDispatch()
+    owner.board.scroller.contentOffset = .zero
+    owner.focusTrip(.moscow)
+    XCTAssertEqual(owner.factory.cameraMode, .follow(.trip(.moscow)))
+    XCTAssertEqual(owner.selectedMetric, .road)
+    let card = try XCTUnwrap(owner.board.cards[.road])
+    let visible = CGRect(origin: owner.board.scroller.contentOffset, size: owner.board.scroller.bounds.size)
+    XCTAssertTrue(visible.contains(card.convert(card.bounds, to: owner.board.scroller)),
+                  "The chosen card is brought into view")
+    owner.factory.setPaused(true)
+    window.isHidden = true
+  }
+  @MainActor func testFocusTitleShowsTheCurrentStageOfTheSameOrder() {
+    let (owner, window) = ownerInWindow()
+    let sim = owner.simulation
+    sim.startQualityCheck()
+    runUntil(sim) { sim.quality == .packing }
+    owner.refresh()
+    XCTAssertEqual(owner.activeFocus.title, "Marea · упаковка", "Not «удержана ОТК» any more")
+    XCTAssertTrue(owner.activeFocus.reason.hasPrefix("Решение принято"), "The decision itself was taken")
+    owner.choose(.production)
+    let chosen = owner.activeFocus.subject
+    runUntil(sim) { sim.quality == .loading }
+    owner.refresh()
+    XCTAssertEqual(owner.activeFocus.subject, chosen)
+    XCTAssertFalse(owner.activeFocus.reason.contains("Решение принято"), "A process, not a decision")
+    owner.factory.setPaused(true)
+    window.isHidden = true
+  }
+  @MainActor func testMetricStripScrollsFromCardsAndKeepsItsOffsetOnUpdates() throws {
+    let (owner, window) = ownerInWindow()
+    let strip = owner.board.scroller
+    let card = try XCTUnwrap(owner.board.cards[.portfolio])
+    XCTAssertTrue(strip.canCancelContentTouches)
+    XCTAssertTrue(strip.touchesShouldCancel(in: card), "A drag that starts on a card scrolls the strip")
+    strip.layoutIfNeeded()
+    let maxX = max(0, strip.contentSize.width - strip.bounds.width)
+    XCTAssertGreaterThan(maxX, 0, "Six cards do not fit: the strip scrolls")
+    strip.contentOffset.x = min(120, maxX)
+    let offset = strip.contentOffset
+    owner.simulation.startQualityCheck()
+    owner.refresh()
+    XCTAssertEqual(strip.contentOffset, offset, "Numbers update in place; scroll position stays")
+    XCTAssertTrue(owner.board.cards[.decisions]?.isSelected == true, "Selection stays too")
+    owner.factory.setPaused(true)
+    window.isHidden = true
+  }
+  @MainActor func testBoardFitsANarrowScreenWithTheLargestText() throws {
+    let owner = OwnerController()
+    let window = UIWindow(frame: CGRect(x: 0, y: 0, width: 320, height: 568))
+    window.traitOverrides.preferredContentSizeCategory = .accessibilityExtraExtraExtraLarge
+    window.rootViewController = owner
+    window.makeKeyAndVisible()
+    owner.view.layoutIfNeeded()
+    owner.view.layoutIfNeeded()
+    XCTAssertLessThanOrEqual(owner.board.frame.height, window.bounds.height * 0.5 + 1, "Scene keeps half the screen")
+    XCTAssertGreaterThanOrEqual(owner.board.frame.minX, 0)
+    XCTAssertLessThanOrEqual(owner.board.frame.maxX, window.bounds.width)
+    func find(_ id: String, in view: UIView) -> UIView? {
+      view.accessibilityIdentifier == id ? view : view.subviews.lazy.compactMap { find(id, in: $0) }.first
+    }
+    let reason = try XCTUnwrap(find("insight.focus.reason", in: owner.board) as? UILabel)
+    XCTAssertFalse(reason.isHidden)
+    XCTAssertGreaterThan(reason.bounds.width, 100, "The reason takes the full width")
+    let needed = reason.sizeThatFits(CGSize(width: reason.bounds.width, height: .greatestFiniteMagnitude)).height
+    XCTAssertLessThanOrEqual(needed, reason.bounds.height + 1, "Reason is not clipped (the board scrolls instead)")
+    let action = try XCTUnwrap(find("insight.action", in: owner.board))
+    let inBoard = action.convert(action.bounds, to: owner.board)
+    XCTAssertTrue(owner.board.bounds.insetBy(dx: -1, dy: -1000).contains(inBoard), "Action stays within the board width")
+    // Our own views only (cards, labels, stacks, scrollers); system button internals are excluded.
+    func ambiguous(_ v: UIView) -> [UIView] {
+      if v is UIButton { return [] }
+      let own = v is InsightMetricCard || v is UILabel || v is UIStackView || v is UIScrollView
+      return (own && v.hasAmbiguousLayout ? [v] : []) + v.subviews.flatMap(ambiguous)
+    }
+    let unclear = ambiguous(owner.board)
+    XCTAssertEqual(unclear.count, 0, "No ambiguous layout on the board: \(unclear.map { "\(type(of: $0)) \($0.accessibilityIdentifier ?? "") \($0.frame)" })")
+    owner.factory.setPaused(true)
+    window.isHidden = true
+  }
+  @MainActor func testMapDragMovesTheCameraKeepsIsometryAndCanReturn() throws {
+    let (owner, window) = ownerInWindow()
+    let factory = owner.factory
+    let camera = try XCTUnwrap(factory.pointOfView)
+    let orientation = camera.orientation
+    let start = factory.mapCamera.focus
+    let pan = ScriptedPan()
+    pan.scriptedState = .began
+    factory.handlePan(pan)
+    XCTAssertEqual(factory.cameraMode, .manual)
+    pan.scriptedState = .changed
+    pan.scriptedTranslation = CGPoint(x: 90, y: -60)
+    factory.handlePan(pan)
+    pan.scriptedState = .ended
+    factory.handlePan(pan)
+    let moved = factory.mapCamera.focus
+    XCTAssertGreaterThan(abs(moved.x - start.x) + abs(moved.z - start.z), 1, "The drag really moves the map focus")
+    // The same screen-space math as CampusCamera.pan: 90 pt right, 60 pt up.
+    var expected = CampusCamera()
+    expected.viewport = factory.mapCamera.viewport
+    expected.scale = factory.mapCamera.scale
+    expected.pan(CGPoint(x: 90, y: -60), from: start)
+    XCTAssertEqual(moved.x, expected.focus.x, accuracy: 0.5)
+    XCTAssertEqual(moved.z, expected.focus.z, accuracy: 0.5)
+    // The camera node itself followed (model value; the presentation may still be gliding).
+    XCTAssertEqual(camera.position.x - camera.position.z, moved.x - moved.z, accuracy: 3,
+                   "Camera node position moved with the focus")
+    XCTAssertEqual(camera.orientation.x, orientation.x, accuracy: 0.0001)
+    XCTAssertEqual(camera.orientation.y, orientation.y, accuracy: 0.0001)
+    XCTAssertEqual(camera.orientation.z, orientation.z, accuracy: 0.0001)
+    XCTAssertEqual(camera.orientation.w, orientation.w, accuracy: 0.0001)
+    // A model revision while exploring does not move it back.
+    owner.simulation.startQualityCheck()
+    owner.refresh()
+    XCTAssertEqual(factory.mapCamera.focus.x, moved.x, accuracy: 0.001)
+    XCTAssertFalse(owner.returnPill.isHidden)
+    owner.showActiveFocus()
+    XCTAssertEqual(factory.cameraMode, .event, "«К событию» returns")
+    XCTAssertEqual(factory.mapCamera.focus.x, FactoryZone.quality.position.x, accuracy: 0.01)
+    factory.setPaused(true)
+    window.isHidden = true
+  }
+  func testPausedScenarioKeepsTheFocus() {
+    let sim = FactorySimulation()
+    sim.paused = true
+    let revision = sim.revision
+    for _ in 0..<20 { sim.advance() }
+    XCTAssertEqual(sim.primaryFocus.id, "marea-held")
+    XCTAssertEqual(sim.tick, 0)
+    XCTAssertGreaterThanOrEqual(sim.revision, revision)
   }
   func testCampusBuildingsDoNotOverlapAndRouteConnectsBusiness() {
     for (i, a) in FactoryZone.allCases.enumerated() {

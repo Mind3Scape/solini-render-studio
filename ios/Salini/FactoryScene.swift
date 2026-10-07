@@ -22,7 +22,21 @@ final class FactorySceneView: SCNView, UIGestureRecognizerDelegate {
   private var batchTransfer: SCNNode?
   private var transferStarted = false
   private var freightGate: SCNNode?
-  private var followingShipment = false
+  /// Explicit camera policy. `event` frames a focus once; `follow` re-centres on a moving trip
+  /// every frame; `manual` is any direct map gesture — model revisions never move it; `tour`
+  /// is the stage-by-stage route.
+  /// A moving thing the camera can stay on: a trip's truck or the loading forklift.
+  enum FollowAnchor: Equatable { case trip(InsideTrip), transfer }
+  enum CameraMode: Equatable { case event, follow(FollowAnchor), manual, tour }
+  /// While a flight to a moving anchor is in progress, per-frame following waits for it.
+  private var followSettlesAt: CFTimeInterval = 0
+  private var followCatchUp = false
+  private(set) var cameraMode: CameraMode = .event {
+    didSet { if oldValue != cameraMode { onCameraModeChange?(cameraMode) } }
+  }
+  var onCameraModeChange: ((CameraMode) -> Void)?
+  /// Where a trip is visible: its truck while on the campus, the exit gate once it has left.
+  static let exitGate = SCNVector3(104, 0, -66)
   private weak var simulation: FactorySimulation?
   private var lens: CampusLens = .campus
   private var trackedOrder: InsideOrderID?
@@ -161,7 +175,14 @@ final class FactorySceneView: SCNView, UIGestureRecognizerDelegate {
       lastViewport = bounds.size
       lastVisibleRect = visibleMapRect
       mapCamera.viewport = visibleMapRect.size
-      if let activeZone {
+      if cameraMode == .manual && explored {
+        // Manual exploration keeps its own focus and scale across any layout change.
+      } else if case .follow(let anchor) = cameraMode {
+        mapCamera.frame(.dispatch)
+        mapCamera.scale *= 0.8
+        mapCamera.focus = followPoint(anchor)
+        mapCamera.clamp()
+      } else if let activeZone {
         mapCamera.frame(activeZone)
       } else if !explored {
         if restingFrame == .territory { mapCamera.overview() } else { mapCamera.quarter() }
@@ -2102,7 +2123,6 @@ final class FactorySceneView: SCNView, UIGestureRecognizerDelegate {
     self.simulation = simulation
     self.lens = lens
     self.trackedOrder = tracked
-    if tracked == nil { followingShipment = false }
     SCNTransaction.begin()
     SCNTransaction.animationDuration = UIAccessibility.isReduceMotionEnabled ? 0 : 0.5
     for zone in FactoryZone.allCases {
@@ -2176,6 +2196,7 @@ final class FactorySceneView: SCNView, UIGestureRecognizerDelegate {
   }
   fileprivate func placeLabels() {
     guard bounds.width > 0, window != nil else { return }
+    updateFollow()
     var occupied: [CGRect] = []
     let overview = mapCamera.scale > mapCamera.overviewScale * 0.72
     let priority = FactoryZone.allCases.sorted {
@@ -2218,11 +2239,6 @@ final class FactorySceneView: SCNView, UIGestureRecognizerDelegate {
         marker.position = SCNVector3(location.x, 0.65, location.z)
         departedAndGone = truck.presentation.opacity < 0.05
         marker.opacity = departedAndGone ? 0 : (trackedOrder == order || lens == .orders ? 1 : 0)
-        if followingShipment && trackedOrder == order && !departedAndGone {
-          mapCamera.focus = SCNVector3(location.x, 0, location.z)
-          mapCamera.clamp()
-          updateCamera(duration: 0)
-        }
       }
       let point = projectPoint(marker.presentation.position)
       tag.sizeToFit()
@@ -2274,6 +2290,7 @@ final class FactorySceneView: SCNView, UIGestureRecognizerDelegate {
     onViewport?(mapCamera)
   }
   func resetCamera() {
+    cameraMode = .manual
     activeZone = nil
     explored = false
     restingFrame = .territory
@@ -2290,7 +2307,8 @@ final class FactorySceneView: SCNView, UIGestureRecognizerDelegate {
     for (z, outline) in outlines { outline.opacity = highlight && z == zone ? 1 : 0 }
     SCNTransaction.commit()
   }
-  func focusOn(_ zone: FactoryZone, animated: Bool = true) {
+  func focusOn(_ zone: FactoryZone, animated: Bool = true, mode: CameraMode = .event) {
+    cameraMode = mode
     activeZone = zone
     accessibilityValue = "\(zone.code) · \(zone.title), комплекс \(zone.complex)"
     explored = true
@@ -2298,6 +2316,74 @@ final class FactorySceneView: SCNView, UIGestureRecognizerDelegate {
     mapCamera.frame(zone)
     updateCamera(duration: animated ? 0.85 : 0)
     updateRoofs()
+  }
+  /// Frames an insight target: a hall once, or a trip continuously. Never changes business state.
+  func show(_ target: InsideTarget, animated: Bool = true) {
+    switch target {
+    case .zone(let zone): focusOn(zone, animated: animated)
+    case .trip(let trip): follow(.trip(trip), animated: animated)
+    case .transfer: follow(.transfer, animated: animated)
+    }
+  }
+  func follow(_ anchor: FollowAnchor, animated: Bool = true) {
+    let wasFollowing = cameraMode == .follow(anchor)
+    activeZone = nil
+    explored = true
+    cameraMode = .follow(anchor)
+    select(anchor == .transfer ? .packing : .dispatch)
+    switch anchor {
+    case .trip(let trip): accessibilityValue = "\(trip.title) · \(trip.destination)"
+    case .transfer: accessibilityValue = "Погрузчик · упаковка → док 02"
+    }
+    mapCamera.frame(.dispatch)
+    mapCamera.scale *= 0.8
+    mapCamera.focus = followPoint(anchor)
+    mapCamera.clamp()
+    let flight = animated && !wasFollowing && !UIAccessibility.isReduceMotionEnabled ? 0.85 : 0
+    // The per-frame follow must not cancel this flight: it resumes when the flight lands and
+    // first catches up with a short glide instead of a jump.
+    followSettlesAt = CACurrentMediaTime() + flight
+    followCatchUp = flight > 0
+    updateCamera(duration: flight)
+    updateRoofs()
+  }
+  func setTourMode() { cameraMode = .tour }
+  /// A follow anchor's position: the truck on the campus, the exit gate after it has left, or
+  /// the forklift carrying the packed batch.
+  func followPoint(_ anchor: FollowAnchor) -> SCNVector3 {
+    switch anchor {
+    case .transfer:
+      guard let lift = batchTransfer else { return FactoryZone.packing.position }
+      let p = lift.presentation.convertPosition(SCNVector3Zero, to: nil)
+      return SCNVector3(p.x, 0, p.z)
+    case .trip(let trip):
+      guard let truck = outboundTrucks[trip.rawValue], !tripLeftCampus(trip) else { return Self.exitGate }
+      let p = truck.presentation.convertPosition(SCNVector3Zero, to: nil)
+      return SCNVector3(p.x, 0, p.z)
+    }
+  }
+  /// True once a released truck has driven off the site (faded out or past the boundary).
+  func tripLeftCampus(_ trip: InsideTrip) -> Bool {
+    guard departures.contains(trip.rawValue), let truck = outboundTrucks[trip.rawValue] else { return false }
+    let p = truck.presentation.convertPosition(SCNVector3Zero, to: nil)
+    return truck.presentation.opacity < 0.05 || truck.opacity < 0.05 || p.z < Float(CampusSite.complexOne.minY)
+  }
+  /// Called every display tick: keeps a followed trip centred without animation.
+  private func updateFollow() {
+    guard case .follow(let anchor) = cameraMode, !simulationPaused,
+      CACurrentMediaTime() >= followSettlesAt
+    else { return }
+    let target = followPoint(anchor)
+    if abs(target.x - mapCamera.focus.x) + abs(target.z - mapCamera.focus.z) > 0.05 {
+      mapCamera.focus = target
+      mapCamera.clamp()
+      let glide = followCatchUp && !UIAccessibility.isReduceMotionEnabled ? 0.25 : 0
+      followCatchUp = false
+      if glide > 0 { followSettlesAt = CACurrentMediaTime() + glide }
+      updateCamera(duration: glide)
+    } else {
+      followCatchUp = false
+    }
   }
   func closeUp(_ zone: FactoryZone) {
     focusOn(zone, animated: false)
@@ -2338,10 +2424,10 @@ final class FactorySceneView: SCNView, UIGestureRecognizerDelegate {
     }
     SCNTransaction.commit()
   }
-  func releaseDispatch(_ number: Int = 1) {
+  /// `immediate` skips the drive (as Reduce Motion does): the truck has left the site at once.
+  func releaseDispatch(_ number: Int = 1, immediate: Bool = false) {
     guard !departures.contains(number), let truck = outboundTrucks[number] else { return }
     departures.insert(number)
-    if number == 2 && trackedOrder != nil { followingShipment = true }
     freightGate?.removeAllActions()
     freightGate?.runAction(
       .sequence([
@@ -2366,10 +2452,10 @@ final class FactorySceneView: SCNView, UIGestureRecognizerDelegate {
     drive.speed = simulationSpeed
     truck.runAction(drive, forKey: "departure")
     truck.isPaused = simulationPaused || UIAccessibility.isReduceMotionEnabled
-    if UIAccessibility.isReduceMotionEnabled { truck.opacity = 0 }
+    if UIAccessibility.isReduceMotionEnabled || immediate { truck.opacity = 0 }
   }
   func stepZoom(_ closer: Bool) {
-    followingShipment = false
+    cameraMode = .manual
     onExplore?()
     explored = true
     mapCamera.zoom(mapCamera.scale * (closer ? 0.72 : 1.38))
@@ -2418,7 +2504,9 @@ final class FactorySceneView: SCNView, UIGestureRecognizerDelegate {
       }
     }
   }
-  @objc private func pan(_ g: UIPanGestureRecognizer) {
+  @objc private func pan(_ g: UIPanGestureRecognizer) { handlePan(g) }
+  /// The map drag. Internal so a test can drive it with a real recognizer state and translation.
+  func handlePan(_ g: UIPanGestureRecognizer) {
     if g.state == .began {
       // Adopt the presentation camera so a touch can interrupt a flight without jumping.
       let presented = cameraNode.presentation.position
@@ -2430,7 +2518,7 @@ final class FactorySceneView: SCNView, UIGestureRecognizerDelegate {
         presented.x - CampusCamera.offset.x - shift.x, 0,
         presented.z - CampusCamera.offset.z - shift.z)
       cameraNode.removeAllAnimations()
-      followingShipment = false
+      cameraMode = .manual
       panOrigin = mapCamera.focus
       explored = true
       onExplore?()
@@ -2446,7 +2534,7 @@ final class FactorySceneView: SCNView, UIGestureRecognizerDelegate {
   }
   @objc private func zoom(_ g: UIPinchGestureRecognizer) {
     if g.state == .began {
-      followingShipment = false
+      cameraMode = .manual
       pinchScale = mapCamera.scale
       explored = true
       onExplore?()

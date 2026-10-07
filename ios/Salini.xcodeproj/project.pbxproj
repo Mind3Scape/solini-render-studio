@@ -27,6 +27,7 @@
 		52865D44CB6F34BBD75EA0C3 /* greca-editorial.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 91874D6C11CB47206527617E /* greca-editorial.jpg */; };
 		556031AFBC01ED618E9F0D68 /* CatalogData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F35174F3897EDA5D14359707 /* CatalogData.swift */; };
 		56B48C7F86569A1C65D45047 /* aria.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A3AD3AD462395F7627F0F9ED /* aria.jpg */; };
+		5807328559EB0FCB68D52279 /* InsightBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143757887A660060C31EEA9F /* InsightBoard.swift */; };
 		5A04D150B5857BBA96742663 /* oriente.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A177BC09A63FBF19E80DCF74 /* oriente.jpg */; };
 		622429E388CF81F64A0BEF38 /* InsideVisuals.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57996FF6A4B9A58C4F8C45E /* InsideVisuals.swift */; };
 		64E48A693ECBAABA272CB3DB /* greca-film-v1.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 42A918ABF8585C6BC5289573 /* greca-film-v1.mp4 */; };
@@ -64,6 +65,7 @@
 		CBE48C2F8819A2EE63FDF028 /* aria-final-v1.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A81E07316820E6A61ECE593 /* aria-final-v1.png */; };
 		D4F081D4382A5BE5549A09CF /* Support.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F92CDB3890A5C91EF0EAC1E /* Support.swift */; };
 		E0004C970033EB673136243D /* luce.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D91143AF411A90AC2958AC84 /* luce.jpg */; };
+		E1E655189020B47085668945 /* InsideInsight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6925D6ED72DF85405AB2642F /* InsideInsight.swift */; };
 		E3870384C2CE964391CDB5E5 /* Design.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3AB58D801AACAB3369DA9D5 /* Design.swift */; };
 		E4D822944844DA160F637E2B /* aria-film-v1.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 7D70130BE779A16D905D698D /* aria-film-v1.mp4 */; };
 		ED57E656CAA402EE7A42A859 /* ProposalPDF.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306929DD07FBFF39A6397AD6 /* ProposalPDF.swift */; };
@@ -90,6 +92,7 @@
 		0A3AABFA7EE65B9740755F4B /* aria-loop-v1.mp4 */ = {isa = PBXFileReference; path = "aria-loop-v1.mp4"; sourceTree = "<group>"; };
 		0BDA4150E041906634BE2E98 /* ninfea-film-v3.mp4 */ = {isa = PBXFileReference; path = "ninfea-film-v3.mp4"; sourceTree = "<group>"; };
 		115177084A87D881A3F70994 /* MaterialStudio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaterialStudio.swift; sourceTree = "<group>"; };
+		143757887A660060C31EEA9F /* InsightBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightBoard.swift; sourceTree = "<group>"; };
 		1C21E6FCCD97876F706ADB2E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		200C0338C7066941F0D41381 /* stone.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = stone.jpg; sourceTree = "<group>"; };
 		205C91FAD53CEC3928277F81 /* NinfeaCinema.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NinfeaCinema.swift; sourceTree = "<group>"; };
@@ -106,6 +109,7 @@
 		5F0F1FC1E86F2639CE0FDD3D /* opera-film-v1.mp4 */ = {isa = PBXFileReference; path = "opera-film-v1.mp4"; sourceTree = "<group>"; };
 		632403708ED41F88A65A300E /* CampusOverview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusOverview.swift; sourceTree = "<group>"; };
 		672B74F0BCED01A47E534CD1 /* opera-detail.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "opera-detail.jpg"; sourceTree = "<group>"; };
+		6925D6ED72DF85405AB2642F /* InsideInsight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsideInsight.swift; sourceTree = "<group>"; };
 		6C53D942770B336103058500 /* opera-top.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "opera-top.jpg"; sourceTree = "<group>"; };
 		71A0945E0526B6B9D34EAD27 /* salini-logo.svg */ = {isa = PBXFileReference; path = "salini-logo.svg"; sourceTree = "<group>"; };
 		7BAB34199B15CE6E53C954A2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -240,8 +244,10 @@
 				8533340A72EAF8A013360ECE /* FactoryScene.swift */,
 				227902BDF40ADF52F72D7B54 /* Home.swift */,
 				7BAB34199B15CE6E53C954A2 /* Info.plist */,
+				6925D6ED72DF85405AB2642F /* InsideInsight.swift */,
 				FD95755374BE98F79C16C503 /* InsidePanels.swift */,
 				A57996FF6A4B9A58C4F8C45E /* InsideVisuals.swift */,
+				143757887A660060C31EEA9F /* InsightBoard.swift */,
 				115177084A87D881A3F70994 /* MaterialStudio.swift */,
 				CBE7AB302AA433C80A3F4A14 /* MaterialStudioScene.swift */,
 				205C91FAD53CEC3928277F81 /* NinfeaCinema.swift */,
@@ -407,8 +413,10 @@
 				E3870384C2CE964391CDB5E5 /* Design.swift in Sources */,
 				C919C35BF39AFCF7A2620366 /* FactoryScene.swift in Sources */,
 				C1E3CF871A14297CBBCB4D68 /* Home.swift in Sources */,
+				E1E655189020B47085668945 /* InsideInsight.swift in Sources */,
 				A7D8C823650DD7790B0917A3 /* InsidePanels.swift in Sources */,
 				622429E388CF81F64A0BEF38 /* InsideVisuals.swift in Sources */,
+				5807328559EB0FCB68D52279 /* InsightBoard.swift in Sources */,
 				34D8442BABB4641EBEA5BB0C /* MaterialStudio.swift in Sources */,
 				6BA100206BD88C0C97502BDE /* MaterialStudioScene.swift in Sources */,
 				01C959B14340E03E7D4D41B2 /* NinfeaCinema.swift in Sources */,
@@ -443,7 +451,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = TQ5SCF3KQZ;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Salini/Info.plist;
@@ -626,7 +634,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = TQ5SCF3KQZ;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Salini/Info.plist;

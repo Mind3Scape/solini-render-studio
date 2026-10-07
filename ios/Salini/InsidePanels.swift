@@ -67,6 +67,8 @@ final class InsidePanelController: ScrollController {
   let simulation: FactorySimulation
   let destination: InsideDestination
   let onLocate: (FactoryZone, InsideOrderID?) -> Void
+  /// A released trip: the board follows that truck (falls back to the dispatch hall).
+  var onTrip: ((InsideTrip) -> Void)?
   private var observer: NSObjectProtocol?
   private var lastRevision = -1
   private var forecastMinute: Double = -1
@@ -116,12 +118,17 @@ final class InsidePanelController: ScrollController {
     if lastRevision != simulation.revision { render() }
   }
   private func push(_ destination: InsideDestination) {
-    navigationController?.pushViewController(
-      InsidePanelController(destination, simulation: simulation, onLocate: onLocate), animated: true
-    )
+    let next = InsidePanelController(destination, simulation: simulation, onLocate: onLocate)
+    next.onTrip = onTrip
+    navigationController?.pushViewController(next, animated: true)
   }
   private func locate(_ zone: FactoryZone, _ order: InsideOrderID? = nil) {
     dismiss(animated: true) { [onLocate] in onLocate(zone, order) }
+  }
+  private func locateTrip(_ trip: InsideTrip) {
+    dismiss(animated: true) { [onTrip, onLocate] in
+      if let onTrip { onTrip(trip) } else { onLocate(.dispatch, trip == .petersburg ? .marea : nil) }
+    }
   }
   private func section(_ title: String) { add(insideEyebrow(title), inset: 22) }
   private func card(_ views: [UIView]) { add(insideCard(views), inset: 16) }
@@ -558,7 +565,7 @@ final class InsidePanelController: ScrollController {
       icon: "truck.box", prominent: true
     ) { [weak self] in
       guard let self, self.simulation.releaseMareaDispatch() else { return }
-      self.locate(.dispatch, .marea)
+      self.locateTrip(.petersburg)
     }
     release.isEnabled = simulation.quality == .ready
     release.accessibilityIdentifier = "inside.dispatch.release02"
@@ -580,7 +587,7 @@ final class InsidePanelController: ScrollController {
     ) { [weak self] in
       guard let self else { return }
       self.simulation.releaseDispatch()
-      self.locate(.dispatch)
+      self.locateTrip(.moscow)
     }
     first.isEnabled = !simulation.dispatchReleased
     add(first, inset: 16)

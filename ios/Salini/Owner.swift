@@ -1,57 +1,71 @@
 import SceneKit
 import UIKit
 
+/// Salini Inside as the owner's working board: it opens on what needs attention now, a swipeable
+/// board of business metrics sits under the scene, a tap points the camera at the live process,
+/// and free manual exploration is never undone by the model.
 final class OwnerController: UIViewController {
   let simulation = FactorySimulation()
-  private let factory = FactorySceneView()
+  let factory = FactorySceneView()
   private let minimap = CampusOverview()
-  private let dock = GlassView()
-  private let dockContent = UIStackView()
   private let header = GlassView()
-  private let mapTools = GlassView()
-  private let metrics = UIStackView()
-  /// Quiet canvas wash behind the metrics so the map never runs under their text.
-  private let metricsBackdrop = GradientView(
-    colors: [InsideStyle.canvas, InsideStyle.canvas.withAlphaComponent(0.94), InsideStyle.canvas.withAlphaComponent(0)],
-    locations: [0, 0.78, 1])
-  private let outputNumber = label("42", 31, .light, InsideStyle.ink)
-  private let attentionNumber = label("2", 31, .light, InsideStyle.amber)
-  private let contextLabel = label("ТЕРРИТОРИЯ · \(FactoryZone.allCases.count) УЧАСТКОВ · 2 КОМПЛЕКСА", 10, .medium, InsideStyle.muted)
+  let board = InsightBoardView()
+  let returnPill = UIButton(type: .system)
   private let live = label("ДЕМО · 00:00", 10, .semibold, InsideStyle.blue)
-  private let eventText = label(
-    "Два решения изменят ход этой смены", 10, .medium, InsideStyle.muted)
-  private var selected: FactoryZone?
-  private var trackedOrder: InsideOrderID?
   private var lens: CampusLens = .campus
-  private var tourIndex: Int?
+  private var trackedOrder: InsideOrderID?
+  private(set) var tourIndex: Int?
   private var timer: Timer?
   private var observers: [NSObjectProtocol] = []
   private var speed = 1
-  private var compactMap = false
   private var lastRevision = -1
   private var pauseButton: UIButton!
   private var speedButton: UIButton!
-  private var dockProgress: UIProgressView?
+  /// The card the owner chose and the focus the camera is showing. Model revisions refresh their
+  /// text but never switch them: after a decision the camera does not jump on its own.
+  private(set) var selectedMetric: InsideMetricID? = .decisions
+  private(set) var activeFocus: InsideFocus
+  private(set) var cameraManual = false
+
+  /// Where the camera was last sent for the active subject; a change while in event/follow
+  /// mode moves the camera along with the same process.
+  private(set) var shownTarget: InsideTarget?
+
+  init() {
+    activeFocus = InsideFocus(
+      id: "", kind: .live, subject: .zone(.office), target: .zone(.office), title: "", reason: "", decision: nil)
+    super.init(nibName: nil, bundle: nil)
+    activeFocus = simulation.primaryFocus
+  }
+  required init?(coder: NSCoder) { fatalError() }
+
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = InsideStyle.canvas
     factory.translatesAutoresizingMaskIntoConstraints = false
     view.addSubview(factory)
-    makeHeader()
-    makeDock()
     NSLayoutConstraint.activate([
       factory.leadingAnchor.constraint(equalTo: view.leadingAnchor),
       factory.trailingAnchor.constraint(equalTo: view.trailingAnchor),
       factory.topAnchor.constraint(equalTo: view.topAnchor),
       factory.bottomAnchor.constraint(equalTo: view.bottomAnchor),
     ])
-    makeMapControls()
-    factory.onSelect = { [weak self] zone in self?.select(zone) }
-    factory.onOrderSelect = { [weak self] order in self?.track(order) }
+    makeHeader()
+    makeBoard()
+    makeMinimap()
+    factory.onSelect = { [weak self] zone in self?.focusZone(zone) }
+    factory.onOrderSelect = { [weak self] order in self?.locate(order) }
     factory.onStationSelect = { [weak self] zone, code in self?.open(.station(zone, code)) }
-    factory.onExplore = { [weak self] in self?.tourIndex = nil }
     factory.onViewport = { [weak self] camera in self?.minimap.camera = camera }
-    minimap.onSelect = { [weak self] zone in self?.select(zone) }
+    factory.onCameraModeChange = { [weak self] mode in
+      guard let self else { return }
+      self.cameraManual = mode == .manual
+      self.updateReturnPill()
+    }
+    // Opening: straight onto the top-priority focus, set before the first layout — no flight.
+    shownTarget = activeFocus.target
+    factory.show(activeFocus.target, animated: false)
+    minimap.selectedZone = zone(of: activeFocus.target)
     observers.append(
       NotificationCenter.default.addObserver(
         forName: .factoryChanged, object: simulation, queue: .main
@@ -60,15 +74,6 @@ final class OwnerController: UIViewController {
       NotificationCenter.default.addObserver(
         forName: UIApplication.willResignActiveNotification, object: nil, queue: .main
       ) { [weak self] _ in self?.stopClock() })
-    // Reduce Motion switched on the fly: the scene holds still at once and resumes when allowed;
-    // the scenario keeps advancing and its state stays visible through colours and labels.
-    observers.append(
-      NotificationCenter.default.addObserver(
-        forName: UIAccessibility.reduceMotionStatusDidChangeNotification, object: nil, queue: .main
-      ) { [weak self] _ in
-        guard let self else { return }
-        self.factory.setPaused(self.simulation.paused)
-      })
     observers.append(
       NotificationCenter.default.addObserver(
         forName: UIApplication.didBecomeActiveNotification, object: nil, queue: .main
@@ -76,17 +81,23 @@ final class OwnerController: UIViewController {
         guard let self, self.view.window != nil else { return }
         self.startClock()
       })
-    refresh()
+    // Reduce Motion switched on the fly: the scene holds still at once and resumes when allowed;
+    // the scenario keeps advancing and its state stays visible through the board.
+    observers.append(
+      NotificationCenter.default.addObserver(
+        forName: UIAccessibility.reduceMotionStatusDidChangeNotification, object: nil, queue: .main
+      ) { [weak self] _ in
+        guard let self else { return }
+        self.factory.setPaused(self.simulation.paused)
+      })
+    refresh(force: true)
   }
   override func viewDidLayoutSubviews() {
     super.viewDidLayoutSubviews()
-    let top = metrics.isHidden ? header.frame.maxY + 28 : contextLabel.frame.maxY + 18
-    let bottom = view.bounds.height - mapTools.frame.minY + 8
+    let top = header.frame.maxY + 8
+    let bottom = view.bounds.height - board.frame.minY + 8
     factory.mapContentInsets = UIEdgeInsets(top: top, left: 0, bottom: bottom, right: 0)
-    let overlayViews: [UIView] =
-      metrics.isHidden
-      ? [header, minimap, mapTools, dock] : [header, metrics, contextLabel, minimap, mapTools, dock]
-    factory.excludedAnnotationRects = overlayViews.filter { !$0.isHidden }.map {
+    factory.excludedAnnotationRects = [header, minimap, board, returnPill].filter { !$0.isHidden }.map {
       $0.convert($0.bounds, to: factory).insetBy(dx: -8, dy: -8)
     }
   }
@@ -115,8 +126,7 @@ final class OwnerController: UIViewController {
     let clock = Timer(timeInterval: 1, repeats: true) { [weak self] _ in
       guard let self else { return }
       for _ in 0..<self.speed { self.simulation.advance() }
-      self.live.text =
-        self.simulation.paused ? "ДЕМО · ПАУЗА" : "ДЕМО · \(self.simulation.clockTime)"
+      self.live.text = self.simulation.paused ? "ДЕМО · ПАУЗА" : "ДЕМО · \(self.simulation.clockTime)"
     }
     RunLoop.main.add(clock, forMode: .common)
     timer = clock
@@ -127,35 +137,17 @@ final class OwnerController: UIViewController {
     factory.setPaused(true)
     factory.isPlaying = false
   }
-  private func iconButton(_ icon: String, _ name: String, action: @escaping () -> Void) -> UIButton
-  {
+
+  // MARK: Header
+
+  private func iconButton(_ icon: String, _ name: String, action: @escaping () -> Void) -> UIButton {
     let b = insideAction("", icon: icon, action: action)
     b.accessibilityLabel = name
     b.widthAnchor.constraint(equalToConstant: 44).isActive = true
     b.height(44)
-    b.configuration?.contentInsets = NSDirectionalEdgeInsets(
-      top: 10, leading: 10, bottom: 10, trailing: 10)
-    b.configuration?.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(
-      pointSize: 17, weight: .regular)
+    b.configuration?.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+    b.configuration?.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(pointSize: 17, weight: .regular)
     return b
-  }
-  private func compact(
-    _ title: String, _ icon: String, prominent: Bool = false,
-    action: @escaping () -> Void
-  ) -> UIButton {
-    insideAction(title, icon: icon, prominent: prominent, action: action)
-  }
-  private func layersMenu() -> UIMenu {
-    UIMenu(
-      title: "Слой карты",
-      children: CampusLens.allCases.map { layer in
-        UIAction(title: layer.title) { [weak self] _ in
-          guard let self else { return }
-          self.lens = layer
-          self.factory.apply(self.simulation, lens: layer, tracked: self.trackedOrder)
-          self.renderDock(animated: true)
-        }
-      })
   }
   private func makeHeader() {
     let back = iconButton("chevron.left", "Закрыть Salini Inside") { [weak self] in
@@ -168,355 +160,281 @@ final class OwnerController: UIViewController {
       guard let self else { return }
       self.simulation.paused.toggle()
       self.factory.setPaused(self.simulation.paused)
-      self.pauseButton.configuration?.image = UIImage(
-        systemName: self.simulation.paused ? "play" : "pause")
-      self.pauseButton.accessibilityLabel =
-        self.simulation.paused ? "Продолжить демо" : "Приостановить демо"
+      self.pauseButton.configuration?.image = UIImage(systemName: self.simulation.paused ? "play" : "pause")
+      self.pauseButton.accessibilityLabel = self.simulation.paused ? "Продолжить демо" : "Приостановить демо"
     }
-    speedButton = compact("×150", "") { [weak self] in
+    speedButton = insideAction("×150", icon: "") { [weak self] in
       guard let self else { return }
       self.speed = self.speed == 1 ? 3 : 1
       self.speedButton.configuration?.title = "×\(self.speed * 150)"
       self.speedButton.accessibilityLabel = "Время сценария ускорено в \(self.speed * 150) раз"
       self.factory.simulationSpeed = CGFloat(self.speed)
     }
-    speedButton.configuration?.contentInsets = NSDirectionalEdgeInsets(
-      top: 10, leading: 0, bottom: 10, trailing: 0)
-    speedButton.configuration?.titleTextAttributesTransformer =
-      UIConfigurationTextAttributesTransformer {
-        var a = $0
-        a.font = .monospacedDigitSystemFont(ofSize: 11, weight: .medium)
-        return a
-      }
+    speedButton.configuration?.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0)
+    speedButton.configuration?.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer {
+      var a = $0
+      a.font = .monospacedDigitSystemFont(ofSize: 11, weight: .medium)
+      return a
+    }
     speedButton.widthAnchor.constraint(equalToConstant: 43).isActive = true
     speedButton.height(44)
     let more = iconButton("ellipsis", "Инструменты карты") {}
     more.showsMenuAsPrimaryAction = true
+    more.accessibilityIdentifier = "insight.menu"
     more.menu = UIMenu(children: [
-      layersMenu(),
+      UIAction(title: "Вся территория", image: UIImage(systemName: "viewfinder")) { [weak self] _ in self?.overview() },
       UIMenu(
         title: "Перейти к участку",
         children: FactoryZone.allCases.map { zone in
-          UIAction(title: "\(zone.code) · \(zone.title)", image: UIImage(systemName: zone.icon)) {
-            [weak self] _ in self?.select(zone)
+          UIAction(title: "\(zone.code) · \(zone.title)", image: UIImage(systemName: zone.icon)) { [weak self] _ in
+            self?.focusZone(zone)
           }
         }),
-      UIAction(title: "Открыть / закрыть крыши", image: UIImage(systemName: "square.3.layers.3d")) {
-        [weak self] _ in
+      UIMenu(title: "Слой карты", children: CampusLens.allCases.map { layer in
+        UIAction(title: layer.title) { [weak self] _ in
+          guard let self else { return }
+          self.lens = layer
+          self.factory.apply(self.simulation, lens: layer, tracked: self.trackedOrder)
+        }
+      }),
+      UIAction(title: "Открыть / закрыть крыши", image: UIImage(systemName: "square.3.layers.3d")) { [weak self] _ in
         guard let self else { return }
         self.factory.setRoof(!self.factory.roofVisible)
       },
-      UIAction(
-        title: "Маршрут Aria по этапам",
-        image: UIImage(systemName: "point.topleft.down.to.point.bottomright.curvepath")
-      ) { [weak self] _ in self?.startTour() },
-      UIAction(title: "Начать демо заново", image: UIImage(systemName: "arrow.counterclockwise")) {
-        [weak self] _ in
+      UIAction(title: "Маршрут Aria по этапам",
+               image: UIImage(systemName: "point.topleft.down.to.point.bottomright.curvepath")) { [weak self] _ in
+        self?.startTour()
+      },
+      UIAction(title: "Журнал решений", image: UIImage(systemName: "clock.arrow.circlepath")) { [weak self] _ in
+        self?.open(.events)
+      },
+      UIAction(title: "Начать демо заново", image: UIImage(systemName: "arrow.counterclockwise")) { [weak self] _ in
         guard let self, let nav = self.navigationController else { return }
         let next = OwnerController()
         next.hidesBottomBarWhenPushed = self.hidesBottomBarWhenPushed
         nav.setViewControllers(Array(nav.viewControllers.dropLast()) + [next], animated: false)
       },
-      UIAction(title: "О модели и источниках", image: UIImage(systemName: "info.circle")) {
-        [weak self] _ in self?.sheet(AboutController())
+      UIAction(title: "О модели и источниках", image: UIImage(systemName: "info.circle")) { [weak self] _ in
+        self?.sheet(AboutController())
       },
     ])
-    let heading = stack(
-      [back, title, UIView(), pauseButton, speedButton, more], axis: .horizontal, spacing: 0)
+    let heading = stack([back, title, UIView(), pauseButton, speedButton, more], axis: .horizontal, spacing: 0)
     heading.alignment = .center
     header.translatesAutoresizingMaskIntoConstraints = false
     view.addSubview(header)
     header.contentView.pin(heading, inset: 4)
-    metrics.isUserInteractionEnabled = false
-    metrics.axis = .horizontal
-    metrics.distribution = .fillEqually
-    metrics.spacing = 20
-    let area = label("12 000+", 28, .light, InsideStyle.ink)
-    for number in [area, outputNumber, attentionNumber] {
-      number.font = .monospacedDigitSystemFont(ofSize: 28, weight: .light)
-      number.adjustsFontSizeToFitWidth = true
-      number.minimumScaleFactor = 0.65
-      number.numberOfLines = 1
-    }
-    for (number, caption) in [
-      (area, "м² производства¹"), (outputNumber, "принято ОТК / 68"),
-      (attentionNumber, "ждут решения"),
-    ] {
-      metrics.addArrangedSubview(
-        stack([number, label(caption, 10, .regular, InsideStyle.muted)], spacing: 5))
-    }
-    metricsBackdrop.translatesAutoresizingMaskIntoConstraints = false
-    view.insertSubview(metricsBackdrop, aboveSubview: factory)
-    metrics.translatesAutoresizingMaskIntoConstraints = false
-    view.addSubview(metrics)
-    contextLabel.translatesAutoresizingMaskIntoConstraints = false
-    view.addSubview(contextLabel)
     NSLayoutConstraint.activate([
       header.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 4),
       header.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
       header.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-      metrics.topAnchor.constraint(equalTo: header.bottomAnchor, constant: 24),
-      metrics.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 28),
-      metrics.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -28),
-      contextLabel.topAnchor.constraint(equalTo: header.bottomAnchor, constant: 103),
-      contextLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 28),
-      metricsBackdrop.topAnchor.constraint(equalTo: view.topAnchor),
-      metricsBackdrop.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-      metricsBackdrop.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-      metricsBackdrop.bottomAnchor.constraint(equalTo: contextLabel.bottomAnchor, constant: 26),
+    ])
+    // Map zoom for VoiceOver without on-screen ± buttons (pinch remains for touch).
+    factory.accessibilityCustomActions = (factory.accessibilityCustomActions ?? []) + [
+      UIAccessibilityCustomAction(name: "Приблизить карту") { [weak self] _ in self?.factory.stepZoom(true); return true },
+      UIAccessibilityCustomAction(name: "Отдалить карту") { [weak self] _ in self?.factory.stepZoom(false); return true },
+      UIAccessibilityCustomAction(name: "Вся территория") { [weak self] _ in self?.overview(); return true },
+    ]
+  }
+
+  // MARK: Board, minimap, return
+
+  private func makeBoard() {
+    board.translatesAutoresizingMaskIntoConstraints = false
+    view.addSubview(board)
+    NSLayoutConstraint.activate([
+      board.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
+      board.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12),
+      board.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -8),
+      // The scene keeps at least half of the screen, even with the largest text.
+      board.heightAnchor.constraint(lessThanOrEqualTo: view.heightAnchor, multiplier: 0.5),
+    ])
+    board.onSelect = { [weak self] id in self?.choose(id) }
+    board.onAction = { [weak self] in self?.act() }
+    board.onSecondary = { [weak self] in self?.secondary() }
+    var c = UIButton.Configuration.prominentGlass()
+    c.title = "К событию"
+    c.image = UIImage(systemName: "arrow.uturn.backward")
+    c.imagePadding = 6
+    c.baseBackgroundColor = InsideStyle.ink
+    c.baseForegroundColor = .white
+    c.cornerStyle = .capsule
+    returnPill.configuration = c
+    returnPill.accessibilityIdentifier = "insight.return"
+    returnPill.addAction(UIAction { [weak self] _ in self?.showActiveFocus() }, for: .touchUpInside)
+    returnPill.translatesAutoresizingMaskIntoConstraints = false
+    returnPill.isHidden = true
+    view.addSubview(returnPill)
+    NSLayoutConstraint.activate([
+      returnPill.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+      returnPill.bottomAnchor.constraint(equalTo: board.topAnchor, constant: -10),
     ])
   }
-  private func makeMapControls() {
-    let reset = iconButton("viewfinder", "Вся территория") { [weak self] in self?.overview() }
-    let closer = iconButton("plus", "Приблизить карту") { [weak self] in
-      self?.factory.stepZoom(true)
-    }
-    let farther = iconButton("minus", "Отдалить карту") { [weak self] in
-      self?.factory.stepZoom(false)
-    }
-    let layers = iconButton("square.3.layers.3d", "Слой карты") {}
-    layers.showsMenuAsPrimaryAction = true
-    layers.menu = UIMenu(
-      children: CampusLens.allCases.map { layer in
-        UIAction(title: layer.title) { [weak self] _ in
-          guard let self else { return }
-          self.lens = layer
-          self.factory.apply(self.simulation, lens: layer, tracked: self.trackedOrder)
-          self.renderDock(animated: true)
-        }
-      })
-    let tools = mapTools
-    tools.rounded(22)
-    let sections = iconButton("building.2", "Все участки") {}
-    sections.showsMenuAsPrimaryAction = true
-    sections.menu = UIMenu(
-      children: FactoryZone.allCases.map { zone in
-        UIAction(title: "\(zone.code) · \(zone.title)") { [weak self] _ in self?.select(zone) }
-      })
-    let buttons = stack([farther, closer, reset, layers, sections], axis: .horizontal, spacing: 0)
-    tools.contentView.pin(buttons, inset: 0)
-    tools.translatesAutoresizingMaskIntoConstraints = false
-    view.addSubview(tools)
+  private func makeMinimap() {
     minimap.translatesAutoresizingMaskIntoConstraints = false
     view.addSubview(minimap)
     NSLayoutConstraint.activate([
-      tools.bottomAnchor.constraint(equalTo: dock.topAnchor, constant: -12),
-      tools.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-      // Always visible: both complexes and the current view, without covering the metrics.
-      minimap.bottomAnchor.constraint(equalTo: tools.topAnchor, constant: -10),
-      minimap.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+      minimap.topAnchor.constraint(equalTo: header.bottomAnchor, constant: 10),
+      minimap.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
       minimap.widthAnchor.constraint(equalToConstant: 96),
       minimap.heightAnchor.constraint(equalToConstant: 84),
     ])
+    minimap.onSelect = { [weak self] zone in self?.focusZone(zone) }
+    minimap.onOverview = { [weak self] in self?.overview() }
   }
-  private func makeDock() {
-    dock.translatesAutoresizingMaskIntoConstraints = false
-    view.addSubview(dock)
-    dockContent.axis = .vertical
-    dockContent.spacing = 10
-    dock.contentView.pin(dockContent, inset: 16)
-    NSLayoutConstraint.activate([
-      dock.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-      dock.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-      dock.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -12),
-    ])
-    eventText.numberOfLines = 1
-    eventText.lineBreakMode = .byTruncatingTail
+  private func updateReturnPill() {
+    let show = cameraManual && tourIndex == nil
+    returnPill.accessibilityLabel = "Вернуться к событию: \(activeFocus.title)"
+    guard returnPill.isHidden == show else { return }
+    returnPill.isHidden = !show
+    view.setNeedsLayout()
   }
-  private func refresh() {
+
+  // MARK: Model → board
+
+  func refresh(force: Bool = false) {
     live.text = simulation.paused ? "ДЕМО · ПАУЗА" : "ДЕМО · \(simulation.clockTime)"
-    dockProgress?.setProgress(
-      trackedOrder == .aria
-        ? simulation.reserveProgress
-        : simulation.quality == .packing
-          ? simulation.packingProgress
-          : simulation.quality == .loading
-            ? simulation.loadingProgress : simulation.qualityProgress,
-      animated: !UIAccessibility.isReduceMotionEnabled)
-    guard lastRevision != simulation.revision else { return }
+    // A followed trip can leave the site between model events: keep its line honest every tick.
+    if case .follow = factory.cameraMode, !force, lastRevision == simulation.revision { renderContext() }
+    guard force || lastRevision != simulation.revision else { return }
     lastRevision = simulation.revision
     factory.apply(simulation, lens: lens, tracked: trackedOrder)
-    if let trackedOrder, tourIndex == nil {
-      let current = simulation.zone(for: trackedOrder)
-      if selected != current { select(current, keepingOrder: true) }
+    let metrics = InsideBoard(simulation: simulation).metrics
+    board.update(metrics: metrics, selected: selectedMetric)
+    activeFocus = refreshed(activeFocus, metrics: metrics)
+    // Follow the same process as it moves; in manual exploration only the text changes.
+    if activeFocus.target != shownTarget && tourIndex == nil && factory.cameraMode != .manual {
+      shownTarget = activeFocus.target
+      factory.show(activeFocus.target, animated: true)
+      minimap.selectedZone = zone(of: activeFocus.target)
     }
-    eventText.text = simulation.events.first
-    renderDock(animated: view.window != nil)
+    renderContext()
   }
-  private func renderDock(animated: Bool = false) {
-    let update = { [self] in
-      self.dockContent.arrangedSubviews.forEach { $0.removeFromSuperview() }
-      self.dockProgress = nil
-      self.metrics.isHidden = self.selected != nil
-      self.contextLabel.isHidden = self.selected != nil
-      self.metricsBackdrop.isHidden = self.selected != nil
-      self.outputNumber.text = "\(self.simulation.completed)"
-      self.attentionNumber.text = "\(self.simulation.attentionCount)"
-      self.contextLabel.text =
-        self.selected.map { "\($0.code) · \($0.shortTitle.uppercased())" }
-        ?? "\(self.lens.title.uppercased()) · \(FactoryZone.allCases.count) УЧАСТКОВ · 2 КОМПЛЕКСА"
-      let kicker: String
-      let title: String
-      let subtitle: String
-      if let tour = self.tourIndex, let zone = self.selected {
-        kicker = "ИЗУЧЕНИЕ ЦЕПОЧКИ · \(tour + 1) ИЗ 8"
-        title = zone.title
-        subtitle = "Схема этапов · не текущее положение заказа"
-      } else if let order = self.trackedOrder {
-        kicker = "\(order.rawValue) / \(order.destination.uppercased())"
-        title = order.product
-        subtitle = self.simulation.status(order)
-      } else if let zone = self.selected {
-        kicker = "УЧАСТОК \(zone.code) / \(self.simulation.load(zone))% ЗАГРУЗКА"
-        title = zone.title
-        subtitle =
-          "\(zone.people) \(plural(zone.people, "человек", "человека", "человек")) · \(self.simulation.summary(zone))"
-      } else {
-        kicker = "СМЕНА · \(self.simulation.clockTime)"
-        title =
-          self.lens == .load
-          ? "Загрузка участков"
-          : self.lens == .orders ? "Заказы на карте" : "Вся компания"
-        subtitle =
-          self.simulation.attentionCount > 0
-          ? "\(self.simulation.attentionCount) \(plural(self.simulation.attentionCount,"решение","решения","решений")) \(self.simulation.attentionCount == 1 ? "требует" : "требуют") внимания"
-          : "Решения приняты · процессы продолжаются"
+  /// The same focus with current texts. Never a different target: the camera stays on what the
+  /// owner chose; a resolved decision reads as resolved, with the order's current status.
+  private func refreshed(_ focus: InsideFocus, metrics: [InsideMetric]) -> InsideFocus {
+    let candidates = simulation.focuses + metrics.map(\.focus)
+    if let same = candidates.first(where: { $0.id == focus.id && $0.subject == focus.subject }) { return same }
+    let status: String
+    switch focus.decision {
+    case .order(let order)?: status = simulation.status(order)
+    case .dispatch?:
+      if case .trip(let trip) = focus.target { status = simulation.tripState(trip).text } else {
+        status = simulation.tripState(.petersburg).text
       }
-      let fold = UIButton(type: .system)
-      var foldConfig = UIButton.Configuration.plain()
-      foldConfig.image = UIImage(systemName: self.compactMap ? "chevron.up" : "chevron.down")
-      foldConfig.baseForegroundColor = InsideStyle.blue
-      foldConfig.contentInsets = NSDirectionalEdgeInsets(
-        top: 8, leading: 12, bottom: 8, trailing: 0)
-      fold.configuration = foldConfig
-      fold.widthAnchor.constraint(equalToConstant: 44).isActive = true
-      fold.height(32)
-      fold.accessibilityLabel = self.compactMap ? "Развернуть сводку" : "Больше пространства карте"
-      fold.addAction(
-        UIAction { [weak self] _ in
-          guard let self else { return }
-          self.compactMap.toggle()
-          self.view.layoutIfNeeded()
-          self.renderDock()
-          UIView.animate(
-            withDuration: UIAccessibility.isReduceMotionEnabled ? 0 : 0.45, delay: 0,
-            usingSpringWithDamping: 0.95, initialSpringVelocity: 0, options: [.allowUserInteraction]
-          ) { self.view.layoutIfNeeded() }
-        }, for: .touchUpInside)
-      let name = label(title, 22, .medium, InsideStyle.ink)
-      name.numberOfLines = 1
-      name.adjustsFontSizeToFitWidth = true
-      name.minimumScaleFactor = 0.75
-      name.accessibilityIdentifier = "owner.selectedZone"
-      name.accessibilityHint = kicker
-      let description = self.tourIndex != nil ? "\(kicker) · \(subtitle)" : subtitle
-      let titles = stack(
-        self.selected == nil
-          ? [name] : [name, label(description, 12, .regular, InsideStyle.muted)], spacing: 5)
-      let context = stack([titles, UIView(), fold], axis: .horizontal, spacing: 8)
-      context.alignment = .center
-      self.dockContent.addArrangedSubview(context)
-      if self.compactMap { return }
-      let first: UIButton
-      let second: UIButton
-      if let index = self.tourIndex {
-        first = self.compact(
-          index == 7 ? "Завершить маршрут" : "Следующий этап", "arrow.right", prominent: true
-        ) { [weak self] in self?.nextTour() }
-        second = self.compact("К заказу", "doc.text") { [weak self] in self?.open(.order(.aria)) }
-      } else if let order = self.trackedOrder {
-        first = self.compact("О заказе", "arrow.up.right", prominent: true) { [weak self] in
-          self?.open(.order(order))
-        }
-        second = self.compact("Все заказы", "square.stack") { [weak self] in self?.open(.orders) }
-      } else if let zone = self.selected {
-        let destination: InsideDestination =
-          zone == .office ? .orders : zone == .dispatch ? .dispatch : .zone(zone)
-        first = self.compact(
-          zone == .office ? "Заказы" : zone == .dispatch ? "Рейсы" : "Процессы", "arrow.up.right",
-          prominent: true
-        ) { [weak self] in self?.open(destination) }
-        let focusOrder: InsideOrderID? =
-          zone == .finishing ? .aria : zone == .quality || zone == .packing ? .marea : nil
-        second = self.compact(
-          focusOrder != nil ? "\(focusOrder!.product)" : "Обзор смены",
-          focusOrder != nil ? "location" : "chart.bar"
-        ) { [weak self] in
-          if let focusOrder { self?.track(focusOrder) } else { self?.open(.briefing) }
-        }
-      } else {
-        first = self.compact("Обзор смены", "arrow.up.right", prominent: true) { [weak self] in
-          self?.open(.briefing)
-        }
-        second = self.compact(
-          self.lens == .load ? "Узкое место" : "Найти заказ",
-          self.lens == .load ? "scope" : "magnifyingglass"
-        ) { [weak self] in
-          guard let self else { return }
-          if self.lens == .load { self.select(.finishing) } else { self.open(.orders) }
-        }
-      }
-      let actions = stack([first, second], axis: .horizontal, spacing: 9)
-      actions.distribution = .fillEqually
-      self.dockContent.addArrangedSubview(actions)
-      self.dockContent.addArrangedSubview(self.eventText)
-      if let order = self.trackedOrder,
-        (order == .aria && self.simulation.reserve == .processing)
-          || (order == .marea && [.checking, .packing, .loading].contains(self.simulation.quality))
-      {
-        let progress = UIProgressView(progressViewStyle: .bar)
-        progress.progressTintColor = InsideStyle.blue
-        progress.trackTintColor = UIColor(hex: 0xD8E0E4)
-        self.dockProgress = progress
-        progress.progress =
-          order == .aria
-          ? self.simulation.reserveProgress
-          : self.simulation.quality == .loading
-            ? self.simulation.loadingProgress
-            : self.simulation.quality == .packing
-              ? self.simulation.packingProgress : self.simulation.qualityProgress
-        self.dockContent.addArrangedSubview(progress)
-      }
+    case .zone(let zone)?: status = simulation.summary(zone)
+    default: status = focus.reason
     }
-    if animated && !UIAccessibility.isReduceMotionEnabled {
-      UIView.transition(
-        with: dockContent, duration: 0.22,
-        options: [.transitionCrossDissolve, .allowUserInteraction], animations: update)
+    // Only a decision that disappeared reads as taken (marked once, stays marked); a process
+    // keeps its own current status.
+    let taken = focus.id.hasSuffix("#taken") || [.blocking, .urgent, .decision].contains(focus.kind)
+    // The title follows the subject's current stage (Marea: «упаковка», not «удержана ОТК»).
+    return simulation.focus(
+      taken && !focus.id.hasSuffix("#taken") ? focus.id + "#taken" : focus.id, .live, focus.subject,
+      simulation.stageTitle(of: focus.subject), taken ? "Решение принято · \(status)" : status, focus.decision)
+  }
+  private func renderContext() {
+    if let index = tourIndex {
+      let zone = FactoryZone.orderRoute[index]
+      board.showContext(
+        title: "Маршрут Aria · \(index + 1) из \(FactoryZone.orderRoute.count) · \(zone.title)",
+        reason: "Схема этапов — не текущее положение заказа",
+        action: index == FactoryZone.orderRoute.count - 1 ? "Завершить" : "Дальше", secondary: "Выйти")
+      return
+    }
+    var reason = activeFocus.reason
+    if case .trip(let trip) = activeFocus.target, factory.tripLeftCampus(trip) {
+      reason = "\(simulation.tripState(trip).text) · за пределами территории"
+    }
+    let decisive = [.blocking, .urgent, .decision].contains(activeFocus.kind)
+    board.showContext(
+      title: activeFocus.title, reason: reason,
+      action: activeFocus.decision == nil ? nil : decisive ? "Решить" : "Подробнее", secondary: nil)
+  }
+
+  // MARK: Actions
+
+  /// Tap on a card: choose it and look at its process. On the chosen card while exploring
+  /// manually, the tap is the way back to the event. Panels open only via the explicit button.
+  func choose(_ id: InsideMetricID) {
+    let metrics = InsideBoard(simulation: simulation).metrics
+    guard let metric = metrics.first(where: { $0.id == id }) else { return }
+    if id != selectedMetric || !cameraManual {
+      activeFocus = metric.focus
+    }
+    selectedMetric = id
+    tourIndex = nil
+    board.update(metrics: metrics, selected: id)
+    board.reveal(id, animated: !UIAccessibility.isReduceMotionEnabled)
+    showActiveFocus()
+  }
+  /// Sends the camera to where the chosen subject is NOW (not where it was when chosen).
+  func showActiveFocus() {
+    tourIndex = nil
+    activeFocus = refreshed(activeFocus, metrics: InsideBoard(simulation: simulation).metrics)
+    if case .order(let order) = activeFocus.subject {
+      trackedOrder = order
+      factory.showOrderRoute(order.route)
     } else {
-      update()
-    }
-  }
-  private func select(_ zone: FactoryZone, keepingOrder: Bool = false) {
-    if !keepingOrder {
       trackedOrder = nil
-      tourIndex = nil
       factory.showRoute(false)
     }
-    selected = zone
-    simulation.selected = zone
-    minimap.selectedZone = zone
-    factory.focusOn(zone)
+    shownTarget = activeFocus.target
+    factory.show(activeFocus.target, animated: true)
+    minimap.selectedZone = zone(of: activeFocus.target)
     factory.apply(simulation, lens: lens, tracked: trackedOrder)
-    contextLabel.text = "\(zone.code) · \(zone.shortTitle)"
-    UISelectionFeedbackGenerator().selectionChanged()
-    renderDock(animated: true)
+    renderContext()
+    updateReturnPill()
   }
-  private func track(_ order: InsideOrderID) {
-    trackedOrder = order
-    tourIndex = nil
-    select(simulation.zone(for: order), keepingOrder: true)
-    factory.showOrderRoute(order.route)
+  private func act() {
+    if let index = tourIndex {
+      if index == FactoryZone.orderRoute.count - 1 { endTour() } else { nextTour() }
+      return
+    }
+    guard let decision = activeFocus.decision else { return }
+    switch decision {
+    case .order(let order): open(.order(order))
+    case .orders: open(.orders)
+    case .dispatch: open(.dispatch)
+    case .zone(let zone): open(zone == .office ? .orders : zone == .dispatch ? .dispatch : .zone(zone))
+    }
   }
-  private func overview() {
-    selected = nil
-    trackedOrder = nil
+  private func secondary() {
+    if tourIndex != nil { endTour() }
+  }
+  private func focusZone(_ zone: FactoryZone) {
+    activeFocus = simulation.focus(
+      "zone-\(zone.rawValue)", .live, .zone(zone), zone.title,
+      "\(simulation.load(zone))% загрузка · \(simulation.summary(zone))", .zone(zone))
+    selectedMetric = nil
+    board.update(metrics: InsideBoard(simulation: simulation).metrics, selected: nil)
+    showActiveFocus()
+  }
+  private func locate(_ order: InsideOrderID) {
+    activeFocus = simulation.focus(
+      "order-\(order.rawValue)", .live, .order(order), order.product,
+      "\(order.rawValue) · \(simulation.status(order))", .order(order))
+    selectedMetric = nil
+    board.update(metrics: InsideBoard(simulation: simulation).metrics, selected: nil)
+    showActiveFocus()
+  }
+  /// A released trip from the dispatch panel: the camera follows that truck.
+  func focusTrip(_ trip: InsideTrip) {
+    activeFocus = simulation.focus(
+      "trip-sel-\(trip.rawValue)", .live, .trip(trip), trip.title,
+      "\(simulation.tripState(trip).text) · \(trip.cargo)", .dispatch)
+    selectedMetric = .road
+    board.update(metrics: InsideBoard(simulation: simulation).metrics, selected: .road)
+    // Chosen from the panel: bring the selected card into view, as a tap would.
+    board.reveal(.road, animated: false)
+    showActiveFocus()
+  }
+  func overview() {
     tourIndex = nil
     minimap.selectedZone = nil
     factory.resetCamera()
     factory.showRoute(false)
-    factory.apply(simulation, lens: lens, tracked: nil)
-    contextLabel.text = "ТЕРРИТОРИЯ · \(FactoryZone.allCases.count) УЧАСТКОВ · 2 КОМПЛЕКСА"
-    renderDock(animated: true)
+    renderContext()
+    updateReturnPill()
   }
   private func startTour() {
     simulation.paused = true
@@ -525,27 +443,37 @@ final class OwnerController: UIViewController {
     pauseButton.accessibilityLabel = "Продолжить демо"
     trackedOrder = nil
     tourIndex = 0
-    select(.office, keepingOrder: true)
+    factory.focusOn(FactoryZone.orderRoute[0], mode: .tour)
+    minimap.selectedZone = FactoryZone.orderRoute[0]
     factory.showOrderRoute(FactoryZone.orderRoute)
+    renderContext()
+    updateReturnPill()
   }
   private func nextTour() {
-    guard let index = tourIndex else { return }
-    guard index < 7 else {
-      overview()
-      return
-    }
+    guard let index = tourIndex, index < FactoryZone.orderRoute.count - 1 else { return endTour() }
     tourIndex = index + 1
-    select(FactoryZone.orderRoute[index + 1], keepingOrder: true)
+    factory.focusOn(FactoryZone.orderRoute[index + 1], mode: .tour)
+    minimap.selectedZone = FactoryZone.orderRoute[index + 1]
+    renderContext()
+  }
+  private func endTour() {
+    tourIndex = nil
+    factory.showRoute(false)
+    showActiveFocus()
+  }
+  private func zone(of target: InsideTarget) -> FactoryZone {
+    switch target {
+    case .zone(let zone): return zone
+    case .trip: return .dispatch
+    case .transfer: return .packing
+    }
   }
   private func open(_ destination: InsideDestination) {
-    let panel = InsidePanelController(destination, simulation: simulation) {
-      [weak self] zone, order in
+    let panel = InsidePanelController(destination, simulation: simulation) { [weak self] zone, order in
       guard let self else { return }
-      self.trackedOrder = order
-      self.tourIndex = nil
-      self.select(zone, keepingOrder: order != nil)
-      if let order { self.factory.showOrderRoute(order.route) }
+      if let order { self.locate(order) } else { self.focusZone(zone) }
     }
+    panel.onTrip = { [weak self] trip in self?.focusTrip(trip) }
     let nav = UINavigationController(rootViewController: panel)
     nav.modalPresentationStyle = .pageSheet
     nav.sheetPresentationController?.detents = [.large()]

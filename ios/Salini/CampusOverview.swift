@@ -5,6 +5,9 @@ final class CampusOverview: UIControl {
   var camera = CampusCamera() { didSet { setNeedsDisplay() } }
   var selectedZone: FactoryZone? { didSet { setNeedsDisplay() } }
   var onSelect: ((FactoryZone) -> Void)?
+  /// The whole territory (both complexes); zones stay one tap away on the map itself.
+  var onOverview: (() -> Void)?
+  private let overviewButton = UIButton(type: .system)
   override init(frame: CGRect) {
     super.init(frame: frame)
     backgroundColor = InsideStyle.canvas.withAlphaComponent(0.96)
@@ -13,8 +16,26 @@ final class CampusOverview: UIControl {
     layer.borderColor = InsideStyle.ink.withAlphaComponent(0.12).cgColor
     layer.borderWidth = 0.5
     accessibilityLabel = "Мини-карта территории"
-    accessibilityHint = "Выберите корпус"
+    accessibilityHint = "Нажмите на корпус, чтобы перейти к нему; кнопка в углу — вся территория"
     addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(choose(_:))))
+    var c = UIButton.Configuration.plain()
+    c.image = UIImage(systemName: "arrow.up.left.and.arrow.down.right")
+    c.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(pointSize: 11, weight: .semibold)
+    c.baseForegroundColor = InsideStyle.ink
+    c.contentInsets = .init(top: 6, leading: 6, bottom: 6, trailing: 6)
+    overviewButton.configuration = c
+    overviewButton.accessibilityLabel = "Вся территория"
+    overviewButton.accessibilityIdentifier = "insight.minimap.overview"
+    overviewButton.addAction(UIAction { [weak self] _ in self?.onOverview?() }, for: .touchUpInside)
+    overviewButton.translatesAutoresizingMaskIntoConstraints = false
+    addSubview(overviewButton)
+    NSLayoutConstraint.activate([
+      overviewButton.topAnchor.constraint(equalTo: topAnchor),
+      overviewButton.trailingAnchor.constraint(equalTo: trailingAnchor),
+      overviewButton.widthAnchor.constraint(equalToConstant: 32),
+      overviewButton.heightAnchor.constraint(equalToConstant: 32),
+    ])
+    accessibilityIdentifier = "insight.minimap"
   }
   required init?(coder: NSCoder) { fatalError() }
   private var modelScale: CGFloat { min((bounds.width - 14) / CampusSite.projectedSize.width,
