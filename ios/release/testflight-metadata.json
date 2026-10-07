@@ -11,6 +11,6 @@
   "signInRequired": false,
   "collectsData": false,
   "tracking": false,
-  "submissionStatus": "Build 1.0 (7) prepared locally; archive and upload pending. App Store Connect browser requires sign-in; processing and testing availability not verified.",
+  "submissionStatus": "Build 1.0 (7) archive signed and verified; upload rejected at 2026-10-07T19:43:55+07:00 with Account credentials have expired (exit 70). Awaiting user refresh of Xcode Apple Account, then retry the same archive. Processing, internal availability and external review not established.",
   "build": "7"
 }

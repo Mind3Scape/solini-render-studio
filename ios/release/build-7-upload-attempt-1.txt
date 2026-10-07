@@ -1,0 +1,13 @@
+Salini 1.0 (7) / design.salini.experience
+Source commit: bf357d5947a5744323cc675880fafaea5df78ed9
+Archive: ios/build/testflight/Salini-1.0-7.xcarchive
+Command: xcodebuild -exportArchive using ios/release/UploadOptions.plist
+Exit code: 70
+Archive and code signature verified; upload is NOT successful.
+
+2026-10-07 19:43:55.236 xcodebuild: Progress 100%: Upload failed.
+Account credentials have expired.
+error: exportArchive Account credentials have expired. Open Xcode's Accounts settings, sign in to your account, and try again.
+** EXPORT FAILED **
+
+The user was asked to refresh the Apple Account in Xcode. No credential was extracted or changed by the agent. Retry the same signed archive after sign-in; do not treat transmission progress 100% as acceptance.
