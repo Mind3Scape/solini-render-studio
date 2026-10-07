@@ -1134,6 +1134,173 @@ final class SaliniTests: XCTestCase {
     factory.setPaused(true)
     window.isHidden = true
   }
+  func testMareaStagesComeFromQualityStatesWithTheModelsOwnProgress() throws {
+    let sim = FactorySimulation()
+    var route = try XCTUnwrap(sim.route(of: .order(.marea)))
+    XCTAssertEqual(route.stages, ["ОТК", "Упаковка", "Погрузка", "Рейс 02"])
+    XCTAssertEqual(route.current, 0)
+    XCTAssertTrue(route.held, "Held at OTK: a block, not movement")
+    XCTAssertNil(route.progress)
+    XCTAssertEqual(sim.status(of: sim.primaryFocus), InsideStatus(text: "Блокирует рейс 02", tone: .amber))
+    sim.startQualityCheck()
+    for _ in 0..<4 { sim.advance() }
+    route = try XCTUnwrap(sim.route(of: .order(.marea)))
+    XCTAssertFalse(route.held)
+    XCTAssertEqual(try XCTUnwrap(route.progress), Double(sim.qualityProgress), accuracy: 0.0001)
+    XCTAssertGreaterThan(try XCTUnwrap(route.progress), 0)
+    runUntil(sim) { sim.quality == .packing }
+    XCTAssertEqual(sim.route(of: .order(.marea))?.current, 1)
+    runUntil(sim) { sim.quality == .loading }
+    route = try XCTUnwrap(sim.route(of: .order(.marea)))
+    XCTAssertEqual(route.current, 2)
+    XCTAssertEqual(try XCTUnwrap(route.progress), Double(sim.loadingProgress), accuracy: 0.0001)
+    runUntil(sim) { sim.quality == .ready }
+    route = try XCTUnwrap(sim.route(of: .order(.marea)))
+    XCTAssertEqual(route.current, 3)
+    XCTAssertNil(route.progress, "No invented trip progress")
+    // Paused: the model does not move, nor does the stage progress.
+    sim.paused = true
+    let frozen = sim.route(of: .order(.marea))
+    for _ in 0..<5 { sim.advance() }
+    XCTAssertEqual(sim.route(of: .order(.marea)), frozen)
+  }
+  func testAriaAndTripStagesAreOnlyWhatTheModelReflects() throws {
+    let sim = FactorySimulation()
+    let aria = try XCTUnwrap(sim.route(of: .order(.aria)))
+    XCTAssertEqual(aria.stages, ["Обработка", "ОТК"], "Only halls zone(for:) reflects — no forecast as done")
+    XCTAssertEqual(aria.current, 0)
+    XCTAssertNil(aria.progress)
+    sim.activateReserve()
+    runUntil(sim) { sim.reserve == .processing }
+    XCTAssertEqual(try XCTUnwrap(sim.route(of: .order(.aria))?.progress), Double(sim.reserveProgress), accuracy: 0.0001)
+    let trip = try XCTUnwrap(sim.route(of: .trip(.moscow)))
+    XCTAssertEqual(trip.stages, ["Док", "В пути"], "No invented gate or delivery stages")
+    XCTAssertEqual(trip.current, 0)
+    sim.releaseDispatch()
+    XCTAssertEqual(sim.route(of: .trip(.moscow))?.current, 1)
+    XCTAssertNil(sim.route(of: .zone(.office)), "Portfolio and halls have no stage model")
+    XCTAssertNil(sim.route(of: .order(.trays)))
+  }
+  func testOnlyAcceptedCarriesATypedProgress() {
+    let sim = FactorySimulation()
+    let metrics = InsideBoard(simulation: sim).metrics
+    for metric in metrics {
+      if metric.id == .accepted {
+        XCTAssertEqual(metric.progress ?? -1, Double(sim.completed) / 68, accuracy: 0.0001)
+      } else {
+        XCTAssertNil(metric.progress, "\(metric.id): no progress without model data")
+      }
+      XCTAssertFalse(metric.icon.isEmpty)
+    }
+    XCTAssertEqual(metrics.first { $0.id == .decisions }?.tone, .amber)
+    XCTAssertEqual(metrics.first { $0.id == .road }?.tone, .neutral, "Nothing on the road yet")
+  }
+  @MainActor func testBoardShowsStagesOnlyForSubjectsWithAStageModel() throws {
+    let (owner, window) = ownerInWindow()
+    func find(_ id: String, in view: UIView) -> UIView? {
+      view.accessibilityIdentifier == id ? view : view.subviews.lazy.compactMap { find(id, in: $0) }.first
+    }
+    let route = try XCTUnwrap(find("insight.route", in: owner.board))
+    XCTAssertFalse(route.isHidden, "Marea has stages")
+    XCTAssertTrue(route.accessibilityLabel?.contains("ОТК — удержан") == true)
+    XCTAssertFalse(route.accessibilityTraits.contains(.button), "Read-only, not navigation")
+    let status = try XCTUnwrap(find("insight.focus.status", in: owner.board) as? UILabel)
+    XCTAssertEqual(status.text, "БЛОКИРУЕТ РЕЙС 02")
+    owner.choose(.portfolio)
+    XCTAssertTrue(route.isHidden, "Portfolio has no stage model")
+    let action = try XCTUnwrap(find("insight.action", in: owner.board))
+    owner.view.layoutIfNeeded()
+    XCTAssertGreaterThanOrEqual(action.bounds.height, 44, "Compact look, 44 pt hit target")
+    owner.factory.setPaused(true)
+    window.isHidden = true
+  }
+  @MainActor func testTakenMareaDecisionShowsTheLiveStateOfTheSameOrder() throws {
+    let (owner, window) = ownerInWindow()
+    let sim = owner.simulation
+    func find(_ id: String, in view: UIView) -> UIView? {
+      view.accessibilityIdentifier == id ? view : view.subviews.lazy.compactMap { find(id, in: $0) }.first
+    }
+    let status = try XCTUnwrap(find("insight.focus.status", in: owner.board) as? UILabel)
+    XCTAssertEqual(status.text, "БЛОКИРУЕТ РЕЙС 02")
+    XCTAssertEqual(status.textColor, InsideStyle.amber)
+    XCTAssertTrue(sim.startQualityCheck())
+    func check(_ text: String, _ tone: InsideTone, _ stage: String) {
+      owner.refresh()
+      XCTAssertEqual(owner.activeFocus.subject, .order(.marea), "\(stage): the same order stays chosen")
+      XCTAssertTrue(owner.activeFocus.id.hasSuffix("#taken"), "\(stage): identity keeps the taken decision")
+      XCTAssertEqual(owner.activeFocus.kind, .live, stage)
+      XCTAssertEqual(sim.status(of: owner.activeFocus), InsideStatus(text: text, tone: tone), stage)
+      XCTAssertEqual(status.text, text.uppercased(), stage)
+      XCTAssertEqual(status.textColor, tone.color, "\(stage): live colour, not a frozen neutral")
+      XCTAssertNotEqual(status.text, "РЕШЕНИЕ ПРИНЯТО", stage)
+      let reason = owner.activeFocus.reason
+      XCTAssertTrue(reason.hasPrefix("Решение принято"), "\(stage): the decision stays a fact — \(reason)")
+      XCTAssertFalse(reason.contains(text), "\(stage): the reason does not repeat the stage — \(reason)")
+    }
+    check("Осмотр идёт", .teal, "checking")
+    runUntil(sim) { sim.quality == .packing }
+    check("Упаковка", .teal, "packing")
+    runUntil(sim) { sim.quality == .ready }
+    check("Готов к выезду", .teal, "ready")
+    XCTAssertTrue(sim.releaseMareaDispatch())
+    runUntil(sim) { sim.quality == .departed }
+    XCTAssertEqual(sim.quality, .departed)
+    check("В пути", .cobalt, "departed")
+    owner.factory.setPaused(true)
+    window.isHidden = true
+  }
+  @MainActor func testMareaRouteFitsANarrowScreenWithoutTruncation() throws {
+    for width in [320.0, 402.0] {
+      let owner = OwnerController()
+      let window = UIWindow(frame: CGRect(x: 0, y: 0, width: width, height: 700))
+      window.traitOverrides.preferredContentSizeCategory = .large
+      window.rootViewController = owner
+      window.makeKeyAndVisible()
+      let sim = owner.simulation
+      sim.startQualityCheck()
+      for _ in 0..<4 { sim.advance() }
+      owner.refresh()
+      XCTAssertNotNil(sim.route(of: .order(.marea))?.progress, "Marea with the model's progress")
+      owner.view.layoutIfNeeded()
+      owner.view.layoutIfNeeded()
+      func find(_ id: String, in view: UIView) -> UIView? {
+        view.accessibilityIdentifier == id ? view : view.subviews.lazy.compactMap { find(id, in: $0) }.first
+      }
+      let route = try XCTUnwrap(find("insight.route", in: owner.board) as? InsightRouteView)
+      XCTAssertFalse(route.isHidden)
+      XCTAssertNotEqual(route.mode, .vertical, "\(width): normal text keeps the compact route")
+      let routeInBoard = route.convert(route.bounds, to: owner.board)
+      XCTAssertTrue(owner.board.bounds.insetBy(dx: -0.5, dy: -0.5).contains(routeInBoard), "\(width): route inside the board")
+      var frames: [CGRect] = []
+      for i in 0..<4 {
+        let name = try XCTUnwrap(find("insight.route.stage.\(i)", in: route) as? UILabel)
+        XCTAssertFalse(name.isHidden)
+        XCTAssertGreaterThanOrEqual(name.font.pointSize, 11)
+        XCTAssertEqual(name.numberOfLines, 1)
+        let needed = name.intrinsicContentSize.width
+        XCTAssertGreaterThanOrEqual(name.bounds.width + 0.5, needed, "\(width): «\(name.text ?? "")» is not truncated")
+        let frame = name.convert(name.bounds, to: route)
+        XCTAssertTrue(route.bounds.insetBy(dx: -0.5, dy: -0.5).contains(frame), "\(width): «\(name.text ?? "")» \(frame) inside \(route.bounds)")
+        frames.append(frame)
+      }
+      for (i, a) in frames.enumerated() {
+        for b in frames.dropFirst(i + 1) { XCTAssertFalse(a.insetBy(dx: 0.5, dy: 0.5).intersects(b), "\(width): labels overlap") }
+      }
+      // The progress bar is under the current stage name, not beside it.
+      let current = try XCTUnwrap(find("insight.route.stage.0", in: route))
+      let bar = try XCTUnwrap(current.superview?.superview?.subviews.compactMap { $0.subviews.first as? UIProgressView }.first)
+      let barFrame = bar.convert(bar.bounds, to: route)
+      XCTAssertGreaterThanOrEqual(barFrame.minY, frames[0].maxY - 0.5, "\(width): bar below the name")
+      XCTAssertEqual(barFrame.minX, frames[0].minX, accuracy: 1, "\(width): bar starts under the name")
+      XCTAssertEqual(bar.alpha, 1)
+      XCTAssertFalse(route.hasAmbiguousLayout)
+      func ambiguous(_ v: UIView) -> [UIView] { (v.hasAmbiguousLayout ? [v] : []) + v.subviews.flatMap(ambiguous) }
+      XCTAssertEqual(ambiguous(route).filter { !($0 is UIProgressView) && !($0.superview is UIProgressView) }.count, 0,
+                     "\(width): no ambiguous route layout")
+      owner.factory.setPaused(true)
+      window.isHidden = true
+    }
+  }
   func testPausedScenarioKeepsTheFocus() {
     let sim = FactorySimulation()
     sim.paused = true

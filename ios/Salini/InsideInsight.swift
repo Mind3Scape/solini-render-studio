@@ -180,6 +180,10 @@ enum InsideMetricID: String, CaseIterable {
   case decisions, portfolio, production, accepted, ready, road
 }
 
+/// Meaning colours of the board: teal — work flowing, cobalt — on the road, amber — risk or a
+/// decision; neutral otherwise. Only meaning, never decoration.
+enum InsideTone: Equatable { case neutral, teal, cobalt, amber }
+
 struct InsideMetric: Equatable {
   let id: InsideMetricID
   let title: String
@@ -187,6 +191,87 @@ struct InsideMetric: Equatable {
   let detail: String
   let attention: Bool
   let focus: InsideFocus
+  var icon = "circle"
+  var tone: InsideTone = .neutral
+  /// A real fraction from the model (0…1), only where one exists — never parsed from `value`.
+  var progress: Double?
+}
+
+/// The status line above the focus title.
+struct InsideStatus: Equatable {
+  let text: String
+  let tone: InsideTone
+}
+
+/// Read-only stages of the chosen subject, only as the model reflects them (no forecast as done).
+struct InsideRoute: Equatable {
+  let stages: [String]
+  let current: Int
+  /// Model progress within the current stage, when the model has one.
+  let progress: Double?
+  /// The current stage is held (a block), not moving.
+  let held: Bool
+}
+
+extension FactorySimulation {
+  /// Status of a focus: an open decision speaks for itself (amber); otherwise — including a taken
+  /// decision (`#taken` only keeps identity) — the subject's CURRENT live state, teal or cobalt.
+  func status(of focus: InsideFocus) -> InsideStatus {
+    switch focus.kind {
+    case .blocking:
+      return InsideStatus(text: focus.subject == .order(.marea) ? "Блокирует рейс 02" : "Блокирует процесс", tone: .amber)
+    case .urgent: return InsideStatus(text: "Риск срока", tone: .amber)
+    case .decision: return InsideStatus(text: "Ждёт решения", tone: .amber)
+    case .live, .load: break
+    }
+    switch focus.subject {
+    case .trip(let trip): return tripStatus(trip)
+    case .order(.marea):
+      switch quality {
+      case .held: return InsideStatus(text: "Ожидает осмотра", tone: .neutral)
+      case .checking: return InsideStatus(text: "Осмотр идёт", tone: .teal)
+      case .packing: return InsideStatus(text: "Упаковка", tone: .teal)
+      case .loading: return InsideStatus(text: "Погрузка", tone: .teal)
+      case .ready, .departed: return tripStatus(.petersburg)
+      }
+    case .order(.aria):
+      return InsideStatus(text: ariaCompleted ? "ОТК" : "Обработка", tone: .teal)
+    case .order(.domino): return tripStatus(.petersburg)
+    case .order: return InsideStatus(text: "В работе", tone: .teal)
+    case .zone(let zone):
+      return InsideStatus(text: "Участок · загрузка \(load(zone))%", tone: .neutral)
+    }
+  }
+  private func tripStatus(_ trip: InsideTrip) -> InsideStatus {
+    let state = tripState(trip)
+    if state.onRoad { return InsideStatus(text: "В пути", tone: .cobalt) }
+    if state.ready { return InsideStatus(text: "Готов к выезду", tone: .teal) }
+    return InsideStatus(text: "В доке", tone: .neutral)
+  }
+
+  /// Stages of a subject as the model knows them. Marea: four stages from `quality` with the
+  /// model's own progress; Aria: only the halls `zone(for:)` reflects (processing → OTK), no
+  /// forecast; a trip: dock → on the road. Other subjects have no stage model.
+  func route(of subject: InsideSubject) -> InsideRoute? {
+    switch subject {
+    case .order(.marea):
+      let stages = ["ОТК", "Упаковка", "Погрузка", "Рейс 02"]
+      switch quality {
+      case .held: return InsideRoute(stages: stages, current: 0, progress: nil, held: true)
+      case .checking: return InsideRoute(stages: stages, current: 0, progress: Double(qualityProgress), held: false)
+      case .packing: return InsideRoute(stages: stages, current: 1, progress: Double(packingProgress), held: false)
+      case .loading: return InsideRoute(stages: stages, current: 2, progress: Double(loadingProgress), held: false)
+      case .ready, .departed: return InsideRoute(stages: stages, current: 3, progress: nil, held: false)
+      }
+    case .order(.aria):
+      let processing = reserve == .processing && !ariaCompleted ? Double(reserveProgress) : nil
+      return InsideRoute(stages: ["Обработка", "ОТК"], current: ariaCompleted ? 1 : 0, progress: processing, held: false)
+    case .order(.domino): return route(of: .trip(.petersburg))
+    case .trip(let trip):
+      return InsideRoute(stages: ["Док", "В пути"], current: tripState(trip).onRoad ? 1 : 0, progress: nil, held: false)
+    case .order, .zone: return nil
+    }
+  }
 }
 
 /// Every board number comes from the simulation and the fixed demo orders — one source.
@@ -227,13 +312,15 @@ struct InsideBoard {
     return [
       InsideMetric(
         id: .decisions, title: "Решения", value: "\(decisions)",
-        detail: decisions > 0 ? primary.title : "Все приняты", attention: decisions > 0, focus: primary),
+        detail: decisions > 0 ? primary.title : "Все приняты", attention: decisions > 0, focus: primary,
+        icon: decisions > 0 ? "exclamationmark.triangle" : "checkmark.circle", tone: decisions > 0 ? .amber : .teal),
       InsideMetric(
         id: .portfolio, title: "Портфель демо-заказов", value: compactRubles(portfolio),
         detail: "\(InsideOrderID.allCases.count) демо-заказов", attention: false,
         focus: s.focus(
           "portfolio", .live, .zone(.office), "Портфель демо-заказов",
-          "\(InsideOrderID.allCases.count) демо-заказов · \(rubles(portfolio))", .orders)),
+          "\(InsideOrderID.allCases.count) демо-заказов · \(rubles(portfolio))", .orders),
+        icon: "doc.text", tone: .neutral),
       InsideMetric(
         id: .production, title: "В работе", value: "\(inProductionPieces)",
         detail: "изделий · литьё → упаковка", attention: false,
@@ -241,26 +328,30 @@ struct InsideBoard {
           "production-\(largest?.0.rawValue ?? "none")", .live, productionSubject,
           largest.map { "\($0.0.product) · \($0.1.title)" } ?? FactoryZone.casting.title,
           largest.map { "\($0.0.quantity) шт. · \(s.status($0.0))" } ?? "Нет партий",
-          largest.map { .order($0.0) } ?? .zone(.casting))),
+          largest.map { .order($0.0) } ?? .zone(.casting)),
+        icon: "gearshape.2", tone: .teal),
       InsideMetric(
         id: .accepted, title: "Принято ОТК", value: "\(s.completed)/68",
         detail: "план смены", attention: s.quality == .held,
         focus: s.focus(
           "accepted", .live, .zone(.quality), "Контроль качества",
-          "Принято \(s.completed) из 68 · \(s.status(.marea))", .zone(.quality))),
+          "Принято \(s.completed) из 68 · \(s.status(.marea))", .zone(.quality)),
+        icon: "checkmark.seal", tone: s.quality == .held ? .amber : .teal, progress: Double(s.completed) / 68),
       InsideMetric(
         id: .ready, title: "К отгрузке", value: "\(readyPieces)",
         detail: "мест на складе и в доках", attention: s.quality == .ready,
         focus: s.focus(
           "ready", .live, s.quality == .loading || s.quality == .ready ? .order(.marea) : .zone(.warehouse),
-          "Склад и доки", "\(readyPieces) мест · \(s.tripState(.petersburg).text)", .dispatch)),
+          "Склад и доки", "\(readyPieces) мест · \(s.tripState(.petersburg).text)", .dispatch),
+        icon: "shippingbox", tone: s.quality == .ready ? .amber : .teal),
       InsideMetric(
         id: .road, title: "В пути", value: "\(tripsOnRoad.count)",
         detail: tripsOnRoad.isEmpty ? "рейсы в доках" : tripsOnRoad.map(\.destination).joined(separator: " · "),
         attention: false,
         focus: s.focus(
           "road-\(roadTrip.rawValue)", .live, .trip(roadTrip), roadTrip.title,
-          "\(s.tripState(roadTrip).text) · \(roadTrip.cargo)", .dispatch)),
+          "\(s.tripState(roadTrip).text) · \(roadTrip.cargo)", .dispatch),
+        icon: "truck.box", tone: tripsOnRoad.isEmpty ? .neutral : .cobalt),
     ]
   }
 }

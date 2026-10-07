@@ -327,17 +327,24 @@ final class OwnerController: UIViewController {
     // Only a decision that disappeared reads as taken (marked once, stays marked); a process
     // keeps its own current status.
     let taken = focus.id.hasSuffix("#taken") || [.blocking, .urgent, .decision].contains(focus.kind)
-    // The title follows the subject's current stage (Marea: «упаковка», not «удержана ОТК»).
+    // The title and the status line follow the subject's current stage; a taken decision stays a
+    // fact in the reason («Решение принято · 12 раковин · S-Stone») without repeating the stage.
+    let fact: String
+    switch focus.subject {
+    case .order(let order): fact = order.description
+    case .trip(let trip): fact = trip.cargo
+    case .zone: fact = status
+    }
     return simulation.focus(
       taken && !focus.id.hasSuffix("#taken") ? focus.id + "#taken" : focus.id, .live, focus.subject,
-      simulation.stageTitle(of: focus.subject), taken ? "Решение принято · \(status)" : status, focus.decision)
+      simulation.stageTitle(of: focus.subject), taken ? "Решение принято · \(fact)" : status, focus.decision)
   }
   private func renderContext() {
     if let index = tourIndex {
       let zone = FactoryZone.orderRoute[index]
       board.showContext(
-        title: "Маршрут Aria · \(index + 1) из \(FactoryZone.orderRoute.count) · \(zone.title)",
-        reason: "Схема этапов — не текущее положение заказа",
+        status: InsideStatus(text: "Маршрут Aria · \(index + 1) из \(FactoryZone.orderRoute.count)", tone: .neutral),
+        title: zone.title, reason: "Схема этапов — не текущее положение заказа", route: nil,
         action: index == FactoryZone.orderRoute.count - 1 ? "Завершить" : "Дальше", secondary: "Выйти")
       return
     }
@@ -347,7 +354,8 @@ final class OwnerController: UIViewController {
     }
     let decisive = [.blocking, .urgent, .decision].contains(activeFocus.kind)
     board.showContext(
-      title: activeFocus.title, reason: reason,
+      status: simulation.status(of: activeFocus), title: activeFocus.title, reason: reason,
+      route: simulation.route(of: activeFocus.subject),
       action: activeFocus.decision == nil ? nil : decisive ? "Решить" : "Подробнее", secondary: nil)
   }
 
