@@ -2,7 +2,7 @@
 
 Salini **1.0 (7)**, bundle `design.salini.experience`, App Store Connect app `6819688748`.
 
-**Signed archive ready; upload blocked by expired Xcode account credentials.** On 7 October 2026 at 19:43:55 (UTC+7), Apple rejected the export after transmission with `Account credentials have expired` (`EXPORT FAILED`, exit 70). This is not a successful upload. See [attempt 1](build-7-upload-attempt-1.txt).
+**Uploaded successfully on 7 October 2026 at 21:01:03 (UTC+7).** After the user refreshed the Xcode Apple Account, the same signed archive was accepted: `Upload succeeded`, `Uploaded Salini`, `EXPORT SUCCEEDED`, exit 0. App Store Connect in authenticated Safari also showed build 7 **Processing**. See [upload receipt](build-7-upload-receipt.txt). The expired-credentials failure is retained as [attempt 1](build-7-upload-attempt-1.txt).
 
 Source: `bf357d5947a5744323cc675880fafaea5df78ed9`, branch `codex/salini-native-materials`, pushed before archive/upload.
 
@@ -15,20 +15,11 @@ Build 7 improves the native material studio: real bundled HDR radiance, finish-s
 - Native iPhone 18 Pro / iOS 27 UI: white comparison, RAL 6005, macro view. Noemi and Greca A/B renders cover white / green / anthracite and finishes. [QA](../QA.md).
 - Archive: `ios/build/testflight/Salini-1.0-7.xcarchive`, Release arm64, manual existing Salini TestFlight profile. Version/build **1.0 / 7**, signature, privacy manifest, HDRI and third-party notices verified.
 - Simulator build 7 installed and launched, saved projects preserved.
-- **Upload:** failed (expired account credentials). **Processing/internal testing/external Beta App Review:** not established for build 7. App Store Connect browser is separately signed out; the user was asked to sign in.
+- **Upload:** succeeded. **Apple processing:** started, confirmed in App Store Connect. **Internal testing / external Beta App Review:** not yet confirmed for build 7. The authenticated Safari session is available, but user tab changes interrupted the follow-up operations; coordination was requested before further browser actions.
 - The existing [public invitation](https://testflight.apple.com/join/mUb5H7bZ) does not prove availability of build 7. Previous build 6 upload succeeded: [receipt](build-6-upload-receipt.txt).
 
-## Resume after Apple sign-in
+## Next server steps
 
-Xcode > Settings > Apple Accounts: refresh the existing account. The prepared archive can be sent again without rebuilding:
+Verify processing completion in App Store Connect, add to the existing internal group as needed, and select build 7 for the existing external group/review. Test text is prepared in [testflight-metadata.json](testflight-metadata.json). Existing build 3 was shown as Approved for Salini Public Beta; that is not evidence of build 7 approval.
 
-```sh
-xcodebuild -exportArchive \
-  -archivePath ios/build/testflight/Salini-1.0-7.xcarchive \
-  -exportPath ios/build/testflight/upload-1.0-7-retry \
-  -exportOptionsPlist ios/release/UploadOptions.plist
-```
-
-After confirmed upload, verify processing in App Store Connect, add to the existing internal group as needed, and select build 7 for the existing external group/review. Keep upload, internal availability and external approval distinct. Test text is prepared in [testflight-metadata.json](testflight-metadata.json).
-
-Every implementation delivery must be committed and pushed. The TestFlight delivery remains incomplete until a successful upload; publishing to the App Store is a separate action.
+Every implementation delivery must be committed and pushed. Upload is now complete; internal availability and external review remain separately tracked. Publishing to the App Store is a separate action.

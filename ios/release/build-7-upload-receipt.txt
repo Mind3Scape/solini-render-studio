@@ -1,0 +1,13 @@
+Salini 1.0 (7) / design.salini.experience
+Source commit: bf357d5947a5744323cc675880fafaea5df78ed9
+Archive: ios/build/testflight/Salini-1.0-7.xcarchive
+Command: xcodebuild -exportArchive using ios/release/UploadOptions.plist
+Retry after the user refreshed Xcode Apple Account authentication.
+Exit code: 0
+
+2026-10-07 21:01:03.950 xcodebuild: Progress 100%: Uploaded package is processing.
+2026-10-07 21:01:03.954 xcodebuild: Progress 100%: Upload succeeded.
+Uploaded Salini
+** EXPORT SUCCEEDED **
+
+App Store Connect, authenticated Safari, Salini app 6819688748: Build Uploads showed Version 1.0, Build (7), Processing, Oct 7 2026 9:01 PM. Processing completion and tester availability require a subsequent check.
