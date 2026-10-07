@@ -10,9 +10,13 @@ final class OwnerController: UIViewController {
   private let header = GlassView()
   private let mapTools = GlassView()
   private let metrics = UIStackView()
+  /// Quiet canvas wash behind the metrics so the map never runs under their text.
+  private let metricsBackdrop = GradientView(
+    colors: [InsideStyle.canvas, InsideStyle.canvas.withAlphaComponent(0.94), InsideStyle.canvas.withAlphaComponent(0)],
+    locations: [0, 0.78, 1])
   private let outputNumber = label("42", 31, .light, InsideStyle.ink)
   private let attentionNumber = label("2", 31, .light, InsideStyle.amber)
-  private let contextLabel = label("ТЕРРИТОРИЯ · 9 УЧАСТКОВ", 10, .medium, InsideStyle.muted)
+  private let contextLabel = label("ТЕРРИТОРИЯ · \(FactoryZone.allCases.count) УЧАСТКОВ · 2 КОМПЛЕКСА", 10, .medium, InsideStyle.muted)
   private let live = label("ДЕМО · 00:00", 10, .semibold, InsideStyle.blue)
   private let eventText = label(
     "Два решения изменят ход этой смены", 10, .medium, InsideStyle.muted)
@@ -56,6 +60,15 @@ final class OwnerController: UIViewController {
       NotificationCenter.default.addObserver(
         forName: UIApplication.willResignActiveNotification, object: nil, queue: .main
       ) { [weak self] _ in self?.stopClock() })
+    // Reduce Motion switched on the fly: the scene holds still at once and resumes when allowed;
+    // the scenario keeps advancing and its state stays visible through colours and labels.
+    observers.append(
+      NotificationCenter.default.addObserver(
+        forName: UIAccessibility.reduceMotionStatusDidChangeNotification, object: nil, queue: .main
+      ) { [weak self] _ in
+        guard let self else { return }
+        self.factory.setPaused(self.simulation.paused)
+      })
     observers.append(
       NotificationCenter.default.addObserver(
         forName: UIApplication.didBecomeActiveNotification, object: nil, queue: .main
@@ -72,7 +85,7 @@ final class OwnerController: UIViewController {
     factory.mapContentInsets = UIEdgeInsets(top: top, left: 0, bottom: bottom, right: 0)
     let overlayViews: [UIView] =
       metrics.isHidden
-      ? [header, minimap, mapTools, dock] : [header, metrics, contextLabel, mapTools, dock]
+      ? [header, minimap, mapTools, dock] : [header, metrics, contextLabel, minimap, mapTools, dock]
     factory.excludedAnnotationRects = overlayViews.filter { !$0.isHidden }.map {
       $0.convert($0.bounds, to: factory).insetBy(dx: -8, dy: -8)
     }
@@ -232,6 +245,8 @@ final class OwnerController: UIViewController {
       metrics.addArrangedSubview(
         stack([number, label(caption, 10, .regular, InsideStyle.muted)], spacing: 5))
     }
+    metricsBackdrop.translatesAutoresizingMaskIntoConstraints = false
+    view.insertSubview(metricsBackdrop, aboveSubview: factory)
     metrics.translatesAutoresizingMaskIntoConstraints = false
     view.addSubview(metrics)
     contextLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -245,6 +260,10 @@ final class OwnerController: UIViewController {
       metrics.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -28),
       contextLabel.topAnchor.constraint(equalTo: header.bottomAnchor, constant: 103),
       contextLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 28),
+      metricsBackdrop.topAnchor.constraint(equalTo: view.topAnchor),
+      metricsBackdrop.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+      metricsBackdrop.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+      metricsBackdrop.bottomAnchor.constraint(equalTo: contextLabel.bottomAnchor, constant: 26),
     ])
   }
   private func makeMapControls() {
@@ -283,10 +302,11 @@ final class OwnerController: UIViewController {
     NSLayoutConstraint.activate([
       tools.bottomAnchor.constraint(equalTo: dock.topAnchor, constant: -12),
       tools.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-      minimap.topAnchor.constraint(equalTo: header.bottomAnchor, constant: 18),
-      minimap.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-      minimap.widthAnchor.constraint(equalToConstant: 88),
-      minimap.heightAnchor.constraint(equalToConstant: 62),
+      // Always visible: both complexes and the current view, without covering the metrics.
+      minimap.bottomAnchor.constraint(equalTo: tools.topAnchor, constant: -10),
+      minimap.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+      minimap.widthAnchor.constraint(equalToConstant: 96),
+      minimap.heightAnchor.constraint(equalToConstant: 84),
     ])
   }
   private func makeDock() {
@@ -327,14 +347,14 @@ final class OwnerController: UIViewController {
     let update = { [self] in
       self.dockContent.arrangedSubviews.forEach { $0.removeFromSuperview() }
       self.dockProgress = nil
-      self.minimap.isHidden = self.selected == nil
       self.metrics.isHidden = self.selected != nil
       self.contextLabel.isHidden = self.selected != nil
+      self.metricsBackdrop.isHidden = self.selected != nil
       self.outputNumber.text = "\(self.simulation.completed)"
       self.attentionNumber.text = "\(self.simulation.attentionCount)"
       self.contextLabel.text =
         self.selected.map { "\($0.code) · \($0.shortTitle.uppercased())" }
-        ?? "\(self.lens.title.uppercased()) · 9 УЧАСТКОВ"
+        ?? "\(self.lens.title.uppercased()) · \(FactoryZone.allCases.count) УЧАСТКОВ · 2 КОМПЛЕКСА"
       let kicker: String
       let title: String
       let subtitle: String
@@ -495,7 +515,7 @@ final class OwnerController: UIViewController {
     factory.resetCamera()
     factory.showRoute(false)
     factory.apply(simulation, lens: lens, tracked: nil)
-    contextLabel.text = "ТЕРРИТОРИЯ · 9 УЧАСТКОВ"
+    contextLabel.text = "ТЕРРИТОРИЯ · \(FactoryZone.allCases.count) УЧАСТКОВ · 2 КОМПЛЕКСА"
     renderDock(animated: true)
   }
   private func startTour() {

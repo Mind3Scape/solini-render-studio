@@ -1,3 +1,4 @@
+import SafariServices
 import QuickLook
 import UIKit
 
@@ -151,159 +152,341 @@ final class ChoiceControl: UIView {
   }
 }
 
-final class FinderController: ScrollController {
-  private var budget = 1
-  private var compact = false
-  private let result = UIStackView()
+/// Search the real catalogue and return one product with the execution the hit stands for.
+final class CatalogPickerController: UITableViewController, UISearchResultsUpdating {
+  private let search = UISearchController(searchResultsController: nil)
+  private var hits: [Catalog.Hit] = Catalog.shared.search("")
+  private let onPick: (CatalogProduct, String?) -> Void
+  init(title: String, onPick: @escaping (CatalogProduct, String?) -> Void) {
+    self.onPick = onPick
+    super.init(style: .plain)
+    self.title = title
+  }
+  required init?(coder: NSCoder) { fatalError() }
   override func viewDidLoad() {
     super.viewDidLoad()
-    title = "Личный подбор"
-    add(
-      stack(
-        [eyebrow("ДВА ШАГА К СВОЕЙ ФОРМЕ"), label("Начнём с вашего\nпространства.", 33, .medium)],
-        spacing: 13))
-    let space = ChoiceControl(["До 180 см", "Без ограничений"], selected: 1) { [weak self] index in
-      self?.compact = index == 0
-      self?.render()
-    }
-    let money = ChoiceControl(["До 500 тыс.", "Любой бюджет"], selected: 1) { [weak self] index in
-      self?.budget = index
-      self?.render()
-    }
-    add(
-      workspaceCard([eyebrow("ДЛИНА ВАННЫ"), space, spacer(5), eyebrow("БЮДЖЕТ"), money]), inset: 20
-    )
-    result.axis = .vertical
-    result.spacing = 20
-    add(result, inset: 20)
-    render()
+    search.searchResultsUpdater = self
+    search.obscuresBackgroundDuringPresentation = false
+    search.searchBar.placeholder = "Название, коллекция или артикул"
+    navigationItem.searchController = search
+    navigationItem.hidesSearchBarWhenScrolling = false
+    navigationItem.leftBarButtonItem = UIBarButtonItem(
+      systemItem: .cancel, primaryAction: UIAction { [weak self] _ in self?.dismiss(animated: true) })
+    tableView.register(UITableViewCell.self, forCellReuseIdentifier: "hit")
   }
-  private func render() {
-    result.arrangedSubviews.forEach { $0.removeFromSuperview() }
-    let products = Product.all.filter { p in
-      p.category == "Ванны" && (budget == 1 || p.price <= 500000)
-        && (!compact || (Int(p.dimensions.components(separatedBy: " ").first ?? "0") ?? 0) <= 1800)
+  func updateSearchResults(for searchController: UISearchController) {
+    hits = Catalog.shared.search(searchController.searchBar.text ?? "")
+    tableView.reloadData()
+  }
+  override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { hits.count }
+  override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    let cell = tableView.dequeueReusableCell(withIdentifier: "hit", for: indexPath)
+    let hit = hits[indexPath.row]
+    var c = UIListContentConfiguration.subtitleCell()
+    c.text = hit.product.name
+    c.secondaryText = [hit.product.category, hit.price.map(rubles) ?? "цена по запросу"].joined(separator: " · ")
+    c.secondaryTextProperties.color = Palette.muted
+    c.image = UIImage(systemName: "photo")
+    c.imageProperties.maximumSize = CGSize(width: 54, height: 54)
+    c.imageProperties.cornerRadius = 8
+    cell.contentConfiguration = c
+    let id = hit.product.id
+    CatalogImages.shared.image(for: hit.product, maxPixel: 160) { [weak cell] image in
+      guard let cell, var current = cell.contentConfiguration as? UIListContentConfiguration,
+        current.text == hit.product.name, let image, id == hit.product.id
+      else { return }
+      current.image = image
+      cell.contentConfiguration = current
     }
-    result.addArrangedSubview(
-      label(
-        "\(products.count) \(plural(products.count, "форма подходит", "формы подходят", "форм подходят"))",
-        24, .semibold))
-    for p in products {
-      let tile = ProductTile(product: p) { [weak self] in self?.showProduct(p) }
-      tile.height(345)
-      result.addArrangedSubview(tile)
-    }
-    if products.isEmpty {
-      result.addArrangedSubview(label("Попробуйте увеличить длину или бюджет.", 17))
-    }
+    return cell
+  }
+  override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    let hit = hits[indexPath.row]
+    dismiss(animated: true) { [onPick] in onPick(hit.product, hit.variantKey ?? hit.product.variants.first?.key) }
   }
 }
 
+/// Two real catalogue items side by side, each in its own execution; differing values are bold.
 final class CompareController: ScrollController {
+  private struct Slot {
+    var product: CatalogProduct
+    var variantKey: String?
+    var variant: CatalogVariant? { product.variant(key: variantKey) }
+  }
+  private var slots: [Slot] = []
   private let body = UIStackView()
-  private var selected = 0
-  private let candidates = Product.all.filter { $0.category == "Ванны" }
   override func viewDidLoad() {
     super.viewDidLoad()
-    title = "Сравнить формы"
-    add(
-      stack(
-        [eyebrow("ВЫБОР В ДЕТАЛЯХ"), label("Один взгляд.\nДве возможности.", 32, .medium)],
-        spacing: 12))
-    let picker = ChoiceControl(["Aria / Opera", "Aria / Greca"], selected: 0) { [weak self] index in
-      self?.selected = index
-      self?.render()
+    title = "Сравнить"
+    // Opening pair: two signature baths; either side can be replaced from the whole catalogue.
+    for (id, sku) in [("aria", "1051201M"), ("opera", nil)] as [(String, String?)] {
+      if let p = Catalog.shared.product(id) {
+        slots.append(Slot(product: p, variantKey: p.variants.first { sku == nil || $0.sku == sku }?.key ?? p.variants.first?.key))
+      }
     }
-    add(picker, inset: 20)
+    add(stack([eyebrow("СРАВНЕНИЕ"), label("Выберите свою форму", 30, .regular, serif: true)], spacing: 10))
     body.axis = .vertical
     body.spacing = 18
     add(body, inset: 20)
     render()
+    registerForTraitChanges([UITraitPreferredContentSizeCategory.self]) { (self: Self, _) in self.render() }
   }
   private func render() {
     body.arrangedSubviews.forEach { $0.removeFromSuperview() }
-    guard candidates.count == 3 else { return }
-    let ps = [candidates[0], candidates[selected + 1]]
-    let columns = ps.map { p -> UIView in
-      let image = photo(p.image, height: 150)
-      image.contentMode = .scaleAspectFit
-      image.backgroundColor = .white
-      image.rounded(20)
-      return stack(
-        [
-          image, label(p.name, 25, .semibold), label(p.dimensions, 12, .regular, Palette.muted),
-          label(rubles(p.price), 17, .medium),
-          ActionButton("Выбрать", icon: "plus", prominent: true) { [weak self] in
-            DemoStore.shared.add(p, stone: false)
-            self?.message(
-              "\(p.name) в проекте",
-              "Выбранное изделие сохранено. Продолжить можно в разделе «Проекты».")
-          },
-        ], spacing: 13)
+    guard slots.count == 2 else { return }
+    let parts = slots.indices.map { column($0) }
+    // Accessibility text sizes: the two positions stack instead of squeezing into half widths.
+    if traitCollection.preferredContentSizeCategory.isAccessibilityCategory {
+      body.addArrangedSubview(stack(parts.map { stack($0, spacing: 8) }, spacing: 24))
+    } else {
+      // Paired rows: photo, name, execution and buttons line up even when one name wraps.
+      var rows: [UIView] = []
+      for k in parts[0].indices {
+        let pair = stack([parts[0][k], parts[1][k]], axis: .horizontal, spacing: 12)
+        pair.distribution = .fillEqually
+        pair.alignment = .fill
+        rows.append(pair)
+      }
+      body.addArrangedSubview(stack(rows, spacing: 8))
     }
-    let row = stack(columns, axis: .horizontal, spacing: 14)
-    row.distribution = .fillEqually
-    row.alignment = .top
-    body.addArrangedSubview(row)
-    body.addArrangedSubview(
-      workspaceCard([
-        label("Форма и ощущение", 21, .semibold),
-        label(
-          selected == 0
-            ? "Aria — строгая геометрия и встроенный свет. Opera — классическая пластика и мягкая линия борта."
-            : "Aria — архитектурный акцент. Greca — округлый силуэт и более компактная длина.", 15,
-          .regular, Palette.muted),
-      ]))
+    body.addArrangedSubview(table())
+    body.addArrangedSubview(label(
+      "Цены на \(Catalog.shared.snapshotText). Наличие и сроки уточняйте у менеджера.",
+      12, .regular, Palette.muted))
+  }
+  private func column(_ i: Int) -> [UIView] {
+    let slot = slots[i]
+    let image = UIImageView()
+    image.contentMode = .scaleAspectFit
+    image.backgroundColor = .white
+    image.rounded(18)
+    image.height(140)
+    CatalogImages.shared.image(for: slot.product, maxPixel: 500) { image.image = $0 }
+    var execution = UIButton.Configuration.plain()
+    execution.title = slot.variant?.title ?? "Исполнение"
+    execution.image = UIImage(systemName: "chevron.up.chevron.down")
+    execution.imagePlacement = .trailing
+    execution.imagePadding = 4
+    execution.baseForegroundColor = Palette.ink
+    execution.contentInsets = .init(top: 6, leading: 0, bottom: 6, trailing: 0)
+    let executionButton = UIButton(configuration: execution)
+    executionButton.titleLabel?.numberOfLines = 2
+    executionButton.contentHorizontalAlignment = .leading
+    executionButton.contentVerticalAlignment = .top
+    executionButton.showsMenuAsPrimaryAction = true
+    executionButton.menu = UIMenu(children: slot.product.variants.map { v in
+      UIAction(title: v.title ?? "Базовое исполнение", subtitle: v.price.map(rubles) ?? "цена по запросу",
+               state: v.key == slot.variantKey ? .on : .off) { [weak self] _ in
+        self?.slots[i].variantKey = v.key
+        self?.render()
+      }
+    })
+    executionButton.isEnabled = slot.product.variants.count > 1
+    executionButton.accessibilityLabel = "Исполнение: \(slot.variant?.title ?? "базовое")"
+    let change = ActionButton("Заменить", icon: "magnifyingglass") { [weak self] in
+      let picker = CatalogPickerController(title: "Позиция \(i + 1)") { product, key in
+        self?.slots[i] = Slot(product: product, variantKey: key)
+        self?.render()
+      }
+      self?.present(UINavigationController(rootViewController: picker), animated: true)
+    }
+    change.accessibilityIdentifier = "compare.change.\(i)"
+    let add = ActionButton("В проект", icon: "plus", prominent: true) { [weak self] in
+      guard ProjectStore.shared.add(slot.product, variantKey: slot.variantKey) != nil else {
+        self?.message("Выберите исполнение", "Без исполнения позицию нельзя добавить в проект.")
+        return
+      }
+      self?.message("\(slot.product.name) в проекте", "Исполнение: \(slot.variant?.title ?? "базовое").")
+    }
+    let open = UIButton(configuration: .plain(), primaryAction: UIAction { [weak self] _ in
+      self?.navigationController?.pushViewController(
+        CatalogProductController(slot.product, variantKey: slot.variantKey), animated: true)
+    })
+    open.configuration?.title = slot.product.name
+    open.configuration?.baseForegroundColor = Palette.ink
+    open.configuration?.contentInsets = .zero
+    open.titleLabel?.font = UIFont(descriptor: UIFont.systemFont(ofSize: 21).fontDescriptor.withDesign(.serif)!, size: 21)
+    open.titleLabel?.numberOfLines = 3
+    open.contentHorizontalAlignment = .leading
+    open.contentVerticalAlignment = .top
+    return [image, open, executionButton, change, add]
+  }
+  private func table() -> UIView {
+    func values(_ s: Slot) -> [String] {
+      let v = s.variant
+      let d = s.product.dimensions
+      return [
+        s.product.category + (s.product.subcategory.map { " · \($0)" } ?? ""),
+        v?.price.map(rubles) ?? "по запросу",
+        v?.sku ?? "—",
+        d.text ?? "—",
+        s.product.depthToOverflow.map { "\(Int($0)) мм" } ?? "—",
+        v?.weightKg.map(kg) ?? "—",
+        v?.packedWeightKg.map(kg) ?? "—",
+        s.product.availability.stockQuantity.flatMap { $0 > 0 ? "\($0) шт. на складе" : nil }
+          ?? s.product.availability.text ?? "уточняется",
+        ProposalTexts.warranty(for: s.product),
+        s.product.model == nil ? "—" : "есть",
+        v?.allowsRAL == true ? "RAL Classic по запросу" : "—",
+      ]
+    }
+    let titles = ["Категория", "Цена", "Артикул", "Габариты", "До перелива", "Вес", "В упаковке", "Наличие",
+                  "Гарантия", "3D-модель", "Цвет"]
+    let a = values(slots[0])
+    let b = values(slots[1])
+    var rows: [UIView] = []
+    for (i, title) in titles.enumerated() {
+      let differs = a[i] != b[i]
+      let left = label(a[i], 14, differs ? .semibold : .regular)
+      let right = label(b[i], 14, differs ? .semibold : .regular)
+      let pair = stack([left, right], axis: traitCollection.preferredContentSizeCategory.isAccessibilityCategory ? .vertical : .horizontal, spacing: 12)
+      pair.distribution = .fillEqually
+      pair.alignment = .top
+      let row = stack([label(title.uppercased(), 10, .semibold, Palette.muted), pair], spacing: 4)
+      row.isAccessibilityElement = true
+      row.accessibilityLabel = "\(title): \(slots[0].product.name) — \(a[i]); \(slots[1].product.name) — \(b[i])"
+      rows.append(row)
+      rows.append(line())
+    }
+    return workspaceCard(rows)
   }
 }
 
+/// Opening an official USDZ. On a device: QuickLook with AR. QuickLook in the iOS Simulator
+/// shows only a file card, so there the same form opens in the material studio, whose SceneKit
+/// scene renders the model. The original file is always shared as is.
+enum ModelViewing {
+  static var subtitle: String {
+    #if targetEnvironment(simulator)
+      return "просмотр в студии"
+    #else
+      return "просмотр и AR"
+    #endif
+  }
+  static func open(_ form: StudioForm, from host: UIViewController) {
+    #if targetEnvironment(simulator)
+      MaterialStudioController.present(form: form, from: host)
+    #else
+      host.present(ProposalPreviewController(fileURL: form.modelURL), animated: true)
+    #endif
+  }
+  static func share(_ form: StudioForm, from host: UIViewController) {
+    let sheet = UIActivityViewController(activityItems: [form.modelURL], applicationActivities: nil)
+    sheet.popoverPresentationController?.sourceView = host.view
+    host.present(sheet, animated: true)
+  }
+}
+
+/// Designer library: every bundled official model, the documents of the current project and
+/// a catalogue search for any other item's documents.
 final class ResourcesController: ScrollController {
   override func viewDidLoad() {
     super.viewDidLoad()
-    title = "Библиотека дизайнера"
-    add(
-      stack(
-        [
-          eyebrow("ФАЙЛЫ ДЛЯ РАБОТЫ"), label("От замысла\nк точному проекту.", 34, .medium),
-          label(
-            "Оригинальные модели и документация Salini доступны прямо в приложении.", 15, .regular,
-            Palette.muted),
-        ], spacing: 14))
-    let model = photo("greca", height: 220)
-    model.rounded(24)
-    add(
-      workspaceCard([
-        model, label("Greca / 3D", 26, .semibold),
-        label("USDZ · оригинальная модель Salini", 12, .regular, Palette.muted),
-        ActionButton("Открыть модель", icon: "cube.transparent", prominent: true) { [weak self] in
-          self?.present(ObjectViewerController(), animated: true)
-        },
-        ActionButton("Поделиться USDZ", icon: "square.and.arrow.up") { [weak self] in
-          self?.share("Greca", ext: "usdz")
-        },
-      ]), inset: 20)
-    add(
-      workspaceAction(
-        "Чертёж Aria", subtitle: "Размеры, установка, подключения · PDF", icon: "ruler"
-      ) { [weak self] in
-        self?.present(ModelPreviewController("Aria-drawing", ext: "pdf"), animated: true)
-      }, inset: 20)
-    add(
-      workspaceAction(
-        "Материалы и покрытия", subtitle: "S-Stone и S-Sense", icon: "circle.lefthalf.filled"
-      ) { [weak self] in self?.sheet(MaterialsController()) }, inset: 20)
-    add(
-      workspaceAction(
-        "Добавить изделие в проект", subtitle: "Каталог и выбор исполнения", icon: "plus.square"
-      ) { [weak self] in
-        self?.navigationController?.pushViewController(CatalogController(), animated: true)
-      }, inset: 20)
+    navigationItem.title = "Библиотека дизайнера"
   }
-  private func share(_ name: String, ext: String) {
-    guard let url = Bundle.main.url(forResource: name, withExtension: ext) else { return }
-    let vc = UIActivityViewController(activityItems: [url], applicationActivities: nil)
-    vc.popoverPresentationController?.sourceView = view
-    present(vc, animated: true)
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    content.arrangedSubviews.forEach { $0.removeFromSuperview() }
+    add(stack([
+      eyebrow("ФАЙЛЫ ДЛЯ РАБОТЫ"), label("От замысла\nк точному проекту.", 34, .regular, serif: true),
+      label("Официальные 3D-модели Salini в приложении и документы карточек сайта.", 15, .regular, Palette.muted),
+    ], spacing: 12))
+    // Project documents first: what the designer is working on right now.
+    let project = ProjectStore.shared.current
+    let projectProducts = project.lines.compactMap(\.product).reduce(into: [CatalogProduct]()) { list, p in
+      if !list.contains(where: { $0.id == p.id }) { list.append(p) }
+    }
+    var projectRows: [UIView] = [eyebrow("ПРОЕКТ «\(project.name.uppercased())»")]
+    if projectProducts.isEmpty {
+      projectRows.append(label("Добавьте изделия в проект — здесь появятся их паспорта, чертежи и модели.", 14, .regular, Palette.muted))
+    }
+    for p in projectProducts { projectRows.append(documentsBlock(p)) }
+    add(stack(projectRows, spacing: 12), inset: 20)
+    var models: [UIView] = [eyebrow("3D-МОДЕЛИ USDZ · \(StudioForm.all.count)")]
+    for form in StudioForm.all {
+      models.append(workspaceAction(form.name, subtitle: "Официальная модель · \(ModelViewing.subtitle)", icon: "cube.transparent") {
+        [weak self] in self.map { ModelViewing.open(form, from: $0) }
+      })
+    }
+    add(stack(models, spacing: 10), inset: 20)
+    add(stack([
+      eyebrow("ДРУГИЕ ИЗДЕЛИЯ"),
+      workspaceAction("Документы любого изделия", subtitle: "Поиск по 305 карточкам каталога", icon: "magnifyingglass") {
+        [weak self] in
+        let picker = CatalogPickerController(title: "Документы изделия") { product, _ in
+          self?.navigationController?.pushViewController(ProductDocumentsController(product), animated: true)
+        }
+        self?.present(UINavigationController(rootViewController: picker), animated: true)
+      },
+      workspaceAction("Чертёж Aria", subtitle: "Размеры, установка, подключения · PDF в приложении", icon: "ruler") {
+        [weak self] in self?.present(ModelPreviewController("Aria-drawing", ext: "pdf"), animated: true)
+      },
+      workspaceAction("Материалы и покрытия", subtitle: "S-Stone и S-Sense в студии", icon: "circle.lefthalf.filled") {
+        [weak self] in self.map { MaterialStudioController.present(from: $0) }
+      },
+    ], spacing: 10), inset: 20)
+  }
+  private func documentsBlock(_ p: CatalogProduct) -> UIView {
+    let docs = p.documents.filter { !$0.isOption }
+    let model = StudioForm.all.first { $0.product.id == p.id }
+    var rows: [UIView] = [label(p.name, 20, .regular, serif: true)]
+    if let model {
+      rows.append(ActionButton("3D-модель · \(ModelViewing.subtitle)", icon: "cube.transparent") { [weak self] in
+        self.map { ModelViewing.open(model, from: $0) }
+      })
+      rows.append(ActionButton("Поделиться USDZ", icon: "square.and.arrow.up") { [weak self] in
+        self.map { ModelViewing.share(model, from: $0) }
+      })
+    }
+    for d in docs.prefix(6) { rows.append(documentButton(d)) }
+    if docs.isEmpty && model == nil {
+      rows.append(label("Документы в карточке сайта не опубликованы — запросите у менеджера.", 13, .regular, Palette.muted))
+    }
+    return workspaceCard(rows)
+  }
+  private func documentButton(_ d: CatalogDocument) -> UIView {
+    documentLink(d) { [weak self] url in self?.present(SFSafariViewController(url: url), animated: true) }
+  }
+}
+
+func documentLink(_ d: CatalogDocument, open: @escaping (URL) -> Void) -> UIView {
+  let kinds = ["passport": "Паспорт", "drawing": "Чертёж", "model": "Модель", "presentation": "Презентация"]
+  let b = ActionButton("\(kinds[d.kind].map { "\($0) · " } ?? "")\(d.label)", icon: "doc.text") {
+    guard let url = URL(string: d.url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? d.url) else { return }
+    open(url)
+  }
+  b.accessibilityHint = "Откроется на сайте Salini"
+  return b
+}
+
+final class ProductDocumentsController: ScrollController {
+  private let product: CatalogProduct
+  init(_ product: CatalogProduct) {
+    self.product = product
+    super.init(nibName: nil, bundle: nil)
+  }
+  required init?(coder: NSCoder) { fatalError() }
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    title = product.name
+    navigationItem.largeTitleDisplayMode = .never
+    var rows: [UIView] = [eyebrow("ДОКУМЕНТЫ КАРТОЧКИ"), label(product.name, 30, .regular, serif: true)]
+    if let model = StudioForm.all.first(where: { $0.product.id == product.id }) {
+      rows.append(ActionButton("3D-модель · \(ModelViewing.subtitle)", icon: "cube.transparent", prominent: true) { [weak self] in
+        self.map { ModelViewing.open(model, from: $0) }
+      })
+      rows.append(ActionButton("Поделиться USDZ", icon: "square.and.arrow.up") { [weak self] in
+        self.map { ModelViewing.share(model, from: $0) }
+      })
+    }
+    let docs = product.documents.filter { !$0.isOption }
+    for d in docs { rows.append(documentLink(d) { [weak self] url in self?.present(SFSafariViewController(url: url), animated: true) }) }
+    if docs.isEmpty { rows.append(label("В карточке сайта документы не опубликованы — запросите у менеджера.", 14, .regular, Palette.muted)) }
+    rows.append(ActionButton("Открыть карточку", icon: "arrow.up.right") { [weak self] in
+      guard let self else { return }
+      self.navigationController?.pushViewController(CatalogProductController(self.product), animated: true)
+    })
+    add(stack(rows, spacing: 12))
   }
 }
 
@@ -312,7 +495,7 @@ final class StockController: ScrollController {
   private let results = UIStackView()
   override func viewDidLoad() {
     super.viewDidLoad()
-    title = "Наличие"
+    navigationItem.title = "Наличие"
     add(
       stack(
         [
@@ -323,6 +506,11 @@ final class StockController: ScrollController {
       self?.warehouse = index
       self?.render()
     }
+    navigationItem.rightBarButtonItem = UIBarButtonItem(
+      title: "Поставки", image: UIImage(systemName: "truck.box"),
+      primaryAction: UIAction { [weak self] _ in
+        self?.navigationController?.pushViewController(PartnerOrdersController(), animated: true)
+      })
     add(picker, inset: 20)
     results.axis = .vertical
     results.spacing = 16
@@ -441,7 +629,11 @@ final class PartnerOrdersController: ScrollController {
             "Создайте резерв на складе. Здесь появятся его состав и маршрут отгрузки.", 15,
             .regular, Palette.muted),
           ActionButton("Открыть наличие", icon: "shippingbox", prominent: true) { [weak self] in
-            self?.tabBarController?.selectedIndex = 1
+            if let tabs = self?.tabBarController, (tabs.viewControllers?.count ?? 0) > MainTabs.toolTabIndex + 1 {
+              tabs.selectedIndex = MainTabs.toolTabIndex
+            } else {
+              self?.navigationController?.pushViewController(StockController(), animated: true)
+            }
           },
         ]), inset: 20)
     }

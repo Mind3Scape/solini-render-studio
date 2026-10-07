@@ -19,10 +19,12 @@ final class CampusOverview: UIControl {
   required init?(coder: NSCoder) { fatalError() }
   private var modelScale: CGFloat { min((bounds.width - 14) / CampusSite.projectedSize.width,
         (bounds.height - 12) / CampusSite.projectedSize.height) }
+  private static let uMid = (CampusSite.projectedRange.u.lowerBound + CampusSite.projectedRange.u.upperBound) / 2
+  private static let vMid = (CampusSite.projectedRange.v.lowerBound + CampusSite.projectedRange.v.upperBound) / 2
   private func point(_ x: CGFloat, _ z: CGFloat) -> CGPoint {
     CGPoint(
-      x: bounds.midX + (x - z - 5) / sqrt(2) * modelScale,
-      y: bounds.midY + (x + z - 5) / sqrt(6) * modelScale)
+      x: bounds.midX + (x - z - Self.uMid) / sqrt(2) * modelScale,
+      y: bounds.midY + (x + z - Self.vMid) / sqrt(6) * modelScale)
   }
   /// Path booleans are costly; the minimap redraws on every camera move.
   private static let roads = CampusSite.roadSurfaces()
@@ -31,14 +33,15 @@ final class CampusOverview: UIControl {
     let s = modelScale
     return CGAffineTransform(
       a: s / sqrt(2), b: s / sqrt(6), c: -s / sqrt(2), d: s / sqrt(6),
-      tx: bounds.midX - 5 * s / sqrt(2), ty: bounds.midY - 5 * s / sqrt(6))
+      tx: bounds.midX - Self.uMid * s / sqrt(2), ty: bounds.midY - Self.vMid * s / sqrt(6))
   }
   override func draw(_ rect: CGRect) {
     guard let context = UIGraphicsGetCurrentContext() else { return }
     // The site and its road hierarchy give the zones their real context.
     var transform = isometric
-    let site = CGPath(rect: CampusSite.bounds, transform: &transform)
-    context.addPath(site)
+    for plinth in CampusSite.complexes {
+      context.addPath(CGPath(rect: plinth, transform: &transform))
+    }
     context.setFillColor(InsideStyle.paving.cgColor)
     context.fillPath()
     for (path, color) in [(Self.roads.primary, InsideStyle.asphalt),

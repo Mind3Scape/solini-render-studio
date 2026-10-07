@@ -334,6 +334,7 @@ final class FactorySimulation {
     case .packing: return quality == .packing ? 82 : 54
     case .warehouse: return 68
     case .dispatch: return quality == .departed ? 33 : 67
+    case .robotics: return 74
     }
   }
   func count(_ zone: FactoryZone) -> Int {
@@ -483,6 +484,12 @@ final class FactorySimulation {
           quality == .departed ? "В пути" : quality == .ready ? "Готов к выезду" : "Ожидает Marea",
           "Рейс 02 · 12 раковин + 6 мебельных комплектов", .marea
         ), ("D-03", "Казань", "Планирование", "Рейс 03 · поддоны", .trays),
+      ]
+    case .robotics:
+      rows = [
+        ("R-01", "Обрезка борта", "В работе", "Робот-манипулятор · перевёрнутая ванна на поворотном столе", nil),
+        ("R-02", "Сверление перелива", "В работе", "Отверстие перелива по шаблону изделия", nil),
+        ("R-03", "Шаттл из литья", "В пути", "Отливки из комплекса 1 · остановка у ворот", nil),
       ]
     }
     return rows.map {

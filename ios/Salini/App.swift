@@ -106,57 +106,43 @@ struct ProjectItem: Codable, Equatable, Identifiable {
   var total: Int { (product?.price(stone: stone) ?? 0) * quantity }
 }
 
+/// Role and favourites. Projects live in ProjectStore; the prototype's project keys are migrated there.
 final class DemoStore {
   static let shared = DemoStore()
   private let defaults: UserDefaults
   var role: Audience { didSet { defaults.set(role.rawValue, forKey: "salini.role") } }
-  var items: [ProjectItem] { didSet { save() } }
+  /// Catalogue product ids. Prototype ids («aria», «greca»…) are mapped on load.
   var favorites: Set<String> { didSet { save() } }
-  var projectName: String { didSet { save() } }
   init(defaults: UserDefaults = .standard) {
     self.defaults = defaults
     role = Audience(rawValue: defaults.string(forKey: "salini.role") ?? "home") ?? .home
-    items =
-      (defaults.data(forKey: "salini.items").flatMap {
-        try? JSONDecoder().decode([ProjectItem].self, from: $0)
-      }) ?? []
-    favorites = Set(defaults.stringArray(forKey: "salini.favorites") ?? [])
-    projectName = defaults.string(forKey: "salini.projectName") ?? "Моё пространство"
+    favorites = Set((defaults.stringArray(forKey: "salini.favorites") ?? []).map { Catalog.legacyIds[$0] ?? $0 })
   }
   private func save() {
-    defaults.set(try? JSONEncoder().encode(items), forKey: "salini.items")
     defaults.set(Array(favorites), forKey: "salini.favorites")
-    defaults.set(projectName, forKey: "salini.projectName")
     NotificationCenter.default.post(name: .demoChanged, object: nil)
   }
+  /// Prototype entry points (stories, 3D viewer, comparison) add the matching catalogue execution.
   func add(_ product: Product, stone: Bool) {
-    if let i = items.firstIndex(where: { $0.productId == product.id && $0.stone == stone }) {
-      items[i].quantity += 1
-    } else {
-      items.append(ProjectItem(productId: product.id, stone: stone))
-    }
+    guard let match = Catalog.shared.product(for: product, stone: stone) else { return }
+    ProjectStore.shared.add(match.0, variantKey: match.1?.key)
   }
-  func toggle(_ product: Product) {
-    if favorites.contains(product.id) {
-      favorites.remove(product.id)
-    } else {
-      favorites.insert(product.id)
-    }
+  func toggle(_ id: String) {
+    if favorites.contains(id) { favorites.remove(id) } else { favorites.insert(id) }
   }
-  var total: Int { items.reduce(0) { $0 + $1.total } }
   func reset() {
-    items = []
     favorites = []
-    projectName = "Моё пространство"
     role = .home
+    ProjectStore.shared.reset()
   }
 }
 extension Notification.Name { static let demoChanged = Notification.Name("salini.demoChanged") }
 func rubles(_ value: Int) -> String {
   let f = NumberFormatter()
   f.numberStyle = .decimal
-  f.groupingSeparator = " "
-  return (f.string(from: NSNumber(value: value)) ?? "\(value)") + " ₽"
+  // Non-breaking spaces: «790 000 ₽» never wraps into a lone «₽» or a split number.
+  f.groupingSeparator = "\u{00A0}"
+  return (f.string(from: NSNumber(value: value)) ?? "\(value)") + "\u{00A0}₽"
 }
 
 func plural(_ count: Int, _ one: String, _ few: String, _ many: String) -> String {
@@ -168,6 +154,10 @@ func plural(_ count: Int, _ one: String, _ few: String, _ many: String) -> Strin
 }
 
 final class MainTabs: UITabBarController {
+  /// Shared positions: every role has the catalogue and a project; role tools follow.
+  static let catalogTabIndex = 1
+  static let projectTabIndex = 2
+  static let toolTabIndex = 3
   private let home = UINavigationController(rootViewController: HomeController())
   private let profile = UINavigationController(rootViewController: ProfileController())
   override func viewDidLoad() {
@@ -179,25 +169,21 @@ final class MainTabs: UITabBarController {
   }
   func applyAudience() {
     let role = DemoStore.shared.role
-    let second: UIViewController =
-      role == .home
-      ? CatalogController() : role == .atelier ? ResourcesController() : StockController()
-    let third: UIViewController =
-      role == .partner ? PartnerOrdersController() : ProjectsController()
-    let list: [(UINavigationController, String, String)] = [
+    var list: [(UINavigationController, String, String)] = [
       (home, role == .home ? "Мир Salini" : "Главная", "sparkles"),
+      (UINavigationController(rootViewController: CatalogController()), "Каталог", "square.grid.2x2"),
       (
-        UINavigationController(rootViewController: second),
-        role == .home ? "Коллекции" : role == .atelier ? "Библиотека" : "Наличие",
-        role == .partner ? "shippingbox" : role == .atelier ? "cube" : "square.grid.2x2"
+        UINavigationController(rootViewController: ProjectsController()),
+        role == .atelier ? "Спецификация" : "Проект", "square.stack.3d.up"
       ),
-      (
-        UINavigationController(rootViewController: third),
-        role == .partner ? "Поставки" : role == .atelier ? "Спецификация" : "Проекты",
-        role == .partner ? "truck.box" : "square.stack.3d.up"
-      ),
-      (profile, "Профиль", "person.crop.circle"),
     ]
+    // Designer library and partner stock/reserve tools stay as their own tabs.
+    switch role {
+    case .atelier: list.append((UINavigationController(rootViewController: ResourcesController()), "Библиотека", "cube"))
+    case .partner: list.append((UINavigationController(rootViewController: StockController()), "Наличие", "shippingbox"))
+    case .home: break
+    }
+    list.append((profile, "Профиль", "person.crop.circle"))
     viewControllers = list.map { nav, title, icon in
       nav.tabBarItem = UITabBarItem(
         title: title, image: UIImage(systemName: icon),

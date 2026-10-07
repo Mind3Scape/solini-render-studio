@@ -176,7 +176,8 @@ class ScrollController: UIViewController {
     content.addArrangedSubview(inset == 0 ? view : view.inset(inset))
   }
   func showProduct(_ product: Product) {
-    navigationController?.pushViewController(ProductController(product), animated: true)
+    guard let match = Catalog.shared.product(for: product) else { return }
+    navigationController?.pushViewController(CatalogProductController(match.0, variantKey: match.1?.key), animated: true)
   }
   func message(_ title: String, _ text: String) {
     let a = UIAlertController(title: title, message: text, preferredStyle: .alert)

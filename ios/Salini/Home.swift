@@ -2,8 +2,8 @@ import UIKit
 
 final class HomeController: ScrollController, UIScrollViewDelegate {
   private var gallery: CollectionGallery?
-  private var materials: MaterialShowcase?
-  private var materialChoice: SaliniMaterial = .stone
+  private var materials: MaterialFeatureView?
+  private var materialChoice: StudioFinish?
   private var visible = false
   override var preferredStatusBarStyle: UIStatusBarStyle { .darkContent }
   override func viewWillAppear(_ animated: Bool) {
@@ -40,41 +40,19 @@ final class HomeController: ScrollController, UIScrollViewDelegate {
         && !intersection.isNull && intersection.height > rect.height * 0.25
     }
   }
-  private func openMaterials(_ material: SaliniMaterial) {
-    let nav = UINavigationController(rootViewController: MaterialStudioController(material))
-    nav.modalPresentationStyle = .pageSheet
-    nav.sheetPresentationController?.detents = [.large()]
-    nav.sheetPresentationController?.prefersGrabberVisible = true
-    present(nav, animated: true)
+  private func openMaterials(_ form: StudioForm?, _ finish: StudioFinish) {
+    MaterialStudioController.present(form: form, finish: finish, from: self)
   }
   private func materialFeature() {
-    let feature = MaterialShowcase { [weak self] material in self?.openMaterials(material) }
-    feature.select(materialChoice, animated: false)
-    let jump = ActionButton("", icon: "arrow.down.right") { [weak self, weak feature] in
-      guard let self, let feature else { return }
-      let y = feature.convert(feature.bounds, to: self.scroll).minY
-      self.scroll.setContentOffset(
-        CGPoint(x: 0, y: y - self.scroll.adjustedContentInset.top - 12),
-        animated: !UIAccessibility.isReduceMotionEnabled)
-    }
-    jump.accessibilityLabel = "Показать материалы"
-    jump.accessibilityIdentifier = "material.reveal"
-    jump.widthAnchor.constraint(equalToConstant: 48).isActive = true
-    let title = stack(
-      [label("Почувствуйте\nразницу.", 35, .regular), UIView(), jump], axis: .horizontal,
-      spacing: 10)
-    title.alignment = .center
-    section(
-      stack(
-        [
-          eyebrow("ДВА МАТЕРИАЛА. ДВА ХАРАКТЕРА."),
-          title,
-        ], spacing: 12), top: 23, bottom: 21, inset: 24)
+    let feature = MaterialFeatureView { [weak self] form, finish in self?.openMaterials(form, finish) }
+    if let materialChoice { feature.select(materialChoice, animated: false) }
+    feature.accessibilityIdentifier = "material.feature"
     materials = feature
-    section(feature, top: 0, bottom: 24, inset: 16)
+    // One large editorial block: its own heading, one hero render, real executions only.
+    section(feature, top: 26, bottom: 28, inset: 20)
   }
   private func render() {
-    materialChoice = materials?.selected ?? materialChoice
+    materialChoice = materials?.finish ?? materialChoice
     materials?.sceneView.active = false
     gallery?.active = false
     content.arrangedSubviews.forEach { $0.removeFromSuperview() }
@@ -88,12 +66,14 @@ final class HomeController: ScrollController, UIScrollViewDelegate {
     logo.accessibilityLabel = "Salini"
     logo.isAccessibilityElement = true
     let search = ActionButton("", icon: role == .partner ? "shippingbox" : "magnifyingglass") {
-      [weak self] in self?.tabBarController?.selectedIndex = 1
+      [weak self] in
+      self?.tabBarController?.selectedIndex = role == .partner ? MainTabs.toolTabIndex : MainTabs.catalogTabIndex
     }
-    search.accessibilityLabel = role == .partner ? "Наличие на складе" : "Открыть каталог и файлы"
+    search.accessibilityLabel = role == .partner ? "Наличие на складе" : "Открыть каталог"
     search.widthAnchor.constraint(equalToConstant: 46).isActive = true
     let profile = ActionButton("", icon: "person.crop.circle") { [weak self] in
-      self?.tabBarController?.selectedIndex = 3
+      guard let tabs = self?.tabBarController else { return }
+      tabs.selectedIndex = (tabs.viewControllers?.count ?? 1) - 1
     }
     profile.accessibilityLabel = "Профиль"
     profile.widthAnchor.constraint(equalToConstant: 46).isActive = true
@@ -163,7 +143,7 @@ final class HomeController: ScrollController, UIScrollViewDelegate {
     let actions = stack(
       [
         ActionButton("Подобрать", icon: "slider.horizontal.3", prominent: true) { [weak self] in
-          self?.navigationController?.pushViewController(FinderController(), animated: true)
+          self?.navigationController?.pushViewController(ChooseController(), animated: true)
         },
         ActionButton("Сравнить", icon: "rectangle.split.2x1") { [weak self] in
           self?.navigationController?.pushViewController(CompareController(), animated: true)
@@ -201,18 +181,19 @@ final class HomeController: ScrollController, UIScrollViewDelegate {
           eyebrow("РАБОЧЕЕ ПРОСТРАНСТВО ДИЗАЙНЕРА"),
           label("Идеи становятся\nпроектами.", 30, .semibold),
         ], spacing: 12))
-    let store = DemoStore.shared
+    let project = ProjectStore.shared.current
     let pic = photo("interior", height: 150)
     pic.rounded(20)
-    let count = store.items.reduce(0) { $0 + $1.quantity }
+    let count = project.pieces
     section(
       workspaceCard([
-        pic, eyebrow("ТЕКУЩИЙ ПРОЕКТ"), label(store.projectName, 26, .semibold),
+        pic, eyebrow("ТЕКУЩИЙ ПРОЕКТ"), label(project.name, 26, .semibold),
         label(
-          "\(count) \(plural(count, "изделие", "изделия", "изделий")) · \(rubles(store.total))", 14,
+          "\(count) \(plural(count, "изделие", "изделия", "изделий")) · \(rubles(project.knownTotal))"
+            + (project.isTotalComplete ? "" : " + по запросу"), 14,
           .medium, Palette.muted),
         ActionButton("Продолжить комплектацию", icon: "arrow.up.right", prominent: true) {
-          [weak self] in self?.tabBarController?.selectedIndex = 2
+          [weak self] in self?.tabBarController?.selectedIndex = MainTabs.projectTabIndex
         },
       ]))
     section(
@@ -221,16 +202,14 @@ final class HomeController: ScrollController, UIScrollViewDelegate {
           eyebrow("ИНСТРУМЕНТЫ ПРОЕКТА"),
           workspaceAction(
             "Добавить изделие", subtitle: "Выбрать форму и исполнение", icon: "plus.square"
-          ) { [weak self] in
-            self?.navigationController?.pushViewController(CatalogController(), animated: true)
-          },
+          ) { [weak self] in self?.tabBarController?.selectedIndex = MainTabs.catalogTabIndex },
           workspaceAction(
             "3D и технические файлы", subtitle: "USDZ, чертежи и размеры", icon: "cube"
-          ) { [weak self] in self?.tabBarController?.selectedIndex = 1 },
+          ) { [weak self] in self?.tabBarController?.selectedIndex = MainTabs.toolTabIndex },
           workspaceAction(
             "Спецификация проекта", subtitle: "Количество, состав, стоимость и PDF",
             icon: "doc.richtext"
-          ) { [weak self] in self?.tabBarController?.selectedIndex = 2 },
+          ) { [weak self] in self?.tabBarController?.selectedIndex = MainTabs.projectTabIndex },
         ], spacing: 14))
     materialFeature()
   }
@@ -252,10 +231,10 @@ final class HomeController: ScrollController, UIScrollViewDelegate {
     let actions = stack(
       [
         ActionButton("Наличие", icon: "shippingbox", prominent: true) { [weak self] in
-          self?.tabBarController?.selectedIndex = 1
+          self?.tabBarController?.selectedIndex = MainTabs.toolTabIndex
         },
         ActionButton("Поставки", icon: "truck.box") { [weak self] in
-          self?.tabBarController?.selectedIndex = 2
+          self?.navigationController?.pushViewController(PartnerOrdersController(), animated: true)
         },
       ], axis: .horizontal, spacing: 10)
     actions.distribution = .fillEqually
@@ -278,7 +257,7 @@ final class HomeController: ScrollController, UIScrollViewDelegate {
         workspaceAction(
           "Создать первый резерв", subtitle: "Выберите склад и количество изделий",
           icon: "plus.square"
-        ) { [weak self] in self?.tabBarController?.selectedIndex = 1 })
+        ) { [weak self] in self?.tabBarController?.selectedIndex = MainTabs.toolTabIndex })
     }
     section(
       workspaceAction(
@@ -391,4 +370,3 @@ final class InspirationController: ScrollController {
       ]))
   }
 }
-typealias MaterialsController = MaterialStudioController

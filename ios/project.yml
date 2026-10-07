@@ -15,10 +15,16 @@ targets:
     sources:
       - path: Salini
         excludes:
+          - CatalogMedia
+          - CatalogMedia/**
           - Resources/ninfea-film-v2.mp4
           - Resources/ninfea-poster-v2.png
           - Resources/ninfea-water.png
           - Resources/ninfea-garden.png
+      # Offline catalogue (ios/tools/build_catalog.py): one folder resource, not 300 file references.
+      - path: Salini/CatalogMedia
+        type: folder
+        buildPhase: resources
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: design.salini.experience
