@@ -1,1 +1,221 @@
-*{box-sizing:border-box}body{margin:0;background:#f5f4ef;color:#193c37;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}main{max-width:790px;margin:auto;padding:64px 34px}.brand{display:flex;gap:22px;align-items:center;color:inherit;text-decoration:none;font-size:48px;font-weight:700;letter-spacing:-3px}.brand span{font-size:10px;letter-spacing:2px;border-left:1px solid #bcc6bb;padding-left:22px}.eyebrow{margin:74px 0 16px;font-size:10px;letter-spacing:2px;font-weight:600}h1{font-size:clamp(38px,7vw,58px);font-weight:500;letter-spacing:-2px;line-height:1.12;margin:0 0 24px}.lead{font-size:16px;color:#667a6b;line-height:1.8}.connection{margin:35px 0 22px;padding:23px;border:1px solid #d7dfd2;border-radius:12px;background:#fff;display:flex;gap:15px;align-items:flex-start}.connection strong{font-size:15px;font-weight:500}.connection p{margin:9px 0 0;font-size:13px;line-height:1.6;color:#667a6b}#dot{width:9px;height:9px;border-radius:50%;background:#b89d69;margin-top:5px;flex-shrink:0}button,#open{display:inline-block;color:#fff;background:#193c37;padding:14px 19px;border:1px solid #193c37;border-radius:6px;font:inherit;font-size:13px;cursor:pointer;text-decoration:none;margin:0 10px 10px 0}button:disabled{opacity:.55;cursor:wait}[hidden]{display:none!important}.note{font-size:12px;line-height:1.8;color:#7b857b;max-width:630px;margin-top:22px}footer{border-top:1px solid #dadfd4;margin-top:40px;padding-top:22px;color:#7b857b;font-size:10px}a:focus-visible,button:focus-visible{outline:3px solid #a6b789;outline-offset:4px}
+/* Salini Render Studio — entry. Cold porcelain, graphite, clear glass only on
+   navigation and controls that sit above the photograph. System type, no web fonts. */
+:root {
+  --porcelain: #f3f5f8;
+  --porcelain-2: #e8ecf1;
+  --surface: #ffffff;
+  --graphite: #1b2026;
+  --graphite-2: #2c333b;
+  --muted: #56616c;          /* 5.9:1 on porcelain */
+  --line: rgba(27, 32, 38, .11);
+  --accent: #2b62c9;         /* calm blue, 5.3:1 with white text */
+  --ok: #2e8b62;
+  --idle: #8b95a0;
+  --glass: rgba(249, 251, 253, .72);
+  --glass-strong: rgba(249, 251, 253, .86);
+  --glass-edge: rgba(255, 255, 255, .7);
+  --glass-shadow: 0 1px 0 rgba(255, 255, 255, .75) inset, 0 18px 50px rgba(12, 18, 26, .18);
+  --radius: 22px;
+  --gutter: clamp(16px, 4vw, 48px);
+  --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", system-ui, "Segoe UI", Roboto, sans-serif;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: 88px; }
+body {
+  margin: 0; background: var(--porcelain); color: var(--graphite);
+  font: 400 17px/1.55 var(--font); letter-spacing: -.01em;
+  -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+}
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; }
+[hidden] { display: none !important; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 10px; }
+
+.skip {
+  position: fixed; left: 12px; top: 12px; z-index: 50; padding: 12px 16px; border-radius: 12px;
+  background: var(--graphite); color: #fff; text-decoration: none; transform: translateY(-160%);
+}
+.skip:focus-visible { transform: none; }
+
+/* Navigation glass: the only floating material on the page besides the connection control. */
+.bar {
+  position: fixed; inset: max(12px, env(safe-area-inset-top)) var(--gutter) auto; z-index: 20;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  height: 60px; padding: 0 10px 0 20px; border-radius: 999px;
+  background: var(--glass); border: 1px solid var(--glass-edge); box-shadow: var(--glass-shadow);
+  -webkit-backdrop-filter: blur(24px) saturate(170%); backdrop-filter: blur(24px) saturate(170%);
+}
+.brand { display: flex; align-items: center; gap: 14px; text-decoration: none; min-height: 44px; }
+.brand img { width: 74px; height: auto; }
+.brand span {
+  font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
+  padding-left: 14px; border-left: 1px solid rgba(27, 32, 38, .2); color: var(--graphite-2);
+}
+.bar nav { display: flex; gap: 4px; }
+.bar nav a {
+  display: inline-flex; align-items: center; min-height: 44px; padding: 0 16px; border-radius: 999px;
+  font-size: 15px; font-weight: 500; text-decoration: none; color: var(--graphite-2);
+}
+.bar nav a:hover { background: rgba(27, 32, 38, .06); }
+
+/* Hero: the photograph dominates; copy and the connection panel sit in its dark left field. */
+.hero { position: relative; min-height: min(100svh, 940px); display: flex; align-items: flex-end; isolation: isolate; }
+/* The photograph fills the right ~70%; the copy column sits over its dark left edge, clear of the bath. */
+.hero { background: #111417; }
+.hero-photo { display: block; position: absolute; inset: 0 0 0 max(30%, 330px); z-index: -1; overflow: hidden; background: #111417; }
+.hero-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; }
+.hero::after {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: linear-gradient(90deg, #111417 0%, #111417 30%, rgba(17, 20, 23, .55) 40%, rgba(17, 20, 23, 0) 52%),
+              linear-gradient(0deg, rgba(9, 12, 16, .45) 0%, rgba(9, 12, 16, 0) 40%);
+}
+.hero-copy {
+  width: min(440px, calc(30% + 60px)); min-width: 360px; margin: 0 0 0 var(--gutter);
+  padding: 140px 0 clamp(32px, 6vh, 64px); color: #fff;
+}
+.eyebrow {
+  margin: 0 0 14px; font-size: 13px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
+}
+.hero .eyebrow { color: rgba(255, 255, 255, .82); }
+h1 {
+  margin: 0 0 18px; font-size: clamp(40px, 4.8vw, 68px); line-height: 1.02; font-weight: 600; letter-spacing: -.035em;
+}
+.lead { margin: 0 0 32px; max-width: 46ch; font-size: 19px; line-height: 1.55; color: rgba(255, 255, 255, .88); }
+
+/* Connection control: real status only, driven by connect.js. */
+.connection {
+  display: grid; gap: 18px; padding: 22px; border-radius: var(--radius); color: var(--graphite);
+  background: var(--glass-strong); border: 1px solid var(--glass-edge); box-shadow: var(--glass-shadow);
+  -webkit-backdrop-filter: blur(28px) saturate(170%); backdrop-filter: blur(28px) saturate(170%);
+}
+.connection:focus { outline: none; }
+.connection-state { display: flex; gap: 14px; align-items: flex-start; }
+.connection strong { display: block; font-size: 18px; font-weight: 600; letter-spacing: -.015em; }
+.connection p { margin: 6px 0 0; font-size: 15px; line-height: 1.5; color: var(--muted); }
+#dot {
+  flex: none; width: 12px; height: 12px; margin-top: 6px; border-radius: 50%;
+  background: var(--idle); box-shadow: 0 0 0 4px rgba(139, 149, 160, .18);
+  animation: checking 1.6s ease-in-out infinite;
+}
+/* connect.js paints its own inline colours; map them onto this palette by state. */
+#dot[style*="618a65"], #dot[style*="97, 138, 101"] {
+  background: var(--ok) !important; box-shadow: 0 0 0 4px rgba(46, 139, 98, .2); animation: none;
+}
+#dot[style*="b89d69"], #dot[style*="184, 157, 105"] {
+  background: var(--idle) !important; box-shadow: 0 0 0 4px rgba(139, 149, 160, .2); animation: none;
+}
+@keyframes checking { 50% { opacity: .35; } }
+.connection-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+#retry, #open {
+  display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 22px;
+  border-radius: 999px; font: 600 16px/1 var(--font); letter-spacing: -.01em; text-decoration: none; cursor: pointer;
+  transition: background-color .2s, transform .2s;
+}
+#retry { background: var(--surface); color: var(--graphite); border: 1px solid rgba(27, 32, 38, .16); }
+#retry:hover:not(:disabled) { background: #f7f9fb; }
+#retry:disabled { opacity: .6; cursor: progress; }
+#open { background: var(--accent); color: #fff; border: 1px solid var(--accent); }
+#open:hover { background: #2457b8; }
+#retry:active:not(:disabled), #open:active { transform: scale(.98); }
+
+/* How it works */
+.how {
+  display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: clamp(40px, 6vw, 96px); align-items: center;
+  max-width: 1280px; margin: 0 auto; padding: clamp(80px, 12vw, 150px) var(--gutter);
+}
+.how .eyebrow, .access .eyebrow { color: var(--accent); }
+h2 { margin: 0 0 40px; font-size: clamp(30px, 3.6vw, 46px); line-height: 1.1; font-weight: 600; letter-spacing: -.03em; max-width: 18ch; }
+.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+.steps li { display: grid; grid-template-columns: 56px 1fr; gap: 12px; padding: 26px 0; border-top: 1px solid var(--line); }
+.steps li:last-child { border-bottom: 1px solid var(--line); }
+.step-index { font-size: 15px; font-weight: 600; color: var(--accent); font-variant-numeric: tabular-nums; padding-top: 4px; }
+h3 { margin: 0 0 6px; font-size: 22px; line-height: 1.25; font-weight: 600; letter-spacing: -.02em; }
+.steps p { margin: 0; color: var(--muted); font-size: 17px; }
+.how-photo { margin: 0; }
+.how-photo img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 28px; box-shadow: 0 30px 80px rgba(12, 18, 26, .14); }
+.how-photo figcaption { margin-top: 14px; font-size: 14px; line-height: 1.5; color: var(--muted); }
+
+/* Access */
+.access { max-width: 1280px; margin: 0 auto; padding: 0 var(--gutter) clamp(80px, 10vw, 130px); }
+.access h2 { margin-bottom: 28px; }
+.access-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.access-grid p {
+  margin: 0; padding: 26px; border-radius: var(--radius); background: var(--surface);
+  border: 1px solid var(--line); color: var(--graphite-2); font-size: 16px; line-height: 1.6;
+}
+.foot {
+  display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+  max-width: 1280px; margin: 0 auto; padding: 28px var(--gutter) calc(28px + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--line); font-size: 14px; color: var(--muted);
+}
+
+/* Tablet and phone: the photograph comes first, copy and controls follow on porcelain. */
+@media (max-width: 899.98px) {
+  .bar { height: 56px; padding-left: 16px; }
+  .bar nav a:last-child { display: none; }
+  .hero { display: block; min-height: 0; }
+  .hero-photo { position: relative; inset: auto; height: clamp(300px, 46svh, 460px); }
+  .hero-photo img { object-position: 50% 50%; }
+  .hero::after { display: none; }
+  .hero { background: none; }
+  .hero-copy { width: auto; min-width: 0; margin: 0; padding: 22px var(--gutter) 8px; color: var(--graphite); }
+  .hero h1 { margin-bottom: 10px; }
+  .hero .eyebrow { color: var(--accent); }
+  .lead { margin-bottom: 18px; color: var(--muted); font-size: 17px; }
+  /* Not above the photograph here, so it is a plain surface: no glass without content behind it. */
+  .connection {
+    background: var(--surface); border: 1px solid var(--line); box-shadow: 0 10px 30px rgba(12, 18, 26, .06);
+    -webkit-backdrop-filter: none; backdrop-filter: none;
+  }
+  .how { grid-template-columns: 1fr; padding-top: 72px; padding-bottom: 72px; }
+  .how-photo { max-width: 560px; }
+  .access-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 599.98px) {
+  .hero-photo { height: clamp(220px, 37svh, 320px); }
+}
+@media (max-width: 420px) {
+  body { font-size: 16px; }
+  .brand { gap: 10px; }
+  .brand img { width: 62px; }
+  .brand span { padding-left: 10px; font-size: 11px; letter-spacing: .1em; }
+  .bar nav a { padding: 0 12px; font-size: 14px; }
+  h1 { font-size: clamp(32px, 9.6vw, 40px); }
+  .eyebrow { margin-bottom: 8px; font-size: 12px; }
+  .lead { font-size: 16px; }
+  .connection { padding: 16px; gap: 14px; }
+  .connection-actions > * { flex: 1 1 100%; }
+  .steps li { grid-template-columns: 40px 1fr; }
+  h3 { font-size: 20px; }
+}
+@media (max-width: 360px) {
+  /* iPhone SE class: keep the connection action inside the first screen. */
+  .hero-photo { height: clamp(160px, 30svh, 220px); }
+  .hero-copy { padding-top: 16px; }
+  .hero .eyebrow { display: none; }
+  .lead { margin-bottom: 14px; }
+  .connection p { font-size: 14px; }
+  #retry, #open { padding: 0 14px; font-size: 15px; white-space: nowrap; }
+}
+@media (max-width: 340px) {
+  .brand span { display: none; }
+}
+
+/* Without backdrop-filter, glass becomes a near-opaque porcelain surface — never unreadable. */
+@supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .bar { background: rgba(246, 248, 250, .97); }
+  .connection { background: rgba(250, 251, 253, .98); }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .bar { background: rgba(246, 248, 250, .98); -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .connection { background: var(--surface); -webkit-backdrop-filter: none; backdrop-filter: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+@media (forced-colors: active) {
+  .bar, .connection, .access-grid p { border: 1px solid CanvasText; }
+  #dot { forced-color-adjust: none; }
+}
