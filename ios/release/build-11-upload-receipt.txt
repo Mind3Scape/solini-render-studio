@@ -1,0 +1,34 @@
+Salini 1.0 (11) — upload attempt (NOT SUCCESSFUL)
+Date: 9 October 2026, Asia/Bangkok (UTC+7)
+Bundle: design.salini.experience
+App Store Connect app: 6819688748
+Team: TQ5SCF3KQZ
+Source commit: bfccb0082c7234c8bab5e0a8d20a163b35b762c8
+Branch: codex/salini-native-materials (pushed to GitHub)
+
+Archive: ios/build/testflight/Salini-1.0-11.xcarchive
+Archive succeeded, signed, codesign verification passed.
+All 177 Insight resource files match build-11-insight-sha256.json.
+Full simulator suite: 133 tests passed, 0 failed.
+
+Upload attempt:
+2026-10-09 02:05:48 Starting upload
+2026-10-09 02:09:38 Progress 100% (bytes transferred, NOT acceptance)
+2026-10-09 02:10:01 Upload failed.
+Account credentials have expired.
+error: exportArchive Account credentials have expired. Open Xcode's Accounts settings, sign in to your account, and try again.
+** EXPORT FAILED **
+Exit status: 70
+
+Distribution status:
+- Upload: failed at completion; do not claim delivered.
+- Processing: unverified.
+- Internal testing: unverified for build 11.
+- External/public beta: build 11 not submitted/verified; build 10 previously approved.
+- Browser ASC session also expired. User asked to renew both Xcode and ASC sign-in.
+
+After renewed Xcode sign-in, retry from repository root:
+xcodebuild -exportArchive -archivePath ios/build/testflight/Salini-1.0-11.xcarchive -exportOptionsPlist ios/release/UploadOptions.plist -exportPath ios/build/testflight/export-11 -allowProvisioningUpdates
+
+Confirm successful upload, then verify processing and group availability in App Store Connect; add build 11 to Salini Public Beta and submit Beta App Review if required.
+Public invite: https://testflight.apple.com/join/mUb5H7bZ

@@ -1,5 +1,5 @@
 {
-  "status": "Accepted as an improved interactive graphics proof, not equivalence to concepts 01/02; build 11 release pending.",
+  "status": "Improved interactive proof committed and pushed; build 11 archive validated. Upload blocked by expired Xcode credentials, not delivered to TestFlight yet.",
   "request": "Retain the architectural abstraction of concepts 01/02 but substantially improve physical light, materials and model quality; fix cargo intersecting the vehicle.",
   "review": {
     "build_10_failures": [
@@ -73,10 +73,13 @@
       "Final iOS day entry, QC day/night, trailer cutaway and full-truck framing visually reviewed",
       "Ordinary Insight entry opens RealityKit; day/night and manual/return-to-action controls inspected",
       "All 177 resource files enumerated (48,264,213 bytes); no missing material texture paths",
-      "259-second simulator recording reviewed by sampled frames; saved 60-second excerpt covers the fourth load, loaded departure and continuation with the next batch"
+      "259-second simulator recording reviewed by sampled frames; saved 60-second excerpt covers the fourth load, loaded departure and continuation with the next batch",
+      "Source commit bfccb0082c7234c8bab5e0a8d20a163b35b762c8 pushed to origin/codex/salini-native-materials",
+      "Release archive succeeded; signature verified and all 177 bundled asset hashes matched"
     ],
     "remaining": [
-      "GitHub commit/push and TestFlight upload/distribution"
+      "Renew Xcode sign-in and retry build 11 upload (first attempt failed with expired credentials)",
+      "Renew App Store Connect browser session to verify processing/internal testing and submit/add build 11 to public beta"
     ]
   }
 }

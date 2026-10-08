@@ -11,7 +11,7 @@
   "signInRequired": false,
   "collectsData": false,
   "tracking": false,
-  "submissionStatus": "Build 1.0 (11) in final validation. Not yet archived or uploaded. Previous build 1.0 (10) is approved for public beta. Public invite: https://testflight.apple.com/join/mUb5H7bZ",
+  "submissionStatus": "Build 1.0 (11) archived and validated. Upload attempted 9 October 2026 at 02:05–02:10 UTC+7, but Apple rejected completion: Account credentials have expired (xcodebuild exit 70 / EXPORT FAILED). Not uploaded successfully. Requires renewed Xcode Apple Account sign-in, then retry the existing archive. Processing, internal testing and public beta for build 11 are unverified. Previous build 1.0 (10) is approved for public beta. Public invite: https://testflight.apple.com/join/mUb5H7bZ",
   "build": "11",
   "betaReviewNotes": "Build 1.0 (11) improves the existing shipping-section graphics proof (Profile > Salini Inside > Участок отгрузки) with native RealityKit rendering, bundled physically based materials and baked day/night lighting. The interactive camera follows the simulated cargo or truck; pan, zoom, orbit and a return-to-action button allow manual inspection. Fixed imported pallet orientation and loading clearance. The selected load can be viewed through a labelled trailer cutaway. No sign-in, payment, real equipment control, new data collection, analytics or network rendering. All industrial states remain explicitly simulated. Existing catalog, projects, PDF proposals and collection films remain available. Product geometry originates from Salini; CC0 third-party assets have bundled provenance. Requires iOS/iPadOS 27 or later."
 }

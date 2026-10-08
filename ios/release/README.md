@@ -1,4 +1,41 @@
-# TestFlight release
+# TestFlight release — build 11
+
+Salini **1.0 (11)**, bundle `design.salini.experience`, App Store Connect app `6819688748`.
+
+Source: `bfccb0082c7234c8bab5e0a8d20a163b35b762c8`, branch `codex/salini-native-materials`, pushed to GitHub.
+Upload completion was rejected by Apple on **9 October 2026 at 02:10 (UTC+7)** because Xcode account credentials expired. **Build 11 is not yet successfully uploaded.** [Upload attempt and retry instructions](build-11-upload-receipt.txt). Processing, internal testing and public beta availability are unverified.
+
+This release replaces the shipping/QC graphics proof with interactive RealityKit rendering: textured materials,
+baked Cycles lighting, interior environment captures, soft shadows, calibrated day/night exposure, and more detailed
+workstations, services, planting and trailer geometry. The source product meshes are Salini assets.
+Imported pallet orientation and loading clearance are corrected. Cargo following opens at a useful scale;
+a labelled trailer cutaway reveals the selected load while the truck is docked, and truck selection fits the full vehicle.
+
+Open **Profile → Salini Inside → Участок отгрузки**. Pan, zoom and orbit enter manual exploration;
+**К действию** restores following. Day/night, zones, object selection and pause are available.
+Business activity remains explicitly simulated. The scene is an improved architectural proof, still simpler than
+concepts 01/02; it is not a photoreal final campus or real-time path tracer.
+
+Opus 5.5 implemented the Swift and Blender changes. Codex directed repeated visual passes, researched/downloaded
+assets, reviewed the code, built and checked the running app.
+
+## Verification
+
+- **133 tests passed, 0 failed**, 225.296 seconds on iPhone 18 Pro / iOS 27 simulator.
+- Visual checks cover ordinary entry, day/night QC lighting, follow/manual controls, cutaway and truck framing.
+- [60-second loading/departure recording](../../research/insight-poc-2026-10-08/qa-build11/ios-loading-motion.mp4).
+- Release archive is signed and all **177 resource files** match their source SHA-256 hashes.
+- [Validation and limits](build-11-validation.txt). Direct touch gestures and physical-device performance remain device QA.
+
+## Distribution
+
+[Public invitation](https://testflight.apple.com/join/mUb5H7bZ) currently has previously approved build 10.
+Build 11 requires renewed Xcode Apple Account sign-in before retrying the verified archive upload. Browser verification also awaits renewed
+App Store Connect sign-in; the Safari session expired. Do not infer build 11 approval from build 10 approval.
+
+---
+
+# Previous release — build 10
 
 Salini **1.0 (10)**, bundle `design.salini.experience`, App Store Connect app `6819688748`.
 
