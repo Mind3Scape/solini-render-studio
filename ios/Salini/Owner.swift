@@ -8,6 +8,7 @@ final class OwnerController: UIViewController {
   let simulation = FactorySimulation()
   let factory = FactorySceneView()
   private let minimap = CampusOverview()
+  private let atelierEntry = ShippingAtelierEntry()
   private let header = GlassView()
   let board = InsightBoardView()
   let returnPill = UIButton(type: .system)
@@ -53,6 +54,7 @@ final class OwnerController: UIViewController {
     makeHeader()
     makeBoard()
     makeMinimap()
+    makeAtelierEntry()
     factory.onSelect = { [weak self] zone in self?.focusZone(zone) }
     factory.onOrderSelect = { [weak self] order in self?.locate(order) }
     factory.onStationSelect = { [weak self] zone, code in self?.open(.station(zone, code)) }
@@ -97,7 +99,7 @@ final class OwnerController: UIViewController {
     let top = header.frame.maxY + 8
     let bottom = view.bounds.height - board.frame.minY + 8
     factory.mapContentInsets = UIEdgeInsets(top: top, left: 0, bottom: bottom, right: 0)
-    factory.excludedAnnotationRects = [header, minimap, board, returnPill].filter { !$0.isHidden }.map {
+    factory.excludedAnnotationRects = [header, minimap, board, returnPill, atelierEntry].filter { !$0.isHidden }.map {
       $0.convert($0.bounds, to: factory).insetBy(dx: -8, dy: -8)
     }
   }
@@ -205,6 +207,9 @@ final class OwnerController: UIViewController {
                image: UIImage(systemName: "point.topleft.down.to.point.bottomright.curvepath")) { [weak self] _ in
         self?.startTour()
       },
+      UIAction(title: "Участок отгрузки · 3D", image: UIImage(systemName: "shippingbox")) { [weak self] _ in
+        self?.openAtelier()
+      },
       UIAction(title: "Журнал решений", image: UIImage(systemName: "clock.arrow.circlepath")) { [weak self] _ in
         self?.open(.events)
       },
@@ -280,6 +285,20 @@ final class OwnerController: UIViewController {
     ])
     minimap.onSelect = { [weak self] zone in self?.focusZone(zone) }
     minimap.onOverview = { [weak self] in self?.overview() }
+  }
+  /// The visible way into the shipping-section graphics proof, under the header on the left
+  /// (the minimap keeps the right).
+  private func makeAtelierEntry() {
+    atelierEntry.translatesAutoresizingMaskIntoConstraints = false
+    atelierEntry.addAction(UIAction { [weak self] _ in self?.openAtelier() }, for: .touchUpInside)
+    view.addSubview(atelierEntry)
+    NSLayoutConstraint.activate([
+      atelierEntry.topAnchor.constraint(equalTo: header.bottomAnchor, constant: 10),
+      atelierEntry.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+    ])
+  }
+  func openAtelier(animated: Bool = true) {
+    navigationController?.pushViewController(ShippingAtelierController(), animated: animated)
   }
   private func updateReturnPill() {
     let show = cameraManual && tourIndex == nil

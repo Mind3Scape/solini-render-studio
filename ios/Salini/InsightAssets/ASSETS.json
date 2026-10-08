@@ -1,0 +1,610 @@
+{
+ "generated_by": "ios/tools/insight_poc/build_atelier_kit.py",
+ "assets": [
+  {
+   "asset": "car-factory-production-line-seated-forklift-driver-5efd32f9",
+   "title": "Seated Forklift Driver (Car Factory Production Line)",
+   "source": "https://3dassets.dev/assets/car-factory-production-line-seated-forklift-driver-5efd32f9",
+   "license": "CC0-1.0",
+   "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+   "authors": [
+    "3D Assets"
+   ],
+   "ai_generated": true,
+   "source_files": [
+    {
+     "url": "https://cdn.3dassets.dev/assets/27863/v1/model.glb",
+     "sha256": "ba8df58c05a7c97a5e27a21f235291c77913cd565d64085f5fad2db8fc700332"
+    }
+   ],
+   "use": "bevelled and recoloured into the forklift (Forklift_Body / Forklift_Carriage)"
+  },
+  {
+   "asset": "clean_asphalt",
+   "source": "https://polyhaven.com/a/clean_asphalt",
+   "license": "CC0-1.0",
+   "license_url": "https://polyhaven.com/license",
+   "authors": [],
+   "source_files": [
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/clean_asphalt/clean_asphalt_nor_gl_1k.jpg",
+     "sha256": "99cdf6b6f0b8a319d206e1d561bf2a5d9933d8d33e1d685f8e25388101d21310"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/clean_asphalt/clean_asphalt_diff_1k.jpg",
+     "sha256": "ddf9224e9cfa3eb2998d9097e4cd34bd3630c85e0e6798e5a0a000415a684083"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/clean_asphalt/clean_asphalt_rough_1k.jpg",
+     "sha256": "2280be133c104eb04370b625ebcc7f6709d2173b43ae2cd15a0074c26f492bf9"
+    }
+   ],
+   "use": "tiled ground material"
+  },
+  {
+   "asset": "concrete_road_barrier",
+   "source": "https://polyhaven.com/a/concrete_road_barrier",
+   "license": "CC0-1.0",
+   "license_url": "https://polyhaven.com/license",
+   "authors": [
+    "Amal Kumar"
+   ],
+   "source_files": [
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/concrete_road_barrier/concrete_road_barrier_1k.gltf",
+     "sha256": "c371e87d303fff3f0c9fbe88520f7837514364e5c66aac3244e115ffa673d061"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/concrete_road_barrier/concrete_road_barrier_nor_gl_1k.jpg",
+     "sha256": "c1072f51ff5c3d7158f0fbb0aa26e82b816b745b9f03639c4816832af2b37c52"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/concrete_road_barrier/concrete_road_barrier_arm_1k.jpg",
+     "sha256": "b940847648012f2db8c24b16e07ad1e39b3bd33ea493203364deca209606e4b4"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/concrete_road_barrier/concrete_road_barrier_diff_1k.jpg",
+     "sha256": "88b2d79829ffec7b11ac4d9c8554328f30b665d2c17f634197fde4f1ca8696fe"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/concrete_road_barrier/concrete_road_barrier.bin",
+     "sha256": "64a4f9bc6e4af64d714a252c3c13428c430a60569deba3d52ca6b7dd3aa70d8c"
+    }
+   ],
+   "use": "decimated geometry joined into atelier_kit.usdc; textures resized into textures/"
+  },
+  {
+   "asset": "exterior_aircon_unit",
+   "source": "https://polyhaven.com/a/exterior_aircon_unit",
+   "license": "CC0-1.0",
+   "license_url": "https://polyhaven.com/license",
+   "authors": [
+    "Monsta3D"
+   ],
+   "source_files": [
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/exterior_aircon_unit/exterior_aircon_unit_1k.gltf",
+     "sha256": "f19d85c76948903047c2846068aeaa376d5e956a410675268cb6cb6aac5d97c2"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/exterior_aircon_unit/exterior_aircon_unit_01_nor_gl_1k.jpg",
+     "sha256": "e5a6f3c135b942d6efe62a24496c575d03f6a4316188efe65079035d7faf1c38"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/exterior_aircon_unit/exterior_aircon_unit_01_opacity_1k.jpg",
+     "sha256": "c19feb434c2b01923fbb3e16ace3aa6d9cb16b05c2a5c479ad237759b2d331d6"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/exterior_aircon_unit/exterior_aircon_unit_rusted_01_arm_1k.jpg",
+     "sha256": "51c103926b118bf00b902826001db802b15755c6eefa12b00afa24c60d7b341b"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/exterior_aircon_unit/exterior_aircon_unit_01_arm_1k.jpg",
+     "sha256": "14671920f716691dc3b8940432f7aba5c469e3b466441ff8ad500de92d3178fb"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/exterior_aircon_unit/exterior_aircon_unit_02_arm_1k.jpg",
+     "sha256": "1cdfa2d1c938c3af61a5f06510b0d94aeddddd4bdc1832008b3826240dd1535d"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/exterior_aircon_unit/exterior_aircon_unit_rusted_02_arm_1k.jpg",
+     "sha256": "6ac4cfca6a8d8bec6ef1ff756652eb1f36b780d1ff7d70d9cb3e0f7fe1faf271"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/4k/exterior_aircon_unit/exterior_aircon_unit.bin",
+     "sha256": "b4b9ad082bdaa8f8b437bc14d9981caeaf318334499d4bf65d616fb2ec0c5ca8"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/exterior_aircon_unit/exterior_aircon_unit_02_nor_gl_1k.jpg",
+     "sha256": "864c0fb1e55aff910d826a8c1f6a2ad459f7db0124b5846445d466cabf0cadf5"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/exterior_aircon_unit/exterior_aircon_unit_rusted_01_nor_gl_1k.jpg",
+     "sha256": "14f105cda9172290be2e8b23b8e895099b65e222619850af3b13105901d922e2"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/exterior_aircon_unit/exterior_aircon_unit_rusted_01_diff_1k.jpg",
+     "sha256": "a8771db98ed7f3d46ce48fd70867f58a74a2530666c339f8dcc14f3e5de86d0b"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/exterior_aircon_unit/exterior_aircon_unit_01_diff_1k.jpg",
+     "sha256": "2ae5005b4836d2c91d1e712d9acf425c7dcc4973b7c0fc6f23da9afaa6381da6"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/exterior_aircon_unit/exterior_aircon_unit_rusted_02_opacity_1k.jpg",
+     "sha256": "a86bcaf9c4858cf250fd67c9a0ee362504454b9972ff6e1ac44e38bac3213421"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/exterior_aircon_unit/exterior_aircon_unit_rusted_02_nor_gl_1k.jpg",
+     "sha256": "3af4716b42812b742577594c7a0a342accd79925f02037c152b1da1c5831bb78"
+    }
+   ],
+   "use": "decimated geometry joined into atelier_kit.usdc; textures resized into textures/"
+  },
+  {
+   "asset": "factory_yard",
+   "source": "https://polyhaven.com/a/factory_yard",
+   "license": "CC0-1.0",
+   "license_url": "https://polyhaven.com/license",
+   "authors": [],
+   "source_files": [
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/1k/factory_yard_1k.hdr",
+     "sha256": "a87b1fa5f4690b4dd53c39355ec98337d3216b514912fb5a62b820cddc59e9bd"
+    }
+   ],
+   "use": "environment light"
+  },
+  {
+   "asset": "hand_truck",
+   "source": "https://polyhaven.com/a/hand_truck",
+   "license": "CC0-1.0",
+   "license_url": "https://polyhaven.com/license",
+   "authors": [
+    "Mutanzom3D"
+   ],
+   "source_files": [
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/hand_truck/hand_truck_1k.gltf",
+     "sha256": "303029ba829f2975ebed80f6f36e38d57cec87379e7214fcfb7d8e6e921c8e58"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/hand_truck/hand_truck_nor_gl_1k.jpg",
+     "sha256": "8674bbaa5562c24efceef0ab77f374ffe32fa583ef5dc2a44846305aa0fd8f79"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/hand_truck/hand_truck_diff_1k.jpg",
+     "sha256": "a1c528e0c88a03a96b89215eab228083f9dd66a502174936bccc0fe427ce345a"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/hand_truck/hand_truck_arm_1k.jpg",
+     "sha256": "30ceadb1fa303f36dc0372a5681203e69715546219838e1bc0634c274407204c"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/hand_truck/hand_truck.bin",
+     "sha256": "2a7ca50cdfac207defa68f71600f37e7cdd05d35bc94139df5269ea7d8b7a214"
+    }
+   ],
+   "use": "decimated geometry joined into atelier_kit.usdc; textures resized into textures/"
+  },
+  {
+   "asset": "modular_airduct_rectangular_01",
+   "source": "https://polyhaven.com/a/modular_airduct_rectangular_01",
+   "license": "CC0-1.0",
+   "license_url": "https://polyhaven.com/license",
+   "authors": [
+    "James Ray Cock"
+   ],
+   "source_files": [
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/modular_airduct_rectangular_01/modular_airduct_rectangular_01_1k.gltf",
+     "sha256": "61468e734df89c1a84f6aa5f2f60ea2d1486d927f640d1912bdc929be7673643"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modular_airduct_rectangular_01/modular_airduct_rectangular_01_parts01_nor_gl_1k.jpg",
+     "sha256": "e659e0dbe8ec88e33d2578fdb59af3b5aec308957914a6847ce076fe16e8c3c5"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modular_airduct_rectangular_01/modular_airduct_rectangular_01_parts02_nor_gl_1k.jpg",
+     "sha256": "b41b75e92307d9c37433dd27766eb3328aa09394bf4bf501e6a42da80bbf3010"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modular_airduct_rectangular_01/modular_airduct_rectangular_01_parts02_diff_1k.jpg",
+     "sha256": "e17a732494acf18dc4f1d9518a1297758d1437acad7d98110a4550a537428b17"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/modular_airduct_rectangular_01/modular_airduct_rectangular_01.bin",
+     "sha256": "9cd2aef6a787922571a9b4830dd3fd57ba5b535db88b9980ecf9a255a59aa2a6"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modular_airduct_rectangular_01/modular_airduct_rectangular_01_parts01_arm_1k.jpg",
+     "sha256": "8225a69b7a5cb20e0e091899955b5765c82cdea781ffd28da51d7a5cc3d12ddd"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modular_airduct_rectangular_01/modular_airduct_rectangular_01_parts02_arm_1k.jpg",
+     "sha256": "718ee754ffb882cff87d3470b641b94d6c09ed62a51fe81575149321cf104278"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modular_airduct_rectangular_01/modular_airduct_rectangular_01_parts01_diff_1k.jpg",
+     "sha256": "b86936922be53c2a4591bbdd88a0d63fcc7583bb534ce9fc569d5be3fb9306c0"
+    }
+   ],
+   "use": "decimated geometry joined into atelier_kit.usdc; textures resized into textures/"
+  },
+  {
+   "asset": "modular_industrial_pipes_01",
+   "source": "https://polyhaven.com/a/modular_industrial_pipes_01",
+   "license": "CC0-1.0",
+   "license_url": "https://polyhaven.com/license",
+   "authors": [
+    "Jorge Camacho"
+   ],
+   "source_files": [
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/modular_industrial_pipes_01/modular_industrial_pipes_01_1k.gltf",
+     "sha256": "455d3a0fe95b7900a08cbebb23cfb2c341672fcb67ae7355d776e53cfa3d0688"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modular_industrial_pipes_01/modular_industrial_pipes_01_group02_arm_1k.jpg",
+     "sha256": "4c65dcb651a3d345517fa93ad7c6e48f2388f4e8bb347446f70317c16049867b"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modular_industrial_pipes_01/modular_industrial_pipes_01_group01_diff_1k.jpg",
+     "sha256": "c0233f66b18e3374dfbbb8c8078a41f6571a0809d3eb14dd9d3c332265cfde7b"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modular_industrial_pipes_01/modular_industrial_pipes_01_group02_nor_gl_1k.jpg",
+     "sha256": "84a43ca11a4f1ac84f7fc8336a4e9b7b333d30c13e540f3ff42e662dc6f91b53"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/modular_industrial_pipes_01/modular_industrial_pipes_01.bin",
+     "sha256": "2e11e1a7dabd56b1e158364f48b0b388bf316fcab61a01274740db75dbafa448"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modular_industrial_pipes_01/modular_industrial_pipes_01_group01_nor_gl_1k.jpg",
+     "sha256": "ed4728fde567efe420e3a6e1bdc4238b26c2782218737c7e2de88eeca1e91fb2"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modular_industrial_pipes_01/modular_industrial_pipes_01_group01_arm_1k.jpg",
+     "sha256": "7fff7d4604491eeb7531ad5f7520517015c72ec7316d1e865d62f23f976dfed6"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modular_industrial_pipes_01/modular_industrial_pipes_01_group02_diff_1k.jpg",
+     "sha256": "ef8a75c402a8871903dcaa147b023d57c640d0de4c7a8acdfdee822861656a92"
+    }
+   ],
+   "use": "decimated geometry joined into atelier_kit.usdc; textures resized into textures/"
+  },
+  {
+   "asset": "overhead_crane",
+   "source": "https://polyhaven.com/a/overhead_crane",
+   "license": "CC0-1.0",
+   "license_url": "https://polyhaven.com/license",
+   "authors": [
+    "Timothy3D"
+   ],
+   "source_files": [
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/overhead_crane/overhead_crane_1k.gltf",
+     "sha256": "a1ed11c117f76b5cc2cce7489feed3091d7120cdca78380c4ff65cf269e479e0"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/overhead_crane/overhead_crane_trim_nor_gl_1k.jpg",
+     "sha256": "a1bb588412ecd396b736eeb2b86ac47f9ea22a97c5e223c0b35b81f08413ff21"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/overhead_crane/overhead_crane_trim_diff_1k.jpg",
+     "sha256": "280fe3810a52fd69468f8729012c343fedf9e0129fd5dffc865a0e35713a0e8c"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/overhead_crane/overhead_crane_trim_arm_1k.jpg",
+     "sha256": "425d751dd8d92ae715866eebc05abcf85af8cd92c8a744e22ebced6e81caaa2e"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/overhead_crane/overhead_crane_nor_gl_1k.jpg",
+     "sha256": "10f4409d6fcc62e7a0913cfc5c942249c4870834745a67aa80f8cc3589c896b7"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/overhead_crane/overhead_crane_diff_1k.jpg",
+     "sha256": "2eadaa0c07a8543ca4ac33133260b1ed315cdff7fb88d7367f60f702937b8423"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/overhead_crane/overhead_crane_arm_1k.jpg",
+     "sha256": "8e9fed5c722536e1a264d80841041b42790b59b37ee6561b15eb4916cf96c73e"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/overhead_crane/overhead_crane.bin",
+     "sha256": "6fcbc59c9b2e563c08206d0d3ff2560872e7697991c33997eecf882315ef9b47"
+    }
+   ],
+   "use": "decimated geometry joined into atelier_kit.usdc; textures resized into textures/"
+  },
+  {
+   "asset": "parcel-depot-and-sorting-hall-parcel-depot-and-sorting-528c9054",
+   "title": "Counterbalance forklift with raising forks (Parcel Depot and Sorting Hall)",
+   "source": "https://3dassets.dev/assets/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-528c9054",
+   "license": "CC0-1.0",
+   "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+   "authors": [
+    "3D Assets"
+   ],
+   "ai_generated": true,
+   "source_files": [
+    {
+     "url": "https://cdn.3dassets.dev/assets/34814/v1/model.glb",
+     "sha256": "42aa755487dd5b166a16bf570168161d26906532bd8f061f458c50a23c4add32"
+    }
+   ],
+   "use": "bevelled and recoloured into the forklift (Forklift_Body / Forklift_Carriage)"
+  },
+  {
+   "asset": "plastic_crate_01",
+   "source": "https://polyhaven.com/a/plastic_crate_01",
+   "license": "CC0-1.0",
+   "license_url": "https://polyhaven.com/license",
+   "authors": [
+    "PierreB3D"
+   ],
+   "source_files": [
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/plastic_crate_01/plastic_crate_01_1k.gltf",
+     "sha256": "42556fc8e39e5834ebf474dff79d4c0524fd3074be6c86c0c6704a10be8b3756"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/plastic_crate_01/plastic_crate_01_nor_gl_1k.jpg",
+     "sha256": "6f0c44778216d50672d6a23660b22dec8b96bb6e71518d699c24630c34cf9217"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/plastic_crate_01/plastic_crate_01_diff_1k.jpg",
+     "sha256": "d9109a42e397e39bbd7f42976d93122dbd5ccdef8ff64bce353571e1c1b994f6"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/plastic_crate_01/plastic_crate_01_arm_1k.jpg",
+     "sha256": "9a4af28d6fe8d5459a3c1a8706c0f8877221873ac9b83de580e6cfa63c3ecaa0"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/4k/plastic_crate_01/plastic_crate_01.bin",
+     "sha256": "59b307238a27f304739aeef0b1c9622d1e4efb31a96d805d2cfc0c461f9bb06d"
+    }
+   ],
+   "use": "decimated geometry joined into atelier_kit.usdc; textures resized into textures/"
+  },
+  {
+   "asset": "power_box_01",
+   "source": "https://polyhaven.com/a/power_box_01",
+   "license": "CC0-1.0",
+   "license_url": "https://polyhaven.com/license",
+   "authors": [
+    "Rico Cilliers",
+    "Yann Kervran"
+   ],
+   "source_files": [
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/power_box_01/power_box_01_1k.gltf",
+     "sha256": "edb54e68fb1229e9f59906459d782c2ddc576f6bd1141cf09ad864f48d7cb93b"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/power_box_01/power_box_01_arm_1k.jpg",
+     "sha256": "4601e901e2f7c1584ab5ecf65e0e192a99a4be86da505527f1622658e1b1e527"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/power_box_01/power_box_01_nor_gl_1k.jpg",
+     "sha256": "199b6fe93776aa0934f7bc36d8c82f1b4db9be9243e82e0cb3727bbcf25d85f1"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/power_box_01/power_box_01.bin",
+     "sha256": "b46efdf668ec2d4e04ff51604b5f1486caf20df632f442aab62601718058db05"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/power_box_01/power_box_01_diff_1k.jpg",
+     "sha256": "845c425ebc0ded263a7d49909e2c26710dd6160da11c0ca44aebd723f4f6f168"
+    }
+   ],
+   "use": "decimated geometry joined into atelier_kit.usdc; textures resized into textures/"
+  },
+  {
+   "asset": "salini-ninfea-02",
+   "source": "https://salini-srl.com/rakoviny/nakladnye/ninfea-02/",
+   "public_model": "https://disk.yandex.ru/d/nCDy9HaVw9WUgQ",
+   "license": "Salini product visualization asset, rights retained by Salini; not CC0",
+   "rights": "Salini — rights retained (not CC0); product visualisation",
+   "dimensions_mm": [
+    540,
+    447,
+    120
+   ],
+   "source_files": [
+    {
+     "url": "/Ninfea-02-2015-Corona-fbx.fbx",
+     "sha256": "a8e5d1fed2f5c86f6036573ebc92e00896503df7d589ea1f6c151af4b85b1d73"
+    },
+    {
+     "url": "/Ninfea-02-2015-obj.mtl",
+     "sha256": "d5080b99a9bb69cd43f4b35d2a879b8393c3b7145669678897bcbeff39c27e2f"
+    },
+    {
+     "url": "/Ninfea-02-2015-obj.obj",
+     "sha256": "9cb8290428891815ce42e9766eed46ef72d7b28501d26215c80303122dc61687"
+    }
+   ],
+   "use": "four basins on the basin inspection table, normalised to 540 mm, joined into atelier_kit.usdc"
+  },
+  {
+   "asset": "security_camera_01",
+   "source": "https://polyhaven.com/a/security_camera_01",
+   "license": "CC0-1.0",
+   "license_url": "https://polyhaven.com/license",
+   "authors": [
+    "Alexander Otterbeck",
+    "Yann Kervran"
+   ],
+   "source_files": [
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/security_camera_01/security_camera_01_1k.gltf",
+     "sha256": "d2468fe353cd9f992a5549709cf9efcfae67e9fd17f80bf7ff3866e2881dd2ae"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/security_camera_01/security_camera_01.bin",
+     "sha256": "c43dd3576213c169d1b3a9968788c0da2d14073e59c7d2503bc230c05042bb21"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/security_camera_01/security_camera_01_diff_1k.jpg",
+     "sha256": "572968d8c693682aa5c87d59428e1db234b0d81ec620af8a019c72e3f011d53f"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/security_camera_01/security_camera_01_arm_1k.jpg",
+     "sha256": "68bb728aff5af6bd4141201cd221c7e17ef537f49978c321b0e183677f8877ba"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/security_camera_01/security_camera_01_nor_gl_1k.jpg",
+     "sha256": "80e791da5d975177d16d5f30202deac0b262ffe6b13311605c09c630b93d0de5"
+    }
+   ],
+   "use": "decimated geometry joined into atelier_kit.usdc; textures resized into textures/"
+  },
+  {
+   "asset": "smooth_concrete_floor",
+   "source": "https://polyhaven.com/a/smooth_concrete_floor",
+   "license": "CC0-1.0",
+   "license_url": "https://polyhaven.com/license",
+   "authors": [],
+   "source_files": [
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/smooth_concrete_floor/smooth_concrete_floor_nor_gl_1k.jpg",
+     "sha256": "588bdbcc16b8dfa2869a2c154c076a419abb8ed83284691c2dffdddfcf20cc0c"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/smooth_concrete_floor/smooth_concrete_floor_diff_1k.jpg",
+     "sha256": "079587ae48fb3e2bfb0d0f9209eb75dc26ee30e213403d96377a30f6f6955092"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/smooth_concrete_floor/smooth_concrete_floor_rough_1k.jpg",
+     "sha256": "89082ede1efd3a60fd600a49e381a5822c89ee3bf75456ad883b3057190042a5"
+    }
+   ],
+   "use": "tiled ground material"
+  },
+  {
+   "asset": "steel_frame_shelves_01",
+   "source": "https://polyhaven.com/a/steel_frame_shelves_01",
+   "license": "CC0-1.0",
+   "license_url": "https://polyhaven.com/license",
+   "authors": [
+    "James Ray Cock"
+   ],
+   "source_files": [
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/steel_frame_shelves_01/steel_frame_shelves_01_1k.gltf",
+     "sha256": "4eff8994825d654e337f8dc425e959ed6add7f4773188c87ba64402d9edd9842"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/steel_frame_shelves_01/steel_frame_shelves_01_diff_1k.jpg",
+     "sha256": "85e205b334e15e05bec9b02be1258da6ab949ae908aa57e0bee6b94ba45b4415"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/steel_frame_shelves_01/steel_frame_shelves_01_nor_gl_1k.jpg",
+     "sha256": "2a67ed7dd4f53c3e225396e6381992b768fe58b5261be703d540678e366e46ed"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/steel_frame_shelves_01/steel_frame_shelves_01_arm_1k.jpg",
+     "sha256": "858629eeaa8f68ddb4fc1a813afe6ed988ded3d6d49184ec45a14611760f0bb3"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/steel_frame_shelves_01/steel_frame_shelves_01.bin",
+     "sha256": "306d7e72d12a5d3047b8a189f8d0add51075eaf7f51f935286fda4e1c16dd066"
+    }
+   ],
+   "use": "decimated geometry joined into atelier_kit.usdc; textures resized into textures/"
+  },
+  {
+   "asset": "tree_small_02",
+   "source": "https://polyhaven.com/a/tree_small_02",
+   "license": "CC0-1.0",
+   "license_url": "https://polyhaven.com/license",
+   "authors": [
+    "Rico Cilliers"
+   ],
+   "source_files": [
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/tree_small_02/tree_small_02_1k.gltf",
+     "sha256": "3062a709614c05b80fdc1e56583998bc3cb1027b0d52f956c8ecfb882ff8ca6d"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/tree_small_02/tree_small_02_branch_nor_gl_1k.jpg",
+     "sha256": "a2efae9e7fede259601188cd5cb7e561fc502bd87e04d862a9532b2d8e647a62"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/tree_small_02/tree_small_02_branch_diff_1k.jpg",
+     "sha256": "a71b768e330c0c6cca097e30314f6b4e842ef724a1370f6aab14b4434eec64cb"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/tree_small_02/tree_small_02_branch_arm_1k.jpg",
+     "sha256": "8968b46d76c67da09ebbf4eed04b8123c9e0ddf5b55d123968b35b32aa76d27a"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/tree_small_02/tree_small_02_leaves_nor_gl_1k.jpg",
+     "sha256": "8c72e04fb23e16ae1df79c01385a638473d1dd4dede3d51e83d70153c129f09b"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/tree_small_02/tree_small_02_leaves_diff_1k.jpg",
+     "sha256": "261e7d7a5ac7d2e16ea8823ff8510be8f3f615999724232994039ad2885e5c36"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/tree_small_02/tree_small_02_leaves_arm_1k.jpg",
+     "sha256": "71f81374daf5a8f3e6eb2c694264a1769fdb0bea508178e4105618eecea83c3e"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/tree_small_02/tree_small_02_nor_gl_1k.jpg",
+     "sha256": "9c83be074c950ea1b94c732c0c0291b53b9ba357f932d378bafe3ca3b4418871"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/tree_small_02/tree_small_02_diff_1k.jpg",
+     "sha256": "4e0093f407b3a1120a36de49a48ebe5a465a9a9b77e361c7a3e66866e115e404"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/tree_small_02/tree_small_02_arm_1k.jpg",
+     "sha256": "891c5a1bb124292984b01558e9f2b0302d27d2fa3ccf9dfc6c34f9ea4ca24e6c"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/tree_small_02/tree_small_02.bin",
+     "sha256": "8da6c3c389ad8748286d1b7488cd827f75ebdad9d8f59ef7dfb0916df5edc634"
+    }
+   ],
+   "use": "decimated geometry joined into atelier_kit.usdc; textures resized into textures/"
+  },
+  {
+   "asset": "wooden_crate_01",
+   "source": "https://polyhaven.com/a/wooden_crate_01",
+   "license": "CC0-1.0",
+   "license_url": "https://polyhaven.com/license",
+   "authors": [
+    "James Ray Cock"
+   ],
+   "source_files": [
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/wooden_crate_01/wooden_crate_01_1k.gltf",
+     "sha256": "fd9c6073acfc671e12b64666053f2805ae33aff5d3dbbcfe5c97c08c06644927"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/wooden_crate_01/wooden_crate_01_diff_1k.jpg",
+     "sha256": "16653f4abaf4c1d9bca94bde3bd8c54d0ea9a5298d1648abcf57de1f7ecc34cc"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/wooden_crate_01/wooden_crate_01_nor_gl_1k.jpg",
+     "sha256": "f4ea44c7dc1686123d337039cb713d74e8a2dbc6d1bd2beeac276d06f5df3fab"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/wooden_crate_01/wooden_crate_01.bin",
+     "sha256": "85f381f8035f7a6f2f3b848640894c6d3333b261946dd8a338c0fe19e0bea21e"
+    },
+    {
+     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/wooden_crate_01/wooden_crate_01_arm_1k.jpg",
+     "sha256": "cd0b031c3924905e16ffd78ead062c2cc274148c4104d09635310097738b4679"
+    }
+   ],
+   "use": "decimated geometry joined into atelier_kit.usdc; textures resized into textures/"
+  }
+ ],
+ "own_work": "architecture, racking, yard, forklift, truck and batch are procedural (this script)",
+ "products": "Alda 160×70, Mona 170, Luce 170, Noemi 170, Sofia 150 — Salini catalogue USDZ (CatalogMedia/models), loaded at runtime; Ninfea 02 basin in the kit"
+}

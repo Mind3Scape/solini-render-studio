@@ -1,0 +1,199 @@
+{
+ "gi": {
+  "day": "atelier_gi_day.png",
+  "gamma": 2.2,
+  "night": "atelier_gi_night.png",
+  "range": 4.0
+ },
+ "license": "Poly Haven CC0 1.0 (polyhaven.com/license); manifests in tmp/insight-poc-source",
+ "lightmapped": [
+  "M_Asphalt",
+  "M_Bollard",
+  "M_BoothFrame",
+  "M_Carton",
+  "M_Curb",
+  "M_Desk",
+  "M_Floor",
+  "M_Galv",
+  "M_Grass",
+  "M_Leveler",
+  "M_LineWhite",
+  "M_LineYellow",
+  "M_Mat",
+  "M_Panel",
+  "M_Paving",
+  "M_Plinth",
+  "M_RackBeam",
+  "M_RackUpright",
+  "M_Section",
+  "M_Slab",
+  "M_Steel",
+  "M_Timber",
+  "M_Window",
+  "M_Wrap"
+ ],
+ "materials": {
+  "M_Asphalt": {
+   "asset": "clean_asphalt",
+   "base": "textures/clean_asphalt_diff.jpg",
+   "normal": "textures/clean_asphalt_nor_gl.jpg",
+   "rough": "textures/clean_asphalt_rough.jpg",
+   "tile": 2.0
+  },
+  "M_Floor": {
+   "asset": "smooth_concrete_floor",
+   "base": "textures/smooth_concrete_floor_diff.jpg",
+   "normal": "textures/smooth_concrete_floor_nor_gl.jpg",
+   "rough": "textures/smooth_concrete_floor_rough.jpg",
+   "tile": 2.0
+  },
+  "concrete_road_barrier": {
+   "arm": "textures/concrete_road_barrier_arm.jpg",
+   "asset": "concrete_road_barrier",
+   "base": "textures/concrete_road_barrier_diff.jpg",
+   "normal": "textures/concrete_road_barrier_nor_gl.jpg"
+  },
+  "exterior_aircon_unit_01": {
+   "arm": "textures/exterior_aircon_unit_01_arm.jpg",
+   "asset": "exterior_aircon_unit",
+   "base": "textures/exterior_aircon_unit_01_diff.jpg",
+   "normal": "textures/exterior_aircon_unit_01_nor_gl.jpg"
+  },
+  "exterior_aircon_unit_02": {
+   "arm": "textures/exterior_aircon_unit_02_arm.jpg",
+   "asset": "exterior_aircon_unit",
+   "grille": true,
+   "normal": "textures/exterior_aircon_unit_02_nor_gl.jpg"
+  },
+  "exterior_aircon_unit_rusted_01": {
+   "arm": "textures/exterior_aircon_unit_rusted_01_arm.jpg",
+   "asset": "exterior_aircon_unit",
+   "base": "textures/exterior_aircon_unit_rusted_01_diff.jpg",
+   "normal": "textures/exterior_aircon_unit_rusted_01_nor_gl.jpg"
+  },
+  "exterior_aircon_unit_rusted_02": {
+   "arm": "textures/exterior_aircon_unit_rusted_02_arm.jpg",
+   "asset": "exterior_aircon_unit",
+   "grille": true,
+   "normal": "textures/exterior_aircon_unit_rusted_02_nor_gl.jpg"
+  },
+  "hand_truck": {
+   "arm": "textures/hand_truck_arm.jpg",
+   "asset": "hand_truck",
+   "base": "textures/hand_truck_diff.jpg",
+   "normal": "textures/hand_truck_nor_gl.jpg"
+  },
+  "modular_airduct_rectangular_01_parts01": {
+   "arm": "textures/modular_airduct_rectangular_01_parts01_arm.jpg",
+   "asset": "modular_airduct_rectangular_01",
+   "base": "textures/modular_airduct_rectangular_01_parts01_diff.jpg",
+   "normal": "textures/modular_airduct_rectangular_01_parts01_nor_gl.jpg"
+  },
+  "modular_airduct_rectangular_01_parts02": {
+   "arm": "textures/modular_airduct_rectangular_01_parts02_arm.jpg",
+   "asset": "modular_airduct_rectangular_01",
+   "base": "textures/modular_airduct_rectangular_01_parts02_diff.jpg",
+   "normal": "textures/modular_airduct_rectangular_01_parts02_nor_gl.jpg"
+  },
+  "modular_industrial_pipes_01_group01": {
+   "arm": "textures/modular_industrial_pipes_01_group01_arm.jpg",
+   "asset": "modular_industrial_pipes_01",
+   "base": "textures/modular_industrial_pipes_01_group01_diff.jpg",
+   "normal": "textures/modular_industrial_pipes_01_group01_nor_gl.jpg"
+  },
+  "modular_industrial_pipes_01_group02": {
+   "arm": "textures/modular_industrial_pipes_01_group02_arm.jpg",
+   "asset": "modular_industrial_pipes_01",
+   "base": "textures/modular_industrial_pipes_01_group02_diff.jpg",
+   "normal": "textures/modular_industrial_pipes_01_group02_nor_gl.jpg"
+  },
+  "overhead_crane": {
+   "arm": "textures/overhead_crane_arm.jpg",
+   "asset": "overhead_crane",
+   "base": "textures/overhead_crane_diff.jpg",
+   "normal": "textures/overhead_crane_nor_gl.jpg"
+  },
+  "overhead_crane_trim": {
+   "arm": "textures/overhead_crane_trim_arm.jpg",
+   "asset": "overhead_crane",
+   "base": "textures/overhead_crane_trim_diff.jpg",
+   "normal": "textures/overhead_crane_trim_nor_gl.jpg"
+  },
+  "plastic_crate_01": {
+   "arm": "textures/plastic_crate_01_arm.jpg",
+   "asset": "plastic_crate_01",
+   "base": "textures/plastic_crate_01_diff.jpg",
+   "normal": "textures/plastic_crate_01_nor_gl.jpg"
+  },
+  "power_box_01": {
+   "arm": "textures/power_box_01_arm.jpg",
+   "asset": "power_box_01",
+   "base": "textures/power_box_01_diff.jpg",
+   "normal": "textures/power_box_01_nor_gl.jpg"
+  },
+  "security_camera_01": {
+   "arm": "textures/security_camera_01_arm.jpg",
+   "asset": "security_camera_01",
+   "base": "textures/security_camera_01_diff.jpg",
+   "normal": "textures/security_camera_01_nor_gl.jpg"
+  },
+  "security_camera_01_glass": {
+   "arm": "textures/security_camera_01_arm.jpg",
+   "asset": "security_camera_01",
+   "base": "textures/security_camera_01_diff.jpg",
+   "grille": true,
+   "normal": "textures/security_camera_01_nor_gl.jpg"
+  },
+  "steel_frame_shelves_01": {
+   "arm": "textures/steel_frame_shelves_01_arm.jpg",
+   "asset": "steel_frame_shelves_01",
+   "base": "textures/steel_frame_shelves_01_diff.jpg",
+   "normal": "textures/steel_frame_shelves_01_nor_gl.jpg"
+  },
+  "tree_small_02_branches": {
+   "arm": "textures/tree_small_02_branch_arm.jpg",
+   "asset": "tree_small_02",
+   "base": "textures/tree_small_02_branch_diff.jpg",
+   "normal": "textures/tree_small_02_branch_nor_gl.jpg"
+  },
+  "tree_small_02_leaves": {
+   "arm": "textures/tree_small_02_leaves_arm.jpg",
+   "asset": "tree_small_02",
+   "base": "textures/tree_small_02_leaves_diff.jpg",
+   "foliage": true,
+   "normal": "textures/tree_small_02_leaves_nor_gl.jpg"
+  },
+  "tree_small_02_trunk": {
+   "arm": "textures/tree_small_02_arm.jpg",
+   "asset": "tree_small_02",
+   "base": "textures/tree_small_02_diff.jpg",
+   "normal": "textures/tree_small_02_nor_gl.jpg"
+  },
+  "wooden_crate_01": {
+   "arm": "textures/wooden_crate_01_arm.jpg",
+   "asset": "wooden_crate_01",
+   "base": "textures/wooden_crate_01_diff.jpg",
+   "normal": "textures/wooden_crate_01_nor_gl.jpg"
+  }
+ },
+ "sources": [
+  "car-factory-production-line-seated-forklift-driver-5efd32f9",
+  "clean_asphalt",
+  "concrete_road_barrier",
+  "exterior_aircon_unit",
+  "factory_yard",
+  "hand_truck",
+  "modular_airduct_rectangular_01",
+  "modular_industrial_pipes_01",
+  "overhead_crane",
+  "parcel-depot-and-sorting-hall-parcel-depot-and-sorting-528c9054",
+  "plastic_crate_01",
+  "power_box_01",
+  "salini-ninfea-02",
+  "security_camera_01",
+  "smooth_concrete_floor",
+  "steel_frame_shelves_01",
+  "tree_small_02",
+  "wooden_crate_01"
+ ]
+}

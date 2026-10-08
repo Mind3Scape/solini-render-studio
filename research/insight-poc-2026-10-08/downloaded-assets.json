@@ -1,0 +1,2408 @@
+{
+  "downloaded_at": "2026-10-08",
+  "status": "Downloaded source library; individual acceptance and bundled subset are tracked separately. Downloaded does not mean integrated.",
+  "higgsfield": {
+    "available_credits_at_start": 710,
+    "generation_jobs_submitted": 0,
+    "reason": "Catalog exposes 3D models but generate_3d is not in the connected callable tool set. estimate_image_cost refused 3D. No charge."
+  },
+  "assets": [
+    {
+      "name": "clean_asphalt",
+      "source": "https://polyhaven.com/a/clean_asphalt",
+      "license": "CC0-1.0",
+      "license_url": "https://polyhaven.com/license",
+      "authors": {},
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/clean_asphalt/clean_asphalt_nor_gl_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/clean_asphalt/clean_asphalt_nor_gl_1k.jpg",
+          "size": 776360,
+          "sha256": "99cdf6b6f0b8a319d206e1d561bf2a5d9933d8d33e1d685f8e25388101d21310"
+        },
+        {
+          "file": "tmp/insight-poc-source/clean_asphalt/clean_asphalt_diff_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/clean_asphalt/clean_asphalt_diff_1k.jpg",
+          "size": 697630,
+          "sha256": "ddf9224e9cfa3eb2998d9097e4cd34bd3630c85e0e6798e5a0a000415a684083"
+        },
+        {
+          "file": "tmp/insight-poc-source/clean_asphalt/clean_asphalt_rough_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/clean_asphalt/clean_asphalt_rough_1k.jpg",
+          "size": 641634,
+          "sha256": "2280be133c104eb04370b625ebcc7f6709d2173b43ae2cd15a0074c26f492bf9"
+        }
+      ]
+    },
+    {
+      "name": "concrete_road_barrier",
+      "source": "https://polyhaven.com/a/concrete_road_barrier",
+      "license": "CC0-1.0",
+      "license_url": "https://polyhaven.com/license",
+      "authors": {
+        "Amal Kumar": "All"
+      },
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/concrete_road_barrier/concrete_road_barrier_1k.gltf",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/concrete_road_barrier/concrete_road_barrier_1k.gltf",
+          "size": 2868,
+          "sha256": "c371e87d303fff3f0c9fbe88520f7837514364e5c66aac3244e115ffa673d061"
+        },
+        {
+          "file": "tmp/insight-poc-source/concrete_road_barrier/textures/concrete_road_barrier_nor_gl_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/concrete_road_barrier/concrete_road_barrier_nor_gl_1k.jpg",
+          "size": 961760,
+          "sha256": "c1072f51ff5c3d7158f0fbb0aa26e82b816b745b9f03639c4816832af2b37c52"
+        },
+        {
+          "file": "tmp/insight-poc-source/concrete_road_barrier/textures/concrete_road_barrier_arm_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/concrete_road_barrier/concrete_road_barrier_arm_1k.jpg",
+          "size": 619502,
+          "sha256": "b940847648012f2db8c24b16e07ad1e39b3bd33ea493203364deca209606e4b4"
+        },
+        {
+          "file": "tmp/insight-poc-source/concrete_road_barrier/textures/concrete_road_barrier_diff_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/concrete_road_barrier/concrete_road_barrier_diff_1k.jpg",
+          "size": 792641,
+          "sha256": "88b2d79829ffec7b11ac4d9c8554328f30b665d2c17f634197fde4f1ca8696fe"
+        },
+        {
+          "file": "tmp/insight-poc-source/concrete_road_barrier/concrete_road_barrier.bin",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/concrete_road_barrier/concrete_road_barrier.bin",
+          "size": 1374016,
+          "sha256": "64a4f9bc6e4af64d714a252c3c13428c430a60569deba3d52ca6b7dd3aa70d8c"
+        }
+      ]
+    },
+    {
+      "name": "exterior_aircon_unit",
+      "source": "https://polyhaven.com/a/exterior_aircon_unit",
+      "license": "CC0-1.0",
+      "license_url": "https://polyhaven.com/license",
+      "authors": {
+        "Monsta3D": "All"
+      },
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/exterior_aircon_unit/exterior_aircon_unit_1k.gltf",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/exterior_aircon_unit/exterior_aircon_unit_1k.gltf",
+          "size": 9634,
+          "sha256": "f19d85c76948903047c2846068aeaa376d5e956a410675268cb6cb6aac5d97c2"
+        },
+        {
+          "file": "tmp/insight-poc-source/exterior_aircon_unit/textures/exterior_aircon_unit_01_nor_gl_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/exterior_aircon_unit/exterior_aircon_unit_01_nor_gl_1k.jpg",
+          "size": 472088,
+          "sha256": "e5a6f3c135b942d6efe62a24496c575d03f6a4316188efe65079035d7faf1c38"
+        },
+        {
+          "file": "tmp/insight-poc-source/exterior_aircon_unit/textures/exterior_aircon_unit_01_opacity_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/exterior_aircon_unit/exterior_aircon_unit_01_opacity_1k.jpg",
+          "size": 333675,
+          "sha256": "c19feb434c2b01923fbb3e16ace3aa6d9cb16b05c2a5c479ad237759b2d331d6"
+        },
+        {
+          "file": "tmp/insight-poc-source/exterior_aircon_unit/textures/exterior_aircon_unit_rusted_01_arm_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/exterior_aircon_unit/exterior_aircon_unit_rusted_01_arm_1k.jpg",
+          "size": 673246,
+          "sha256": "51c103926b118bf00b902826001db802b15755c6eefa12b00afa24c60d7b341b"
+        },
+        {
+          "file": "tmp/insight-poc-source/exterior_aircon_unit/textures/exterior_aircon_unit_01_arm_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/exterior_aircon_unit/exterior_aircon_unit_01_arm_1k.jpg",
+          "size": 651293,
+          "sha256": "14671920f716691dc3b8940432f7aba5c469e3b466441ff8ad500de92d3178fb"
+        },
+        {
+          "file": "tmp/insight-poc-source/exterior_aircon_unit/textures/exterior_aircon_unit_02_arm_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/exterior_aircon_unit/exterior_aircon_unit_02_arm_1k.jpg",
+          "size": 484026,
+          "sha256": "1cdfa2d1c938c3af61a5f06510b0d94aeddddd4bdc1832008b3826240dd1535d"
+        },
+        {
+          "file": "tmp/insight-poc-source/exterior_aircon_unit/textures/exterior_aircon_unit_rusted_02_arm_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/exterior_aircon_unit/exterior_aircon_unit_rusted_02_arm_1k.jpg",
+          "size": 605557,
+          "sha256": "6ac4cfca6a8d8bec6ef1ff756652eb1f36b780d1ff7d70d9cb3e0f7fe1faf271"
+        },
+        {
+          "file": "tmp/insight-poc-source/exterior_aircon_unit/exterior_aircon_unit.bin",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/4k/exterior_aircon_unit/exterior_aircon_unit.bin",
+          "size": 494784,
+          "sha256": "b4b9ad082bdaa8f8b437bc14d9981caeaf318334499d4bf65d616fb2ec0c5ca8"
+        },
+        {
+          "file": "tmp/insight-poc-source/exterior_aircon_unit/textures/exterior_aircon_unit_02_nor_gl_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/exterior_aircon_unit/exterior_aircon_unit_02_nor_gl_1k.jpg",
+          "size": 942230,
+          "sha256": "864c0fb1e55aff910d826a8c1f6a2ad459f7db0124b5846445d466cabf0cadf5"
+        },
+        {
+          "file": "tmp/insight-poc-source/exterior_aircon_unit/textures/exterior_aircon_unit_rusted_01_nor_gl_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/exterior_aircon_unit/exterior_aircon_unit_rusted_01_nor_gl_1k.jpg",
+          "size": 583620,
+          "sha256": "14f105cda9172290be2e8b23b8e895099b65e222619850af3b13105901d922e2"
+        },
+        {
+          "file": "tmp/insight-poc-source/exterior_aircon_unit/textures/exterior_aircon_unit_rusted_01_diff_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/exterior_aircon_unit/exterior_aircon_unit_rusted_01_diff_1k.jpg",
+          "size": 606076,
+          "sha256": "a8771db98ed7f3d46ce48fd70867f58a74a2530666c339f8dcc14f3e5de86d0b"
+        },
+        {
+          "file": "tmp/insight-poc-source/exterior_aircon_unit/textures/exterior_aircon_unit_01_diff_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/exterior_aircon_unit/exterior_aircon_unit_01_diff_1k.jpg",
+          "size": 506664,
+          "sha256": "2ae5005b4836d2c91d1e712d9acf425c7dcc4973b7c0fc6f23da9afaa6381da6"
+        },
+        {
+          "file": "tmp/insight-poc-source/exterior_aircon_unit/textures/exterior_aircon_unit_rusted_02_opacity_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/exterior_aircon_unit/exterior_aircon_unit_rusted_02_opacity_1k.jpg",
+          "size": 357558,
+          "sha256": "a86bcaf9c4858cf250fd67c9a0ee362504454b9972ff6e1ac44e38bac3213421"
+        },
+        {
+          "file": "tmp/insight-poc-source/exterior_aircon_unit/textures/exterior_aircon_unit_rusted_02_nor_gl_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/exterior_aircon_unit/exterior_aircon_unit_rusted_02_nor_gl_1k.jpg",
+          "size": 947477,
+          "sha256": "3af4716b42812b742577594c7a0a342accd79925f02037c152b1da1c5831bb78"
+        }
+      ]
+    },
+    {
+      "name": "factory_yard",
+      "source": "https://polyhaven.com/a/factory_yard",
+      "license": "CC0-1.0",
+      "license_url": "https://polyhaven.com/license",
+      "authors": {},
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/factory_yard/factory_yard_1k.hdr",
+          "url": "https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/1k/factory_yard_1k.hdr",
+          "size": 1623545,
+          "sha256": "a87b1fa5f4690b4dd53c39355ec98337d3216b514912fb5a62b820cddc59e9bd"
+        }
+      ]
+    },
+    {
+      "name": "hand_truck",
+      "source": "https://polyhaven.com/a/hand_truck",
+      "license": "CC0-1.0",
+      "license_url": "https://polyhaven.com/license",
+      "authors": {
+        "Mutanzom3D": "All"
+      },
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/hand_truck/hand_truck_1k.gltf",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/hand_truck/hand_truck_1k.gltf",
+          "size": 2754,
+          "sha256": "303029ba829f2975ebed80f6f36e38d57cec87379e7214fcfb7d8e6e921c8e58"
+        },
+        {
+          "file": "tmp/insight-poc-source/hand_truck/textures/hand_truck_nor_gl_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/hand_truck/hand_truck_nor_gl_1k.jpg",
+          "size": 944148,
+          "sha256": "8674bbaa5562c24efceef0ab77f374ffe32fa583ef5dc2a44846305aa0fd8f79"
+        },
+        {
+          "file": "tmp/insight-poc-source/hand_truck/textures/hand_truck_diff_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/hand_truck/hand_truck_diff_1k.jpg",
+          "size": 802329,
+          "sha256": "a1c528e0c88a03a96b89215eab228083f9dd66a502174936bccc0fe427ce345a"
+        },
+        {
+          "file": "tmp/insight-poc-source/hand_truck/textures/hand_truck_arm_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/hand_truck/hand_truck_arm_1k.jpg",
+          "size": 894412,
+          "sha256": "30ceadb1fa303f36dc0372a5681203e69715546219838e1bc0634c274407204c"
+        },
+        {
+          "file": "tmp/insight-poc-source/hand_truck/hand_truck.bin",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/hand_truck/hand_truck.bin",
+          "size": 535704,
+          "sha256": "2a7ca50cdfac207defa68f71600f37e7cdd05d35bc94139df5269ea7d8b7a214"
+        }
+      ]
+    },
+    {
+      "name": "modular_airduct_rectangular_01",
+      "source": "https://polyhaven.com/a/modular_airduct_rectangular_01",
+      "license": "CC0-1.0",
+      "license_url": "https://polyhaven.com/license",
+      "authors": {
+        "James Ray Cock": "All"
+      },
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/modular_airduct_rectangular_01/modular_airduct_rectangular_01_1k.gltf",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/modular_airduct_rectangular_01/modular_airduct_rectangular_01_1k.gltf",
+          "size": 37157,
+          "sha256": "61468e734df89c1a84f6aa5f2f60ea2d1486d927f640d1912bdc929be7673643"
+        },
+        {
+          "file": "tmp/insight-poc-source/modular_airduct_rectangular_01/textures/modular_airduct_rectangular_01_parts01_nor_gl_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modular_airduct_rectangular_01/modular_airduct_rectangular_01_parts01_nor_gl_1k.jpg",
+          "size": 63936,
+          "sha256": "e659e0dbe8ec88e33d2578fdb59af3b5aec308957914a6847ce076fe16e8c3c5"
+        },
+        {
+          "file": "tmp/insight-poc-source/modular_airduct_rectangular_01/textures/modular_airduct_rectangular_01_parts02_nor_gl_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modular_airduct_rectangular_01/modular_airduct_rectangular_01_parts02_nor_gl_1k.jpg",
+          "size": 88121,
+          "sha256": "b41b75e92307d9c37433dd27766eb3328aa09394bf4bf501e6a42da80bbf3010"
+        },
+        {
+          "file": "tmp/insight-poc-source/modular_airduct_rectangular_01/textures/modular_airduct_rectangular_01_parts02_diff_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modular_airduct_rectangular_01/modular_airduct_rectangular_01_parts02_diff_1k.jpg",
+          "size": 158760,
+          "sha256": "e17a732494acf18dc4f1d9518a1297758d1437acad7d98110a4550a537428b17"
+        },
+        {
+          "file": "tmp/insight-poc-source/modular_airduct_rectangular_01/modular_airduct_rectangular_01.bin",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/modular_airduct_rectangular_01/modular_airduct_rectangular_01.bin",
+          "size": 1795116,
+          "sha256": "9cd2aef6a787922571a9b4830dd3fd57ba5b535db88b9980ecf9a255a59aa2a6"
+        },
+        {
+          "file": "tmp/insight-poc-source/modular_airduct_rectangular_01/textures/modular_airduct_rectangular_01_parts01_arm_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modular_airduct_rectangular_01/modular_airduct_rectangular_01_parts01_arm_1k.jpg",
+          "size": 247732,
+          "sha256": "8225a69b7a5cb20e0e091899955b5765c82cdea781ffd28da51d7a5cc3d12ddd"
+        },
+        {
+          "file": "tmp/insight-poc-source/modular_airduct_rectangular_01/textures/modular_airduct_rectangular_01_parts02_arm_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modular_airduct_rectangular_01/modular_airduct_rectangular_01_parts02_arm_1k.jpg",
+          "size": 188686,
+          "sha256": "718ee754ffb882cff87d3470b641b94d6c09ed62a51fe81575149321cf104278"
+        },
+        {
+          "file": "tmp/insight-poc-source/modular_airduct_rectangular_01/textures/modular_airduct_rectangular_01_parts01_diff_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modular_airduct_rectangular_01/modular_airduct_rectangular_01_parts01_diff_1k.jpg",
+          "size": 187245,
+          "sha256": "b86936922be53c2a4591bbdd88a0d63fcc7583bb534ce9fc569d5be3fb9306c0"
+        }
+      ]
+    },
+    {
+      "name": "modular_factory_facade",
+      "source": "https://polyhaven.com/a/modular_factory_facade",
+      "license": "CC0-1.0",
+      "license_url": "https://polyhaven.com/license",
+      "authors": {
+        "James Ray Cock": "All"
+      },
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/modular_factory_facade/modular_factory_facade_1k.gltf",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/modular_factory_facade/modular_factory_facade_1k.gltf",
+          "size": 372666,
+          "sha256": "41ff58b722f9cb3e9db8bcacae3163946603ae99a1d42bb6f9045d7c4ec0f179"
+        },
+        {
+          "file": "tmp/insight-poc-source/modular_factory_facade/textures/modular_factory_facade_brick_diff_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modular_factory_facade/modular_factory_facade_brick_diff_1k.jpg",
+          "size": 1115986,
+          "sha256": "852b01c61efc07fd8e60e59767657ef51112bf65f5eaf184f02c27ea5170582d"
+        },
+        {
+          "file": "tmp/insight-poc-source/modular_factory_facade/textures/modular_factory_facade_doors_diff_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modular_factory_facade/modular_factory_facade_doors_diff_1k.jpg",
+          "size": 570733,
+          "sha256": "157b59b9d1c929e51e2747f4f9481389743acba539308cecbb98c17294b6c7e1"
+        },
+        {
+          "file": "tmp/insight-poc-source/modular_factory_facade/textures/modular_factory_facade_trim_01_arm_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modular_factory_facade/modular_factory_facade_trim_01_arm_1k.jpg",
+          "size": 733418,
+          "sha256": "0ab1657c75a9b5beb3d5552adfafccdd5174c391f20ccd6c0b41939c1a8bfe3f"
+        },
+        {
+          "file": "tmp/insight-poc-source/modular_factory_facade/textures/modular_factory_facade_doors_arm_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modular_factory_facade/modular_factory_facade_doors_arm_1k.jpg",
+          "size": 723782,
+          "sha256": "794b16de5bd2aae6431fd8aee7b10b3b1095bbe89b233a158a1e031e0a27c4e3"
+        },
+        {
+          "file": "tmp/insight-poc-source/modular_factory_facade/textures/modular_factory_facade_trim_01_diff_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modular_factory_facade/modular_factory_facade_trim_01_diff_1k.jpg",
+          "size": 617348,
+          "sha256": "beff49832938c5493a4b5bbb82eeabd138c29c6523e5228e006f702859bbc87f"
+        },
+        {
+          "file": "tmp/insight-poc-source/modular_factory_facade/textures/modular_factory_facade_windows_arm_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modular_factory_facade/modular_factory_facade_windows_arm_1k.jpg",
+          "size": 873236,
+          "sha256": "7bfc0d579188dd88bb2d8962ae81402e6ccabff244709e68ba3be4cc5d500d0d"
+        },
+        {
+          "file": "tmp/insight-poc-source/modular_factory_facade/textures/modular_factory_facade_garage_nor_gl_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modular_factory_facade/modular_factory_facade_garage_nor_gl_1k.jpg",
+          "size": 752068,
+          "sha256": "e8ac6265622fb8c8df454ae02a75746bc37ded0d4533dbe65fa275d0e40f28ba"
+        },
+        {
+          "file": "tmp/insight-poc-source/modular_factory_facade/textures/modular_factory_facade_windows_nor_gl_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modular_factory_facade/modular_factory_facade_windows_nor_gl_1k.jpg",
+          "size": 612643,
+          "sha256": "4dc9e4a6b97d5384849faeebca87eae9f6736664971c6c10a41fc19bd01fc106"
+        },
+        {
+          "file": "tmp/insight-poc-source/modular_factory_facade/textures/modular_factory_facade_trim_01_nor_gl_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modular_factory_facade/modular_factory_facade_trim_01_nor_gl_1k.jpg",
+          "size": 827556,
+          "sha256": "05441cf545c9d5f6786cd191e9b3b627668b1176e155d1fae7fbe28f6a8d3802"
+        },
+        {
+          "file": "tmp/insight-poc-source/modular_factory_facade/textures/modular_factory_facade_garage_diff_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modular_factory_facade/modular_factory_facade_garage_diff_1k.jpg",
+          "size": 588149,
+          "sha256": "d1cf6239c7364900b02279600937a4c9bf0a21d315efabf18f16d5637020e39f"
+        },
+        {
+          "file": "tmp/insight-poc-source/modular_factory_facade/textures/modular_factory_facade_brick_arm_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modular_factory_facade/modular_factory_facade_brick_arm_1k.jpg",
+          "size": 726245,
+          "sha256": "322cba4e6b03e39fa2a57335deddfbda6d819f8b29b108b9000790ded99b0d95"
+        },
+        {
+          "file": "tmp/insight-poc-source/modular_factory_facade/textures/modular_factory_facade_brick_nor_gl_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modular_factory_facade/modular_factory_facade_brick_nor_gl_1k.jpg",
+          "size": 1052229,
+          "sha256": "1168796e949c5ce3957142e86bce1d09531466aaea90dc46cbc3f3225cbdd78e"
+        },
+        {
+          "file": "tmp/insight-poc-source/modular_factory_facade/textures/modular_factory_facade_doors_nor_gl_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modular_factory_facade/modular_factory_facade_doors_nor_gl_1k.jpg",
+          "size": 488916,
+          "sha256": "1e3bdff6d4b30cb26e901d6d14e42d398aeacfb46767900404eb38ec5ba016dc"
+        },
+        {
+          "file": "tmp/insight-poc-source/modular_factory_facade/textures/modular_factory_facade_windows_diff_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modular_factory_facade/modular_factory_facade_windows_diff_1k.jpg",
+          "size": 619613,
+          "sha256": "d361dacbd23095dacf1d82eb5a509a305c44b007f8adfb221dc2e5efe56180e0"
+        },
+        {
+          "file": "tmp/insight-poc-source/modular_factory_facade/modular_factory_facade.bin",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/modular_factory_facade/modular_factory_facade.bin",
+          "size": 6269260,
+          "sha256": "12702fb065a838695e0621e1aac3947af92d32c439fb965c8b0563ad691fed70"
+        },
+        {
+          "file": "tmp/insight-poc-source/modular_factory_facade/textures/modular_factory_facade_garage_arm_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modular_factory_facade/modular_factory_facade_garage_arm_1k.jpg",
+          "size": 682331,
+          "sha256": "a72cfa9020a0a7aad2476b2ceb3c60dc21ac69d4e9026dcddc82710e6784b40f"
+        }
+      ]
+    },
+    {
+      "name": "modular_industrial_pipes_01",
+      "source": "https://polyhaven.com/a/modular_industrial_pipes_01",
+      "license": "CC0-1.0",
+      "license_url": "https://polyhaven.com/license",
+      "authors": {
+        "Jorge Camacho": "All"
+      },
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/modular_industrial_pipes_01/modular_industrial_pipes_01_1k.gltf",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/modular_industrial_pipes_01/modular_industrial_pipes_01_1k.gltf",
+          "size": 15014,
+          "sha256": "455d3a0fe95b7900a08cbebb23cfb2c341672fcb67ae7355d776e53cfa3d0688"
+        },
+        {
+          "file": "tmp/insight-poc-source/modular_industrial_pipes_01/textures/modular_industrial_pipes_01_group02_arm_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modular_industrial_pipes_01/modular_industrial_pipes_01_group02_arm_1k.jpg",
+          "size": 898932,
+          "sha256": "4c65dcb651a3d345517fa93ad7c6e48f2388f4e8bb347446f70317c16049867b"
+        },
+        {
+          "file": "tmp/insight-poc-source/modular_industrial_pipes_01/textures/modular_industrial_pipes_01_group01_diff_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modular_industrial_pipes_01/modular_industrial_pipes_01_group01_diff_1k.jpg",
+          "size": 553576,
+          "sha256": "c0233f66b18e3374dfbbb8c8078a41f6571a0809d3eb14dd9d3c332265cfde7b"
+        },
+        {
+          "file": "tmp/insight-poc-source/modular_industrial_pipes_01/textures/modular_industrial_pipes_01_group02_nor_gl_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modular_industrial_pipes_01/modular_industrial_pipes_01_group02_nor_gl_1k.jpg",
+          "size": 725187,
+          "sha256": "84a43ca11a4f1ac84f7fc8336a4e9b7b333d30c13e540f3ff42e662dc6f91b53"
+        },
+        {
+          "file": "tmp/insight-poc-source/modular_industrial_pipes_01/modular_industrial_pipes_01.bin",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/modular_industrial_pipes_01/modular_industrial_pipes_01.bin",
+          "size": 515160,
+          "sha256": "2e11e1a7dabd56b1e158364f48b0b388bf316fcab61a01274740db75dbafa448"
+        },
+        {
+          "file": "tmp/insight-poc-source/modular_industrial_pipes_01/textures/modular_industrial_pipes_01_group01_nor_gl_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modular_industrial_pipes_01/modular_industrial_pipes_01_group01_nor_gl_1k.jpg",
+          "size": 674568,
+          "sha256": "ed4728fde567efe420e3a6e1bdc4238b26c2782218737c7e2de88eeca1e91fb2"
+        },
+        {
+          "file": "tmp/insight-poc-source/modular_industrial_pipes_01/textures/modular_industrial_pipes_01_group01_arm_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modular_industrial_pipes_01/modular_industrial_pipes_01_group01_arm_1k.jpg",
+          "size": 860825,
+          "sha256": "7fff7d4604491eeb7531ad5f7520517015c72ec7316d1e865d62f23f976dfed6"
+        },
+        {
+          "file": "tmp/insight-poc-source/modular_industrial_pipes_01/textures/modular_industrial_pipes_01_group02_diff_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modular_industrial_pipes_01/modular_industrial_pipes_01_group02_diff_1k.jpg",
+          "size": 580676,
+          "sha256": "ef8a75c402a8871903dcaa147b023d57c640d0de4c7a8acdfdee822861656a92"
+        }
+      ]
+    },
+    {
+      "name": "overhead_crane",
+      "source": "https://polyhaven.com/a/overhead_crane",
+      "license": "CC0-1.0",
+      "license_url": "https://polyhaven.com/license",
+      "authors": {
+        "Timothy3D": "All"
+      },
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/overhead_crane/overhead_crane_1k.gltf",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/overhead_crane/overhead_crane_1k.gltf",
+          "size": 9310,
+          "sha256": "a1ed11c117f76b5cc2cce7489feed3091d7120cdca78380c4ff65cf269e479e0"
+        },
+        {
+          "file": "tmp/insight-poc-source/overhead_crane/textures/overhead_crane_trim_nor_gl_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/overhead_crane/overhead_crane_trim_nor_gl_1k.jpg",
+          "size": 799724,
+          "sha256": "a1bb588412ecd396b736eeb2b86ac47f9ea22a97c5e223c0b35b81f08413ff21"
+        },
+        {
+          "file": "tmp/insight-poc-source/overhead_crane/textures/overhead_crane_trim_diff_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/overhead_crane/overhead_crane_trim_diff_1k.jpg",
+          "size": 519408,
+          "sha256": "280fe3810a52fd69468f8729012c343fedf9e0129fd5dffc865a0e35713a0e8c"
+        },
+        {
+          "file": "tmp/insight-poc-source/overhead_crane/textures/overhead_crane_trim_arm_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/overhead_crane/overhead_crane_trim_arm_1k.jpg",
+          "size": 759873,
+          "sha256": "425d751dd8d92ae715866eebc05abcf85af8cd92c8a744e22ebced6e81caaa2e"
+        },
+        {
+          "file": "tmp/insight-poc-source/overhead_crane/textures/overhead_crane_nor_gl_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/overhead_crane/overhead_crane_nor_gl_1k.jpg",
+          "size": 819830,
+          "sha256": "10f4409d6fcc62e7a0913cfc5c942249c4870834745a67aa80f8cc3589c896b7"
+        },
+        {
+          "file": "tmp/insight-poc-source/overhead_crane/textures/overhead_crane_diff_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/overhead_crane/overhead_crane_diff_1k.jpg",
+          "size": 630084,
+          "sha256": "2eadaa0c07a8543ca4ac33133260b1ed315cdff7fb88d7367f60f702937b8423"
+        },
+        {
+          "file": "tmp/insight-poc-source/overhead_crane/textures/overhead_crane_arm_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/overhead_crane/overhead_crane_arm_1k.jpg",
+          "size": 771365,
+          "sha256": "8e9fed5c722536e1a264d80841041b42790b59b37ee6561b15eb4916cf96c73e"
+        },
+        {
+          "file": "tmp/insight-poc-source/overhead_crane/overhead_crane.bin",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/overhead_crane/overhead_crane.bin",
+          "size": 3022220,
+          "sha256": "6fcbc59c9b2e563c08206d0d3ff2560872e7697991c33997eecf882315ef9b47"
+        }
+      ]
+    },
+    {
+      "name": "plastic_crate_01",
+      "source": "https://polyhaven.com/a/plastic_crate_01",
+      "license": "CC0-1.0",
+      "license_url": "https://polyhaven.com/license",
+      "authors": {
+        "PierreB3D": "All"
+      },
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/plastic_crate_01/plastic_crate_01_1k.gltf",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/plastic_crate_01/plastic_crate_01_1k.gltf",
+          "size": 2793,
+          "sha256": "42556fc8e39e5834ebf474dff79d4c0524fd3074be6c86c0c6704a10be8b3756"
+        },
+        {
+          "file": "tmp/insight-poc-source/plastic_crate_01/textures/plastic_crate_01_nor_gl_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/plastic_crate_01/plastic_crate_01_nor_gl_1k.jpg",
+          "size": 884228,
+          "sha256": "6f0c44778216d50672d6a23660b22dec8b96bb6e71518d699c24630c34cf9217"
+        },
+        {
+          "file": "tmp/insight-poc-source/plastic_crate_01/textures/plastic_crate_01_diff_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/plastic_crate_01/plastic_crate_01_diff_1k.jpg",
+          "size": 518288,
+          "sha256": "d9109a42e397e39bbd7f42976d93122dbd5ccdef8ff64bce353571e1c1b994f6"
+        },
+        {
+          "file": "tmp/insight-poc-source/plastic_crate_01/textures/plastic_crate_01_arm_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/plastic_crate_01/plastic_crate_01_arm_1k.jpg",
+          "size": 993636,
+          "sha256": "9a4af28d6fe8d5459a3c1a8706c0f8877221873ac9b83de580e6cfa63c3ecaa0"
+        },
+        {
+          "file": "tmp/insight-poc-source/plastic_crate_01/plastic_crate_01.bin",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/4k/plastic_crate_01/plastic_crate_01.bin",
+          "size": 789920,
+          "sha256": "59b307238a27f304739aeef0b1c9622d1e4efb31a96d805d2cfc0c461f9bb06d"
+        }
+      ]
+    },
+    {
+      "name": "power_box_01",
+      "source": "https://polyhaven.com/a/power_box_01",
+      "license": "CC0-1.0",
+      "license_url": "https://polyhaven.com/license",
+      "authors": {
+        "Rico Cilliers": "Modeling & Texturing",
+        "Yann Kervran": "Rigging"
+      },
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/power_box_01/power_box_01_1k.gltf",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/power_box_01/power_box_01_1k.gltf",
+          "size": 4417,
+          "sha256": "edb54e68fb1229e9f59906459d782c2ddc576f6bd1141cf09ad864f48d7cb93b"
+        },
+        {
+          "file": "tmp/insight-poc-source/power_box_01/textures/power_box_01_arm_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/power_box_01/power_box_01_arm_1k.jpg",
+          "size": 801803,
+          "sha256": "4601e901e2f7c1584ab5ecf65e0e192a99a4be86da505527f1622658e1b1e527"
+        },
+        {
+          "file": "tmp/insight-poc-source/power_box_01/textures/power_box_01_nor_gl_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/power_box_01/power_box_01_nor_gl_1k.jpg",
+          "size": 646545,
+          "sha256": "199b6fe93776aa0934f7bc36d8c82f1b4db9be9243e82e0cb3727bbcf25d85f1"
+        },
+        {
+          "file": "tmp/insight-poc-source/power_box_01/power_box_01.bin",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/power_box_01/power_box_01.bin",
+          "size": 782096,
+          "sha256": "b46efdf668ec2d4e04ff51604b5f1486caf20df632f442aab62601718058db05"
+        },
+        {
+          "file": "tmp/insight-poc-source/power_box_01/textures/power_box_01_diff_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/power_box_01/power_box_01_diff_1k.jpg",
+          "size": 490782,
+          "sha256": "845c425ebc0ded263a7d49909e2c26710dd6160da11c0ca44aebd723f4f6f168"
+        }
+      ]
+    },
+    {
+      "name": "security_camera_01",
+      "source": "https://polyhaven.com/a/security_camera_01",
+      "license": "CC0-1.0",
+      "license_url": "https://polyhaven.com/license",
+      "authors": {
+        "Alexander Otterbeck": "Modeling & Texturing",
+        "Yann Kervran": "Rigging"
+      },
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/security_camera_01/security_camera_01_1k.gltf",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/security_camera_01/security_camera_01_1k.gltf",
+          "size": 4743,
+          "sha256": "d2468fe353cd9f992a5549709cf9efcfae67e9fd17f80bf7ff3866e2881dd2ae"
+        },
+        {
+          "file": "tmp/insight-poc-source/security_camera_01/security_camera_01.bin",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/security_camera_01/security_camera_01.bin",
+          "size": 386836,
+          "sha256": "c43dd3576213c169d1b3a9968788c0da2d14073e59c7d2503bc230c05042bb21"
+        },
+        {
+          "file": "tmp/insight-poc-source/security_camera_01/textures/security_camera_01_diff_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/security_camera_01/security_camera_01_diff_1k.jpg",
+          "size": 521174,
+          "sha256": "572968d8c693682aa5c87d59428e1db234b0d81ec620af8a019c72e3f011d53f"
+        },
+        {
+          "file": "tmp/insight-poc-source/security_camera_01/textures/security_camera_01_arm_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/security_camera_01/security_camera_01_arm_1k.jpg",
+          "size": 530966,
+          "sha256": "68bb728aff5af6bd4141201cd221c7e17ef537f49978c321b0e183677f8877ba"
+        },
+        {
+          "file": "tmp/insight-poc-source/security_camera_01/textures/security_camera_01_nor_gl_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/security_camera_01/security_camera_01_nor_gl_1k.jpg",
+          "size": 315604,
+          "sha256": "80e791da5d975177d16d5f30202deac0b262ffe6b13311605c09c630b93d0de5"
+        }
+      ]
+    },
+    {
+      "name": "smooth_concrete_floor",
+      "source": "https://polyhaven.com/a/smooth_concrete_floor",
+      "license": "CC0-1.0",
+      "license_url": "https://polyhaven.com/license",
+      "authors": {},
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/smooth_concrete_floor/smooth_concrete_floor_nor_gl_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/smooth_concrete_floor/smooth_concrete_floor_nor_gl_1k.jpg",
+          "size": 529251,
+          "sha256": "588bdbcc16b8dfa2869a2c154c076a419abb8ed83284691c2dffdddfcf20cc0c"
+        },
+        {
+          "file": "tmp/insight-poc-source/smooth_concrete_floor/smooth_concrete_floor_diff_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/smooth_concrete_floor/smooth_concrete_floor_diff_1k.jpg",
+          "size": 861674,
+          "sha256": "079587ae48fb3e2bfb0d0f9209eb75dc26ee30e213403d96377a30f6f6955092"
+        },
+        {
+          "file": "tmp/insight-poc-source/smooth_concrete_floor/smooth_concrete_floor_rough_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/smooth_concrete_floor/smooth_concrete_floor_rough_1k.jpg",
+          "size": 488628,
+          "sha256": "89082ede1efd3a60fd600a49e381a5822c89ee3bf75456ad883b3057190042a5"
+        }
+      ]
+    },
+    {
+      "name": "steel_frame_shelves_01",
+      "source": "https://polyhaven.com/a/steel_frame_shelves_01",
+      "license": "CC0-1.0",
+      "license_url": "https://polyhaven.com/license",
+      "authors": {
+        "James Ray Cock": "All"
+      },
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/steel_frame_shelves_01/steel_frame_shelves_01_1k.gltf",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/steel_frame_shelves_01/steel_frame_shelves_01_1k.gltf",
+          "size": 2766,
+          "sha256": "4eff8994825d654e337f8dc425e959ed6add7f4773188c87ba64402d9edd9842"
+        },
+        {
+          "file": "tmp/insight-poc-source/steel_frame_shelves_01/textures/steel_frame_shelves_01_diff_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/steel_frame_shelves_01/steel_frame_shelves_01_diff_1k.jpg",
+          "size": 477882,
+          "sha256": "85e205b334e15e05bec9b02be1258da6ab949ae908aa57e0bee6b94ba45b4415"
+        },
+        {
+          "file": "tmp/insight-poc-source/steel_frame_shelves_01/textures/steel_frame_shelves_01_nor_gl_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/steel_frame_shelves_01/steel_frame_shelves_01_nor_gl_1k.jpg",
+          "size": 318836,
+          "sha256": "2a67ed7dd4f53c3e225396e6381992b768fe58b5261be703d540678e366e46ed"
+        },
+        {
+          "file": "tmp/insight-poc-source/steel_frame_shelves_01/textures/steel_frame_shelves_01_arm_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/steel_frame_shelves_01/steel_frame_shelves_01_arm_1k.jpg",
+          "size": 655560,
+          "sha256": "858629eeaa8f68ddb4fc1a813afe6ed988ded3d6d49184ec45a14611760f0bb3"
+        },
+        {
+          "file": "tmp/insight-poc-source/steel_frame_shelves_01/steel_frame_shelves_01.bin",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/steel_frame_shelves_01/steel_frame_shelves_01.bin",
+          "size": 142312,
+          "sha256": "306d7e72d12a5d3047b8a189f8d0add51075eaf7f51f935286fda4e1c16dd066"
+        }
+      ]
+    },
+    {
+      "name": "wooden_crate_01",
+      "source": "https://polyhaven.com/a/wooden_crate_01",
+      "license": "CC0-1.0",
+      "license_url": "https://polyhaven.com/license",
+      "authors": {
+        "James Ray Cock": "All"
+      },
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/wooden_crate_01/wooden_crate_01_1k.gltf",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/wooden_crate_01/wooden_crate_01_1k.gltf",
+          "size": 5612,
+          "sha256": "fd9c6073acfc671e12b64666053f2805ae33aff5d3dbbcfe5c97c08c06644927"
+        },
+        {
+          "file": "tmp/insight-poc-source/wooden_crate_01/textures/wooden_crate_01_diff_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/wooden_crate_01/wooden_crate_01_diff_1k.jpg",
+          "size": 711292,
+          "sha256": "16653f4abaf4c1d9bca94bde3bd8c54d0ea9a5298d1648abcf57de1f7ecc34cc"
+        },
+        {
+          "file": "tmp/insight-poc-source/wooden_crate_01/textures/wooden_crate_01_nor_gl_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/wooden_crate_01/wooden_crate_01_nor_gl_1k.jpg",
+          "size": 594076,
+          "sha256": "f4ea44c7dc1686123d337039cb713d74e8a2dbc6d1bd2beeac276d06f5df3fab"
+        },
+        {
+          "file": "tmp/insight-poc-source/wooden_crate_01/wooden_crate_01.bin",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/wooden_crate_01/wooden_crate_01.bin",
+          "size": 189408,
+          "sha256": "85f381f8035f7a6f2f3b848640894c6d3333b261946dd8a338c0fe19e0bea21e"
+        },
+        {
+          "file": "tmp/insight-poc-source/wooden_crate_01/textures/wooden_crate_01_arm_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/wooden_crate_01/wooden_crate_01_arm_1k.jpg",
+          "size": 776699,
+          "sha256": "cd0b031c3924905e16ffd78ead062c2cc274148c4104d09635310097738b4679"
+        }
+      ]
+    },
+    {
+      "name": "Powered belt conveyor, 2 m straight (Parcel Depot and Sorting Hall)",
+      "source": "https://3dassets.dev/assets/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-97c2fdc9",
+      "license": {
+        "slug": "cc0-1.0",
+        "name": "CC0 1.0 Universal",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "attributionRequired": false
+      },
+      "author": {
+        "username": "3dassets",
+        "name": "3D Assets",
+        "url": "https://3dassets.dev/u/3dassets"
+      },
+      "ai_generated_by_source": true,
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/parcel-depot/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-97c2fdc9.glb",
+          "url": "https://cdn.3dassets.dev/assets/34784/v1/model.glb",
+          "sha256": "6b733059fe8d296b711afe5814f9f31401f1518de05fe8566c87cbf0c9b5684d",
+          "size": 15116
+        }
+      ],
+      "triangles": 264,
+      "animations": [
+        "roller-spin"
+      ]
+    },
+    {
+      "name": "Powered belt conveyor, 4 m straight (Parcel Depot and Sorting Hall)",
+      "source": "https://3dassets.dev/assets/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-87ae9888",
+      "license": {
+        "slug": "cc0-1.0",
+        "name": "CC0 1.0 Universal",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "attributionRequired": false
+      },
+      "author": {
+        "username": "3dassets",
+        "name": "3D Assets",
+        "url": "https://3dassets.dev/u/3dassets"
+      },
+      "ai_generated_by_source": true,
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/parcel-depot/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-87ae9888.glb",
+          "url": "https://cdn.3dassets.dev/assets/34783/v1/model.glb",
+          "sha256": "e02c6b2dbff5a16d545107bbccc71ebe20350a30cb9734562127f1607d18d5df",
+          "size": 15168
+        }
+      ],
+      "triangles": 264,
+      "animations": [
+        "roller-spin"
+      ]
+    },
+    {
+      "name": "Powered belt conveyor, 90 degree curve (Parcel Depot and Sorting Hall)",
+      "source": "https://3dassets.dev/assets/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-a062e5ac",
+      "license": {
+        "slug": "cc0-1.0",
+        "name": "CC0 1.0 Universal",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "attributionRequired": false
+      },
+      "author": {
+        "username": "3dassets",
+        "name": "3D Assets",
+        "url": "https://3dassets.dev/u/3dassets"
+      },
+      "ai_generated_by_source": true,
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/parcel-depot/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-a062e5ac.glb",
+          "url": "https://cdn.3dassets.dev/assets/34785/v1/model.glb",
+          "sha256": "dd686e7039ac8f35301b7d9784638821d6985d75e1bafee3cb0e4ddccfb52679",
+          "size": 21880
+        }
+      ],
+      "triangles": 480,
+      "animations": []
+    },
+    {
+      "name": "Incline belt conveyor, 1.5 m rise (Parcel Depot and Sorting Hall)",
+      "source": "https://3dassets.dev/assets/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-170c30c8",
+      "license": {
+        "slug": "cc0-1.0",
+        "name": "CC0 1.0 Universal",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "attributionRequired": false
+      },
+      "author": {
+        "username": "3dassets",
+        "name": "3D Assets",
+        "url": "https://3dassets.dev/u/3dassets"
+      },
+      "ai_generated_by_source": true,
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/parcel-depot/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-170c30c8.glb",
+          "url": "https://cdn.3dassets.dev/assets/34782/v1/model.glb",
+          "sha256": "157940de0c2b0a7fea7e61b153ce9dbde7c8c86cc85aadd879aaec06834d5185",
+          "size": 20984
+        }
+      ],
+      "triangles": 396,
+      "animations": [
+        "roller-spin"
+      ]
+    },
+    {
+      "name": "Gravity roller conveyor, 2 m section (Parcel Depot and Sorting Hall)",
+      "source": "https://3dassets.dev/assets/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-f1f23aa3",
+      "license": {
+        "slug": "cc0-1.0",
+        "name": "CC0 1.0 Universal",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "attributionRequired": false
+      },
+      "author": {
+        "username": "3dassets",
+        "name": "3D Assets",
+        "url": "https://3dassets.dev/u/3dassets"
+      },
+      "ai_generated_by_source": true,
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/parcel-depot/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-f1f23aa3.glb",
+          "url": "https://cdn.3dassets.dev/assets/34786/v1/model.glb",
+          "sha256": "d507e2862b9ab49e148ea3f37d9e3d3ba36bcfc8a8cd27a964e15dc9a82b1f10",
+          "size": 16016
+        }
+      ],
+      "triangles": 436,
+      "animations": [
+        "roller-spin"
+      ]
+    },
+    {
+      "name": "Conveyor leg and support frame (Parcel Depot and Sorting Hall)",
+      "source": "https://3dassets.dev/assets/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-5bf8f9bc",
+      "license": {
+        "slug": "cc0-1.0",
+        "name": "CC0 1.0 Universal",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "attributionRequired": false
+      },
+      "author": {
+        "username": "3dassets",
+        "name": "3D Assets",
+        "url": "https://3dassets.dev/u/3dassets"
+      },
+      "ai_generated_by_source": true,
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/parcel-depot/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-5bf8f9bc.glb",
+          "url": "https://cdn.3dassets.dev/assets/34787/v1/model.glb",
+          "sha256": "7b7619d334103ebdf36797fe2e3fe27df4792b80ac158760232fbff776b717df",
+          "size": 11300
+        }
+      ],
+      "triangles": 168,
+      "animations": []
+    },
+    {
+      "name": "Diverter arm conveyor unit (Parcel Depot and Sorting Hall)",
+      "source": "https://3dassets.dev/assets/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-f2cb1e59",
+      "license": {
+        "slug": "cc0-1.0",
+        "name": "CC0 1.0 Universal",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "attributionRequired": false
+      },
+      "author": {
+        "username": "3dassets",
+        "name": "3D Assets",
+        "url": "https://3dassets.dev/u/3dassets"
+      },
+      "ai_generated_by_source": true,
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/parcel-depot/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-f2cb1e59.glb",
+          "url": "https://cdn.3dassets.dev/assets/34788/v1/model.glb",
+          "sha256": "2d4b8a23fdb2abd0dc01dccd3485ee007981e674b8fd764380fe2bb8450c6353",
+          "size": 21960
+        }
+      ],
+      "triangles": 376,
+      "animations": [
+        "roller-spin",
+        "divert"
+      ]
+    },
+    {
+      "name": "Parcel scanner arch over a belt (Parcel Depot and Sorting Hall)",
+      "source": "https://3dassets.dev/assets/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-5a8683a9",
+      "license": {
+        "slug": "cc0-1.0",
+        "name": "CC0 1.0 Universal",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "attributionRequired": false
+      },
+      "author": {
+        "username": "3dassets",
+        "name": "3D Assets",
+        "url": "https://3dassets.dev/u/3dassets"
+      },
+      "ai_generated_by_source": true,
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/parcel-depot/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-5a8683a9.glb",
+          "url": "https://cdn.3dassets.dev/assets/34789/v1/model.glb",
+          "sha256": "d0c6009416bda79869015b5de40ec11597513646debd1f556b4089f13dbd32de",
+          "size": 20924
+        }
+      ],
+      "triangles": 408,
+      "animations": [
+        "roller-spin"
+      ]
+    },
+    {
+      "name": "Weigh and dimension station (Parcel Depot and Sorting Hall)",
+      "source": "https://3dassets.dev/assets/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-28ea51cb",
+      "license": {
+        "slug": "cc0-1.0",
+        "name": "CC0 1.0 Universal",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "attributionRequired": false
+      },
+      "author": {
+        "username": "3dassets",
+        "name": "3D Assets",
+        "url": "https://3dassets.dev/u/3dassets"
+      },
+      "ai_generated_by_source": true,
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/parcel-depot/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-28ea51cb.glb",
+          "url": "https://cdn.3dassets.dev/assets/34790/v1/model.glb",
+          "sha256": "0d8b969a1061fa6f21c7416b36b5887ea420643dfe9b1e02a59bad263afe534c",
+          "size": 29052
+        }
+      ],
+      "triangles": 584,
+      "animations": [
+        "roller-spin"
+      ]
+    },
+    {
+      "name": "Label printer and applicator (Parcel Depot and Sorting Hall)",
+      "source": "https://3dassets.dev/assets/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-949db989",
+      "license": {
+        "slug": "cc0-1.0",
+        "name": "CC0 1.0 Universal",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "attributionRequired": false
+      },
+      "author": {
+        "username": "3dassets",
+        "name": "3D Assets",
+        "url": "https://3dassets.dev/u/3dassets"
+      },
+      "ai_generated_by_source": true,
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/parcel-depot/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-949db989.glb",
+          "url": "https://cdn.3dassets.dev/assets/34791/v1/model.glb",
+          "sha256": "40ebdcbdb0e5e1753b13a377a98d3a855233137d7910dfdd9243c74b62e4725c",
+          "size": 18992
+        }
+      ],
+      "triangles": 296,
+      "animations": [
+        "tilt"
+      ]
+    },
+    {
+      "name": "Sorting chute with bag frame (Parcel Depot and Sorting Hall)",
+      "source": "https://3dassets.dev/assets/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-89e61450",
+      "license": {
+        "slug": "cc0-1.0",
+        "name": "CC0 1.0 Universal",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "attributionRequired": false
+      },
+      "author": {
+        "username": "3dassets",
+        "name": "3D Assets",
+        "url": "https://3dassets.dev/u/3dassets"
+      },
+      "ai_generated_by_source": true,
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/parcel-depot/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-89e61450.glb",
+          "url": "https://cdn.3dassets.dev/assets/34792/v1/model.glb",
+          "sha256": "21c461cbd38587cf1e3ccdbb0d78097b3cc04216ec16b60189ce3d1dac57c852",
+          "size": 27996
+        }
+      ],
+      "triangles": 540,
+      "animations": []
+    },
+    {
+      "name": "Sorting chute with a full bag (Parcel Depot and Sorting Hall)",
+      "source": "https://3dassets.dev/assets/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-6e3e0c1f",
+      "license": {
+        "slug": "cc0-1.0",
+        "name": "CC0 1.0 Universal",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "attributionRequired": false
+      },
+      "author": {
+        "username": "3dassets",
+        "name": "3D Assets",
+        "url": "https://3dassets.dev/u/3dassets"
+      },
+      "ai_generated_by_source": true,
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/parcel-depot/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-6e3e0c1f.glb",
+          "url": "https://cdn.3dassets.dev/assets/34793/v1/model.glb",
+          "sha256": "52a6fbc4a8783bcc495c31d677acc0451ac6726244e7379a12a5de4967e24bd3",
+          "size": 32320
+        }
+      ],
+      "triangles": 624,
+      "animations": []
+    },
+    {
+      "name": "Post bag on a wheeled frame (Parcel Depot and Sorting Hall)",
+      "source": "https://3dassets.dev/assets/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-63001cf6",
+      "license": {
+        "slug": "cc0-1.0",
+        "name": "CC0 1.0 Universal",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "attributionRequired": false
+      },
+      "author": {
+        "username": "3dassets",
+        "name": "3D Assets",
+        "url": "https://3dassets.dev/u/3dassets"
+      },
+      "ai_generated_by_source": true,
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/parcel-depot/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-63001cf6.glb",
+          "url": "https://cdn.3dassets.dev/assets/34794/v1/model.glb",
+          "sha256": "77554163602a81871ce5559429fa6762ffeb65124150bfc73af6eba742435313",
+          "size": 24216
+        }
+      ],
+      "triangles": 480,
+      "animations": []
+    },
+    {
+      "name": "Parcel cage, loaded (Parcel Depot and Sorting Hall)",
+      "source": "https://3dassets.dev/assets/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-4cd8af04",
+      "license": {
+        "slug": "cc0-1.0",
+        "name": "CC0 1.0 Universal",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "attributionRequired": false
+      },
+      "author": {
+        "username": "3dassets",
+        "name": "3D Assets",
+        "url": "https://3dassets.dev/u/3dassets"
+      },
+      "ai_generated_by_source": true,
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/parcel-depot/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-4cd8af04.glb",
+          "url": "https://cdn.3dassets.dev/assets/34795/v1/model.glb",
+          "sha256": "60c7fb71802bca0545205b8734b3cb39b930d75f8f988dea3cf26481924a40be",
+          "size": 51300
+        }
+      ],
+      "triangles": 1080,
+      "animations": []
+    },
+    {
+      "name": "Parcel cage, empty (Parcel Depot and Sorting Hall)",
+      "source": "https://3dassets.dev/assets/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-bb964d78",
+      "license": {
+        "slug": "cc0-1.0",
+        "name": "CC0 1.0 Universal",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "attributionRequired": false
+      },
+      "author": {
+        "username": "3dassets",
+        "name": "3D Assets",
+        "url": "https://3dassets.dev/u/3dassets"
+      },
+      "ai_generated_by_source": true,
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/parcel-depot/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-bb964d78.glb",
+          "url": "https://cdn.3dassets.dev/assets/34796/v1/model.glb",
+          "sha256": "504eb12b5e34fee299ff614f9a20a61da0438403c2c875da8a751a244d3c1e09",
+          "size": 39776
+        }
+      ],
+      "triangles": 852,
+      "animations": []
+    },
+    {
+      "name": "Roll cage with rolling castors (Parcel Depot and Sorting Hall)",
+      "source": "https://3dassets.dev/assets/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-500e3c8d",
+      "license": {
+        "slug": "cc0-1.0",
+        "name": "CC0 1.0 Universal",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "attributionRequired": false
+      },
+      "author": {
+        "username": "3dassets",
+        "name": "3D Assets",
+        "url": "https://3dassets.dev/u/3dassets"
+      },
+      "ai_generated_by_source": true,
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/parcel-depot/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-500e3c8d.glb",
+          "url": "https://cdn.3dassets.dev/assets/34798/v1/model.glb",
+          "sha256": "7c143fc84c0ef96d70f265e9eac3d1f882a68f6f214cad3b755a5062cacac6af",
+          "size": 40764
+        }
+      ],
+      "triangles": 984,
+      "animations": [
+        "wheel-roll"
+      ]
+    },
+    {
+      "name": "Sort tray rack (Parcel Depot and Sorting Hall)",
+      "source": "https://3dassets.dev/assets/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-54cee482",
+      "license": {
+        "slug": "cc0-1.0",
+        "name": "CC0 1.0 Universal",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "attributionRequired": false
+      },
+      "author": {
+        "username": "3dassets",
+        "name": "3D Assets",
+        "url": "https://3dassets.dev/u/3dassets"
+      },
+      "ai_generated_by_source": true,
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/parcel-depot/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-54cee482.glb",
+          "url": "https://cdn.3dassets.dev/assets/34797/v1/model.glb",
+          "sha256": "c4dd1bcd5c3d3b3dee341536f14c4cb5180c2e35cd7eac583a03e9543b0ab555",
+          "size": 21560
+        }
+      ],
+      "triangles": 456,
+      "animations": []
+    },
+    {
+      "name": "Parcel stack, small (Parcel Depot and Sorting Hall)",
+      "source": "https://3dassets.dev/assets/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-f2bd236d",
+      "license": {
+        "slug": "cc0-1.0",
+        "name": "CC0 1.0 Universal",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "attributionRequired": false
+      },
+      "author": {
+        "username": "3dassets",
+        "name": "3D Assets",
+        "url": "https://3dassets.dev/u/3dassets"
+      },
+      "ai_generated_by_source": true,
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/parcel-depot/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-f2bd236d.glb",
+          "url": "https://cdn.3dassets.dev/assets/34800/v1/model.glb",
+          "sha256": "8fd03facb75362c4c085f6ac5872a26e16a253ae69fe2d1bfb1e360b379b82eb",
+          "size": 7608
+        }
+      ],
+      "triangles": 108,
+      "animations": []
+    },
+    {
+      "name": "Parcel stack, medium (Parcel Depot and Sorting Hall)",
+      "source": "https://3dassets.dev/assets/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-04648bc0",
+      "license": {
+        "slug": "cc0-1.0",
+        "name": "CC0 1.0 Universal",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "attributionRequired": false
+      },
+      "author": {
+        "username": "3dassets",
+        "name": "3D Assets",
+        "url": "https://3dassets.dev/u/3dassets"
+      },
+      "ai_generated_by_source": true,
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/parcel-depot/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-04648bc0.glb",
+          "url": "https://cdn.3dassets.dev/assets/34799/v1/model.glb",
+          "sha256": "65570bee8e9e8f5ed8f29ebe050e169c82bb91055a6610a70302fd356c6045c4",
+          "size": 10328
+        }
+      ],
+      "triangles": 180,
+      "animations": []
+    },
+    {
+      "name": "Parcel stack, large (Parcel Depot and Sorting Hall)",
+      "source": "https://3dassets.dev/assets/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-4a2d56cf",
+      "license": {
+        "slug": "cc0-1.0",
+        "name": "CC0 1.0 Universal",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "attributionRequired": false
+      },
+      "author": {
+        "username": "3dassets",
+        "name": "3D Assets",
+        "url": "https://3dassets.dev/u/3dassets"
+      },
+      "ai_generated_by_source": true,
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/parcel-depot/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-4a2d56cf.glb",
+          "url": "https://cdn.3dassets.dev/assets/34801/v1/model.glb",
+          "sha256": "ae2ee52460f74457a3b220a8632c73c89474265aba5c27d2d4f617a2ef8179bf",
+          "size": 14124
+        }
+      ],
+      "triangles": 288,
+      "animations": []
+    },
+    {
+      "name": "Pallet of parcels, wrapped (Parcel Depot and Sorting Hall)",
+      "source": "https://3dassets.dev/assets/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-ae7ca995",
+      "license": {
+        "slug": "cc0-1.0",
+        "name": "CC0 1.0 Universal",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "attributionRequired": false
+      },
+      "author": {
+        "username": "3dassets",
+        "name": "3D Assets",
+        "url": "https://3dassets.dev/u/3dassets"
+      },
+      "ai_generated_by_source": true,
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/parcel-depot/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-ae7ca995.glb",
+          "url": "https://cdn.3dassets.dev/assets/34802/v1/model.glb",
+          "sha256": "3e6eec367a1a7efb1a2d79ec716b4803ab221fd3fc54c18fa9aafb1315f88e0e",
+          "size": 15252
+        }
+      ],
+      "triangles": 252,
+      "animations": []
+    },
+    {
+      "name": "Jiffy bag and box assortment (Parcel Depot and Sorting Hall)",
+      "source": "https://3dassets.dev/assets/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-ff038fb8",
+      "license": {
+        "slug": "cc0-1.0",
+        "name": "CC0 1.0 Universal",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "attributionRequired": false
+      },
+      "author": {
+        "username": "3dassets",
+        "name": "3D Assets",
+        "url": "https://3dassets.dev/u/3dassets"
+      },
+      "ai_generated_by_source": true,
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/parcel-depot/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-ff038fb8.glb",
+          "url": "https://cdn.3dassets.dev/assets/34803/v1/model.glb",
+          "sha256": "0ac850c6c0f56417b1321b83bf169afc31a36f024521433a767b9ea16c966911",
+          "size": 13692
+        }
+      ],
+      "triangles": 220,
+      "animations": []
+    },
+    {
+      "name": "Parcel delivery van, blue livery (Parcel Depot and Sorting Hall)",
+      "source": "https://3dassets.dev/assets/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-4a1bddf3",
+      "license": {
+        "slug": "cc0-1.0",
+        "name": "CC0 1.0 Universal",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "attributionRequired": false
+      },
+      "author": {
+        "username": "3dassets",
+        "name": "3D Assets",
+        "url": "https://3dassets.dev/u/3dassets"
+      },
+      "ai_generated_by_source": true,
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/parcel-depot/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-4a1bddf3.glb",
+          "url": "https://cdn.3dassets.dev/assets/34804/v1/model.glb",
+          "sha256": "9e1e40714902878d68a3e11552319cd1131c59dae8332ec57244689551bda6c5",
+          "size": 58804
+        }
+      ],
+      "triangles": 1264,
+      "animations": [
+        "side-door-open",
+        "side-door-close",
+        "rear-door-open",
+        "rear-door-close",
+        "wheel-roll"
+      ]
+    },
+    {
+      "name": "Parcel delivery van, red livery (Parcel Depot and Sorting Hall)",
+      "source": "https://3dassets.dev/assets/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-8438a841",
+      "license": {
+        "slug": "cc0-1.0",
+        "name": "CC0 1.0 Universal",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "attributionRequired": false
+      },
+      "author": {
+        "username": "3dassets",
+        "name": "3D Assets",
+        "url": "https://3dassets.dev/u/3dassets"
+      },
+      "ai_generated_by_source": true,
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/parcel-depot/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-8438a841.glb",
+          "url": "https://cdn.3dassets.dev/assets/34805/v1/model.glb",
+          "sha256": "08c1a89834ac2cbdd89c9aeb68ed2dd8e274cc6e08f64a7bc505e1665da23f1c",
+          "size": 57904
+        }
+      ],
+      "triangles": 1264,
+      "animations": [
+        "side-door-open",
+        "side-door-close",
+        "rear-door-open",
+        "rear-door-close",
+        "wheel-roll"
+      ]
+    },
+    {
+      "name": "Parcel delivery van, doors open (Parcel Depot and Sorting Hall)",
+      "source": "https://3dassets.dev/assets/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-c88ba64c",
+      "license": {
+        "slug": "cc0-1.0",
+        "name": "CC0 1.0 Universal",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "attributionRequired": false
+      },
+      "author": {
+        "username": "3dassets",
+        "name": "3D Assets",
+        "url": "https://3dassets.dev/u/3dassets"
+      },
+      "ai_generated_by_source": true,
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/parcel-depot/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-c88ba64c.glb",
+          "url": "https://cdn.3dassets.dev/assets/34806/v1/model.glb",
+          "sha256": "af13b19bac0aefa9b7c904f9a253128f7b2a581a2c7c036249f3d8432d36acd0",
+          "size": 58564
+        }
+      ],
+      "triangles": 1264,
+      "animations": [
+        "wheel-roll"
+      ]
+    },
+    {
+      "name": "Box lorry trailer (Parcel Depot and Sorting Hall)",
+      "source": "https://3dassets.dev/assets/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-709bf064",
+      "license": {
+        "slug": "cc0-1.0",
+        "name": "CC0 1.0 Universal",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "attributionRequired": false
+      },
+      "author": {
+        "username": "3dassets",
+        "name": "3D Assets",
+        "url": "https://3dassets.dev/u/3dassets"
+      },
+      "ai_generated_by_source": true,
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/parcel-depot/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-709bf064.glb",
+          "url": "https://cdn.3dassets.dev/assets/34807/v1/model.glb",
+          "sha256": "49beb0fec5ad90803fc0c65bebe3f75211809e7595be3d87c2468f567bcceaeb",
+          "size": 34840
+        }
+      ],
+      "triangles": 900,
+      "animations": [
+        "open",
+        "close",
+        "wheel-roll"
+      ]
+    },
+    {
+      "name": "Dock leveller plate (Parcel Depot and Sorting Hall)",
+      "source": "https://3dassets.dev/assets/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-dd48ee53",
+      "license": {
+        "slug": "cc0-1.0",
+        "name": "CC0 1.0 Universal",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "attributionRequired": false
+      },
+      "author": {
+        "username": "3dassets",
+        "name": "3D Assets",
+        "url": "https://3dassets.dev/u/3dassets"
+      },
+      "ai_generated_by_source": true,
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/parcel-depot/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-dd48ee53.glb",
+          "url": "https://cdn.3dassets.dev/assets/34808/v1/model.glb",
+          "sha256": "ce4a74f9d6e778fd006b71269f527d0b8821109c2a04ef962a9d118135a593d3",
+          "size": 10836
+        }
+      ],
+      "triangles": 148,
+      "animations": []
+    },
+    {
+      "name": "Dock bumper pair (Parcel Depot and Sorting Hall)",
+      "source": "https://3dassets.dev/assets/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-5cc9b47d",
+      "license": {
+        "slug": "cc0-1.0",
+        "name": "CC0 1.0 Universal",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "attributionRequired": false
+      },
+      "author": {
+        "username": "3dassets",
+        "name": "3D Assets",
+        "url": "https://3dassets.dev/u/3dassets"
+      },
+      "ai_generated_by_source": true,
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/parcel-depot/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-5cc9b47d.glb",
+          "url": "https://cdn.3dassets.dev/assets/34809/v1/model.glb",
+          "sha256": "0e131b9d417339c5a32ae466b704a0d3ce2ffff91cf1d317681279b2d20f29d9",
+          "size": 10468
+        }
+      ],
+      "triangles": 200,
+      "animations": []
+    },
+    {
+      "name": "Dock shelter frame (Parcel Depot and Sorting Hall)",
+      "source": "https://3dassets.dev/assets/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-1dfae3d5",
+      "license": {
+        "slug": "cc0-1.0",
+        "name": "CC0 1.0 Universal",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "attributionRequired": false
+      },
+      "author": {
+        "username": "3dassets",
+        "name": "3D Assets",
+        "url": "https://3dassets.dev/u/3dassets"
+      },
+      "ai_generated_by_source": true,
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/parcel-depot/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-1dfae3d5.glb",
+          "url": "https://cdn.3dassets.dev/assets/34810/v1/model.glb",
+          "sha256": "1408eb604a7d28c6029ae91877a0e38fde0ac3fda001f4aa91df202638cf81f9",
+          "size": 8264
+        }
+      ],
+      "triangles": 132,
+      "animations": []
+    },
+    {
+      "name": "Loading bay number sign (Parcel Depot and Sorting Hall)",
+      "source": "https://3dassets.dev/assets/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-36150cf2",
+      "license": {
+        "slug": "cc0-1.0",
+        "name": "CC0 1.0 Universal",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "attributionRequired": false
+      },
+      "author": {
+        "username": "3dassets",
+        "name": "3D Assets",
+        "url": "https://3dassets.dev/u/3dassets"
+      },
+      "ai_generated_by_source": true,
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/parcel-depot/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-36150cf2.glb",
+          "url": "https://cdn.3dassets.dev/assets/34812/v1/model.glb",
+          "sha256": "401b8fa074abd09a7a38a3aa26ad1d39cdf62831aec4a211397d14d2870117ab",
+          "size": 13676
+        }
+      ],
+      "triangles": 220,
+      "animations": []
+    },
+    {
+      "name": "Hand pallet truck (Parcel Depot and Sorting Hall)",
+      "source": "https://3dassets.dev/assets/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-cdf2cc74",
+      "license": {
+        "slug": "cc0-1.0",
+        "name": "CC0 1.0 Universal",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "attributionRequired": false
+      },
+      "author": {
+        "username": "3dassets",
+        "name": "3D Assets",
+        "url": "https://3dassets.dev/u/3dassets"
+      },
+      "ai_generated_by_source": true,
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/parcel-depot/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-cdf2cc74.glb",
+          "url": "https://cdn.3dassets.dev/assets/34811/v1/model.glb",
+          "sha256": "e5bfb6a2c20de58df3be03195ad8be56218f3e09720171f65fde95016fa7e94c",
+          "size": 21692
+        }
+      ],
+      "triangles": 504,
+      "animations": [
+        "wheel-roll"
+      ]
+    },
+    {
+      "name": "Sack truck (Parcel Depot and Sorting Hall)",
+      "source": "https://3dassets.dev/assets/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-f2c7530f",
+      "license": {
+        "slug": "cc0-1.0",
+        "name": "CC0 1.0 Universal",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "attributionRequired": false
+      },
+      "author": {
+        "username": "3dassets",
+        "name": "3D Assets",
+        "url": "https://3dassets.dev/u/3dassets"
+      },
+      "ai_generated_by_source": true,
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/parcel-depot/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-f2c7530f.glb",
+          "url": "https://cdn.3dassets.dev/assets/34813/v1/model.glb",
+          "sha256": "0da216fc1c22272938f800aae7e5717e576193f354f0b98beccb3457a2069c13",
+          "size": 14744
+        }
+      ],
+      "triangles": 268,
+      "animations": []
+    },
+    {
+      "name": "Counterbalance forklift with raising forks (Parcel Depot and Sorting Hall)",
+      "source": "https://3dassets.dev/assets/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-528c9054",
+      "license": {
+        "slug": "cc0-1.0",
+        "name": "CC0 1.0 Universal",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "attributionRequired": false
+      },
+      "author": {
+        "username": "3dassets",
+        "name": "3D Assets",
+        "url": "https://3dassets.dev/u/3dassets"
+      },
+      "ai_generated_by_source": true,
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/parcel-depot/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-528c9054.glb",
+          "url": "https://cdn.3dassets.dev/assets/34814/v1/model.glb",
+          "sha256": "42aa755487dd5b166a16bf570168161d26906532bd8f061f458c50a23c4add32",
+          "size": 38260
+        }
+      ],
+      "triangles": 908,
+      "animations": [
+        "hood-open",
+        "hood-close",
+        "lift-open",
+        "lift-close",
+        "wheel-roll"
+      ]
+    },
+    {
+      "name": "Forklift charging point (Parcel Depot and Sorting Hall)",
+      "source": "https://3dassets.dev/assets/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-346cc909",
+      "license": {
+        "slug": "cc0-1.0",
+        "name": "CC0 1.0 Universal",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "attributionRequired": false
+      },
+      "author": {
+        "username": "3dassets",
+        "name": "3D Assets",
+        "url": "https://3dassets.dev/u/3dassets"
+      },
+      "ai_generated_by_source": true,
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/parcel-depot/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-346cc909.glb",
+          "url": "https://cdn.3dassets.dev/assets/34815/v1/model.glb",
+          "sha256": "0677b349b2dc23b5075c6397043637c0bc3436aaf46317f555800cd5675fb057",
+          "size": 62384
+        }
+      ],
+      "triangles": 240,
+      "animations": []
+    },
+    {
+      "name": "Sorting hall floor tile, 4 m (Parcel Depot and Sorting Hall)",
+      "source": "https://3dassets.dev/assets/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-00f41b0e",
+      "license": {
+        "slug": "cc0-1.0",
+        "name": "CC0 1.0 Universal",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "attributionRequired": false
+      },
+      "author": {
+        "username": "3dassets",
+        "name": "3D Assets",
+        "url": "https://3dassets.dev/u/3dassets"
+      },
+      "ai_generated_by_source": true,
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/parcel-depot/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-00f41b0e.glb",
+          "url": "https://cdn.3dassets.dev/assets/34817/v1/model.glb",
+          "sha256": "241954cb11644b641377b506570101dcd3b829ca7c5657f791e3be3131187d43",
+          "size": 51612
+        }
+      ],
+      "triangles": 48,
+      "animations": []
+    },
+    {
+      "name": "Marked walkway floor tile, 4 m (Parcel Depot and Sorting Hall)",
+      "source": "https://3dassets.dev/assets/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-3d237281",
+      "license": {
+        "slug": "cc0-1.0",
+        "name": "CC0 1.0 Universal",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "attributionRequired": false
+      },
+      "author": {
+        "username": "3dassets",
+        "name": "3D Assets",
+        "url": "https://3dassets.dev/u/3dassets"
+      },
+      "ai_generated_by_source": true,
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/parcel-depot/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-3d237281.glb",
+          "url": "https://cdn.3dassets.dev/assets/34816/v1/model.glb",
+          "sha256": "85902c4ded31d9f605070371d23f335667cc348eecf359759b32e1f086e6cf3e",
+          "size": 56260
+        }
+      ],
+      "triangles": 144,
+      "animations": []
+    },
+    {
+      "name": "Sorting hall wall module, 4 m (Parcel Depot and Sorting Hall)",
+      "source": "https://3dassets.dev/assets/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-cbea172b",
+      "license": {
+        "slug": "cc0-1.0",
+        "name": "CC0 1.0 Universal",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "attributionRequired": false
+      },
+      "author": {
+        "username": "3dassets",
+        "name": "3D Assets",
+        "url": "https://3dassets.dev/u/3dassets"
+      },
+      "ai_generated_by_source": true,
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/parcel-depot/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-cbea172b.glb",
+          "url": "https://cdn.3dassets.dev/assets/34819/v1/model.glb",
+          "sha256": "eba6fbae2f41faed90a9c391ba8977ebb710b8c9867058ca54462dda849fcb2c",
+          "size": 56556
+        }
+      ],
+      "triangles": 156,
+      "animations": []
+    },
+    {
+      "name": "Roller shutter door module, 4 m (Parcel Depot and Sorting Hall)",
+      "source": "https://3dassets.dev/assets/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-d27512fd",
+      "license": {
+        "slug": "cc0-1.0",
+        "name": "CC0 1.0 Universal",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "attributionRequired": false
+      },
+      "author": {
+        "username": "3dassets",
+        "name": "3D Assets",
+        "url": "https://3dassets.dev/u/3dassets"
+      },
+      "ai_generated_by_source": true,
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/parcel-depot/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-d27512fd.glb",
+          "url": "https://cdn.3dassets.dev/assets/34818/v1/model.glb",
+          "sha256": "d09bb0d96e895620040d85482026f7b063c5a5fad3c4abba0b9bebbbd1d5baab",
+          "size": 63844
+        }
+      ],
+      "triangles": 324,
+      "animations": [
+        "open",
+        "close"
+      ]
+    },
+    {
+      "name": "Roller shutter door module, open (Parcel Depot and Sorting Hall)",
+      "source": "https://3dassets.dev/assets/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-1259bc67",
+      "license": {
+        "slug": "cc0-1.0",
+        "name": "CC0 1.0 Universal",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "attributionRequired": false
+      },
+      "author": {
+        "username": "3dassets",
+        "name": "3D Assets",
+        "url": "https://3dassets.dev/u/3dassets"
+      },
+      "ai_generated_by_source": true,
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/parcel-depot/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-1259bc67.glb",
+          "url": "https://cdn.3dassets.dev/assets/34820/v1/model.glb",
+          "sha256": "01178d5fb4c1cbb357dfedd2c8bace60a51b92a7dda65f2bdadba0569265459f",
+          "size": 64508
+        }
+      ],
+      "triangles": 296,
+      "animations": []
+    },
+    {
+      "name": "Mezzanine office deck section, 4 m (Parcel Depot and Sorting Hall)",
+      "source": "https://3dassets.dev/assets/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-ccd961b9",
+      "license": {
+        "slug": "cc0-1.0",
+        "name": "CC0 1.0 Universal",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "attributionRequired": false
+      },
+      "author": {
+        "username": "3dassets",
+        "name": "3D Assets",
+        "url": "https://3dassets.dev/u/3dassets"
+      },
+      "ai_generated_by_source": true,
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/parcel-depot/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-ccd961b9.glb",
+          "url": "https://cdn.3dassets.dev/assets/34821/v1/model.glb",
+          "sha256": "fd73d972f8267f5476c3fcdc7726a3a957bb65c87c6a60a970120e37949b2d52",
+          "size": 9556
+        }
+      ],
+      "triangles": 132,
+      "animations": []
+    },
+    {
+      "name": "Mezzanine stair flight, 3 m rise (Parcel Depot and Sorting Hall)",
+      "source": "https://3dassets.dev/assets/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-3de951d6",
+      "license": {
+        "slug": "cc0-1.0",
+        "name": "CC0 1.0 Universal",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "attributionRequired": false
+      },
+      "author": {
+        "username": "3dassets",
+        "name": "3D Assets",
+        "url": "https://3dassets.dev/u/3dassets"
+      },
+      "ai_generated_by_source": true,
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/parcel-depot/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-3de951d6.glb",
+          "url": "https://cdn.3dassets.dev/assets/34822/v1/model.glb",
+          "sha256": "dbd2c64a88a99917f00b6ed3d74deaddffae9be3cbafd292ae02207606c5177b",
+          "size": 18560
+        }
+      ],
+      "triangles": 360,
+      "animations": []
+    },
+    {
+      "name": "Supervisor desk with screens (Parcel Depot and Sorting Hall)",
+      "source": "https://3dassets.dev/assets/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-c294a285",
+      "license": {
+        "slug": "cc0-1.0",
+        "name": "CC0 1.0 Universal",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "attributionRequired": false
+      },
+      "author": {
+        "username": "3dassets",
+        "name": "3D Assets",
+        "url": "https://3dassets.dev/u/3dassets"
+      },
+      "ai_generated_by_source": true,
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/parcel-depot/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-c294a285.glb",
+          "url": "https://cdn.3dassets.dev/assets/34823/v1/model.glb",
+          "sha256": "eda4622e79ca2ef978148d1cb4b05e5adf182ddc0bcfe7e26cbc900882be6221",
+          "size": 30144
+        }
+      ],
+      "triangles": 596,
+      "animations": []
+    },
+    {
+      "name": "Driver check in counter (Parcel Depot and Sorting Hall)",
+      "source": "https://3dassets.dev/assets/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-83979c04",
+      "license": {
+        "slug": "cc0-1.0",
+        "name": "CC0 1.0 Universal",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "attributionRequired": false
+      },
+      "author": {
+        "username": "3dassets",
+        "name": "3D Assets",
+        "url": "https://3dassets.dev/u/3dassets"
+      },
+      "ai_generated_by_source": true,
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/parcel-depot/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-83979c04.glb",
+          "url": "https://cdn.3dassets.dev/assets/34824/v1/model.glb",
+          "sha256": "fdc769f627e999dbf48ea94223de0247ead4d29fa64396755a96a2a0564c9b69",
+          "size": 14412
+        }
+      ],
+      "triangles": 244,
+      "animations": []
+    },
+    {
+      "name": "Shift and route board (Parcel Depot and Sorting Hall)",
+      "source": "https://3dassets.dev/assets/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-04e556b6",
+      "license": {
+        "slug": "cc0-1.0",
+        "name": "CC0 1.0 Universal",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "attributionRequired": false
+      },
+      "author": {
+        "username": "3dassets",
+        "name": "3D Assets",
+        "url": "https://3dassets.dev/u/3dassets"
+      },
+      "ai_generated_by_source": true,
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/parcel-depot/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-04e556b6.glb",
+          "url": "https://cdn.3dassets.dev/assets/34826/v1/model.glb",
+          "sha256": "500ab63420288320749dad2507e875ad22a30cfd14d5c4110fa4e0e8a51f5280",
+          "size": 12948
+        }
+      ],
+      "triangles": 204,
+      "animations": []
+    },
+    {
+      "name": "Staff locker bank, four doors (Parcel Depot and Sorting Hall)",
+      "source": "https://3dassets.dev/assets/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-0493c966",
+      "license": {
+        "slug": "cc0-1.0",
+        "name": "CC0 1.0 Universal",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "attributionRequired": false
+      },
+      "author": {
+        "username": "3dassets",
+        "name": "3D Assets",
+        "url": "https://3dassets.dev/u/3dassets"
+      },
+      "ai_generated_by_source": true,
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/parcel-depot/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-0493c966.glb",
+          "url": "https://cdn.3dassets.dev/assets/34825/v1/model.glb",
+          "sha256": "9de3700d04d50a8e466d3e6ee2abe6e7478e96c6a5fba1380ee1c66924aff48e",
+          "size": 16852
+        }
+      ],
+      "triangles": 348,
+      "animations": [
+        "open",
+        "close"
+      ]
+    },
+    {
+      "name": "Canteen table run with benches (Parcel Depot and Sorting Hall)",
+      "source": "https://3dassets.dev/assets/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-8444d504",
+      "license": {
+        "slug": "cc0-1.0",
+        "name": "CC0 1.0 Universal",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "attributionRequired": false
+      },
+      "author": {
+        "username": "3dassets",
+        "name": "3D Assets",
+        "url": "https://3dassets.dev/u/3dassets"
+      },
+      "ai_generated_by_source": true,
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/parcel-depot/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-8444d504.glb",
+          "url": "https://cdn.3dassets.dev/assets/34827/v1/model.glb",
+          "sha256": "91ad4eb483219fb580295b33adda9b69e6294520968a3600606ccc208a4248ec",
+          "size": 14364
+        }
+      ],
+      "triangles": 248,
+      "animations": []
+    },
+    {
+      "name": "Vending machine (Parcel Depot and Sorting Hall)",
+      "source": "https://3dassets.dev/assets/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-73a0bf1b",
+      "license": {
+        "slug": "cc0-1.0",
+        "name": "CC0 1.0 Universal",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "attributionRequired": false
+      },
+      "author": {
+        "username": "3dassets",
+        "name": "3D Assets",
+        "url": "https://3dassets.dev/u/3dassets"
+      },
+      "ai_generated_by_source": true,
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/parcel-depot/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-73a0bf1b.glb",
+          "url": "https://cdn.3dassets.dev/assets/34828/v1/model.glb",
+          "sha256": "96957e3fb1b44627e8dac0874e4fb9827e09e4175e58d4d029c4f00c7c78f2e6",
+          "size": 20400
+        }
+      ],
+      "triangles": 360,
+      "animations": [
+        "open",
+        "close"
+      ]
+    },
+    {
+      "name": "First aid and fire point (Parcel Depot and Sorting Hall)",
+      "source": "https://3dassets.dev/assets/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-6e1a6644",
+      "license": {
+        "slug": "cc0-1.0",
+        "name": "CC0 1.0 Universal",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "attributionRequired": false
+      },
+      "author": {
+        "username": "3dassets",
+        "name": "3D Assets",
+        "url": "https://3dassets.dev/u/3dassets"
+      },
+      "ai_generated_by_source": true,
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/parcel-depot/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-6e1a6644.glb",
+          "url": "https://cdn.3dassets.dev/assets/34829/v1/model.glb",
+          "sha256": "2c46fac3e797675a21486fffbaff57961a376d60b5ac7b019bd200d52e503312",
+          "size": 19880
+        }
+      ],
+      "triangles": 352,
+      "animations": []
+    },
+    {
+      "name": "Safety barrier rail, 2 m (Parcel Depot and Sorting Hall)",
+      "source": "https://3dassets.dev/assets/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-d69ce6d4",
+      "license": {
+        "slug": "cc0-1.0",
+        "name": "CC0 1.0 Universal",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "attributionRequired": false
+      },
+      "author": {
+        "username": "3dassets",
+        "name": "3D Assets",
+        "url": "https://3dassets.dev/u/3dassets"
+      },
+      "ai_generated_by_source": true,
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/parcel-depot/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-d69ce6d4.glb",
+          "url": "https://cdn.3dassets.dev/assets/34830/v1/model.glb",
+          "sha256": "94cd62c606a02b2ae71d841b073944b85b286b9ce605b98ef9dd11f3caa5b766",
+          "size": 12592
+        }
+      ],
+      "triangles": 224,
+      "animations": []
+    },
+    {
+      "name": "High bay light unit (Parcel Depot and Sorting Hall)",
+      "source": "https://3dassets.dev/assets/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-8674e42f",
+      "license": {
+        "slug": "cc0-1.0",
+        "name": "CC0 1.0 Universal",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "attributionRequired": false
+      },
+      "author": {
+        "username": "3dassets",
+        "name": "3D Assets",
+        "url": "https://3dassets.dev/u/3dassets"
+      },
+      "ai_generated_by_source": true,
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/parcel-depot/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-8674e42f.glb",
+          "url": "https://cdn.3dassets.dev/assets/34831/v1/model.glb",
+          "sha256": "a9baf704bb0177976b8b1a682a87ead1b729a13cada8d13b2db96c42ee616670",
+          "size": 8912
+        }
+      ],
+      "triangles": 136,
+      "animations": []
+    },
+    {
+      "name": "Wall extractor fan panel (Parcel Depot and Sorting Hall)",
+      "source": "https://3dassets.dev/assets/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-cbda8b33",
+      "license": {
+        "slug": "cc0-1.0",
+        "name": "CC0 1.0 Universal",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "attributionRequired": false
+      },
+      "author": {
+        "username": "3dassets",
+        "name": "3D Assets",
+        "url": "https://3dassets.dev/u/3dassets"
+      },
+      "ai_generated_by_source": true,
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/parcel-depot/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-cbda8b33.glb",
+          "url": "https://cdn.3dassets.dev/assets/34832/v1/model.glb",
+          "sha256": "2d67093f17db2143d2fc01fb5c0993abc406fb955777337bddb6de579a3b8578",
+          "size": 17884
+        }
+      ],
+      "triangles": 244,
+      "animations": [
+        "spin"
+      ]
+    },
+    {
+      "name": "Parcel depot sorting hall and loading dock (Parcel Depot and Sorting Hall)",
+      "source": "https://3dassets.dev/assets/parcel-depot-and-sorting-hall-parcel-dep-c1755830-starter-scene",
+      "license": {
+        "slug": "cc0-1.0",
+        "name": "CC0 1.0 Universal",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "attributionRequired": false
+      },
+      "author": {
+        "username": "3dassets",
+        "name": "3D Assets",
+        "url": "https://3dassets.dev/u/3dassets"
+      },
+      "ai_generated_by_source": true,
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/parcel-depot/parcel-depot-and-sorting-hall-parcel-dep-c1755830-starter-scene.glb",
+          "url": "https://cdn.3dassets.dev/assets/34833/v1/model.glb",
+          "sha256": "cd8e0363aa324649b9777ec164573340fb4de5249bc0a0f8ff352b3cf6633ef0",
+          "size": 797164
+        }
+      ],
+      "triangles": 17464,
+      "animations": []
+    },
+    {
+      "name": "Depot dock and yard (Parcel Depot and Sorting Hall)",
+      "source": "https://3dassets.dev/assets/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-0a2a26e8",
+      "license": {
+        "slug": "cc0-1.0",
+        "name": "CC0 1.0 Universal",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "attributionRequired": false
+      },
+      "author": {
+        "username": "3dassets",
+        "name": "3D Assets",
+        "url": "https://3dassets.dev/u/3dassets"
+      },
+      "ai_generated_by_source": true,
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/parcel-depot/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-0a2a26e8.glb",
+          "url": "https://cdn.3dassets.dev/assets/34834/v1/model.glb",
+          "sha256": "9374264995c96e06f64866119f330f5d4f13f812d67f21d459afc1025f23d5a0",
+          "size": 454664
+        }
+      ],
+      "triangles": 10048,
+      "animations": []
+    },
+    {
+      "name": "Parcel depot sorting hall and loading dock (Parcel Depot and Sorting Hall)",
+      "source": "https://3dassets.dev/assets/parcel-depot-and-sorting-hall-parcel-dep-c1755830-starter-scene",
+      "license": {
+        "slug": "cc0-1.0",
+        "name": "CC0 1.0 Universal",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "attributionRequired": false
+      },
+      "author": {
+        "username": "3dassets",
+        "name": "3D Assets",
+        "url": "https://3dassets.dev/u/3dassets"
+      },
+      "ai_generated_by_source": true,
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/parcel-depot/parcel-depot-and-sorting-hall-parcel-dep-c1755830-starter-scene.glb",
+          "url": "https://cdn.3dassets.dev/assets/34833/v1/model.glb",
+          "sha256": "083ef1bb3d76f27f5d0a7d207e3d71cec04322b754751c2708b3e24fa7e37be9",
+          "size": 797164
+        }
+      ],
+      "triangles": 17464,
+      "animations": []
+    },
+    {
+      "name": "Forklift (Car Factory Production Line)",
+      "source": "https://3dassets.dev/assets/car-factory-production-line-forklift-4daac5a1",
+      "license": {
+        "slug": "cc0-1.0",
+        "name": "CC0 1.0 Universal",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "attributionRequired": false
+      },
+      "author": {
+        "username": "3dassets",
+        "name": "3D Assets",
+        "url": "https://3dassets.dev/u/3dassets"
+      },
+      "ai_generated_by_source": true,
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/forklift-candidates/car-factory-production-line-forklift-4daac5a1.glb",
+          "url": "https://cdn.3dassets.dev/assets/27856/v1/model.glb",
+          "sha256": "41123e658ffef3c8890f75367758947b71ee70c3918311aeddf42f45c64fdc67",
+          "size": 59724
+        }
+      ],
+      "triangles": 2728,
+      "animations": [
+        "open",
+        "close",
+        "roll"
+      ]
+    },
+    {
+      "name": "Seated Forklift Driver (Car Factory Production Line)",
+      "source": "https://3dassets.dev/assets/car-factory-production-line-seated-forklift-driver-5efd32f9",
+      "license": {
+        "slug": "cc0-1.0",
+        "name": "CC0 1.0 Universal",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "attributionRequired": false
+      },
+      "author": {
+        "username": "3dassets",
+        "name": "3D Assets",
+        "url": "https://3dassets.dev/u/3dassets"
+      },
+      "ai_generated_by_source": true,
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/forklift-candidates/car-factory-production-line-seated-forklift-driver-5efd32f9.glb",
+          "url": "https://cdn.3dassets.dev/assets/27863/v1/model.glb",
+          "sha256": "ba8df58c05a7c97a5e27a21f235291c77913cd565d64085f5fad2db8fc700332",
+          "size": 45252
+        }
+      ],
+      "triangles": 2052,
+      "animations": []
+    },
+    {
+      "name": "Counterbalance forklift truck (Machine Shop and Factory Hall)",
+      "source": "https://3dassets.dev/assets/machine-shop-and-factory-hall-machine-shop-and-factory-78651fdd",
+      "license": {
+        "slug": "cc0-1.0",
+        "name": "CC0 1.0 Universal",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "attributionRequired": false
+      },
+      "author": {
+        "username": "3dassets",
+        "name": "3D Assets",
+        "url": "https://3dassets.dev/u/3dassets"
+      },
+      "ai_generated_by_source": true,
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/forklift-candidates/machine-shop-and-factory-hall-machine-shop-and-factory-78651fdd.glb",
+          "url": "https://cdn.3dassets.dev/assets/27768/v1/model.glb",
+          "sha256": "7efe111ea57cd1fed6c3e5ce887014745e4635b42864a08025c4cf989881a234",
+          "size": 150760
+        }
+      ],
+      "triangles": 3376,
+      "animations": [
+        "wheel-roll",
+        "open",
+        "close"
+      ]
+    },
+    {
+      "name": "tree_small_02",
+      "source": "https://polyhaven.com/a/tree_small_02",
+      "license": "CC0-1.0",
+      "license_url": "https://polyhaven.com/license",
+      "authors": {
+        "Rico Cilliers": "All"
+      },
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/tree_small_02/tree_small_02_1k.gltf",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/tree_small_02/tree_small_02_1k.gltf",
+          "size": 9075,
+          "sha256": "3062a709614c05b80fdc1e56583998bc3cb1027b0d52f956c8ecfb882ff8ca6d"
+        },
+        {
+          "file": "tmp/insight-poc-source/tree_small_02/textures/tree_small_02_branch_nor_gl_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/tree_small_02/tree_small_02_branch_nor_gl_1k.jpg",
+          "size": 581596,
+          "sha256": "a2efae9e7fede259601188cd5cb7e561fc502bd87e04d862a9532b2d8e647a62"
+        },
+        {
+          "file": "tmp/insight-poc-source/tree_small_02/textures/tree_small_02_branch_diff_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/tree_small_02/tree_small_02_branch_diff_1k.jpg",
+          "size": 449977,
+          "sha256": "a71b768e330c0c6cca097e30314f6b4e842ef724a1370f6aab14b4434eec64cb"
+        },
+        {
+          "file": "tmp/insight-poc-source/tree_small_02/textures/tree_small_02_branch_arm_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/tree_small_02/tree_small_02_branch_arm_1k.jpg",
+          "size": 375732,
+          "sha256": "8968b46d76c67da09ebbf4eed04b8123c9e0ddf5b55d123968b35b32aa76d27a"
+        },
+        {
+          "file": "tmp/insight-poc-source/tree_small_02/textures/tree_small_02_leaves_nor_gl_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/tree_small_02/tree_small_02_leaves_nor_gl_1k.jpg",
+          "size": 681604,
+          "sha256": "8c72e04fb23e16ae1df79c01385a638473d1dd4dede3d51e83d70153c129f09b"
+        },
+        {
+          "file": "tmp/insight-poc-source/tree_small_02/textures/tree_small_02_leaves_diff_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/tree_small_02/tree_small_02_leaves_diff_1k.jpg",
+          "size": 340003,
+          "sha256": "261e7d7a5ac7d2e16ea8823ff8510be8f3f615999724232994039ad2885e5c36"
+        },
+        {
+          "file": "tmp/insight-poc-source/tree_small_02/textures/tree_small_02_leaves_arm_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/tree_small_02/tree_small_02_leaves_arm_1k.jpg",
+          "size": 633698,
+          "sha256": "71f81374daf5a8f3e6eb2c694264a1769fdb0bea508178e4105618eecea83c3e"
+        },
+        {
+          "file": "tmp/insight-poc-source/tree_small_02/textures/tree_small_02_nor_gl_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/tree_small_02/tree_small_02_nor_gl_1k.jpg",
+          "size": 1228646,
+          "sha256": "9c83be074c950ea1b94c732c0c0291b53b9ba357f932d378bafe3ca3b4418871"
+        },
+        {
+          "file": "tmp/insight-poc-source/tree_small_02/textures/tree_small_02_diff_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/tree_small_02/tree_small_02_diff_1k.jpg",
+          "size": 863246,
+          "sha256": "4e0093f407b3a1120a36de49a48ebe5a465a9a9b77e361c7a3e66866e115e404"
+        },
+        {
+          "file": "tmp/insight-poc-source/tree_small_02/textures/tree_small_02_arm_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/tree_small_02/tree_small_02_arm_1k.jpg",
+          "size": 708242,
+          "sha256": "891c5a1bb124292984b01558e9f2b0302d27d2fa3ccf9dfc6c34f9ea4ca24e6c"
+        },
+        {
+          "file": "tmp/insight-poc-source/tree_small_02/tree_small_02.bin",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/tree_small_02/tree_small_02.bin",
+          "size": 95102324,
+          "sha256": "8da6c3c389ad8748286d1b7488cd827f75ebdad9d8f59ef7dfb0916df5edc634"
+        }
+      ]
+    },
+    {
+      "name": "salini-ninfea-02",
+      "source": "https://salini-srl.com/rakoviny/nakladnye/ninfea-02/",
+      "public_model": "https://disk.yandex.ru/d/nCDy9HaVw9WUgQ",
+      "license": "Salini product visualization asset, rights retained by Salini; not CC0",
+      "dimensions_mm": [
+        540,
+        447,
+        120
+      ],
+      "source_files": [
+        {
+          "file": "tmp/insight-poc-source/salini-ninfea-02/Ninfea-02-2015-Corona-fbx.fbx",
+          "size": 510304,
+          "sha256": "a8e5d1fed2f5c86f6036573ebc92e00896503df7d589ea1f6c151af4b85b1d73",
+          "source_path": "/Ninfea-02-2015-Corona-fbx.fbx"
+        },
+        {
+          "file": "tmp/insight-poc-source/salini-ninfea-02/Ninfea-02-2015-obj.mtl",
+          "size": 242,
+          "sha256": "d5080b99a9bb69cd43f4b35d2a879b8393c3b7145669678897bcbeff39c27e2f",
+          "source_path": "/Ninfea-02-2015-obj.mtl"
+        },
+        {
+          "file": "tmp/insight-poc-source/salini-ninfea-02/Ninfea-02-2015-obj.obj",
+          "size": 1173314,
+          "sha256": "9cb8290428891815ce42e9766eed46ef72d7b28501d26215c80303122dc61687",
+          "source_path": "/Ninfea-02-2015-obj.obj"
+        }
+      ]
+    }
+  ]
+}

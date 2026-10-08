@@ -1,0 +1,36 @@
+{
+  "date": "2026-10-08",
+  "task": "Interactive shipping/quality-control scene proof, not full factory replacement",
+  "visual_target": [
+    "../insight-style-directions-2026-10-08/01-porcelain-architecture.png",
+    "../insight-style-directions-2026-10-08/02-graphite-control.png"
+  ],
+  "research": [
+    {
+      "source": "https://developer.apple.com/videos/play/wwdc2026/279/",
+      "verified_features": [
+        "RealityKit lightmap support and Reality Composer Pro 3 light baker",
+        "soft spotlight shadows with lightSize and quality",
+        "mesh LOD and thermal-state adaptation",
+        "Gaussian splat rendering shown on Apple Vision Pro"
+      ],
+      "interpretation": "Feature announcement does not prove every feature is available on iPhone. No claim of iOS Gaussian splat support or real-time path tracing is made."
+    },
+    {
+      "source": "https://developer.apple.com/documentation/scenekit/scnmaterial/lightingmodel-swift.struct/physicallybased",
+      "verified_features": [
+        "PBR with environmental lighting and HDR"
+      ],
+      "interpretation": "Asset quality, scale, lighting and exposure are more immediate bottlenecks than switching engines."
+    }
+  ],
+  "implementation_decision": "Keep live SceneKit camera, selection and logistics animation; engineer tests precomputed Cycles irradiance day/night plus PBR surface response. Do not substitute a flat generated background for the interactive scene.",
+  "review_failures_found": [
+    "iOS crash on grayscale roughness texture: converted to RGB by engineer",
+    "shipyard crane visually dominates the sanitary-ware control area",
+    "initial foliage too schematic",
+    "initial night glass has low text contrast",
+    "initial truck status claimed departure without actual motion"
+  ],
+  "followup": "Graphics pass and new iOS visual validation required before acceptance; record shipped features in release receipt, not this research note."
+}

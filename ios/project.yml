@@ -33,6 +33,8 @@ targets:
           - Resources/ninfea-poster-v3.png
           - CatalogMedia
           - CatalogMedia/**
+          - InsightAssets
+          - InsightAssets/**
           - Resources/ninfea-film-v2.mp4
           - Resources/ninfea-poster-v2.png
           - Resources/ninfea-water.png
@@ -41,13 +43,17 @@ targets:
       - path: Salini/CatalogMedia
         type: folder
         buildPhase: resources
+      # «Участок отгрузки» proof kit (ios/tools/insight_poc/build_atelier_kit.py) with ASSETS.json.
+      - path: Salini/InsightAssets
+        type: folder
+        buildPhase: resources
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: design.salini.experience
         DEVELOPMENT_TEAM: TQ5SCF3KQZ
         CODE_SIGN_STYLE: Automatic
         MARKETING_VERSION: '1.0'
-        CURRENT_PROJECT_VERSION: '9'
+        CURRENT_PROJECT_VERSION: '10'
         INFOPLIST_KEY_CFBundleDisplayName: Salini
         GENERATE_INFOPLIST_FILE: YES
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon

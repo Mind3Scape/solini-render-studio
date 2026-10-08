@@ -22,6 +22,10 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     self.window = window
     setRoot(MainTabs(), animated: false)
     window.makeKeyAndVisible()
+    // QA: open the shipping-section proof directly (projects and settings are untouched).
+    if ProcessInfo.processInfo.arguments.contains("-shipping-atelier") {
+      (window.rootViewController as? MainTabs)?.openShippingAtelier()
+    }
   }
   func showWelcome(animated: Bool = true) { setRoot(MainTabs(), animated: animated) }
   func enter(_ role: Audience) {
@@ -166,6 +170,16 @@ final class MainTabs: UITabBarController {
     tabBar.tintColor = Palette.ink
     if #available(iOS 26.0, *) { tabBarMinimizeBehavior = .onScrollDown }
     applyAudience()
+  }
+  /// Profile → Salini Inside → «Участок отгрузки», without animation (QA launch argument).
+  func openShippingAtelier() {
+    loadViewIfNeeded()
+    selectedViewController = profile
+    let owner = OwnerController()
+    owner.hidesBottomBarWhenPushed = true
+    profile.setViewControllers([profile.viewControllers.first ?? ProfileController(), owner], animated: false)
+    owner.loadViewIfNeeded()
+    owner.openAtelier(animated: false)
   }
   func applyAudience() {
     let role = DemoStore.shared.role

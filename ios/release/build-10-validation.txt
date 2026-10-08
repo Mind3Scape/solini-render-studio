@@ -1,0 +1,34 @@
+Salini 1.0 (10) validation — 2026-10-08, Asia/Bangkok
+Engineer: Opus 5.5 in Claude Code. Codex: source/asset research, direction, independent review, builds, simulator and release checks.
+
+Full XCTest suite: 119 passed, 0 failed, 0 skipped. 236.913 seconds.
+Result: tmp/insight-poc-final-tests.xcresult (local, not committed).
+Simulator: Salini — iOS 27, iPhone 18 Pro, iOS 27.0 (24A434), arm64.
+Test suite covers all prior 110 tests plus 9 shipping-section tests: resources/scale/provenance,
+loading/departure timeline, continuity, selection node mapping and day/night scene integrity.
+Existing runtime priority-inversion warnings remain in test log; no test failures.
+
+Visual/user checks:
+- Initial iOS texture-format crash found and fixed (roughness grayscale JPEG converted to RGB).
+- Day/night images inspected on iOS; native glass/text contrast reviewed and corrected.
+- Normal entry from Salini Inside, return navigation, pause/resume, zoom +/- checked.
+- Accessibility actions selected batch/forklift/truck; status cards expanded/collapsed correctly.
+- SceneKit object-to-subject mapping tested. Coordinate injection into Device Hub returned
+  noWindowsAvailable, so direct touch hit testing and pinch/drag were not independently automated.
+- Camera orientation is fixed in code; only focus and scale change. Pan/pinch require device QA.
+- Screenshots: research/insight-poc-2026-10-08/qa/ios-day.png and ios-night.png.
+
+Graphics proof:
+- Real interactive SceneKit scene, not a flat generated image/video background.
+- Cycles baked irradiance day/night + AO, runtime PBR lighting/reflection/shadows and PBR Neutral.
+- Five official catalogue bathtubs plus official Ninfea 02 basin geometry; 74 downloaded source
+  asset entries retained locally, bundled subset in InsightAssets/ASSETS.json.
+- Source/bundled provenance distinguishes CC0 scenery from Salini product rights.
+- Same geometry in day/night. Forklift carries batches, full truck departs, empty truck returns.
+- Camera/state controls are a standalone proof; no production telemetry/ERP connection.
+- Rendering is materially improved but not pixel-identical to generated concept images.
+- Device frame rate/thermal behaviour has not been measured. 60 fps is a requested rendering
+  target, not a verified hardware performance result. Scene loading is synchronous.
+- No Higgsfield generation jobs submitted and no credits spent in this task.
+
+Git and TestFlight status are recorded separately in build-10-upload-receipt.txt.

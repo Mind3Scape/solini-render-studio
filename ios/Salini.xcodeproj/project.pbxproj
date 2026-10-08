@@ -20,6 +20,7 @@
 		34D8442BABB4641EBEA5BB0C /* MaterialStudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115177084A87D881A3F70994 /* MaterialStudio.swift */; };
 		36BD7EC1CE189D4E6B9F0938 /* greca-start-v2.png in Resources */ = {isa = PBXBuildFile; fileRef = 510C09A66229FFCE5421E897 /* greca-start-v2.png */; };
 		36D45DA9DCA6EE81DFF950EB /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BF4C1CE6C2E47285FA6084 /* App.swift */; };
+		3A923864B299F30FCCB37D58 /* ShippingAtelierScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A7C41726D2086E623F4A8A /* ShippingAtelierScene.swift */; };
 		3B13E9E2C9CA77013FD0D3B2 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = B002A96E28C44197F2418A95 /* PrivacyInfo.xcprivacy */; };
 		3B48D5B64C2CCE5E33479486 /* opera.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8B9E9451C86A79C46812A25D /* opera.jpg */; };
 		3E32DB8956BECA97C7E26844 /* aria-final-v2.png in Resources */ = {isa = PBXBuildFile; fileRef = 556DF6C62E8A3AFA814A6C4A /* aria-final-v2.png */; };
@@ -69,10 +70,13 @@
 		CA65FB0F5DD7B7B32972987F /* ninfea-official.webp in Resources */ = {isa = PBXBuildFile; fileRef = 89B8733108E93D1F89BA90FA /* ninfea-official.webp */; };
 		CAE010180EECCDB8C0D0F5EF /* greca-final-v2.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BA8A93ECD667B0381991CBF /* greca-final-v2.png */; };
 		D4F081D4382A5BE5549A09CF /* Support.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F92CDB3890A5C91EF0EAC1E /* Support.swift */; };
+		DDE9235998F60E78C7E81591 /* ShippingAtelier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055566B28CC5912E72E0A949 /* ShippingAtelier.swift */; };
 		E0004C970033EB673136243D /* luce.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D91143AF411A90AC2958AC84 /* luce.jpg */; };
 		E185DB2B761E0E4CA0A91399 /* ninfea-film-v4.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 0CDD0D02A2C9CFBA7229F19A /* ninfea-film-v4.mp4 */; };
 		E1E655189020B47085668945 /* InsideInsight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6925D6ED72DF85405AB2642F /* InsideInsight.swift */; };
 		E3870384C2CE964391CDB5E5 /* Design.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3AB58D801AACAB3369DA9D5 /* Design.swift */; };
+		E52C6B57271B598998C369C3 /* ShippingAtelierTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3250D2DC9188A757B21D78F4 /* ShippingAtelierTests.swift */; };
+		EB68953457CC07DFEC573A05 /* InsightAssets in Resources */ = {isa = PBXBuildFile; fileRef = D546A670C08A873DB3EF1008 /* InsightAssets */; };
 		EB6F957A6FB1E9A3C963E2B4 /* greca-loop-v2.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 4BADDF95589735F1BA47AD6F /* greca-loop-v2.mp4 */; };
 		ED57E656CAA402EE7A42A859 /* ProposalPDF.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306929DD07FBFF39A6397AD6 /* ProposalPDF.swift */; };
 		F0FB799DEC9C13A7C3DBAA4F /* opera-detail.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 672B74F0BCED01A47E534CD1 /* opera-detail.jpg */; };
@@ -94,6 +98,7 @@
 
 /* Begin PBXFileReference section */
 		0151CE5C734FB58E9B195E9D /* SaliniTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaliniTests.swift; sourceTree = "<group>"; };
+		055566B28CC5912E72E0A949 /* ShippingAtelier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShippingAtelier.swift; sourceTree = "<group>"; };
 		06B24C2D0832EF8D141B750A /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		0B441EB9417092B4E01FDB9C /* CinemaReleaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CinemaReleaseTests.swift; sourceTree = "<group>"; };
 		0CDD0D02A2C9CFBA7229F19A /* ninfea-film-v4.mp4 */ = {isa = PBXFileReference; path = "ninfea-film-v4.mp4"; sourceTree = "<group>"; };
@@ -109,6 +114,7 @@
 		293C35086983E07FB5BECC98 /* RALPalette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RALPalette.swift; sourceTree = "<group>"; };
 		306929DD07FBFF39A6397AD6 /* ProposalPDF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProposalPDF.swift; sourceTree = "<group>"; };
 		319851BB55623979FE40C513 /* Projects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Projects.swift; sourceTree = "<group>"; };
+		3250D2DC9188A757B21D78F4 /* ShippingAtelierTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShippingAtelierTests.swift; sourceTree = "<group>"; };
 		3776267C1F0DB827DBEBB68A /* interior.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = interior.jpg; sourceTree = "<group>"; };
 		48423E5D41CA9E73283426A6 /* opera-loop-v2.mp4 */ = {isa = PBXFileReference; path = "opera-loop-v2.mp4"; sourceTree = "<group>"; };
 		4942620F24A4D8F0728613FA /* greca.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = greca.jpg; sourceTree = "<group>"; };
@@ -131,6 +137,7 @@
 		771E47E08A7C1F8871AA3C03 /* greca-film-v2.mp4 */ = {isa = PBXFileReference; path = "greca-film-v2.mp4"; sourceTree = "<group>"; };
 		7BAB34199B15CE6E53C954A2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		7D76CF44BE1C147E96251FD6 /* SaliniTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = SaliniTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		80A7C41726D2086E623F4A8A /* ShippingAtelierScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShippingAtelierScene.swift; sourceTree = "<group>"; };
 		8533340A72EAF8A013360ECE /* FactoryScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactoryScene.swift; sourceTree = "<group>"; };
 		86060A8E4C8C1CE7787D5D95 /* aria-start-v2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "aria-start-v2.png"; sourceTree = "<group>"; };
 		89B8733108E93D1F89BA90FA /* ninfea-official.webp */ = {isa = PBXFileReference; path = "ninfea-official.webp"; sourceTree = "<group>"; };
@@ -154,6 +161,7 @@
 		CBE7AB302AA433C80A3F4A14 /* MaterialStudioScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaterialStudioScene.swift; sourceTree = "<group>"; };
 		CEF9612034EAAC3B2E8AFDEE /* Aria-drawing.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "Aria-drawing.pdf"; sourceTree = "<group>"; };
 		D4BD1EE31F7C199D6DAD475C /* NinfeaStory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NinfeaStory.swift; sourceTree = "<group>"; };
+		D546A670C08A873DB3EF1008 /* InsightAssets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = InsightAssets; path = Salini/InsightAssets; sourceTree = SOURCE_ROOT; };
 		D80E2E88706C9C8634614E62 /* studio_small_09_2k.hdr */ = {isa = PBXFileReference; path = studio_small_09_2k.hdr; sourceTree = "<group>"; };
 		D855C3BB253AC297C2A5282C /* CatalogMedia */ = {isa = PBXFileReference; lastKnownFileType = folder; name = CatalogMedia; path = Salini/CatalogMedia; sourceTree = SOURCE_ROOT; };
 		D857B43F6F8433444EA53ADE /* production.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = production.jpg; sourceTree = "<group>"; };
@@ -176,6 +184,7 @@
 			isa = PBXGroup;
 			children = (
 				D855C3BB253AC297C2A5282C /* CatalogMedia */,
+				D546A670C08A873DB3EF1008 /* InsightAssets */,
 				C9DB1B2197F72D1B205509B6 /* Salini */,
 				644F17B23856E7F2B4AFAFC2 /* SaliniTests */,
 				AE383CBAEB7988EDD8856BEF /* Products */,
@@ -189,6 +198,7 @@
 				1378F961C27F7E433530BB7C /* DesignerPassTests.swift */,
 				E4FAF20A36EDC10E0096E5FE /* InsideOperationsTests.swift */,
 				0151CE5C734FB58E9B195E9D /* SaliniTests.swift */,
+				3250D2DC9188A757B21D78F4 /* ShippingAtelierTests.swift */,
 			);
 			path = SaliniTests;
 			sourceTree = "<group>";
@@ -278,6 +288,8 @@
 				A6A75AF1C04E69E9DDAC5B69 /* ProjectStore.swift */,
 				306929DD07FBFF39A6397AD6 /* ProposalPDF.swift */,
 				293C35086983E07FB5BECC98 /* RALPalette.swift */,
+				055566B28CC5912E72E0A949 /* ShippingAtelier.swift */,
+				80A7C41726D2086E623F4A8A /* ShippingAtelierScene.swift */,
 				1BC98A5F99D057EA8E7B64E9 /* StudioLighting.swift */,
 				4F92CDB3890A5C91EF0EAC1E /* Support.swift */,
 				FA83A08C7BD246CAD8B10652 /* Workspaces.swift */,
@@ -369,6 +381,7 @@
 				655CB7EC2997AD545FD46A7B /* Assets.xcassets in Resources */,
 				6765ADB5BB3496297E24A6DD /* CatalogMedia in Resources */,
 				0C3BB687CDA086420032F89A /* Greca.usdz in Resources */,
+				EB68953457CC07DFEC573A05 /* InsightAssets in Resources */,
 				3B13E9E2C9CA77013FD0D3B2 /* PrivacyInfo.xcprivacy in Resources */,
 				00D4CCC164CF71C8E9110F01 /* aria-film-v2.mp4 in Resources */,
 				3E32DB8956BECA97C7E26844 /* aria-final-v2.png in Resources */,
@@ -418,6 +431,7 @@
 				A81D85D526685B827BFD87FA /* DesignerPassTests.swift in Sources */,
 				6A5FFEFDCD82D51ECE33C0B1 /* InsideOperationsTests.swift in Sources */,
 				F8C623113C63A0FB6739DD71 /* SaliniTests.swift in Sources */,
+				E52C6B57271B598998C369C3 /* ShippingAtelierTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -452,6 +466,8 @@
 				1F8FF3ED9FDF09276E732A12 /* Projects.swift in Sources */,
 				ED57E656CAA402EE7A42A859 /* ProposalPDF.swift in Sources */,
 				9331D02F97215CADCBFC3871 /* RALPalette.swift in Sources */,
+				DDE9235998F60E78C7E81591 /* ShippingAtelier.swift in Sources */,
+				3A923864B299F30FCCB37D58 /* ShippingAtelierScene.swift in Sources */,
 				6BC074B032EB288957F741A9 /* StudioLighting.swift in Sources */,
 				D4F081D4382A5BE5549A09CF /* Support.swift in Sources */,
 				6EC6836266FA7B8BAFDD4FF2 /* Workspaces.swift in Sources */,
@@ -475,7 +491,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = TQ5SCF3KQZ;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Salini/Info.plist;
@@ -658,7 +674,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = TQ5SCF3KQZ;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Salini/Info.plist;
