@@ -1,25 +1,34 @@
 # TestFlight release
 
-Salini **1.0 (7)**, bundle `design.salini.experience`, App Store Connect app `6819688748`.
+Salini **1.0 (10)**, bundle `design.salini.experience`, App Store Connect app `6819688748`.
 
-**Uploaded successfully on 7 October 2026 at 21:01:03 (UTC+7).** After the user refreshed the Xcode Apple Account, the same signed archive was accepted: `Upload succeeded`, `Uploaded Salini`, `EXPORT SUCCEEDED`, exit 0. App Store Connect in authenticated Safari also showed build 7 **Processing**. See [upload receipt](build-7-upload-receipt.txt). The expired-credentials failure is retained as [attempt 1](build-7-upload-attempt-1.txt).
+Uploaded successfully on **8 October 2026 at 22:16:19 (UTC+7)**. Apple upload service returned
+`Upload succeeded` and `EXPORT SUCCEEDED`. Processing completed, the internal group is attached,
+and **Salini Public Beta shows build 1.0 (10) Approved** after submission.
+[Upload and distribution receipt](build-10-upload-receipt.txt).
 
-Source: `bf357d5947a5744323cc675880fafaea5df78ed9`, branch `codex/salini-native-materials`, pushed before archive/upload.
+Source: `509dc3024796460e53a2bc79ff4da007a7fcc65f`, branch `codex/salini-native-materials`, pushed before upload.
 
-Build 7 improves the native material studio: real bundled HDR radiance, finish-specific microstructure, separate Gelcoat, softer shadows, restrained product exposure and Khronos PBR Neutral. Opus 5.5 implemented; Codex reviewed and returned visual/engineering corrections. Official product geometry is retained; fitting assignments are explicit. This is artistic visualization, not measured BRDF or calibrated RAL. PDF retains the accepted print lighting. New collection environments remain research; bundled films have not been replaced.
+Build 10 adds an interactive shipping/quality-control scene accessible from **Profile → Salini Inside → Участок отгрузки**.
+It includes fixed isometric pan/zoom, day/night lighting, real Salini product geometry, downloadable industrial props,
+selectable batches/forklift/truck, and a continuous loading/departure demonstration. Opus 5.5 implemented the scene and
+Blender pipeline; Codex researched and downloaded source assets, directed multiple visual passes, reviewed and tested.
 
-## Verification and availability
+## Verification
 
-- Full final suite: **97 passed, 0 failed, 0 skipped**, 76.7 seconds. `/tmp/salini-material-realism-accepted.xcresult`.
-- A preceding full run exposed a test-only USDZ polygon/index reader crash. It was fixed without removing geometry assertions; focused and full reruns passed.
-- Native iPhone 18 Pro / iOS 27 UI: white comparison, RAL 6005, macro view. Noemi and Greca A/B renders cover white / green / anthracite and finishes. [QA](../QA.md).
-- Archive: `ios/build/testflight/Salini-1.0-7.xcarchive`, Release arm64, manual existing Salini TestFlight profile. Version/build **1.0 / 7**, signature, privacy manifest, HDRI and third-party notices verified.
-- Simulator build 7 installed and launched, saved projects preserved.
-- **Upload:** succeeded. **Apple processing:** started, confirmed in App Store Connect. **Internal testing / external Beta App Review:** not yet confirmed for build 7. The authenticated Safari session is available, but user tab changes interrupted the follow-up operations; coordination was requested before further browser actions.
-- The existing [public invitation](https://testflight.apple.com/join/mUb5H7bZ) does not prove availability of build 7. Previous build 6 upload succeeded: [receipt](build-6-upload-receipt.txt).
+- Full suite: **119 passed, 0 failed, 0 skipped**, 236.913 seconds.
+- iPhone 18 Pro / iOS 27 simulator: normal entry, day/night, zoom, pause, accessible object selection and cards checked.
+- A 279.77-second recording shows the live loading/departure cycle. [42-second excerpt](../../research/insight-poc-2026-10-08/qa/ios-departure.mp4).
+- Release archive signed with the existing Salini TestFlight profile; signature verified.
+- All 71 files of the new 3D resource kit match their accepted source SHA-256 hashes in the archive.
+- [Validation and limitations](build-10-validation.txt): direct pinch/drag still require device QA, no physical-device frame-rate or thermal measurement.
+- This is a bounded graphics proof with simulated industrial data, not a measured digital twin or live production control.
 
-## Next server steps
+## Distribution
 
-Verify processing completion in App Store Connect, add to the existing internal group as needed, and select build 7 for the existing external group/review. Test text is prepared in [testflight-metadata.json](testflight-metadata.json). Existing build 3 was shown as Approved for Salini Public Beta; that is not evidence of build 7 approval.
+[Public invitation](https://testflight.apple.com/join/mUb5H7bZ).
+Build 10 has cleared external Beta App Review and was added to Salini Public Beta with automatic
+tester notification enabled. [App Store Connect proof](../../research/insight-poc-2026-10-08/qa/testflight-build10-approved.png).
 
-Every implementation delivery must be committed and pushed. Upload is now complete; internal availability and external review remain separately tracked. Publishing to the App Store is a separate action.
+Prior release evidence: [build 9](build-9-upload-receipt.txt), [build 8](build-8-upload-receipt.txt), [build 7](build-7-upload-receipt.txt).
+Publishing to the App Store is separate from TestFlight.

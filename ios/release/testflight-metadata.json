@@ -11,7 +11,7 @@
   "signInRequired": false,
   "collectsData": false,
   "tracking": false,
-  "submissionStatus": "Build 10 passed 119 tests; archive/upload pending.",
+  "submissionStatus": "Build 1.0 (10) uploaded 2026-10-08 22:16:19 UTC+7 from pushed commit 509dc30. Processing completed. Salini Internal attached (one invite). Submitted to Salini Public Beta with automatic tester notification; App Store Connect confirms Approved. Public invite: https://testflight.apple.com/join/mUb5H7bZ",
   "build": "10",
   "betaReviewNotes": "Build 1.0 (10) adds a separate interactive shipping/quality-control graphics proof: Profile > Salini Inside > Shipping section (Участок отгрузки). Native 3D, fixed isometric pan/zoom, day/night lighting, selectable batch/forklift/truck and a continuous simulated loading/departure cycle. No sign-in required. All industrial activity is explicitly marked as a demonstration and does not control real equipment. Models and lighting are bundled; no new network rendering, analytics, payment, account or data collection. Existing catalog, projects, PDF proposals and collection films remain available. Product geometry originates from Salini, additional environment assets are CC0 with bundled provenance. Requires iOS/iPadOS 27 or later."
 }

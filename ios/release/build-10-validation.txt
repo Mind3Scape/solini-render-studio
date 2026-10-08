@@ -31,4 +31,11 @@ Graphics proof:
   target, not a verified hardware performance result. Scene loading is synchronous.
 - No Higgsfield generation jobs submitted and no credits spent in this task.
 
+Additional motion QA: recorded 279.77 seconds of the live iOS scene. Inspected sampled frames
+showing loaded-truck departure, an empty dock, a new truck backing in, and the next loading cycle.
+A 42-second excerpt is saved in research/insight-poc-2026-10-08/qa/ios-departure.mp4.
+
+Archive verification: all 71 InsightAssets files match the accepted source SHA-256 hashes.
+Release code signature verified with codesign --verify --deep --strict.
+
 Git and TestFlight status are recorded separately in build-10-upload-receipt.txt.

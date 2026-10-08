@@ -1,0 +1,30 @@
+Salini 1.0 (10) — upload receipt
+Date: 2026-10-08, Asia/Bangkok (UTC+7)
+App Store Connect app: 6819688748
+Bundle: design.salini.experience
+Team: TQ5SCF3KQZ
+Source commit: 509dc3024796460e53a2bc79ff4da007a7fcc65f
+Branch: codex/salini-native-materials, pushed before archive/upload.
+Archive: ios/build/testflight/Salini-1.0-10.xcarchive
+Export options: ios/release/UploadOptions.plist, external testing eligible (not internal-only).
+
+xcodebuild archive: ARCHIVE SUCCEEDED.
+Verified archive: design.salini.experience / 1.0 / 10.
+Signature valid. All 71 InsightAssets files match the accepted source SHA-256 hashes.
+
+2026-10-08 22:16:19.277 +0700 Progress 100%: Uploaded package is processing.
+2026-10-08 22:16:19.283 +0700 Progress 100%: Upload succeeded.
+Uploaded Salini
+** EXPORT SUCCEEDED **
+Exit code: 0.
+
+Upload: CONFIRMED.
+Processing: COMPLETE. App Store Connect listed build 10 Ready to Submit after processing.
+Internal testing: Salini Internal attached automatically, one invite shown for build 10.
+External/public Beta App Review: SUBMITTED and APPROVED.
+Build 1.0 (10) is listed as Approved in Salini Public Beta (now four builds).
+The What to Test text was supplied in Russian; Automatically notify testers remained enabled.
+Public group and existing public link retained. No App Store production release performed.
+Screenshot: research/insight-poc-2026-10-08/qa/testflight-build10-approved.png.
+Public invitation: https://testflight.apple.com/join/mUb5H7bZ
+Validation: ios/release/build-10-validation.txt.
