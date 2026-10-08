@@ -57,8 +57,12 @@ PALETTE = {
     "M_Glass": (0.05, 0.07, 0.09), "M_Forklift": (0.80, 0.58, 0.16), "M_Beacon": (1.0, 0.6, 0.1),
     "M_Coat": (0.92, 0.92, 0.9), "M_Vest": (0.85, 0.6, 0.2), "M_Trousers": (0.2, 0.22, 0.26),
     "M_Skin": (0.75, 0.58, 0.48), "M_Hair": (0.15, 0.13, 0.12), "M_Workwear": (0.22, 0.32, 0.45),
-    "M_Toolbox": (0.85, 0.6, 0.2), "M_Ceramic": (0.92, 0.92, 0.91),
+    "M_Toolbox": (0.85, 0.6, 0.2), "M_Ceramic": (0.92, 0.92, 0.91), "M_Coping": (0.07, 0.08, 0.09),
+    "M_Joint": (0.3, 0.3, 0.3), "M_Frame": (0.55, 0.57, 0.6), "M_LampHousing": (0.8, 0.8, 0.8), "M_Roof": (0.18, 0.19, 0.2), "M_Facade": (0.62, 0.64, 0.65),
+    "M_Curtain": (0.62, 0.66, 0.70), "M_Chassis": (0.05, 0.06, 0.07), "M_TrailerRoof": (0.75, 0.77, 0.78),
+    "M_Grille": (0.03, 0.035, 0.04), "M_Headlight": (0.9, 0.9, 0.85), "M_TailLight": (0.5, 0.04, 0.03),
     "M_Window": (0.55, 0.62, 0.68), "M_GlassClear": (0.8, 0.85, 0.88), "M_BoothFrame": (0.86, 0.86, 0.85),
+    "M_Cabinet": (0.82, 0.83, 0.81), "M_PipeWater": (0.2, 0.36, 0.48),
 }
 MATS = {}
 for name, rgb in PALETTE.items():
@@ -125,6 +129,16 @@ def cyl(x, y0, y1, z, r, mat, group="Static", seg=20, bevel=0.01, axis="y"):
     return _obj("cyl", bm, mat, group, bevel, 2)
 
 
+def pipe_z(x, y, z0, z1, r, mat, seg=16):
+    """Horizontal cylinder along scene z at (x, y)."""
+    return cyl(x, z0, z1, y, r, mat, seg=seg, bevel=0, axis="z")
+
+
+def pipe_x(y, z, x0, x1, r, mat, seg=16):
+    """Horizontal cylinder along scene x at height y, depth z."""
+    return cyl(y, x0, x1, z, r, mat, seg=seg, bevel=0, axis="x")
+
+
 def flat(points, y, mat, group="Static"):
     """A flat polygon on the ground (paint, grass, asphalt) — no thickness, no bevel."""
     bm = bmesh.new()
@@ -148,7 +162,7 @@ def stripe(xa, za, xb, zb, w, y, mat):
     return flat([(xa + ox, za + oz), (xb + ox, zb + oz), (xb - ox, zb - oz), (xa - ox, za - oz)], y, mat)
 
 
-def text(body, x, z, size, mat, rot=0.0, y=0.012):
+def text(body, x, z, size, mat, rot=0.0, y=0.012, stand=False):
     cu = bpy.data.curves.new("txt", "FONT")
     cu.body = body
     cu.size = size
@@ -157,7 +171,7 @@ def text(body, x, z, size, mat, rot=0.0, y=0.012):
     ob = bpy.data.objects.new("txt", cu)
     scene.collection.objects.link(ob)
     ob.location = S(x, y, z)
-    ob.rotation_euler = (0, 0, rot)
+    ob.rotation_euler = (math.pi / 2 if stand else 0, 0, rot)   # standing: faces +z (or rot about the vertical)
     bpy.context.view_layer.objects.active = ob
     for o in scene.objects:
         o.select_set(o == ob)
@@ -215,9 +229,41 @@ for i in range(6):
     box(30.0 + 0.3 + i * 0.35, 30.0 + 0.5 + i * 0.35, 0.8, 1.9, -4.92, -4.88, "M_Steel", bevel=0.005)
 box(26, 30, 0, 0.03, -5.9, -5.5, "M_Galv", bevel=0.005)
 
+# ----------------------------------------------------------------------------- neighbour hall
+# Context only (not interactive): a finished production block north of the yard with a ribbed
+# facade, a gravel roof behind a parapet, skylight strips and rooftop units — what the
+# references read as «real plant».
+rect(14.2, 40, -24, -8, 0.004, "M_Asphalt")
+NX0, NX1, NZ0, NZ1, NH = 18.0, 38.0, -22.0, -10.0, 9.0
+box(NX0, NX1, 0, 0.9, NZ0, NZ1, "M_Plinth", bevel=0.04)
+box(NX0 + 0.02, NX1 - 0.02, 0.9, NH, NZ0 + 0.02, NZ1 - 0.02, "M_Facade", bevel=0.05)
+for k in range(int((NX1 - NX0) / 1.2)):                                    # vertical facade ribs
+    x = NX0 + 0.6 + k * 1.2
+    box(x - 0.04, x + 0.04, 0.9, NH, NZ1 - 0.02, NZ1 + 0.03, "M_Facade", bevel=0.01, segments=1)
+for k in range(int((NZ1 - NZ0) / 1.2)):
+    z = NZ0 + 0.6 + k * 1.2
+    box(NX0 - 0.03, NX0 + 0.02, 0.9, NH, z - 0.04, z + 0.04, "M_Facade", bevel=0.01, segments=1)
+box(NX0 + 1.0, NX1 - 1.0, 6.0, 7.2, NZ1 - 0.04, NZ1 + 0.02, "M_Window", bevel=0)       # ribbon window
+box(NX0 - 0.1, NX1 + 0.1, NH, NH + 0.6, NZ0 - 0.1, NZ1 + 0.1, "M_Coping", bevel=0.03)  # parapet
+box(NX0 + 0.2, NX1 - 0.2, NH, NH + 0.45, NZ0 + 0.2, NZ1 - 0.2, "M_Roof", bevel=0.01)  # gravel roof
+for k in range(4):                                                          # skylight strips
+    x0 = NX0 + 2.5 + k * 4.2
+    box(x0, x0 + 1.4, NH + 0.45, NH + 0.85, NZ0 + 2.0, NZ1 - 2.0, "M_Window", bevel=0.05)
+    box(x0 - 0.06, x0 + 1.46, NH + 0.45, NH + 0.55, NZ0 + 1.95, NZ1 - 1.95, "M_Galv", bevel=0.01)
+for x in (24.0, 30.0):
+    box(x - 1.6, x + 1.6, 0.0, 4.2, NZ1 - 0.03, NZ1 + 0.06, "M_Steel", bevel=0.02)
+    for y in range(14):
+        box(x - 1.5, x + 1.5, 0.1 + y * 0.29, 0.36 + y * 0.29, NZ1 + 0.06, NZ1 + 0.09, "M_Galv", bevel=0.01, segments=1)
+    box(x - 2.0, x + 2.0, 4.4, 4.55, NZ1, NZ1 + 1.4, "M_Coping", bevel=0.02)          # canopy
+anchor("anchor_neighbour_roof", (NX0 + NX1) / 2, NH + 0.45, (NZ0 + NZ1) / 2)
+
 # ----------------------------------------------------------------------------- hall shell
 box(0, 14.25, 0, FLOOR, 0, 20.25, "M_Slab", bevel=0.07)           # raised dock-height slab
 rect(0.25, 13.75, 0.25, 19.75, FLOOR + 0.003, "M_Floor")
+for x in (4.75, 9.25):                                                         # saw-cut joints
+    rect(x - 0.008, x + 0.008, 0.25, 19.75, FLOOR + 0.0045, "M_Joint")
+for z in (6.6, 13.2):
+    rect(0.25, 13.75, z - 0.008, z + 0.008, FLOOR + 0.0045, "M_Joint")
 # Far walls: concrete plinth + horizontal sandwich panels with real joints.
 box(0, 14.0, FLOOR, FLOOR + 1.0, 0, 0.28, "M_Plinth", bevel=0.04)
 box(0, 0.28, FLOOR, FLOOR + 1.0, 0, 20.0, "M_Plinth", bevel=0.04)
@@ -248,17 +294,17 @@ for k in range(1, 14):
 box(0.3, 13.7, FLOOR + 3.4, FLOOR + 3.46, 0.3, 0.6, "M_Galv", bevel=0.004, segments=1)    # cable tray
 box(0.3, 13.7, FLOOR + 3.46, FLOOR + 3.52, 0.3, 0.32, "M_Galv", bevel=0, segments=1)
 box(0.3, 13.7, FLOOR + 3.46, FLOOR + 3.52, 0.58, 0.6, "M_Galv", bevel=0, segments=1)
-box(-0.05, 14.05, TOP, TOP + 0.12, -0.05, 0.32, "M_Galv", bevel=0.025)     # coping
+box(-0.05, 14.05, TOP, TOP + 0.12, -0.05, 0.32, "M_Coping", bevel=0.025)   # coping
 box(-0.05, 0.32, TOP, TOP + 0.12, -0.05, 20.05, "M_Galv", bevel=0.01)
 # Near walls cut at CUT with a darker section cap; openings for two docks and a door.
 def cut_wall_x(z0, z1):   # east wall, x 13.75..14.0
     box(13.72, 14.0, FLOOR, FLOOR + 1.0, z0, z1, "M_Plinth", bevel=0.04)
     box(13.75, 14.0, FLOOR + 1.0, CUT, z0, z1, "M_Panel", bevel=0.03)
-    box(13.75, 14.0, CUT, CUT + 0.02, z0, z1, "M_Section", bevel=0)
+    box(13.75, 14.0, CUT, CUT + 0.02, z0, z1, "M_Coping", bevel=0)
 def cut_wall_z(x0, x1):   # south wall, z 19.75..20.0
     box(x0, x1, FLOOR, FLOOR + 1.0, 19.72, 20.0, "M_Plinth", bevel=0.04)
     box(x0, x1, FLOOR + 1.0, CUT, 19.75, 20.0, "M_Panel", bevel=0.03)
-    box(x0, x1, CUT, CUT + 0.02, 19.75, 20.0, "M_Section", bevel=0)
+    box(x0, x1, CUT, CUT + 0.02, 19.75, 20.0, "M_Coping", bevel=0)
 for z0, z1 in ((0.28, 5.0), (8.0, 12.0), (15.0, 20.0)):
     cut_wall_x(z0, z1)
 for x0, x1 in ((0.28, 2.5), (3.5, 13.75)):
@@ -308,7 +354,7 @@ for zc in (6.5, 13.5):
     z0, z1 = zc - 1.5, zc + 1.5
     for zj in (z0 - 0.12, z1 + 0.12):                                   # steel jambs, cut
         box(13.7, 14.05, FLOOR, CUT, zj - 0.1, zj + 0.1, "M_Steel", bevel=0.01)
-        box(13.7, 14.05, CUT, CUT + 0.02, zj - 0.1, zj + 0.1, "M_Section", bevel=0)
+        box(13.7, 14.05, CUT, CUT + 0.02, zj - 0.1, zj + 0.1, "M_Coping", bevel=0)
     box(13.2, 14.25, FLOOR, FLOOR + 0.03, z0 + 0.1, z1 - 0.1, "M_Leveler", bevel=0.01)   # leveler
     for zz in (z0 - 0.45, z1 + 0.05):                                    # shelter pads, cut
         box(14.0, 14.6, FLOOR - 0.1, CUT, zz, zz + 0.4, "M_Rubber", bevel=0.05)
@@ -317,6 +363,9 @@ for zc in (6.5, 13.5):
     box(14.25, 14.3, 0.2, 1.15, z0 + 0.1, z1 - 0.1, "M_Galv", bevel=0.005)   # pit face plate
 anchor("anchor_dock_1", 14.0, FLOOR, 6.5)
 anchor("anchor_dock_2", 14.0, FLOOR, 13.5)
+anchor("anchor_dock_2_left", 14.0, FLOOR, 12.0)
+anchor("anchor_dock_2_right", 14.0, FLOOR, 15.0)
+box(14.25, 14.6, FLOOR - 0.02, FLOOR + 0.015, 12.2, 14.8, "M_Leveler", bevel=0.008)   # leveler lip onto the deck
 # Personnel door with steel stair and handrail from the walkway.
 for i in range(6):
     box(2.55, 3.45, 0, FLOOR - i * 0.2, 20.25 + i * 0.28, 20.53 + i * 0.28, "M_Galv", bevel=0.01)
@@ -377,10 +426,10 @@ def trolley(x, z):
     """Tool trolley: blue-grey frame, two trays, an amber toolbox and a tablet."""
     for sx in (-0.3, 0.3):
         for sz in (-0.2, 0.2):
-            cyl(x + sx, FLOOR + 0.06, FLOOR + 0.9, z + sz, 0.016, "M_Steel", seg=8, bevel=0)
+            cyl(x + sx, FLOOR + 0.06, FLOOR + 0.9, z + sz, 0.016, "M_Frame", seg=8, bevel=0)
             cyl(x + sx, FLOOR, FLOOR + 0.06, z + sz, 0.04, "M_Rubber", seg=10, bevel=0)
     for y in (FLOOR + 0.2, FLOOR + 0.86):
-        box(x - 0.33, x + 0.33, y, y + 0.03, z - 0.23, z + 0.23, "M_Steel", bevel=0.01)
+        box(x - 0.33, x + 0.33, y, y + 0.03, z - 0.23, z + 0.23, "M_Frame", bevel=0.01)
     box(x - 0.24, x + 0.1, FLOOR + 0.89, FLOOR + 1.05, z - 0.14, z + 0.12, "M_Toolbox", bevel=0.02)
     box(x + 0.13, x + 0.3, FLOOR + 0.89, FLOOR + 0.9, z - 0.12, z + 0.12, "M_Screen", bevel=0.004)
     box(x - 0.2, x + 0.2, FLOOR + 0.23, FLOOR + 0.36, z - 0.16, z + 0.16, "M_Carton", bevel=0.01)
@@ -390,23 +439,43 @@ STATIONS = [((2.9, 3.2), "Alda-160-70"), ((6.9, 3.2), "Mona-170"), ((2.9, 6.6), 
 for i, ((cx, cz), product) in enumerate(STATIONS):
     rect(cx - 1.6, cx + 1.6, cz - 1.25, cz + 1.25, FLOOR + 0.006, "M_Mat")
     for sx in (-1, 1):                                                      # trestles
-        box(cx + sx * 0.7 - 0.05, cx + sx * 0.7 + 0.05, FLOOR, FLOOR + 0.55, cz - 0.4, cz + 0.4, "M_Steel", bevel=0.01)
+        box(cx + sx * 0.7 - 0.05, cx + sx * 0.7 + 0.05, FLOOR, FLOOR + 0.55, cz - 0.4, cz + 0.4, "M_Frame", bevel=0.01)
     box(cx - 0.95, cx + 0.95, FLOOR + 0.55, FLOOR + 0.6, cz - 0.42, cz + 0.42, "M_Galv", bevel=0.01)
     for sx in (-1, 1):                                                      # inspection light frame
-        for sz in (-1, 1):
-            cyl(cx + sx * 1.35, FLOOR, FLOOR + 2.5, cz + sz * 1.05, 0.035, "M_Steel", seg=12)
+        for sz in (-1, 1):                                                  # 45 mm profile, base plate, bolts, corner node
+            px, pz = cx + sx * 1.35, cz + sz * 1.05
+            box(px - 0.0225, px + 0.0225, FLOOR + 0.012, FLOOR + 2.47, pz - 0.0225, pz + 0.0225, "M_Frame", bevel=0.004, segments=1)
+            box(px - 0.08, px + 0.08, FLOOR, FLOOR + 0.012, pz - 0.08, pz + 0.08, "M_Galv", bevel=0.003, segments=1)
+            for bx in (-0.055, 0.055):
+                for bz in (-0.055, 0.055):
+                    cyl(px + bx, FLOOR + 0.012, FLOOR + 0.028, pz + bz, 0.009, "M_Steel", seg=6, bevel=0)
+            box(px - 0.04, px + 0.04, FLOOR + 2.45, FLOOR + 2.55, pz - 0.04, pz + 0.04, "M_Steel", bevel=0.006, segments=1)
+    box(cx - 0.72, cx + 0.72, FLOOR + 0.17, FLOOR + 0.2, cz - 0.38, cz + 0.38, "M_Galv", bevel=0.006, segments=1)  # lower shelf
+    box(cx - 0.62, cx - 0.2, FLOOR + 0.2, FLOOR + 0.33, cz - 0.3, cz + 0.02, "M_Toolbox", bevel=0.015)            # tool case
+    box(cx - 0.6, cx - 0.22, FLOOR + 0.33, FLOOR + 0.345, cz - 0.2, cz - 0.08, "M_Rubber", bevel=0.004)          # handle
+    box(cx + 0.05, cx + 0.55, FLOOR + 0.2, FLOOR + 0.36, cz - 0.32, cz + 0.3, "M_Cabinet", bevel=0.012)           # parts bin
+    cyl(cx + 0.3, FLOOR + 0.36, FLOOR + 0.52, cz + 0.12, 0.04, "M_Frame", seg=12, bevel=0.004)                    # spray bottle
+    box(cx - 1.35, cx + 1.35, FLOOR + 1.45, FLOOR + 1.49, cz - 1.05 - 0.02, cz - 1.05 + 0.02, "M_Frame", bevel=0.004, segments=1)  # tool rail
+    for k, (dx, h, mat) in enumerate(((-0.9, 0.32, "M_Galv"), (-0.65, 0.22, "M_Toolbox"), (-0.4, 0.28, "M_Steel"), (0.55, 0.18, "M_Screen"), (0.8, 0.3, "M_Galv"))):
+        box(cx + dx - 0.035, cx + dx + 0.035, FLOOR + 1.45 - h, FLOOR + 1.45, cz - 1.05 + 0.02, cz - 1.05 + 0.05, mat, bevel=0.005, segments=1)
+    sign_z = cz + 1.05                                                       # post sign under the front beam
+    for sx in (-0.22, 0.22):
+        cyl(cx + sx, FLOOR + 2.3, FLOOR + 2.47, sign_z, 0.006, "M_Galv", seg=6, bevel=0)
+    box(cx - 0.3, cx + 0.3, FLOOR + 2.08, FLOOR + 2.3, sign_z - 0.012, sign_z + 0.012, "M_Steel", bevel=0.006, segments=1)
+    text(f"QC {i + 1:02d}", cx, sign_z + 0.014, 0.13, "M_LineWhite", stand=True, y=FLOOR + 2.19)
+    text(f"QC {i + 1:02d}", cx - 1.05, cz + 0.95, 0.22, "M_LineWhite", y=FLOOR + 0.012)                    # stencil on the mat
     for sz in (-1, 1):
-        box(cx - 1.4, cx + 1.4, FLOOR + 2.45, FLOOR + 2.55, cz + sz * 1.05 - 0.04, cz + sz * 1.05 + 0.04, "M_Steel", bevel=0.005)
+        box(cx - 1.4, cx + 1.4, FLOOR + 2.47, FLOOR + 2.53, cz + sz * 1.05 - 0.025, cz + sz * 1.05 + 0.025, "M_Frame", bevel=0.005)
     for sx in (-1, 1):
-        box(cx + sx * 1.35 - 0.04, cx + sx * 1.35 + 0.04, FLOOR + 2.45, FLOOR + 2.55, cz - 1.1, cz + 1.1, "M_Steel", bevel=0.005)
+        box(cx + sx * 1.35 - 0.025, cx + sx * 1.35 + 0.025, FLOOR + 2.47, FLOOR + 2.53, cz - 1.1, cz + 1.1, "M_Frame", bevel=0.005)
     for sz in (-0.45, 0.45):
-        box(cx - 1.1, cx + 1.1, FLOOR + 2.38, FLOOR + 2.45, cz + sz - 0.09, cz + sz + 0.09, "M_Steel", bevel=0.005)
-        box(cx - 1.05, cx + 1.05, FLOOR + 2.37, FLOOR + 2.38, cz + sz - 0.07, cz + sz + 0.07, "M_Lamp", bevel=0)
+        box(cx - 1.1, cx + 1.1, FLOOR + 2.41, FLOOR + 2.47, cz + sz - 0.07, cz + sz + 0.07, "M_LampHousing", bevel=0.01)
+        box(cx - 1.05, cx + 1.05, FLOOR + 2.40, FLOOR + 2.41, cz + sz - 0.055, cz + sz + 0.055, "M_Lamp", bevel=0)
     anchor(f"anchor_product_{product}", cx, FLOOR + 0.6, cz)
     anchor(f"anchor_light_qc_{i + 1}", cx, FLOOR + 2.3, cz)
     trolley(cx + (-0.85 if i % 2 == 0 else 0.85), cz + 0.78)
     for k in range(3):                                                     # inspection tools on the table
-        box(cx - 0.75 + k * 0.12, cx - 0.7 + k * 0.12, FLOOR + 0.6, FLOOR + 0.62, cz + 0.3, cz + 0.4, "M_Toolbox" if k == 0 else "M_Steel", bevel=0)
+        box(cx - 0.75 + k * 0.12, cx - 0.7 + k * 0.12, FLOOR + 0.6, FLOOR + 0.62, cz + 0.3, cz + 0.4, "M_Toolbox" if k == 0 else "M_Frame", bevel=0)
 # Packing table with stretch film and tape: Sofia 150 being packed.
 box(3.95, 5.85, FLOOR + 0.78, FLOOR + 0.82, 8.9, 9.85, "M_Desk", bevel=0.015)
 for sx in (4.05, 5.75):
@@ -510,11 +579,15 @@ def tree(x, z, s, seed):
 # Trees: the Poly Haven tree_small_02 prototype, instanced at these anchors (see TREES below).
 TREE_SPOTS = [(5.6, 23.5, 0.3, 1.0), (10.6, 23.6, 2.1, 0.9), (20.5, 33.6, 4.0, 1.1), (29.0, 33.2, 1.2, 0.95),
               (-3.5, 23.5, 5.2, 1.05)]
-for i in range(14):                                                          # clipped hedge
-    x0 = -0.6 + i * 1.0
-    if 1.9 < x0 < 4.6:
+# Shrubs: real Poly Haven shrub_02/03/04 prototypes, instanced at these spots (see SHRUBS below).
+SHRUB_SPOTS = []
+for i in range(16):                                                          # planting along the hall
+    x = -0.4 + i * 0.95
+    if 1.9 < x < 4.7:
         continue
-    box(x0, x0 + 0.95, 0, 0.75, 22.75, 23.35, "M_Foliage", bevel=0.18, segments=3)
+    SHRUB_SPOTS.append((("Shrub3", "Shrub4", "Shrub2")[i % 3], x, 23.05 + 0.18 * ((i * 7) % 3 - 1), i * 1.7, 0.85 + 0.1 * (i % 3)))
+for i in range(11):                                                          # along the road
+    SHRUB_SPOTS.append((("Shrub4", "Shrub2", "Shrub3")[i % 3], 13.2 + i * 1.45, 31.5, i * 2.3, 0.9 + 0.08 * (i % 2)))
 
 # ----------------------------------------------------------------------------- people
 def limb(p0, p1, r0, r1, mat, seg=10):
@@ -568,9 +641,6 @@ person(16.4, 17.0, 2.2, coat="M_Vest", cap="M_Toolbox")         # yard marshal w
 # More planting south of the road (the site keeps going into the haze).
 rect(-8, 36, 30.6, 38, 0.006, "M_Grass")
 box(-8, 36, 0, 0.14, 30.6, 30.75, "M_Curb", bevel=0.035)
-for i in range(9):                                                           # low hedge along the road
-    x0 = 13.0 + i * 1.5
-    box(x0, x0 + 1.35, 0, 0.6, 31.2, 31.75, "M_Foliage", bevel=0.2, segments=3)
 
 # ----------------------------------------------------------------------------- movers
 def forklift():
@@ -590,7 +660,6 @@ def forklift():
     cyl(-1.25, 2.2, 2.32, 0.0, 0.07, "M_Beacon", g, seg=12)                           # beacon
     for x, r in ((-0.55, 0.33), (-1.95, 0.27)):                                      # tyres
         for sz in (-1, 1):
-            cyl(sz * (0.5 if r > 0.3 else 0.47), x - 0.18, x + 0.18, r, r, "M_Rubber", g, seg=24, axis="z") if False else None
             bm = bmesh.new()
             bmesh.ops.create_cone(bm, cap_ends=True, segments=24, radius1=r, radius2=r, depth=0.24)
             bmesh.ops.rotate(bm, cent=Vector((0, 0, 0)), matrix=Matrix.Rotation(math.pi / 2, 3, "X"), verts=bm.verts)
@@ -608,43 +677,118 @@ def forklift():
         box(-0.02, 0.06, 0.05, 0.75, sz - 0.06, sz + 0.06, "M_Galv", c, bevel=0.01)
 
 
+def wheel(x, y, z, r, width, group, outward, dual=False):
+    """Tyre with a rounded shoulder, a pressed steel rim and a hub (outward = +1 / -1 along z)."""
+    for k in range(2 if dual else 1):
+        zz = z + outward * k * (width + 0.03)
+        bm = bmesh.new()
+        bmesh.ops.create_cone(bm, cap_ends=True, segments=28, radius1=r, radius2=r, depth=width)
+        bmesh.ops.rotate(bm, cent=Vector((0, 0, 0)), matrix=Matrix.Rotation(math.pi / 2, 3, "X"), verts=bm.verts)
+        bmesh.ops.translate(bm, vec=S(x, y, zz), verts=bm.verts)
+        _obj("tyre", bm, "M_Rubber", group, 0.06, segments=3)
+    zr = z + outward * (width / 2 + (width + 0.03 if dual else 0) + 0.005)
+    bm = bmesh.new()
+    bmesh.ops.create_cone(bm, cap_ends=True, segments=24, radius1=r * 0.62, radius2=r * 0.58, depth=0.04)
+    bmesh.ops.rotate(bm, cent=Vector((0, 0, 0)), matrix=Matrix.Rotation(math.pi / 2, 3, "X"), verts=bm.verts)
+    bmesh.ops.translate(bm, vec=S(x, y, zr), verts=bm.verts)
+    _obj("rim", bm, "M_Galv", group, 0.01)
+    bm = bmesh.new()
+    bmesh.ops.create_cone(bm, cap_ends=True, segments=12, radius1=r * 0.2, radius2=r * 0.16, depth=0.08)
+    bmesh.ops.rotate(bm, cent=Vector((0, 0, 0)), matrix=Matrix.Rotation(math.pi / 2, 3, "X"), verts=bm.verts)
+    bmesh.ops.translate(bm, vec=S(x, y, zr + outward * 0.04), verts=bm.verts)
+    _obj("hub", bm, "M_Steel", group, 0.01)
+
+
+TRAILER = dict(x0=14.4, x1=27.95, zc=13.5, w=1.275, deck=FLOOR, roof=3.9)
+
+
 def truck():
-    """Parked at dock 2: trailer rear at the dock, cut at the section height like the walls."""
+    """Curtain-side semi-trailer at dock 02: real roof (load height 2.7 m), the camera-side
+    curtain drawn back to the cab, rear doors open — the forklift loads through a real opening.
+    Tractor: cab with glazing, grille, lights, mirrors, steps and tank; tyres with rims."""
     g = "Truck_Body"
-    zc, x0, x1 = 13.5, 14.4, 28.0
-    w = 1.275
-    box(x0, x1, FLOOR - 0.06, FLOOR, zc - w, zc + w, "M_Leveler", g, bevel=0.01)          # deck
-    for sz in (-1, 1):
-        box(x0, x1, FLOOR, CUT, zc + sz * w - (0.04 if sz > 0 else 0), zc + sz * w + (0 if sz > 0 else 0.04), "M_Trailer", g, bevel=0.01)
-        for k in range(23):                                                              # side ribs
-            x = x0 + 0.3 + k * 0.6
-            box(x - 0.03, x + 0.03, FLOOR, CUT, zc + sz * (w + 0.03) - 0.015, zc + sz * (w + 0.03) + 0.015, "M_Trailer", g, bevel=0.004, segments=1)
-        box(x0, x1, CUT, CUT + 0.02, zc + sz * w - 0.05, zc + sz * w + 0.05, "M_Section", g, bevel=0)
-        box(x0, x1, FLOOR - 0.35, FLOOR - 0.06, zc + sz * (w - 0.1) - 0.05, zc + sz * (w - 0.1) + 0.05, "M_Steel", g, bevel=0.01)
-        box(x0 - 0.02, x0 + 0.05, FLOOR - 0.1, CUT, zc + sz * w - 0.06, zc + sz * w + 0.06, "M_Steel", g, bevel=0.005)
-        # Rear door swung open against the side.
-        box(x0 + 0.05, x0 + 1.3, FLOOR, CUT, zc + sz * (w + 0.09) - 0.025, zc + sz * (w + 0.09) + 0.025, "M_Trailer", g, bevel=0.01)
-    box(x1 - 0.06, x1, FLOOR, CUT, zc - w, zc + w, "M_Trailer", g, bevel=0.01)          # front wall
-    box(x1 - 0.06, x1, CUT, CUT + 0.02, zc - w, zc + w, "M_Section", g, bevel=0)
-    for ax in (16.2, 17.5, 18.8, 28.9, 30.9):                                           # axles + tyres
-        for sz in (-1, 1):
-            bm = bmesh.new()
-            bmesh.ops.create_cone(bm, cap_ends=True, segments=24, radius1=0.5, radius2=0.5, depth=0.55)
-            bmesh.ops.rotate(bm, cent=Vector((0, 0, 0)), matrix=Matrix.Rotation(math.pi / 2, 3, "X"), verts=bm.verts)
-            bmesh.ops.translate(bm, vec=S(ax, 0.5, zc + sz * 0.95), verts=bm.verts)
-            _obj("tyre", bm, "M_Rubber", g, 0.04)
-    box(24.5, 24.6, 0, FLOOR - 0.3, zc - 0.9, zc - 0.8, "M_Steel", g, bevel=0)           # landing legs
-    box(24.5, 24.6, 0, FLOOR - 0.3, zc + 0.8, zc + 0.9, "M_Steel", g, bevel=0)
-    box(26.5, 31.6, 0.75, 1.05, zc - 0.5, zc + 0.5, "M_Steel", g, bevel=0.02)            # tractor frame
-    for sz in (-1, 1):                                                                   # mudguards
-        box(28.5, 31.3, 1.0, 1.1, zc + sz * 1.0 - 0.3, zc + sz * 1.0 + 0.3, "M_Steel", g, bevel=0.03)
-    box(30.0, 32.35, 0.9, 3.75, zc - 1.25, zc + 1.25, "M_TruckCab", g, bevel=0.12)        # cab
-    box(32.33, 32.37, 2.2, 3.35, zc - 1.12, zc + 1.12, "M_Glass", g, bevel=0)             # windscreen
-    for sz in (-1, 1):
-        box(30.9, 32.1, 2.25, 3.3, zc + sz * 1.25 - 0.02, zc + sz * 1.25 + 0.02, "M_Glass", g, bevel=0)
-    box(30.0, 32.35, 3.75, 3.95, zc - 1.2, zc + 1.2, "M_TruckCab", g, bevel=0.08)         # roof fairing
-    box(32.3, 32.45, 0.9, 1.25, zc - 1.25, zc + 1.25, "M_Steel", g, bevel=0.03)           # bumper
+    T = TRAILER
+    x0, x1, zc, w = T["x0"], T["x1"], T["zc"], T["w"]
+    deck, roof = T["deck"], T["roof"]
+    zf, zn = zc - w, zc + w                                                            # far / near side
+    box(x0, x1, deck - 0.14, deck, zf, zn, "M_Leveler", g, bevel=0.015)                # deck
+    for zz in (zc - 0.45, zc + 0.45):                                                   # main beams
+        box(x0 + 0.3, x1 - 0.2, 0.78, deck - 0.14, zz - 0.07, zz + 0.07, "M_Chassis", g, bevel=0.01)
+    box(x0, x1, deck - 0.3, deck - 0.12, zn - 0.06, zn, "M_Chassis", g, bevel=0.01)     # side rails
+    box(x0, x1, deck - 0.3, deck - 0.12, zf, zf + 0.06, "M_Chassis", g, bevel=0.01)
+    box(x0, x1, deck, roof, zf, zf + 0.05, "M_Trailer", g, bevel=0.01)                 # far wall
+    for k in range(1, 12):                                                               # inner stanchions
+        x = x0 + k * (x1 - x0) / 12
+        box(x - 0.04, x + 0.04, deck, roof, zf + 0.05, zf + 0.1, "M_Galv", g, bevel=0.008, segments=1)
+    for k in range(1, 12):                                                               # far wall panel seams
+        x = x0 + k * (x1 - x0) / 12 + 0.55
+        box(x - 0.006, x + 0.006, deck + 0.05, roof - 0.05, zf - 0.006, zf + 0.0, "M_Chassis", g, bevel=0, segments=1)
+    for y in (deck + 0.9, deck + 1.8):                                                   # load rails inside
+        box(x0 + 0.2, x1 - 0.2, y, y + 0.06, zf + 0.05, zf + 0.08, "M_Galv", g, bevel=0.005, segments=1)
+    box(x1 - 0.06, x1, deck, roof, zf, zn, "M_Trailer", g, bevel=0.02)                 # front wall
+    box(x0 - 0.02, x1 + 0.02, roof, roof + 0.07, zf - 0.02, zn + 0.02, "M_TrailerRoof", g, bevel=0.025)
+    for k in range(1, 9):                                                                # roof sheet seams
+        x = x0 + k * (x1 - x0) / 9
+        box(x - 0.01, x + 0.01, roof + 0.07, roof + 0.075, zf, zn, "M_Galv", g, bevel=0, segments=1)
+    for zz in (zf + 0.04, zn - 0.04):                                                   # roof rails
+        box(x0, x1, roof - 0.16, roof, zz - 0.04, zz + 0.04, "M_Galv", g, bevel=0.01, segments=1)
+    for k in range(1, 18):                                                               # roof bows
+        x = x0 + k * (x1 - x0) / 18
+        box(x - 0.02, x + 0.02, roof - 0.06, roof, zf, zn, "M_Galv", g, bevel=0, segments=1)
+    box(x0, x1, deck - 0.02, deck + 0.06, zn - 0.05, zn, "M_Galv", g, bevel=0.005)      # rave rail
+    for k in range(9):                                                                   # curtain drawn back
+        x = x1 - 0.12 - k * 0.15
+        dz = 0.06 if k % 2 else 0.0
+        box(x - 0.09, x + 0.09, deck + 0.05, roof - 0.17, zn - 0.08 + dz, zn + 0.02 + dz, "M_Curtain", g, bevel=0.035, segments=2)
+        for y in (deck + 0.25, deck + 1.3):                                             # buckle straps
+            box(x - 0.1, x + 0.1, y, y + 0.05, zn - 0.09 + dz, zn + 0.03 + dz, "M_Chassis", g, bevel=0.005, segments=1)
+    for zz in (zf, zn - 0.075):                                                         # rear posts + header
+        box(x0, x0 + 0.08, deck - 0.3, roof, zz, zz + 0.075, "M_Chassis", g, bevel=0.01)
+    box(x0, x0 + 0.08, roof - 0.22, roof, zf, zn, "M_Chassis", g, bevel=0.01)
+    box(x0 + 0.08, x0 + 1.3, deck, roof - 0.05, zf - 0.07, zf - 0.02, "M_Trailer", g, bevel=0.01)   # far door, open
+    box(x0 - 0.02, x0 + 0.04, 0.42, 0.58, zf + 0.1, zn - 0.1, "M_Chassis", g, bevel=0.01)          # underrun bar
+    for zz in (zf + 0.15, zn - 0.35):                                                   # rear lights
+        box(x0 - 0.03, x0, 0.66, 0.8, zz, zz + 0.2, "M_TailLight", g, bevel=0.01)
+    for ax in (16.2, 17.5, 18.8):
+        for side in (-1, 1):
+            wheel(ax, 0.5, zc + side * 0.92, 0.5, 0.38, g, side)
+        box(ax - 0.06, ax + 0.06, 0.45, 0.8, zc - 0.85, zc + 0.85, "M_Chassis", g, bevel=0.01)
+    for side in (-1, 1):                                                                 # mudflaps, legs
+        box(19.3, 19.33, 0.12, 0.95, zc + side * 0.95 - 0.25, zc + side * 0.95 + 0.25, "M_Rubber", g, bevel=0.005)
+        box(24.5, 24.62, 0.06, deck - 0.3, zc + side * 0.85 - 0.06, zc + side * 0.85 + 0.06, "M_Chassis", g, bevel=0.01)
+        box(24.4, 24.72, 0.0, 0.06, zc + side * 0.85 - 0.12, zc + side * 0.85 + 0.12, "M_Chassis", g, bevel=0.01)
+    box(19.5, 23.8, 0.55, 0.75, zn - 0.06, zn - 0.02, "M_Galv", g, bevel=0.005)         # side guard
+    # Tractor.
+    box(26.6, 32.0, 0.62, 0.92, zc - 0.48, zc + 0.48, "M_Chassis", g, bevel=0.02)
+    box(27.2, 28.2, 0.92, 1.06, zc - 0.55, zc + 0.55, "M_Chassis", g, bevel=0.03)        # fifth wheel
+    for ax, dual in ((28.6, True), (31.1, False)):
+        for side in (-1, 1):
+            wheel(ax, 0.52, zc + side * (0.78 if dual else 0.98), 0.52, 0.32, g, side, dual=dual)
+    box(29.9, 32.3, 0.95, 3.7, zc - 1.25, zc + 1.25, "M_TruckCab", g, bevel=0.14, segments=3)   # cab
+    box(29.9, 31.7, 3.7, 3.98, zc - 1.18, zc + 1.18, "M_TruckCab", g, bevel=0.12, segments=3)  # roof spoiler
+    box(32.27, 32.33, 2.2, 3.4, zc - 1.1, zc + 1.1, "M_Glass", g, bevel=0.02)                 # windscreen
+    for side in (-1, 1):
+        box(31.1, 32.15, 2.25, 3.35, zc + side * 1.25 - 0.03, zc + side * 1.25 + 0.03, "M_Glass", g, bevel=0.02)
+        zm = zc + side * 1.47                                                           # mirror + arm
+        box(31.95, 32.08, 2.45, 3.05, zm - 0.05, zm + 0.05, "M_Chassis", g, bevel=0.02)
+        box(31.98, 32.02, 2.88, 2.93, min(zc + side * 1.25, zm), max(zc + side * 1.25, zm), "M_Galv", g, bevel=0)
+        box(30.4, 31.2, 0.62, 0.95, zc + side * 1.2 - 0.12, zc + side * 1.2 + 0.12, "M_Chassis", g, bevel=0.03)   # steps
+        box(29.95, 30.3, 1.0, 3.6, zc + side * 1.25 - 0.02, zc + side * 1.25 + 0.02, "M_Chassis", g, bevel=0.01)   # handrail stripe
+    box(32.3, 32.36, 1.25, 2.05, zc - 0.85, zc + 0.85, "M_Grille", g, bevel=0.01)         # grille
+    for k in range(5):
+        y = 1.32 + k * 0.15
+        box(32.34, 32.38, y, y + 0.04, zc - 0.82, zc + 0.82, "M_Galv", g, bevel=0)
+    for side in (-1, 1):
+        box(32.3, 32.37, 1.12, 1.3, zc + side * 0.95 - 0.22, zc + side * 0.95 + 0.22, "M_Headlight", g, bevel=0.02)
+    box(32.25, 32.45, 0.7, 1.12, zc - 1.25, zc + 1.25, "M_Chassis", g, bevel=0.05)         # bumper
+    bm = bmesh.new()                                                                     # fuel tank
+    bmesh.ops.create_cone(bm, cap_ends=True, segments=20, radius1=0.28, radius2=0.28, depth=1.3)
+    bmesh.ops.rotate(bm, cent=Vector((0, 0, 0)), matrix=Matrix.Rotation(math.pi / 2, 3, "Y"), verts=bm.verts)
+    bmesh.ops.translate(bm, vec=S(29.3, 0.78, zc + 1.0), verts=bm.verts)
+    _obj("tank", bm, "M_Galv", g, 0.04)
     anchor("anchor_truck", 21.2, FLOOR, zc)
+    anchor("anchor_trailer_min", x0, deck, zf + 0.05)
+    anchor("anchor_trailer_max", x1 - 0.06, roof - 0.02, zn)
     for k in range(4):
         anchor(f"anchor_slot_{k}", 26.7 - k * 1.3, FLOOR, zc)
 
@@ -657,7 +801,8 @@ def forklift_asset():
     dr = glob.glob(os.path.join(SRC, "forklift-candidates", "*seated-forklift-driver*.glb"))
     if not fl:
         return False
-    place_m = Matrix.Translation(Vector((-0.37, 0, 0))) @ Matrix.Rotation(math.pi / 2, 4, "Z")
+    # Compact warehouse forklift (0.85): collapsed mast ≈ 2.45 m clears the trailer roof.
+    place_m = Matrix.Scale(0.85, 4) @ Matrix.Translation(Vector((-0.37, 0, 0))) @ Matrix.Rotation(math.pi / 2, 4, "Z")
     def bring(path, mapping, extra=Matrix.Identity(4)):
         before = set(bpy.data.objects)
         bpy.ops.import_scene.gltf(filepath=path)
@@ -798,7 +943,7 @@ def load_asset(asset, keep=None, ratio=None, size=512, unit=1.0):
             entry["arm"] = save_texture(os.path.join(SRC, asset, arm), size, True)
         if nor:
             entry["normal"] = save_texture(os.path.join(SRC, asset, nor), size, True)
-        if "leaves" in m["name"]:
+        if "leaves" in m["name"] or asset.startswith("shrub"):
             entry["foliage"] = True
         elif m.get("alphaMode") == "BLEND":
             entry["grille"] = True
@@ -827,11 +972,31 @@ def load_asset(asset, keep=None, ratio=None, size=512, unit=1.0):
             bpy.data.objects.remove(o, do_unlink=True)
     for o in protos:
         scene.collection.objects.unlink(o)
-        for slot in o.material_slots:              # plain material, name kept for the app
-            if slot.material and slot.material.use_nodes:
-                nt = slot.material.node_tree
-                for n in [n for n in nt.nodes if n.type == "TEX_IMAGE"]:
-                    nt.nodes.remove(n)
+        for slot in o.material_slots:
+            m = slot.material
+            if not (m and m.use_nodes):
+                continue
+            # Rewire to the resized textures in OUT/textures: the USD then references
+            # «textures/…» relatively (RealityKit reads them; SceneKit rebinds by name anyway).
+            nt = m.node_tree
+            for n in [n for n in nt.nodes if n.type in ("TEX_IMAGE", "NORMAL_MAP", "SEPRGB", "SEPARATE_COLOR")]:
+                nt.nodes.remove(n)
+            b = next((n for n in nt.nodes if n.type == "BSDF_PRINCIPLED"), None)
+            e = MATERIAL_MAP.get(m.name, {})
+            if b is None:
+                continue
+            if e.get("base"):
+                t = nt.nodes.new("ShaderNodeTexImage")
+                t.image = bpy.data.images.load(os.path.join(OUT, e["base"]), check_existing=True)
+                nt.links.new(t.outputs["Color"], b.inputs["Base Color"])
+            if e.get("normal"):
+                t = nt.nodes.new("ShaderNodeTexImage")
+                t.image = bpy.data.images.load(os.path.join(OUT, e["normal"]), check_existing=True)
+                t.image.colorspace_settings.name = "Non-Color"
+                nm = nt.nodes.new("ShaderNodeNormalMap")
+                nt.links.new(t.outputs["Color"], nm.inputs["Color"])
+                nt.links.new(nm.outputs["Normal"], b.inputs["Normal"])
+            b.inputs["Roughness"].default_value = 0.6
     return protos
 
 
@@ -868,11 +1033,12 @@ if duct:
     centred = (-ctr.x, -ctr.y, -lo.z)
     for k in range(8):                     # clear of the crane bridge
         place(duct, 1.05, 7.25, 6.2 + k * 1.8, 0.0, centred)
-# Pipe manifold on the west wall beside quality control.
-pipes = load_asset("modular_industrial_pipes_01", ratio=0.6)
-if pipes:
-    lo, hi = bounds(pipes)
-    place(pipes, 0.45, FLOOR + 2.6, 3.0, -HALF, (-(lo.x + hi.x) / 2, -(lo.y + hi.y) / 2, -lo.z))
+    DUCT_HALF = (hi.x - lo.x) / 2
+    for k in range(9):                     # cantilever brackets from the west wall under each joint
+        z = 6.2 - 0.9 + k * 1.8
+        box(0.25, 0.3, 6.95, 7.25, z - 0.04, z + 0.04, "M_Galv", bevel=0.004, segments=1)             # wall plate
+        box(0.3, 1.05 + DUCT_HALF + 0.08, 7.17, 7.25, z - 0.025, z + 0.025, "M_Galv", bevel=0.004, segments=1)  # arm
+        box(1.05 + DUCT_HALF + 0.04, 1.05 + DUCT_HALF + 0.08, 7.25, 7.4, z - 0.025, z + 0.025, "M_Galv", bevel=0.004, segments=1)
 # Security cameras: dock island pole and the north-east corner coping.
 cam = load_asset("security_camera_01", keep={"security_camera_01"}, ratio=0.3)
 if cam:
@@ -889,6 +1055,8 @@ if air:
     lo, hi = bounds(air)
     centred = (-(lo.x + hi.x) / 2, -(lo.y + hi.y) / 2, -lo.z)
     place(air, (BX0 + BX1) / 2, FLOOR + BH + 0.14, (BZ0 + BZ1) / 2, 0.0, centred)
+    for k in range(4):                                                      # rooftop units next door
+        place(air, NX0 + 3.0 + k * 4.2, NH + 0.45, NZ1 - 1.2, 0.0, centred)
     box(25.6, 30.0, 0, 0.18, -6.6, -5.2, "M_Curb", bevel=0.03)
     for k in range(2):
         place(air, 26.7 + k * 2.1, 0.18, -5.9, 0.0, centred)
@@ -981,8 +1149,144 @@ if os.path.exists(sink_obj):
     box(1.2, 3.8, FLOOR + 2.2, FLOOR + 2.26, 0.72, 0.9, "M_Steel", bevel=0.005)
     box(1.3, 3.7, FLOOR + 2.19, FLOOR + 2.2, 0.75, 0.87, "M_Lamp", bevel=0)
     anchor("anchor_light_qc_5", 2.5, FLOOR + 2.1, 1.0)
-    for k2 in range(4):
-        place([sink], 1.57 + k2 * 0.62, FLOOR + 0.86, 1.15, 0.0)
+    for k2 in range(3):
+        place([sink], 1.7 + k2 * 0.8, FLOOR + 0.86, 1.15, 0.0)
+    # QC bench kit: perforated lower shelf with cases, a pegboard with the gauges on the lamp posts.
+    box(1.27, 3.73, FLOOR + 0.18, FLOOR + 0.21, 0.82, 1.48, "M_Galv", bevel=0.005, segments=1)
+    box(1.4, 1.9, FLOOR + 0.21, FLOOR + 0.35, 0.9, 1.3, "M_Toolbox", bevel=0.015)
+    box(2.05, 2.75, FLOOR + 0.21, FLOOR + 0.42, 0.88, 1.4, "M_Carton", bevel=0.01)
+    box(2.95, 3.6, FLOOR + 0.21, FLOOR + 0.31, 0.9, 1.38, "M_Cabinet", bevel=0.01)
+    box(1.27, 3.73, FLOOR + 1.05, FLOOR + 1.7, 0.825, 0.835, "M_Galv", bevel=0.003, segments=1)
+    for sx in (1.27, 3.71):
+        box(sx, sx + 0.02, FLOOR + 1.0, FLOOR + 1.75, 0.8, 0.84, "M_Steel", bevel=0.003, segments=1)
+    for dx, y0, y1, w, mat in ((1.45, 1.2, 1.6, 0.05, "M_Toolbox"), (1.75, 1.35, 1.6, 0.12, "M_Screen"),
+                               (2.1, 1.15, 1.62, 0.03, "M_Galv"), (2.45, 1.4, 1.62, 0.18, "M_Steel"),
+                               (2.9, 1.25, 1.6, 0.04, "M_Frame"), (3.3, 1.3, 1.62, 0.14, "M_Toolbox")):
+        box(dx - w / 2, dx + w / 2, FLOOR + y0, FLOOR + y1, 0.835, 0.865, mat, bevel=0.006, segments=1)
+
+# ----------------------------------------------------------------------------- engineering
+# The services that make a real hall read as one (concept 01): distribution cabinets, cable
+# ladder and trays, water and compressed-air lines, post signs. Every run is carried: wall
+# struts with clamps, tray brackets, risers out of the slab, end flanges.
+WX = 0.25                                       # inner face of the west wall (x)
+NZ = 0.25                                       # inner face of the north wall (z)
+# Distribution cabinets (3 × 800 mm) on the west wall behind quality control.
+for k in range(3):
+    z0 = 0.72 + k * 0.8                         # clear of the corner risers
+    box(WX + 0.02, WX + 0.4, FLOOR, FLOOR + 0.1, z0 + 0.02, z0 + 0.78, "M_Steel", bevel=0.006, segments=1)   # plinth
+    box(WX + 0.01, WX + 0.4, FLOOR + 0.1, FLOOR + 2.1, z0 + 0.005, z0 + 0.795, "M_Cabinet", bevel=0.012)    # carcass
+    box(WX + 0.4, WX + 0.42, FLOOR + 0.13, FLOOR + 2.07, z0 + 0.03, z0 + 0.77, "M_Cabinet", bevel=0.006)    # door
+    box(WX + 0.42, WX + 0.44, FLOOR + 1.0, FLOOR + 1.22, z0 + 0.69, z0 + 0.72, "M_Rubber", bevel=0.006)    # handle
+    for j in range(4):                                                                                      # vent louvres
+        y = FLOOR + 0.25 + j * 0.05
+        box(WX + 0.42, WX + 0.425, y, y + 0.02, z0 + 0.2, z0 + 0.6, "M_Steel", bevel=0, segments=1)
+    box(WX + 0.42, WX + 0.423, FLOOR + 1.7, FLOOR + 1.84, z0 + 0.12, z0 + 0.4, "M_LineWhite", bevel=0, segments=1)   # label
+    box(WX + 0.42, WX + 0.424, FLOOR + 1.72, FLOOR + 1.82, z0 + 0.5, z0 + 0.6, "M_LineYellow", bevel=0, segments=1)  # hazard
+    text(f"ЩР-{k + 1}", WX + 0.424, z0 + 0.26, 0.07, "M_Steel", rot=HALF, stand=True, y=FLOOR + 1.77)
+# Vertical cable ladder from the cabinets to the wall tray.
+for zz in (1.75, 2.09):
+    box(WX + 0.06, WX + 0.11, FLOOR + 2.1, FLOOR + 3.46, zz - 0.02, zz + 0.02, "M_Galv", bevel=0.003, segments=1)
+for j in range(6):
+    y = FLOOR + 2.2 + j * 0.22
+    box(WX + 0.06, WX + 0.1, y, y + 0.025, 1.75, 2.09, "M_Galv", bevel=0, segments=1)
+for zz in (1.81, 1.87, 1.93, 1.99):
+    cyl(WX + 0.13, FLOOR + 2.1, FLOOR + 3.42, zz, 0.014, "M_Rubber", seg=8, bevel=0)
+
+
+def tray(a0, a1, along_z, y=FLOOR + 3.4):
+    """A galvanised cable tray with cables, carried by wall brackets every ~1.2 m."""
+    n = int((a1 - a0) / 1.2) + 1
+    if along_z:
+        box(WX + 0.05, WX + 0.35, y, y + 0.02, a0, a1, "M_Galv", bevel=0.003, segments=1)
+        for xx in (WX + 0.05, WX + 0.33):
+            box(xx, xx + 0.02, y, y + 0.1, a0, a1, "M_Galv", bevel=0.003, segments=1)
+        for j, xx in enumerate((WX + 0.12, WX + 0.17, WX + 0.22, WX + 0.27)):
+            pipe_z(xx, y + 0.04, a0 + 0.05, a1 - 0.05, 0.016 if j % 2 else 0.022, "M_Rubber", seg=8)
+        for k in range(n):
+            zz = a0 + 0.15 + k * (a1 - a0 - 0.3) / max(1, n - 1)
+            box(WX, WX + 0.02, y - 0.25, y + 0.05, zz - 0.03, zz + 0.03, "M_Galv", bevel=0.003, segments=1)
+            box(WX + 0.02, WX + 0.37, y - 0.05, y, zz - 0.02, zz + 0.02, "M_Galv", bevel=0.003, segments=1)
+    else:                                       # brackets only: the north tray exists (hall shell)
+        for k in range(n):
+            xx = a0 + 0.15 + k * (a1 - a0 - 0.3) / max(1, n - 1)
+            box(xx - 0.03, xx + 0.03, y - 0.25, y + 0.05, NZ, NZ + 0.02, "M_Galv", bevel=0.003, segments=1)
+            box(xx - 0.02, xx + 0.02, y - 0.05, y, NZ + 0.02, NZ + 0.37, "M_Galv", bevel=0.003, segments=1)
+
+
+tray(0.55, 8.1, True)
+tray(0.6, 13.6, False)
+# Water (blue) and compressed air (galvanised) lines: risers out of the slab in the north-west
+# corner, along the west wall to quality control, the air line also along the north wall.
+PIPES = (("M_PipeWater", 0.045, FLOOR + 2.7, 0.2), ("M_Galv", 0.032, FLOOR + 3.0, 0.32))   # clear of the booth roof
+for mat, r, y, off in PIPES:
+    px, pz = WX + off, NZ + off
+    cyl(px, FLOOR, y, pz, r, mat, seg=16, bevel=0)                                                   # riser
+    box(px - r - 0.015, px + r + 0.015, FLOOR, FLOOR + 0.02, pz - r - 0.015, pz + r + 0.015, "M_Steel", bevel=0.003, segments=1)
+    cyl(px, FLOOR + 0.9, FLOOR + 0.93, pz, r + 0.028, "M_Steel", seg=16, bevel=0)                    # flange
+    box(px - r - 0.02, px + r + 0.02, y - r - 0.02, y + r + 0.02, pz - r - 0.02, pz + r + 0.02, mat, bevel=r * 0.9)  # elbow
+    pipe_z(px, y, pz, 8.05, r, mat)                                                                   # west run
+    for zz in (3.0, 5.6, 8.05):                                                                       # flanges, end cap
+        pipe_z(px, y, zz, zz + 0.025, r + 0.025, "M_Steel")
+    if mat == "M_Galv":
+        pipe_x(y, pz, px, 13.4, r, mat)                                                               # north run
+        for xx in (4.5, 9.0, 13.4):
+            pipe_x(y, pz, xx, xx + 0.025, r + 0.025, "M_Steel")
+# Wall struts (galvanised channel) with clamps: every 1.35 m on the west run, 1.45 m on the north.
+for k in range(6):
+    z = 1.3 + k * 1.35
+    box(WX, WX + 0.04, FLOOR + 2.58, FLOOR + 3.1, z - 0.02, z + 0.02, "M_Galv", bevel=0.003, segments=1)
+    for mat, r, y, off in PIPES:
+        box(WX + 0.04, WX + off, y - 0.012, y + 0.012, z - 0.015, z + 0.015, "M_Galv", bevel=0.002, segments=1)
+        pipe_z(WX + off, y, z - 0.018, z + 0.018, r + 0.01, "M_Steel", seg=14)
+for k in range(9):
+    x = 1.4 + k * 1.45
+    if 9.85 < x < 12.85:                       # no strut through the booth; the span stays < 3 m
+        continue
+    y, r, off = FLOOR + 3.0, 0.032, 0.32
+    box(x - 0.02, x + 0.02, FLOOR + 2.88, FLOOR + 3.12, NZ, NZ + 0.04, "M_Galv", bevel=0.003, segments=1)
+    box(x - 0.015, x + 0.015, y - 0.012, y + 0.012, NZ + 0.04, NZ + off, "M_Galv", bevel=0.002, segments=1)
+    pipe_x(y, NZ + off, x - 0.018, x + 0.018, r + 0.01, "M_Steel", seg=14)
+# Service points for the stations: a water drop with a valve into a wall box, a post sign above.
+for k, zc in enumerate((3.6, 6.6)):
+    px = WX + 0.2
+    cyl(px, FLOOR + 1.45, FLOOR + 2.7, zc, 0.022, "M_PipeWater", seg=12, bevel=0)
+    box(px - 0.05, px + 0.05, FLOOR + 2.65, FLOOR + 2.75, zc - 0.05, zc + 0.05, "M_PipeWater", bevel=0.02)  # tee
+    box(px - 0.035, px + 0.035, FLOOR + 1.7, FLOOR + 1.78, zc - 0.035, zc + 0.035, "M_Steel", bevel=0.01)  # valve
+    box(px + 0.03, px + 0.17, FLOOR + 1.76, FLOOR + 1.78, zc - 0.012, zc + 0.012, "M_TailLight", bevel=0.004)  # lever
+    box(px - 0.03, px + 0.03, FLOOR + 1.42, FLOOR + 1.47, zc - 0.03, zc + 0.03, "M_Steel", bevel=0.008)  # gland into the box
+    box(WX, WX + 0.2, FLOOR + 0.95, FLOOR + 1.45, zc - 0.28, zc + 0.28, "M_Cabinet", bevel=0.01)          # service box
+    box(WX + 0.2, WX + 0.205, FLOOR + 1.0, FLOOR + 1.4, zc - 0.24, zc + 0.24, "M_Cabinet", bevel=0.003, segments=1)
+    for j, zz in enumerate((-0.12, 0.0, 0.12)):                                                         # sockets, coupling
+        box(WX + 0.205, WX + 0.24, FLOOR + 1.08, FLOOR + 1.16, zc + zz - 0.035, zc + zz + 0.035, "M_LineYellow" if j == 2 else "M_Rubber", bevel=0.008)
+    box(WX + 0.01, WX + 0.03, FLOOR + 2.0, FLOOR + 2.3, zc + 0.08, zc + 0.8, "M_Steel", bevel=0.006, segments=1)  # post sign
+    text(f"QC {2 * k + 1:02d}·{2 * k + 2:02d}", WX + 0.032, zc + 0.44, 0.12, "M_LineWhite", rot=HALF, stand=True, y=FLOOR + 2.15)
+
+# Geometry added after the static mesh was realised (basin table, services) is joined into it
+# with the same world-scale UV0 (before this, those boxes stayed loose objects in the USD).
+def _alive(o):
+    try:
+        return o.name in bpy.data.objects and o != static
+    except ReferenceError:                     # joined into «Static» earlier
+        return False
+
+
+late = [o for o in GROUPS.get("Static", []) if _alive(o)]
+if late:
+    for o in scene.objects:
+        o.select_set(o in late)
+    bpy.context.view_layer.objects.active = late[0]
+    bpy.ops.object.convert(target="MESH")
+    bpy.ops.object.join()
+    lj = bpy.context.view_layer.objects.active
+    if not lj.data.uv_layers:
+        lj.data.uv_layers.new(name="UVMap")
+    lj.data.uv_layers[0].name = "UVMap"
+    bpy.ops.object.mode_set(mode="EDIT")
+    bpy.ops.mesh.select_all(action="SELECT")
+    bpy.ops.uv.cube_project(cube_size=2.0)
+    bpy.ops.object.mode_set(mode="OBJECT")
+    GROUPS.setdefault("Props", []).append(lj)
+    print("LATE static objects", len(late))
 
 # Join the props into the static mesh (UV0 = their own texture UVs).
 props = GROUPS.get("Props", [])
@@ -1074,12 +1378,40 @@ if tree_parts:
     while len(tree_proto.data.uv_layers) > 1:
         tree_proto.data.uv_layers.remove(tree_proto.data.uv_layers[-1])
     print("PART Tree", sum(len(p.vertices) - 2 for p in tree_proto.data.polygons))
-    for k, (x, z, rot, sc) in enumerate(TREE_SPOTS):
-        e = anchor(f"anchor_tree_{k}", x, 0.0, z, heading=rot)
+
+# ----------------------------------------------------------------------------- shrubs
+# Poly Haven shrub_02 / 03 / 04 (CC0): natural shrubs, one prototype each, instanced by the app at
+# anchor_inst_<Proto>_<k> (shared geometry). shrub_04 is decimated to half.
+PROTOS = {}
+if tree_proto:
+    PROTOS["Tree"] = tree_proto
+for asset, proto, ratio in (("shrub_02", "Shrub2", None), ("shrub_03", "Shrub3", None), ("shrub_04", "Shrub4", 0.5)):
+    parts = load_asset(asset, ratio=ratio, size=512)
+    if not parts:
+        continue
+    for o in parts:
+        scene.collection.objects.link(o)
+    for o in scene.objects:
+        o.select_set(o in parts)
+    bpy.context.view_layer.objects.active = parts[0]
+    if len(parts) > 1:
+        bpy.ops.object.join()
+    ob = bpy.context.view_layer.objects.active
+    ob.name = ob.data.name = proto
+    while len(ob.data.uv_layers) > 1:
+        ob.data.uv_layers.remove(ob.data.uv_layers[-1])
+    for poly in ob.data.polygons:
+        poly.use_smooth = True
+    PROTOS[proto] = ob
+    print("PART", proto, sum(len(p.vertices) - 2 for p in ob.data.polygons))
+INSTANCES = [("Tree", x, z, rot, sc) for (x, z, rot, sc) in TREE_SPOTS] + list(SHRUB_SPOTS)
+for k, (proto, x, z, rot, sc) in enumerate(INSTANCES):
+    if proto in PROTOS:
+        e = anchor(f"anchor_inst_{proto}_{k}", x, 0.0, z, heading=rot)
         e.scale = (sc, sc, sc)
 
 # Tiled ground materials (app maps them in world metres on UV0).
-for mat, folder, tile in (("M_Floor", "smooth_concrete_floor", 2.0), ("M_Asphalt", "clean_asphalt", 2.0)):
+for mat, folder, tile in (("M_Asphalt", "clean_asphalt", 2.0),):
     base = os.path.join(SRC, folder, f"{folder}_diff_1k.jpg")
     if os.path.exists(base):
         USED_ASSETS.append(folder)
@@ -1107,7 +1439,7 @@ truck_body.parent = truck_root
 # props, people and foliage still occlude (they are in the bake scene) but their own lightmap UVs
 # point at a white corner of the atlas, so thousands of tiny islands never starve the floor.
 NO_ATLAS = {"M_Foliage", "M_Bark", "M_Coat", "M_Vest", "M_Trousers", "M_Skin", "M_Hair", "M_Lamp",
-            "M_Screen", "M_GlassClear", "M_Toolbox", "M_Workwear", "M_Rubber", "M_Ceramic"} | set(MATERIAL_MAP) - {"M_Floor", "M_Asphalt"}
+            "M_Screen", "M_GlassClear", "M_Toolbox", "M_Workwear", "M_Rubber", "M_Ceramic"} | {k for k in MATERIAL_MAP if not k.startswith("M_")}
 me = static.data
 me.uv_layers.new(name="Lightmap")
 me.uv_layers.active = me.uv_layers["Lightmap"]
@@ -1145,13 +1477,209 @@ _area = sum(abs(sum((uv[p.loop_indices[i]].uv.x * uv[p.loop_indices[(i + 1) % le
 print("ATLAS uv bounds", min(v.x for v in _u), min(v.y for v in _u), max(v.x for v in _u), max(v.y for v in _u), "coverage", round(_area, 3))
 print("ATLAS faces", sum(1 for p in me.polygons if p.material_index in atlas_index), "of", len(me.polygons))
 
+def place_instances():
+    """Linked copies of the prototypes at their instance spots (they occlude in bakes and shots);
+    the prototypes themselves sit at the origin and are hidden."""
+    out = []
+    for ob in PROTOS.values():
+        ob.hide_render = True
+    for proto, x, z, rot, sc in INSTANCES:
+        if proto not in PROTOS:
+            continue
+        c = PROTOS[proto].copy()
+        c.hide_render = False
+        c.matrix_world = Matrix.Translation(S(x, 0, z)) @ Matrix.Rotation(rot, 4, "Z") @ Matrix.Scale(sc, 4)
+        scene.collection.objects.link(c)
+        out.append(c)
+    return out
+
+
+def apply_app_palette():
+    """The app's PBR values (ShippingAtelierScene.swift specs) written into the Blender materials,
+    so the USD preview surfaces carry them: RealityKit reads the same kit without a name map,
+    and Cycles shots use the same values as SceneKit."""
+    import re
+    swift = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "Salini",
+                              "ShippingAtelierScene.swift")).read()
+    to_lin = lambda c: (c / 255) / 12.92 if c / 255 <= 0.04045 else ((c / 255 + 0.055) / 1.055) ** 2.4
+    for name, hexc, rough, metal in re.findall(r'"(M_\w+)": Spec\(color: 0x([0-9A-Fa-f]{6}), rough: ([\d.]+)(?:, metal: ([\d.]+))?', swift):
+        if name not in MATS:
+            continue
+        v = int(hexc, 16)
+        b = MATS[name].node_tree.nodes["Principled BSDF"]
+        b.inputs["Base Color"].default_value = (to_lin(v >> 16 & 255), to_lin(v >> 8 & 255), to_lin(v & 255), 1)
+        b.inputs["Roughness"].default_value = float(rough)
+        b.inputs["Metallic"].default_value = float(metal or 0)
+    lamp = MATS["M_Lamp"].node_tree.nodes["Principled BSDF"]
+    lamp.inputs["Emission Color"].default_value = (1.0, 0.95, 0.85, 1)
+    lamp.inputs["Emission Strength"].default_value = 0.0
+    surface_textures(swift)
+
+
+# ----------------------------------------------------------------------------- surface textures
+# Fine, realistic surface variation instead of constant fills: albedo (the app's colour ×
+# subtle variation), roughness (the app's value ± variation) and normal maps per surface kind.
+# Tileable over one UV0 unit = 2 m (cube projection). Same files for SceneKit and RealityKit.
+SURFACE_KIND = {
+    "M_Floor": "concrete_polished", "M_Plinth": "concrete", "M_Slab": "concrete", "M_Paving": "concrete",
+    "M_Curb": "concrete", "M_Section": "concrete", "M_Panel": "panel_ribs", "M_Facade": "sheet_ribs_v",
+    "M_Trailer": "sheet_ribs_v", "M_Steel": "paint", "M_Coping": "paint", "M_Forklift": "paint",
+    "M_TruckCab": "paint", "M_RackUpright": "paint", "M_RackBeam": "paint", "M_Bollard": "paint",
+    "M_BoothFrame": "paint", "M_Chassis": "paint", "M_Desk": "paint", "M_TrailerRoof": "paint",
+    "M_Leveler": "brushed", "M_Frame": "brushed", "M_Galv": "brushed", "M_Rubber": "rubber", "M_Mat": "rubber",
+    "M_Curtain": "fabric", "M_Roof": "gravel", "M_Timber": "timber", "M_Carton": "fibre", "M_Grass": "grass",
+    "M_LineWhite": "paint", "M_LineYellow": "paint", "M_Cabinet": "paint", "M_PipeWater": "paint",
+}
+
+
+def surface_textures(swift):
+    import re
+    import numpy as np
+    N = 512
+    rng = np.random.default_rng(7)
+    fy, fx = np.meshgrid(np.fft.fftfreq(N), np.fft.fftfreq(N), indexing="ij")
+    f = np.sqrt(fx * fx + fy * fy) + 1e-6
+
+    def fbm(beta, lo=0.0, hi=1.0, aniso=(1.0, 1.0)):
+        """Seamless 1/f^beta noise in [-1, 1] (periodic by construction); aniso stretches it."""
+        ff = np.sqrt((fx * aniso[0]) ** 2 + (fy * aniso[1]) ** 2) + 1e-6
+        spec = np.fft.fft2(rng.standard_normal((N, N))) / ff ** beta
+        spec[(ff < lo) | (ff > hi)] = 0
+        n = np.real(np.fft.ifft2(spec))
+        n -= n.mean()
+        return n / (np.abs(n).max() + 1e-9)
+
+    def normal_from_height(h, strength):
+        gx = (np.roll(h, -1, 1) - np.roll(h, 1, 1)) * strength
+        gy = (np.roll(h, -1, 0) - np.roll(h, 1, 0)) * strength
+        n = np.stack([-gx, gy, np.ones_like(h)], 2)
+        n /= np.linalg.norm(n, axis=2, keepdims=True)
+        return n * 0.5 + 0.5
+
+    def scan(name):
+        def load(kind):
+            img = bpy.data.images.load(os.path.join(SRC, "smooth_concrete_floor", f"smooth_concrete_floor_{kind}_1k.jpg"))
+            img.scale(N, N)
+            a = np.empty(N * N * 4, dtype=np.float32)
+            img.pixels.foreach_get(a)
+            bpy.data.images.remove(img)
+            return a.reshape(N, N, 4)[::-1, :, :3]
+        return load(name)
+
+    concrete_diff = scan("diff").mean(2)
+    concrete_diff = (concrete_diff - concrete_diff.mean()) / (np.abs(concrete_diff - concrete_diff.mean()).max() + 1e-6)
+    concrete_rough = scan("rough").mean(2)
+    concrete_rough = (concrete_rough - concrete_rough.mean()) / (np.abs(concrete_rough - concrete_rough.mean()).max() + 1e-6)
+    concrete_nor = scan("nor_gl")
+    yy = np.arange(N)[:, None] / N
+    xx = np.arange(N)[None, :] / N
+
+    def ribs(coord, period_px):
+        u = (coord * N) % period_px / period_px
+        return np.clip(np.minimum(u, 1 - u) * 6, 0, 1)                                     # trapezoid
+
+    specs = {n: (int(c, 16), float(r)) for n, c, r in
+             re.findall(r'"(M_\w+)": Spec\(color: 0x([0-9A-Fa-f]{6}), rough: ([\d.]+)', swift)}
+    for name, kind in SURFACE_KIND.items():
+        if name not in MATS or name not in specs:
+            continue
+        hexc, rough = specs[name]
+        base = np.array([(hexc >> 16 & 255), (hexc >> 8 & 255), (hexc & 255)], np.float32) / 255
+        av, rv, h, ns = np.zeros((N, N)), np.zeros((N, N)), np.zeros((N, N)), 0.0
+        if kind.startswith("concrete"):
+            av, rv = 0.07 * concrete_diff + 0.03 * fbm(1.4, 0.002, 0.05), 0.10 * concrete_rough
+            nrm = concrete_nor
+        else:
+            nrm = None
+            if kind == "paint":
+                av, rv, h, ns = 0.025 * fbm(1.6, 0.002, 0.08), 0.06 * fbm(1.5, 0.002, 0.06), fbm(0.8, 0.08, 0.5), 0.35
+            elif kind == "panel_ribs":
+                av, rv, h, ns = 0.02 * fbm(1.6, 0.002, 0.08), 0.05 * fbm(1.5, 0.002, 0.06), ribs(yy, 25.6) + 0.15 * fbm(0.8, 0.08, 0.5), 1.6
+            elif kind == "sheet_ribs_v":
+                av, rv, h, ns = 0.03 * fbm(1.6, 0.002, 0.08), 0.06 * fbm(1.5, 0.002, 0.06), ribs(xx, 32.0) + 0.1 * fbm(0.8, 0.08, 0.5), 2.2
+            elif kind == "brushed":
+                av, rv, h, ns = 0.03 * fbm(1.2, 0.002, 0.5, (0.04, 1.0)), 0.08 * fbm(1.0, 0.002, 0.5, (0.04, 1.0)), fbm(1.0, 0.05, 0.5, (0.04, 1.0)), 0.25
+            elif kind in ("rubber", "fabric"):
+                av, rv, h, ns = 0.05 * fbm(1.0, 0.01, 0.5), 0.05 * fbm(1.2, 0.002, 0.1), fbm(0.6, 0.1, 0.5), 0.6 if kind == "rubber" else 0.9
+            elif kind == "gravel":
+                av, rv, h, ns = 0.18 * fbm(0.4, 0.05, 0.5), 0.03 * fbm(1.0, 0.002, 0.1), fbm(0.5, 0.05, 0.5), 2.5
+            elif kind in ("timber", "fibre"):
+                st = (1.0, 0.03) if kind == "timber" else (1.0, 1.0)
+                av, rv, h, ns = 0.10 * fbm(1.1, 0.002, 0.5, st), 0.05 * fbm(1.2, 0.002, 0.1), fbm(0.9, 0.02, 0.5, st), 0.5
+            elif kind == "grass":
+                av, rv, h, ns = 0.22 * fbm(1.2, 0.004, 0.4), 0.02 * fbm(1.0, 0.002, 0.1), fbm(0.6, 0.05, 0.5), 1.0
+            nrm = normal_from_height(h, ns)
+        albedo = np.clip(base[None, None, :] * (1 + av[:, :, None]), 0, 1)
+        rmap = np.clip(rough + rv, 0.04, 1.0)
+        entry = {"asset": "generated", "kind": kind}
+        for suffix, data in (("albedo", albedo), ("rough", np.repeat(rmap[:, :, None], 3, 2)), ("nor", nrm)):
+            fname = f"gen_{name[2:].lower()}_{suffix}.jpg"
+            img = bpy.data.images.new(fname, N, N, float_buffer=False, is_data=True)
+            rgba = np.concatenate([data[::-1].astype(np.float32), np.ones((N, N, 1), np.float32)], 2)
+            img.pixels.foreach_set(rgba.ravel())
+            img.filepath_raw = os.path.join(TEX, fname)
+            img.file_format = "JPEG"
+            img.save()
+            bpy.data.images.remove(img)
+            entry[{"albedo": "base", "rough": "rough", "nor": "normal"}[suffix]] = "textures/" + fname
+        MATERIAL_MAP[name] = entry
+        # The Blender material references the same files (USD → RealityKit, Cycles bakes).
+        nt = MATS[name].node_tree
+        b = nt.nodes["Principled BSDF"]
+        for n in [n for n in nt.nodes if n.type in ("TEX_IMAGE", "NORMAL_MAP")]:
+            nt.nodes.remove(n)
+        t = nt.nodes.new("ShaderNodeTexImage")
+        t.image = bpy.data.images.load(os.path.join(OUT, entry["base"]), check_existing=True)
+        nt.links.new(t.outputs["Color"], b.inputs["Base Color"])
+        t = nt.nodes.new("ShaderNodeTexImage")
+        t.image = bpy.data.images.load(os.path.join(OUT, entry["rough"]), check_existing=True)
+        t.image.colorspace_settings.name = "Non-Color"
+        nt.links.new(t.outputs["Color"], b.inputs["Roughness"])
+        t = nt.nodes.new("ShaderNodeTexImage")
+        t.image = bpy.data.images.load(os.path.join(OUT, entry["normal"]), check_existing=True)
+        t.image.colorspace_settings.name = "Non-Color"
+        nm = nt.nodes.new("ShaderNodeNormalMap")
+        nt.links.new(t.outputs["Color"], nm.inputs["Color"])
+        nt.links.new(nm.outputs["Normal"], b.inputs["Normal"])
+    USED_ASSETS.append("smooth_concrete_floor")
+    print("SURFACES", len([k for k in MATERIAL_MAP if k.startswith("M_")]))
+
+
+apply_app_palette()
 os.makedirs(OUT, exist_ok=True)
 LIGHTMAPPED = sorted(static.material_slots[i].material.name for i in atlas_index)
 GI_SAMPLES = int(argv[argv.index("--gi-samples") + 1]) if "--gi-samples" in argv else 1024
 GI_RANGE = 4.0                                   # encoded irradiance range (see the app's decoder)
 SUN_TO = S(0.6, 0.78, -0.4).normalized()        # same sun as the app (ShippingAtelierScene.setupLights)
-SUN_STRENGTH = 2.3 * math.pi                     # app sun 2300 ≈ 2.3 × the normalised sky
-NIGHT_SKY = (0.035 * 0.62, 0.035 * 0.74, 0.035 * 1.0)
+# Soft architectural daylight (diagnostic C): neutral sky ≈ sun, 3° sun disc. Must match the app
+# (ShippingAtelierScene: sky 1.25, sun 1250, PCF penumbra).
+SKY_STRENGTH = 1.25
+SKY_DESAT = 0.85
+SUN_STRENGTH = 1.25 * math.pi
+SUN_ANGLE = 3.0
+NIGHT_SKY = tuple(v / SKY_STRENGTH for v in (0.035 * 0.62, 0.035 * 0.74, 0.035 * 1.0))
+
+
+def night_spots():
+    """The fixtures' light cones (the same in the night bake and the night probe panoramas)."""
+    spots = []
+    for e in GROUPS.get("Anchors", []):
+        if not e.name.startswith("anchor_light_"):
+            continue
+        kind = e.name.split("_")[2]
+        power = {"qc": 120, "wall": 600, "pole": 900}.get(kind, 300)
+        sp = bpy.data.objects.new("bake_" + e.name, bpy.data.lights.new("bake_" + e.name, "SPOT"))
+        sp.data.energy = power
+        sp.data.spot_size = math.radians(110 if kind != "qc" else 120)
+        sp.data.spot_blend = 0.7
+        sp.data.color = (1.0, 0.86, 0.68)
+        sp.data.shadow_soft_size = 0.15
+        sp.location = e.location
+        aim = Vector((0, 0, -1)) if kind != "wall" else (S(7, FLOOR, 10) - e.location).normalized()
+        sp.rotation_euler = aim.to_track_quat("-Z", "Y").to_euler()
+        scene.collection.objects.link(sp)
+        spots.append(sp)
+    return spots
 
 
 def bake_gi():
@@ -1172,6 +1700,8 @@ def bake_gi():
     clamp = 6.0 * mean                                   # the HDRI sun disc is replaced by our sun
     scale = np.minimum(1.0, clamp / np.maximum(lum, 1e-6))
     px[:, :3] *= scale[:, None] / mean
+    l2 = px[:, :3] @ np.array([0.2126, 0.7152, 0.0722], dtype=np.float32)
+    px[:, :3] = px[:, :3] * (1 - SKY_DESAT) + l2[:, None] * SKY_DESAT      # neutral sky, no colour cast
     sky = bpy.data.images.new("sky_clamped", w, h, float_buffer=True, is_data=True)
     sky.pixels.foreach_set(px.ravel())
     sky.pack()
@@ -1195,26 +1725,10 @@ def bake_gi():
     lamp = MATS["M_Lamp"].node_tree.nodes["Principled BSDF"]
     sun = bpy.data.objects.new("sun", bpy.data.lights.new("sun", "SUN"))
     sun.data.energy = SUN_STRENGTH
-    sun.data.angle = math.radians(0.6)
+    sun.data.angle = math.radians(SUN_ANGLE)
     sun.rotation_euler = (-SUN_TO).to_track_quat("-Z", "Y").to_euler()
     scene.collection.objects.link(sun)
-    spots = []
-    for e in GROUPS.get("Anchors", []):
-        if not e.name.startswith("anchor_light_"):
-            continue
-        kind = e.name.split("_")[2]
-        power = {"qc": 120, "wall": 600, "pole": 900}.get(kind, 300)
-        sp = bpy.data.objects.new("bake_" + e.name, bpy.data.lights.new("bake_" + e.name, "SPOT"))
-        sp.data.energy = power
-        sp.data.spot_size = math.radians(110 if kind != "qc" else 120)
-        sp.data.spot_blend = 0.7
-        sp.data.color = (1.0, 0.86, 0.68)
-        sp.data.shadow_soft_size = 0.15
-        sp.location = e.location
-        aim = Vector((0, 0, -1)) if kind != "wall" else (S(7, FLOOR, 10) - e.location).normalized()
-        sp.rotation_euler = aim.to_track_quat("-Z", "Y").to_euler()
-        scene.collection.objects.link(sp)
-        spots.append(sp)
+    spots = night_spots()
 
     def bake(passes):
         img = bpy.data.images.new("gi", SIZE, SIZE, float_buffer=True, is_data=True)
@@ -1233,7 +1747,7 @@ def bake_gi():
         img.pixels.foreach_get(out)
         for slot in static.material_slots:
             nt = slot.material.node_tree
-            for n in [n for n in nt.nodes if n.type == "TEX_IMAGE"]:
+            for n in [n for n in nt.nodes if n.type == "TEX_IMAGE" and n.image and n.image.name.split(".")[0] in ("atelier_ao", "gi")]:
                 nt.nodes.remove(n)
         bpy.data.images.remove(img)
         return out.reshape(SIZE, SIZE, 4)
@@ -1245,7 +1759,7 @@ def bake_gi():
     for sp in spots:
         sp.hide_render = True
     sun.hide_render = True
-    world(1.0)
+    world(SKY_STRENGTH)
     sky_light = bake({"DIRECT", "INDIRECT"})
     sun.hide_render = False
     world(0.0)
@@ -1318,15 +1832,7 @@ if BAKE:
     world.light_settings.distance = 2.5
     for o in (body, carriage, truck_body, batch_ob):
         o.hide_render = True
-    bake_only = []
-    if tree_proto:                      # the trees occlude in the bake at their real places
-        tree_proto.hide_render = True
-        for (x, z, rot, sc) in TREE_SPOTS:
-            c = tree_proto.copy()
-            c.hide_render = False
-            c.matrix_world = Matrix.Translation(S(x, 0, z)) @ Matrix.Rotation(rot, 4, "Z") @ Matrix.Scale(sc, 4)
-            scene.collection.objects.link(c)
-            bake_only.append(c)
+    bake_only = place_instances()
     img = bpy.data.images.new("atelier_ao", SIZE, SIZE, float_buffer=False, is_data=True)
     img.generated_color = (1, 1, 1, 1)          # unbaked texels (and the props' corner) = no occlusion
     for slot in static.material_slots:
@@ -1346,13 +1852,13 @@ if BAKE:
     img.save_render(os.path.join(OUT, "atelier_ao.png"), scene=scene)
     for slot in static.material_slots:
         nt = slot.material.node_tree
-        for n in [n for n in nt.nodes if n.type == "TEX_IMAGE"]:
+        for n in [n for n in nt.nodes if n.type == "TEX_IMAGE" and n.image and n.image.name.split(".")[0] in ("atelier_ao", "gi")]:
             nt.nodes.remove(n)
     bake_gi()
     for o in bake_only:
         bpy.data.objects.remove(o, do_unlink=True)
-    if tree_proto:
-        tree_proto.hide_render = False
+    for ob in PROTOS.values():
+        ob.hide_render = False
     for o in (body, carriage, truck_body, batch_ob):
         o.hide_render = False
 
@@ -1375,11 +1881,49 @@ for o in (static, props_ob):
     bpy.context.view_layer.objects.active = o
     bpy.ops.object.material_slot_remove_unused()
 
+# Inside / outside split (same lightmap atlas, same materials): RealityKit lights the hall with
+# a local environment probe and only the outside with the sky; a sky receiver on one mesh that
+# spans both would suppress the hall probe (measured).
+HALL_MIN, HALL_MAX = Vector((-0.2, -20.6, FLOOR - 0.05)), Vector((14.45, 0.2, 99.0))   # Blender coords
+
+
+def split_outside(ob, outside_name):
+    import bmesh as _bm
+    me = ob.data
+    bm = _bm.new()
+    bm.from_mesh(me)
+    for f in bm.faces:
+        c = f.calc_center_median()
+        inside = HALL_MIN.x <= c.x <= HALL_MAX.x and HALL_MIN.y <= c.y <= HALL_MAX.y and c.z >= HALL_MIN.z
+        f.select = not inside
+    bm.to_mesh(me)
+    bm.free()
+    for o in scene.objects:
+        o.select_set(o == ob)
+    bpy.context.view_layer.objects.active = ob
+    bpy.ops.object.mode_set(mode="EDIT")
+    bpy.ops.mesh.separate(type="SELECTED")
+    bpy.ops.object.mode_set(mode="OBJECT")
+    out = next((o for o in bpy.context.selected_objects if o != ob), None)
+    if out:
+        out.name = out.data.name = outside_name
+        for o in (ob, out):
+            for o2 in scene.objects:
+                o2.select_set(o2 == o)
+            bpy.context.view_layer.objects.active = o
+            bpy.ops.object.material_slot_remove_unused()
+    return out
+
+
+split_outside(static, "StaticOutside")
+split_outside(props_ob, "StaticPropsOutside")
+
 usd = os.path.join(OUT, "atelier_kit.usdc")
 bpy.ops.wm.usd_export(
     filepath=usd, selected_objects_only=False, export_uvmaps=True, rename_uvmaps=True,
     export_materials=True, generate_preview_surface=True, export_normals=True,
     convert_orientation=True, export_global_forward_selection="NEGATIVE_Z", export_global_up_selection="Y",
+    export_textures_mode="KEEP", relative_paths=True,
     export_lights=False, export_cameras=False, triangulate_meshes=False)
 import json
 json.dump({"materials": MATERIAL_MAP, "sources": sorted(set(USED_ASSETS)), "lightmapped": LIGHTMAPPED,
@@ -1418,7 +1962,7 @@ for asset in sorted(set(USED_ASSETS)):
             "license": m.get("license"), "rights": "Salini — rights retained (not CC0); product visualisation",
             "dimensions_mm": m.get("dimensions_mm"),
             "source_files": [{"url": f.get("source_path"), "sha256": f.get("sha256")} for f in m.get("files", [])],
-            "use": "four basins on the basin inspection table, normalised to 540 mm, joined into atelier_kit.usdc",
+            "use": "three basins on the basin inspection table, normalised to 540 mm, joined into atelier_kit.usdc",
         })
         continue
     shipped.append({
@@ -1438,3 +1982,248 @@ tris = sum(len(p.vertices) - 2 for o in (static, props_ob, body, carriage, truck
 for o in (static, props_ob, body, carriage, truck_body, batch_ob):
     print("PART", o.name, sum(len(p.vertices) - 2 for p in o.data.polygons))
 print("KIT", usd, "triangles", tris, "static materials", [s.material.name for s in static.material_slots])
+
+
+# ----------------------------------------------------------------------------- diagnostic shots
+def shot(out_dir):
+    """Path-traced reference of the SAME kit, camera and pose as the app harness (t = 20 s):
+      B — the app's light (clamped HDRI, sun 2.3 × sky, 0.6° disc) and the app's PBR values;
+      C — proposed light (neutral sky, soft 3° sun, sun ≈ 1.25 × sky).
+    Material values are parsed from ShippingAtelierScene.swift so both renderers share them."""
+    import numpy as np
+    os.makedirs(out_dir, exist_ok=True)
+    apply_app_palette()
+    # Downloaded props: their resized base colour / ARM maps as in the app.
+    for m in bpy.data.materials:
+        e = MATERIAL_MAP.get(m.name)
+        if not e or not m.use_nodes or m.name.startswith("M_"):
+            continue
+        nt = m.node_tree
+        b = next((n for n in nt.nodes if n.type == "BSDF_PRINCIPLED"), None)
+        if not b:
+            continue
+        if e.get("base"):
+            t = nt.nodes.new("ShaderNodeTexImage")
+            t.image = bpy.data.images.load(os.path.join(OUT, e["base"]), check_existing=True)
+            nt.links.new(t.outputs["Color"], b.inputs["Base Color"])
+        if e.get("arm"):
+            t = nt.nodes.new("ShaderNodeTexImage")
+            t.image = bpy.data.images.load(os.path.join(OUT, e["arm"]), check_existing=True)
+            t.image.colorspace_settings.name = "Non-Color"
+            sep = nt.nodes.new("ShaderNodeSeparateColor")
+            nt.links.new(t.outputs["Color"], sep.inputs["Color"])
+            nt.links.new(sep.outputs["Green"], b.inputs["Roughness"])
+            nt.links.new(sep.outputs["Blue"], b.inputs["Metallic"])
+    # Pose at t = 20 s (between keys 19 and 21 of AtelierTimeline).
+    hx, hz, heading, fork = 10.75, 13.3, -math.pi / 4, 0.32
+    root.location = S(hx, FLOOR, hz)
+    root.rotation_euler = (0, 0, heading)
+    carriage.location = (0, 0, fork)
+    fwd = Vector((math.cos(heading), 0, -math.sin(heading)))
+    bx, bz = hx + fwd.x * 0.55, hz + fwd.z * 0.55
+    batch_ob.location = S(bx, FLOOR + max(0, fork - 0.05), bz)
+    batch_ob.rotation_euler = (0, 0, heading - math.pi)
+    place_instances()
+    # Catalogue products at their anchors, scaled to their catalogue length.
+    lengths = {"Alda-160-70": 1.615, "Mona-170": 1.70, "Luce": 1.70, "Noemi-170": 1.705, "Sofia-150-2015-Corona-fbx": 1.50}
+    models = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "Salini", "CatalogMedia", "models")
+    for e in GROUPS.get("Anchors", []):
+        if not e.name.startswith("anchor_product_"):
+            continue
+        file = e.name[len("anchor_product_"):]
+        before = set(bpy.data.objects)
+        bpy.ops.wm.usd_import(filepath=os.path.join(models, file + ".usdz"))
+        new = [o for o in bpy.data.objects if o not in before and o.type == "MESH"]
+        if not new:
+            continue
+        pts = [o.matrix_world @ Vector(c) for o in new for c in o.bound_box]
+        lo, hi = Vector(map(min, *pts)), Vector(map(max, *pts))
+        k = lengths.get(file, 1.7) / max(hi.x - lo.x, hi.y - lo.y)
+        rot = Matrix.Rotation(math.pi / 2, 4, "Z") if (hi.y - lo.y) > (hi.x - lo.x) else Matrix.Identity(4)
+        m = Matrix.Translation(e.location) @ rot @ Matrix.Scale(k, 4) @ Matrix.Translation(-Vector(((lo.x + hi.x) / 2, (lo.y + hi.y) / 2, lo.z)))
+        white = bpy.data.materials.new("gelcoat")
+        white.use_nodes = True
+        wb = white.node_tree.nodes["Principled BSDF"]
+        wb.inputs["Base Color"].default_value = (0.9, 0.89, 0.86, 1)
+        wb.inputs["Roughness"].default_value = 0.22
+        for o in new:
+            o.matrix_world = m @ o.matrix_world
+            o.data.materials.clear()
+            o.data.materials.append(white)
+    # Camera: true isometric orthographic, as AtelierCamera (focus, scale 15.5 = half height).
+    focus = S(12.5, FLOOR, 11.0)
+    d = S(1, 1, 1).normalized()
+    cam = bpy.data.objects.new("cam", bpy.data.cameras.new("cam"))
+    cam.data.type = "ORTHO"
+    cam.data.sensor_fit = "VERTICAL"
+    cam.data.ortho_scale = 31.0
+    cam.data.clip_end = 400
+    cam.location = focus + d * 140
+    cam.rotation_euler = (-d).to_track_quat("-Z", "Y").to_euler()
+    scene.collection.objects.link(cam)
+    scene.camera = cam
+    W, H = (int(v) for v in (argv[argv.index("--shot-size") + 1].split("x") if "--shot-size" in argv else ("390", "844")))
+    scene.render.resolution_x, scene.render.resolution_y = W, H
+    scene.render.engine = "CYCLES"
+    prefs = bpy.context.preferences.addons["cycles"].preferences
+    try:
+        prefs.compute_device_type = "METAL"
+        prefs.get_devices()
+        for dv in prefs.devices:
+            dv.use = True
+        scene.cycles.device = "GPU"
+    except Exception:
+        pass
+    scene.cycles.samples = int(argv[argv.index("--shot-samples") + 1]) if "--shot-samples" in argv else 64
+    scene.cycles.use_denoising = True
+    scene.render.film_transparent = True
+    scene.render.image_settings.file_format = "PNG"
+    scene.render.image_settings.color_mode = "RGBA"
+    scene.render.image_settings.color_depth = "8"
+    for vt in ("Khronos PBR Neutral", "PBR Neutral", "Standard"):
+        try:
+            scene.view_settings.view_transform = vt
+            break
+        except TypeError:
+            continue
+    # Sky image (clamped sun disc, normalised to mean 1), optionally desaturated.
+    src = bpy.data.images.load(os.path.join(SRC, "factory_yard", "factory_yard_1k.hdr"))
+    w, h = src.size
+    px = np.empty(w * h * 4, dtype=np.float32)
+    src.pixels.foreach_get(px)
+    px = px.reshape(-1, 4)
+    lum = px[:, :3] @ np.array([0.2126, 0.7152, 0.0722], dtype=np.float32)
+    mean = float(lum.mean())
+    px[:, :3] *= (np.minimum(1.0, 6 * mean / np.maximum(lum, 1e-6)) / mean)[:, None]
+
+    def sky(desat):
+        q = px.copy()
+        l2 = q[:, :3] @ np.array([0.2126, 0.7152, 0.0722], dtype=np.float32)
+        q[:, :3] = q[:, :3] * (1 - desat) + l2[:, None] * desat
+        img = bpy.data.images.new(f"sky{desat}", w, h, float_buffer=True, is_data=True)
+        img.pixels.foreach_set(q.ravel())
+        img.pack()
+        return img
+
+    def world(img, strength):
+        wd = bpy.data.worlds.new("shot")
+        wd.use_nodes = True
+        nt = wd.node_tree
+        env = nt.nodes.new("ShaderNodeTexEnvironment")
+        env.image = img
+        nt.links.new(env.outputs["Color"], nt.nodes["Background"].inputs["Color"])
+        nt.nodes["Background"].inputs["Strength"].default_value = strength
+        scene.world = wd
+
+    sun = bpy.data.objects.new("sun", bpy.data.lights.new("sun", "SUN"))
+    sun.rotation_euler = (-SUN_TO).to_track_quat("-Z", "Y").to_euler()
+    scene.collection.objects.link(sun)
+    variants = {
+        "B-cycles-app-light": dict(desat=0.0, sky=1.0, sun=2.3, angle=0.6, exposure=-0.85, color=(1.0, 0.95, 0.87)),
+        "C-cycles-proposed": dict(desat=SKY_DESAT, sky=SKY_STRENGTH, sun=SUN_STRENGTH / math.pi, angle=SUN_ANGLE,
+                                  exposure=-0.55, color=(1.0, 0.98, 0.95)),
+    }
+    only = argv[argv.index("--shot-only") + 1] if "--shot-only" in argv else ""
+    for name, v in variants.items():
+        if only and only not in name:
+            continue
+        world(sky(v["desat"]), v["sky"])
+        sun.data.energy = v["sun"] * math.pi
+        sun.data.angle = math.radians(v["angle"])
+        sun.data.color = v["color"]
+        scene.view_settings.exposure = v["exposure"]
+        scene.render.filepath = os.path.join(out_dir, name + ".png")
+        bpy.ops.render.render(write_still=True)
+        print("SHOT", name, scene.view_settings.view_transform)
+
+
+if "--shot" in argv:
+    shot(os.path.abspath(argv[argv.index("--shot") + 1]))
+
+
+def probe_panoramas(out_dir):
+    """Equirectangular Cycles panoramas of the baked-lit day scene from the hall and dock probe
+    centres: local environment probes (RealityKit VirtualEnvironmentProbeComponent, parallax box).
+    Movers are hidden (they are dynamic); trees/shrubs and props are in. Radiance .hdr, linear."""
+    import numpy as np
+    place_instances()
+    for o in (body, carriage, truck_body, batch_ob):
+        o.hide_render = True
+    scene.render.engine = "CYCLES"
+    prefs = bpy.context.preferences.addons["cycles"].preferences
+    try:
+        prefs.compute_device_type = "METAL"
+        prefs.get_devices()
+        for dv in prefs.devices:
+            dv.use = True
+        scene.cycles.device = "GPU"
+    except Exception:
+        pass
+    scene.cycles.samples = 96
+    scene.cycles.use_denoising = True
+    scene.render.film_transparent = False
+    scene.view_settings.view_transform = "Standard"
+    scene.view_settings.exposure = 0
+    src = bpy.data.images.load(os.path.join(SRC, "factory_yard", "factory_yard_1k.hdr"))
+    w, h = src.size
+    px = np.empty(w * h * 4, dtype=np.float32)
+    src.pixels.foreach_get(px)
+    px = px.reshape(-1, 4)
+    lum = px[:, :3] @ np.array([0.2126, 0.7152, 0.0722], dtype=np.float32)
+    mean = float(lum.mean())
+    px[:, :3] *= (np.minimum(1.0, 6 * mean / np.maximum(lum, 1e-6)) / mean)[:, None]
+    l2 = px[:, :3] @ np.array([0.2126, 0.7152, 0.0722], dtype=np.float32)
+    px[:, :3] = px[:, :3] * (1 - SKY_DESAT) + l2[:, None] * SKY_DESAT
+    sky = bpy.data.images.new("probe_sky", w, h, float_buffer=True, is_data=True)
+    sky.pixels.foreach_set(px.ravel())
+    sky.pack()
+    wd = bpy.data.worlds.new("probe")
+    wd.use_nodes = True
+    env = wd.node_tree.nodes.new("ShaderNodeTexEnvironment")
+    env.image = sky
+    wd.node_tree.links.new(env.outputs["Color"], wd.node_tree.nodes["Background"].inputs["Color"])
+    wd.node_tree.nodes["Background"].inputs["Strength"].default_value = SKY_STRENGTH
+    scene.world = wd
+    sun = bpy.data.objects.new("sun", bpy.data.lights.new("sun", "SUN"))
+    sun.data.energy = SUN_STRENGTH
+    sun.data.angle = math.radians(SUN_ANGLE)
+    sun.rotation_euler = (-SUN_TO).to_track_quat("-Z", "Y").to_euler()
+    scene.collection.objects.link(sun)
+    cam = bpy.data.objects.new("pano", bpy.data.cameras.new("pano"))
+    cam.data.type = "PANO"
+    cam.data.panorama_type = "EQUIRECTANGULAR"
+    scene.collection.objects.link(cam)
+    scene.camera = cam
+    scene.render.resolution_x, scene.render.resolution_y = 1024, 512
+    scene.render.image_settings.file_format = "HDR"
+    scene.render.image_settings.color_depth = "32"
+    def render(suffix):
+        for name, (x, y, z) in (("probe_hall", (7.0, FLOOR + 1.6, 10.0)), ("probe_dock", (21.0, 2.0, 13.5))):
+            cam.location = S(x, y, z)
+            cam.rotation_euler = (math.pi / 2, 0, -math.pi / 2)    # +X centre, Z up (equirect convention)
+            scene.render.filepath = os.path.join(out_dir, name + suffix + ".hdr")
+            bpy.ops.render.render(write_still=True)
+            print("PROBE", name + suffix)
+
+    render("")
+    # Night: the same light as the night bake — dim tinted sky, lit fixtures and their spots, no
+    # sun (the app's dim moon is live). RealityKit swaps these in with the night lightmap.
+    sun.hide_render = True
+    tint = wd.node_tree.nodes.new("ShaderNodeMix")
+    tint.data_type = "RGBA"
+    tint.blend_type = "MULTIPLY"
+    tint.inputs["Factor"].default_value = 1.0
+    tint.inputs[7].default_value = (*[v * SKY_STRENGTH for v in NIGHT_SKY], 1)
+    wd.node_tree.links.new(env.outputs["Color"], tint.inputs[6])
+    wd.node_tree.links.new(tint.outputs[2], wd.node_tree.nodes["Background"].inputs["Color"])
+    wd.node_tree.nodes["Background"].inputs["Strength"].default_value = 1.0
+    lamp = MATS["M_Lamp"].node_tree.nodes["Principled BSDF"]
+    lamp.inputs["Emission Color"].default_value = (1.0, 0.92, 0.8, 1)
+    lamp.inputs["Emission Strength"].default_value = 25.0
+    night_spots()
+    render("_night")
+    lamp.inputs["Emission Strength"].default_value = 0.0
+
+
+if "--probes" in argv:
+    probe_panoramas(OUT)

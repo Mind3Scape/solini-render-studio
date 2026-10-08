@@ -23,8 +23,10 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     setRoot(MainTabs(), animated: false)
     window.makeKeyAndVisible()
     // QA: open the shipping-section proof directly (projects and settings are untouched).
-    if ProcessInfo.processInfo.arguments.contains("-shipping-atelier") {
+    if ProcessInfo.processInfo.arguments.contains("-shipping-atelier-reality") {
       (window.rootViewController as? MainTabs)?.openShippingAtelier()
+    } else if ProcessInfo.processInfo.arguments.contains("-shipping-atelier") {
+      (window.rootViewController as? MainTabs)?.openShippingAtelier(sceneKit: true)
     }
   }
   func showWelcome(animated: Bool = true) { setRoot(MainTabs(), animated: animated) }
@@ -171,15 +173,20 @@ final class MainTabs: UITabBarController {
     if #available(iOS 26.0, *) { tabBarMinimizeBehavior = .onScrollDown }
     applyAudience()
   }
-  /// Profile → Salini Inside → «Участок отгрузки», without animation (QA launch argument).
-  func openShippingAtelier() {
+  /// Profile → Salini Inside → «Участок отгрузки», without animation (QA launch arguments):
+  /// the live RealityKit screen, or the SceneKit fallback with `sceneKit`.
+  func openShippingAtelier(sceneKit: Bool = false) {
     loadViewIfNeeded()
     selectedViewController = profile
     let owner = OwnerController()
     owner.hidesBottomBarWhenPushed = true
     profile.setViewControllers([profile.viewControllers.first ?? ProfileController(), owner], animated: false)
     owner.loadViewIfNeeded()
-    owner.openAtelier(animated: false)
+    if sceneKit {
+      profile.pushViewController(ShippingAtelierController(), animated: false)
+    } else {
+      owner.openAtelier(animated: false)
+    }
   }
   func applyAudience() {
     let role = DemoStore.shared.role

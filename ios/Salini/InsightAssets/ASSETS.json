@@ -232,50 +232,6 @@
    "use": "decimated geometry joined into atelier_kit.usdc; textures resized into textures/"
   },
   {
-   "asset": "modular_industrial_pipes_01",
-   "source": "https://polyhaven.com/a/modular_industrial_pipes_01",
-   "license": "CC0-1.0",
-   "license_url": "https://polyhaven.com/license",
-   "authors": [
-    "Jorge Camacho"
-   ],
-   "source_files": [
-    {
-     "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/modular_industrial_pipes_01/modular_industrial_pipes_01_1k.gltf",
-     "sha256": "455d3a0fe95b7900a08cbebb23cfb2c341672fcb67ae7355d776e53cfa3d0688"
-    },
-    {
-     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modular_industrial_pipes_01/modular_industrial_pipes_01_group02_arm_1k.jpg",
-     "sha256": "4c65dcb651a3d345517fa93ad7c6e48f2388f4e8bb347446f70317c16049867b"
-    },
-    {
-     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modular_industrial_pipes_01/modular_industrial_pipes_01_group01_diff_1k.jpg",
-     "sha256": "c0233f66b18e3374dfbbb8c8078a41f6571a0809d3eb14dd9d3c332265cfde7b"
-    },
-    {
-     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modular_industrial_pipes_01/modular_industrial_pipes_01_group02_nor_gl_1k.jpg",
-     "sha256": "84a43ca11a4f1ac84f7fc8336a4e9b7b333d30c13e540f3ff42e662dc6f91b53"
-    },
-    {
-     "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/modular_industrial_pipes_01/modular_industrial_pipes_01.bin",
-     "sha256": "2e11e1a7dabd56b1e158364f48b0b388bf316fcab61a01274740db75dbafa448"
-    },
-    {
-     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modular_industrial_pipes_01/modular_industrial_pipes_01_group01_nor_gl_1k.jpg",
-     "sha256": "ed4728fde567efe420e3a6e1bdc4238b26c2782218737c7e2de88eeca1e91fb2"
-    },
-    {
-     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modular_industrial_pipes_01/modular_industrial_pipes_01_group01_arm_1k.jpg",
-     "sha256": "7fff7d4604491eeb7531ad5f7520517015c72ec7316d1e865d62f23f976dfed6"
-    },
-    {
-     "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modular_industrial_pipes_01/modular_industrial_pipes_01_group02_diff_1k.jpg",
-     "sha256": "ef8a75c402a8871903dcaa147b023d57c640d0de4c7a8acdfdee822861656a92"
-    }
-   ],
-   "use": "decimated geometry joined into atelier_kit.usdc; textures resized into textures/"
-  },
-  {
    "asset": "overhead_crane",
    "source": "https://polyhaven.com/a/overhead_crane",
    "license": "CC0-1.0",
@@ -427,7 +383,7 @@
      "sha256": "9cb8290428891815ce42e9766eed46ef72d7b28501d26215c80303122dc61687"
     }
    ],
-   "use": "four basins on the basin inspection table, normalised to 540 mm, joined into atelier_kit.usdc"
+   "use": "three basins on the basin inspection table, normalised to 540 mm, joined into atelier_kit.usdc"
   },
   {
    "asset": "security_camera_01",
@@ -460,6 +416,33 @@
      "sha256": "80e791da5d975177d16d5f30202deac0b262ffe6b13311605c09c630b93d0de5"
     }
    ],
+   "use": "decimated geometry joined into atelier_kit.usdc; textures resized into textures/"
+  },
+  {
+   "asset": "shrub_02",
+   "source": "https://polyhaven.com/a/shrub_02",
+   "license": "CC0-1.0",
+   "license_url": "https://polyhaven.com/license",
+   "authors": [],
+   "source_files": [],
+   "use": "decimated geometry joined into atelier_kit.usdc; textures resized into textures/"
+  },
+  {
+   "asset": "shrub_03",
+   "source": "https://polyhaven.com/a/shrub_03",
+   "license": "CC0-1.0",
+   "license_url": "https://polyhaven.com/license",
+   "authors": [],
+   "source_files": [],
+   "use": "decimated geometry joined into atelier_kit.usdc; textures resized into textures/"
+  },
+  {
+   "asset": "shrub_04",
+   "source": "https://polyhaven.com/a/shrub_04",
+   "license": "CC0-1.0",
+   "license_url": "https://polyhaven.com/license",
+   "authors": [],
+   "source_files": [],
    "use": "decimated geometry joined into atelier_kit.usdc; textures resized into textures/"
   },
   {

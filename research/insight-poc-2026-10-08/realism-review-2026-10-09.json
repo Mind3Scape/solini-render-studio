@@ -1,0 +1,82 @@
+{
+  "status": "Accepted as an improved interactive graphics proof, not equivalence to concepts 01/02; build 11 release pending.",
+  "request": "Retain the architectural abstraction of concepts 01/02 but substantially improve physical light, materials and model quality; fix cargo intersecting the vehicle.",
+  "review": {
+    "build_10_failures": [
+      "Cargo/vehicle interaction was not validated against the loaded geometry envelope.",
+      "Hard, dark shadows and a warm green/yellow lighting cast.",
+      "Box-like truck and shrub silhouettes, generic smooth surfaces and heavy workstation frames.",
+      "Outdoor environment reflections do not reproduce the interior around the products."
+    ],
+    "diagnostic": "Opus produced matched-camera SceneKit/Cycles tests. Softer neutral lighting improves volume, but Cycles still exposes the same geometry/material simplification. Engine replacement alone is insufficient. Exact pixel equivalence was not measured.",
+    "acceptance": [
+      "Inspect actual iOS day/night output, not only Blender renders.",
+      "Inspect all loading stages, including loaded truck departure, with real asset dimensions.",
+      "Preserve interactive camera, selection, status and labelled simulated activity.",
+      "Do not claim local reflections, soft shadows, frame rate or renderer migration until verified.",
+      "Commit, push and upload the accepted implementation to TestFlight."
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://developer.apple.com/videos/play/wwdc2026/279/",
+      "relevance": "RealityKit lightmaps and dynamic soft spotlight shadows. LightmapResource/LightmapComponent and spotlight lightSize are also present for iOS 27 in the installed Xcode SDK, independently checked. Gaussian splat platform support was not inferred."
+    },
+    {
+      "url": "https://google.github.io/filament/dup/intro.html",
+      "relevance": "Alternative native Metal/iOS PBR engine with shadow filtering, contact shadows, SSAO and reflection features. Evaluated as a candidate, not installed or claimed shipped."
+    },
+    {
+      "url": "https://docs.blender.org/manual/en/5.1/render/cycles/baking.html",
+      "relevance": "Separate direct/indirect lighting and surface colour in texture baking; static lighting remains usable with an interactive camera."
+    },
+    {
+      "url": "https://developer.apple.com/documentation/scenekit/scnlight/shadowradius",
+      "relevance": "Shadow-map sampling radius is not equivalent to a physically sized area light. The installed SCNLight.h additionally confirms radiance/irradiance probe APIs; availability alone does not prove our capture implementation works."
+    },
+    {
+      "url": "https://developer.apple.com/documentation/realitykit/tonemappingcomponent",
+      "relevance": "Exposure and tone curve controls confirmed in current official documentation and installed iOS 27 SDK."
+    },
+    {
+      "url": "https://developer.apple.com/documentation/realitykit/lightmapcomponent",
+      "relevance": "Native baked lighting with an interactive camera; measured behavior in our scene is documented separately."
+    }
+  ],
+  "new_free_sources": [
+    "shrub_02",
+    "shrub_03",
+    "shrub_04"
+  ],
+  "source_provenance": "downloaded-assets.json; all three new Poly Haven glTF bundles passed published MD5 checks; local SHA-256 recorded.",
+  "implementation": {
+    "renderer": "RealityKit 27 (non-AR)",
+    "techniques": [
+      "Baked Cycles irradiance on static geometry with measured conversion into the native lightmap atlas",
+      "Hall and dock environment captures; exterior sky separated from interior illumination",
+      "Physically based surface textures with normal and roughness maps",
+      "Native soft spotlight shadows and camera tone mapping",
+      "Original Salini product meshes, CC0 industrial and vegetation meshes"
+    ],
+    "rejected_or_limited": [
+      "SceneKit probe and floor-mirror experiments did not give useful reflections in our macOS offscreen harness; this is not a general API limitation",
+      "A polished diagnostic plate remains darker than expected; no claim of full screen-space or ray-traced reflections",
+      "The geometry and scene density remain simpler than concepts 01/02",
+      "No physical-device frame-rate, memory or thermal profiling yet"
+    ],
+    "verified_to_date": [
+      "iOS simulator build succeeded; first overexposed RK pass rejected",
+      "Revised iOS tone mapping and surface maps visibly inspected; floor/wall/product shading now readable",
+      "Camera zoom/orbit and selection exercised through accessibility actions",
+      "18 focused iOS tests passed, 0 failed, in 22.59 seconds: route clearance, actual geometry orientation, loaded truck departure, RealityKit resources and hit subject mapping",
+      "Full iOS test suite: 133 passed, 0 failed, 225.296 seconds",
+      "Final iOS day entry, QC day/night, trailer cutaway and full-truck framing visually reviewed",
+      "Ordinary Insight entry opens RealityKit; day/night and manual/return-to-action controls inspected",
+      "All 177 resource files enumerated (48,264,213 bytes); no missing material texture paths",
+      "259-second simulator recording reviewed by sampled frames; saved 60-second excerpt covers the fourth load, loaded departure and continuation with the next batch"
+    ],
+    "remaining": [
+      "GitHub commit/push and TestFlight upload/distribution"
+    ]
+  }
+}

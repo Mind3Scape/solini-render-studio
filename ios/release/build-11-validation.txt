@@ -1,0 +1,34 @@
+Salini 1.0 (11) — validation, 9 October 2026 (UTC+7)
+
+Implementation: Opus 5.5 through Claude Code; direction, code review, iOS builds and visual QA: Codex.
+Scope: shipping/QC graphics proof and cargo loading fix. Existing main campus, catalog, films and other app flows retained.
+
+Full suite on Salini iPhone 18 Pro simulator / iOS 27:
+133 tests passed, 0 failed; 225.296 seconds.
+Result: ios/build/build11-validation.xcresult (local build output, not committed).
+Earlier focused suite: 18 passed, 0 failed, 22.590 seconds.
+
+Meaningful regressions covered:
+- Actual imported geometry and up-axis retention; batch dimensions and forklift safety envelope.
+- Trailer/dock clearances over the whole route, spacing against prior loads, truck departure after the forklift clears.
+- RealityKit day/night resources, selection, follow bounds, framing and contextual trailer cutaway.
+
+Visual checks on the iOS simulator:
+- Soft shadows, corrected exposure, textured floor/walls and official product meshes.
+- Ordinary Insight card opens the new scene; user-facing UI has no rendering diagnostics.
+- Entry follows current cargo; zones select manual exploration; Return to action restores follow.
+- Day/night, QC product illumination, zoom/orbit/selection through accessibility actions.
+- Selected load visible in labelled cutaway; choosing the truck restores its opaque body and fits its bounds.
+
+Motion QA: 259-second recording sampled and reviewed; 60-second excerpt in research/insight-poc-2026-10-08/qa-build11/ios-loading-motion.mp4 covers fourth loading, departure and next batch.
+
+Resources: 177 files, 48,264,213 bytes, all texture references resolved.
+Source hashes: build-11-insight-sha256.json. Release archive: all 177 resource SHA-256 hashes match; bundle version 1.0 (11), minimum iOS 27.0; codesign --verify --deep --strict passed.
+
+Limits:
+- This is simulated business activity and a bounded architectural graphics proof, not a measured digital twin.
+- The asset detail/density is still simpler than generated concepts 01/02. No claim of a pixel-identical or photoreal final campus.
+- Lighting combines baked irradiance, environment captures and live shadows; it is not real-time path tracing.
+- Local reflection experiments were measured in macOS RealityRenderer; the polished diagnostic plate remains imperfect.
+- Native screenshots and accessibility controls verified. Direct touch pan/pinch and physical-device FPS, thermal and memory profiling remain device QA.
+- Night fill is calibrated per group, not separate dynamic light at every fixture.

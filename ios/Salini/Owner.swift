@@ -297,8 +297,10 @@ final class OwnerController: UIViewController {
       atelierEntry.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
     ])
   }
+  /// The live shipping section (RealityKit). The SceneKit screen stays only as the QA fallback
+  /// (`-shipping-atelier`).
   func openAtelier(animated: Bool = true) {
-    navigationController?.pushViewController(ShippingAtelierController(), animated: animated)
+    navigationController?.pushViewController(RealityAtelierController(), animated: animated)
   }
   private func updateReturnPill() {
     let show = cameraManual && tourIndex == nil

@@ -74,10 +74,23 @@ final class ShippingAtelierController: UIViewController, UIGestureRecognizerDele
       cardTitle.text = "Ресурсы участка не найдены"
       cardStatus.text = "InsightAssets отсутствует в сборке"
     }
-    if ProcessInfo.processInfo.arguments.contains("-shipping-atelier-night") {
+    let args = ProcessInfo.processInfo.arguments
+    if args.contains("-shipping-atelier-night") {
       atelier.setLighting(.night, animated: false)
     }
+    // QA: `-shipping-atelier-time 20.5` freezes the demonstration at that second (any cycle);
+    // `-shipping-atelier-paused` starts paused at the beginning.
+    if let i = args.firstIndex(of: "-shipping-atelier-time"), i + 1 < args.count, let t = Double(args[i + 1]) {
+      atelier.show(time: t)
+      atelier.paused = true
+    } else if args.contains("-shipping-atelier-paused") {
+      atelier.paused = true
+    }
     updateLightButton()
+    if atelier.paused {
+      pauseButton.configuration?.image = UIImage(systemName: "play")
+      pauseButton.accessibilityLabel = "Продолжить демонстрацию"
+    }
     updateCard()
   }
   override func viewWillAppear(_ animated: Bool) {

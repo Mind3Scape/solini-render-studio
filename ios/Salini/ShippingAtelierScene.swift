@@ -84,6 +84,11 @@ struct AtelierLayout: Equatable {
   var alda: [SIMD3<Float>] = [SIMD3(3.2, 1.8, 4.2), SIMD3(7.6, 1.8, 4.2)]
   var truck = SIMD3<Float>(21.2, 1.2, 13.5)
   var nightLights: [SIMD3<Float>] = []
+  /// Load space of the curtain-side trailer (x along the trailer, y deck → roof underside, z the
+  /// far wall's inner face → the open curtain side) and the dock opening's clear width.
+  var trailerMin = SIMD3<Float>(14.4, 1.2, 12.275)
+  var trailerMax = SIMD3<Float>(27.9, 3.88, 14.775)
+  var dockOpening: ClosedRange<Float> = 12.0...15.0
 
   init() {}
   init(anchors: [String: SIMD3<Float>]) {
@@ -100,6 +105,11 @@ struct AtelierLayout: Equatable {
     let a = (1...2).compactMap { anchors["anchor_alda_\($0)"] }
     if !a.isEmpty { alda = a }
     if let t = anchors["anchor_truck"] { truck = t }
+    if let a = anchors["anchor_trailer_min"], let b = anchors["anchor_trailer_max"] {
+      trailerMin = a
+      trailerMax = b
+    }
+    if let a = anchors["anchor_dock_2_left"], let b = anchors["anchor_dock_2_right"] { dockOpening = min(a.z, b.z)...max(a.z, b.z) }
     nightLights = anchors.filter { $0.key.hasPrefix("anchor_light_") }.sorted { $0.key < $1.key }.map(\.value)
   }
 }
@@ -158,7 +168,16 @@ struct AtelierPose: Equatable {
 struct AtelierTimeline {
   static let period: Double = 48
   static let forkReach: Float = 0.55
+  /// Fork height with a batch (clears the floor, the dock lip and the trailer deck) and empty.
   static let carry: Float = 0.32
+  static let emptyFork: Float = 0.05
+  /// Forklift envelope from the fork heel (the kit's compact forklift at 0.85 scale, collapsed mast).
+  static let bodyBack: Float = 1.75
+  static let forkLength: Float = 0.98
+  static let halfWidth: Float = 0.68
+  static let height: Float = 2.46
+  /// The batch: pallet 1.0 × 1.8 m with two crates.
+  static let batchSize = SIMD3<Float>(1.0, 1.48, 1.8)
   let layout: AtelierLayout
 
   private struct Key {
@@ -178,10 +197,11 @@ struct AtelierTimeline {
     let slotX = layout.slots[min(max(slot, 0), layout.slots.count - 1)]
     let west = Float.pi, south = -Float.pi / 2, east: Float = 0, north = Float.pi / 2
     let c = Self.carry
+    let e0 = Self.emptyFork
     return [
-      Key(t: 0, x: home.x, z: home.y, heading: west, fork: 0),
-      Key(t: 4, x: home.x, z: home.y, heading: west, fork: 0),
-      Key(t: 8, x: p.x + reach, z: p.y, heading: west, fork: 0),
+      Key(t: 0, x: home.x, z: home.y, heading: west, fork: e0),
+      Key(t: 4, x: home.x, z: home.y, heading: west, fork: e0),
+      Key(t: 8, x: p.x + reach, z: p.y, heading: west, fork: e0),
       Key(t: 10, x: p.x + reach, z: p.y, heading: west, fork: c),
       Key(t: 13.5, x: aisle, z: p.y, heading: west, fork: c),
       Key(t: 15.5, x: aisle, z: p.y + 0.5, heading: south, fork: c),
@@ -189,11 +209,12 @@ struct AtelierTimeline {
       Key(t: 21, x: aisle + 0.5, z: z, heading: east, fork: c),
       Key(t: 24, x: layout.dockX - 0.4, z: z, heading: east, fork: c),
       Key(t: 31, x: slotX - reach, z: z, heading: east, fork: c),
-      Key(t: 33, x: slotX - reach, z: z, heading: east, fork: 0),
-      Key(t: 40, x: layout.dockX - 1.4, z: z, heading: east, fork: 0),
-      Key(t: 42, x: layout.dockX - 1.9, z: z - 0.5, heading: north, fork: 0),
-      Key(t: 45.5, x: aisle + 0.3, z: p.y + 0.4, heading: north * 1.5, fork: 0),
-      Key(t: 48, x: home.x, z: home.y, heading: west, fork: 0),
+      Key(t: 32.6, x: slotX - reach, z: z, heading: east, fork: 0),
+      Key(t: 33.4, x: slotX - reach, z: z, heading: east, fork: 0),
+      Key(t: 40, x: layout.dockX - 1.4, z: z, heading: east, fork: e0),
+      Key(t: 42, x: layout.dockX - 1.9, z: z - 0.5, heading: north, fork: e0),
+      Key(t: 45.5, x: aisle + 0.3, z: p.y + 0.4, heading: north * 1.5, fork: e0),
+      Key(t: 48, x: home.x, z: home.y, heading: west, fork: e0),
     ]
   }
 
@@ -221,6 +242,11 @@ struct AtelierTimeline {
     }
     return (.docked, 0, 1)
   }
+
+  /// Height of the batch's underside above the floor for a fork height: the forks slide under the
+  /// pallet at `emptyFork`, so the batch rises only with the forks above that (no jump on pickup
+  /// or placement).
+  static func lift(_ fork: Float) -> Float { max(0, fork - emptyFork) }
 
   static func stage(at t: Double) -> AtelierStage {
     switch t {
@@ -251,7 +277,7 @@ struct AtelierTimeline {
     while dh < -.pi { dh += 2 * .pi }
     let pos = SIMD2<Float>(a.x + (b.x - a.x) * e, a.z + (b.z - a.z) * e)
     let batch: AtelierBatchPlace
-    if t < 8.6 {
+    if t < 8.0 {
       batch = .pickup(opacity: Float(min(1, t / 1.2)))
     } else if t < 32.6 {
       batch = .forks
@@ -274,8 +300,8 @@ struct AtelierCamera: Equatable {
   static let scaleRange: ClosedRange<Double> = 4.5...26
   static let focusMin = SIMD2<Float>(-4, -4)
   static let focusMax = SIMD2<Float>(32, 28)
-  var focus = SIMD3<Float>(12.5, 1.2, 11)
-  var scale: Double = 15.5
+  var focus = SIMD3<Float>(13.5, 1.2, 10.5)
+  var scale: Double = 18
 
   mutating func clamp() {
     scale = min(Self.scaleRange.upperBound, max(Self.scaleRange.lowerBound, scale))
@@ -404,7 +430,7 @@ final class ShippingAtelierScene: NSObject, SCNSceneRendererDelegate {
     giNight = materials.lightmap(.night)
     // «Static» carries lightmap texels (baked light); «StaticProps» has none, so the live night
     // spots light it instead — each surface has exactly one owner of its lamp light.
-    for (name, live) in [("Static", false), ("StaticProps", true)] {
+    for (name, live) in [("Static", false), ("StaticOutside", false), ("StaticProps", true), ("StaticPropsOutside", true)] {
       guard let stat = take(name) else { continue }
       stat.enumerateHierarchy { node, _ in
         if live { node.categoryBitMask |= Self.moverMask }
@@ -434,15 +460,18 @@ final class ShippingAtelierScene: NSObject, SCNSceneRendererDelegate {
       scene.rootNode.addChildNode(stat)
     }
     propMaterials = materials.applied
-    if let proto = take("Tree") {
+    // Vegetation prototypes (Poly Haven tree and shrubs), instanced with shared geometry at
+    // anchor_inst_<Proto>_<k>.
+    for protoName in ["Tree", "Shrub2", "Shrub3", "Shrub4"] {
+      guard let proto = take(protoName) else { continue }
       materials.applyAll(proto)
-      for (name, t) in transforms.sorted(by: { $0.key < $1.key }) where name.hasPrefix("anchor_tree_") {
-        let tree = proto.clone()
-        tree.name = "Tree"
-        tree.simdTransform = t
-        tree.castsShadow = true
-        tree.enumerateHierarchy { n, _ in n.categoryBitMask |= Self.moverMask }
-        scene.rootNode.addChildNode(tree)
+      for (name, t) in transforms.sorted(by: { $0.key < $1.key }) where name.hasPrefix("anchor_inst_\(protoName)_") {
+        let plant = proto.clone()
+        plant.name = protoName
+        plant.simdTransform = t
+        plant.castsShadow = true
+        plant.enumerateHierarchy { n, _ in n.categoryBitMask |= Self.moverMask }
+        scene.rootNode.addChildNode(plant)
         treeCount += 1
       }
     }
@@ -469,12 +498,19 @@ final class ShippingAtelierScene: NSObject, SCNSceneRendererDelegate {
     }
     if let proto = take("Batch") {
       materials.applyAll(proto)
-      batch = proto.clone()
-      batch.name = "BatchCurrent"
+      // The clone keeps the USD up-axis conversion in its own transform; the demo poses only
+      // the holder (setting the clone's Euler angles would undo the conversion and stand the
+      // pallet on its edge — the clipping seen in build 10).
+      func holder(_ name: String) -> SCNNode {
+        let h = SCNNode()
+        h.name = name
+        h.addChildNode(proto.clone())
+        return h
+      }
+      batch = holder("BatchCurrent")
       scene.rootNode.addChildNode(batch)
       for k in 0..<layout.slots.count {
-        let c = proto.clone()
-        c.name = "BatchLoaded"
+        let c = holder("BatchLoaded")
         c.simdPosition = SIMD3(layout.slots[k], layout.floor, layout.dockZ)
         scene.rootNode.addChildNode(c)
         loaded.append(c)
@@ -548,6 +584,7 @@ final class ShippingAtelierScene: NSObject, SCNSceneRendererDelegate {
     m.writesToDepthBuffer = false
     plane.materials = [m]
     let n = SCNNode(geometry: plane)
+    n.name = "ContactShadow"
     n.simdEulerAngles.x = -.pi / 2
     n.simdPosition = SIMD3(offsetX, y, z)
     n.castsShadow = false
@@ -617,7 +654,18 @@ final class ShippingAtelierScene: NSObject, SCNSceneRendererDelegate {
     .truck: Self.outline(width: 3.4, length: 18.8),
   ]
 
+  /// Soft bounce for everything without lightmap texels (products, props, plants, movers): the
+  /// hall floor and walls return light from below; without it gelcoat undersides read black under
+  /// the outdoor IBL. Ambient, category 2 only, so lightmapped static is never lit twice.
+  private let bounce = SCNNode()
+
   private func setupLights() {
+    let fill = SCNLight()
+    fill.type = .ambient
+    fill.categoryBitMask = Self.moverMask
+    fill.color = atelierHex(0xEEEBE6)
+    bounce.light = fill
+    scene.rootNode.addChildNode(bounce)
     let light = SCNLight()
     light.type = .directional
     light.castsShadow = true
@@ -627,14 +675,16 @@ final class ShippingAtelierScene: NSObject, SCNSceneRendererDelegate {
     light.orthographicScale = 30
     light.zNear = 1
     light.zFar = 260
-    light.shadowBias = 0.6
-    light.shadowRadius = 2.5
-    light.shadowSampleCount = 12
+    // Soft architectural daylight: a 3° sun gives 15–30 cm penumbrae at hall heights; PCF over
+    // ~12 texels of the 4096 map (1.5 cm each) approximates it (the bake carries the sky light).
+    light.shadowBias = 0.8
+    light.shadowRadius = 12
+    light.shadowSampleCount = 32
     // Physically dark sun shadows: the baked sky (selfIllumination) is what fills them.
     light.shadowColor = atelierHex(0x000000, 1)
     sun.light = light
     let target = SIMD3<Float>(14, 0, 11)
-    let toSun = simd_normalize(SIMD3<Float>(0.6, 0.78, -0.4))
+    let toSun = simd_normalize(SIMD3<Float>(0.6, 0.78, -0.4))   // = SUN_TO in the kit script
     sun.simdPosition = target + toSun * 120
     sun.simdLook(at: target, up: SIMD3(0, 1, 0), localFront: SIMD3(0, 0, -1))
     scene.rootNode.addChildNode(sun)
@@ -666,15 +716,16 @@ final class ShippingAtelierScene: NSObject, SCNSceneRendererDelegate {
     SCNTransaction.begin()
     SCNTransaction.animationDuration = animated ? 1.2 : 0
     let night = mode == .night
-    let background = night ? atelierHex(0x0C1217) : atelierHex(0xE9ECEB)
+    let background = night ? atelierHex(0x0C1217) : atelierHex(0xE4E7EA)
     scene.background.contents = background
     scene.fogColor = background
     scene.fogStartDistance = 150
     scene.fogEndDistance = 215
     scene.fogDensityExponent = 1.3
-    scene.lightingEnvironment.intensity = night ? 0.035 : 1.0
-    sun.light?.intensity = night ? 60 : 2300
-    sun.light?.color = night ? atelierHex(0x9DB2D6) : atelierHex(0xFFF1DE)
+    // Sun ≈ sky (1250 vs 1.25 × the normalised, desaturated sky), neutral white.
+    scene.lightingEnvironment.intensity = night ? 0.035 : 1.25
+    sun.light?.intensity = night ? 60 : 1250
+    sun.light?.color = night ? atelierHex(0x9DB2D6) : atelierHex(0xFFFAF3)
     for (k, s) in spots.enumerated() {
       // Live spots light the movers only (category 2); the hall and yard have them baked.
       s.light?.intensity = night ? (k < 2 ? 260 : 220) : 0
@@ -682,6 +733,7 @@ final class ShippingAtelierScene: NSObject, SCNSceneRendererDelegate {
     for m in giMaterials {
       m.selfIllumination.contents = night ? giNight ?? giDay : giDay
     }
+    bounce.light?.intensity = night ? 30 : 260
     for (m, color, day, nightValue) in nightMaterials {
       m.emission.contents = color
       m.emission.intensity = night ? nightValue : day
@@ -693,7 +745,7 @@ final class ShippingAtelierScene: NSObject, SCNSceneRendererDelegate {
   }
 
   /// Exposure in stops for the PBR Neutral mapping of each lighting state.
-  static var dayExposure: Float = -0.85
+  static var dayExposure: Float = -0.55
   static var nightExposure: Float = 0.35
   /// The tone-mapping technique for a lighting state (set on the SCNView / renderer).
   func technique(for mode: AtelierLighting) -> SCNTechnique? {
@@ -737,7 +789,7 @@ final class ShippingAtelierScene: NSObject, SCNSceneRendererDelegate {
     case .forks:
       let forward = SIMD3<Float>(cos(p.heading), 0, -sin(p.heading))
       let heel = SIMD3(p.forklift.x, layout.floor, p.forklift.y)
-      batch.simdPosition = heel + forward * AtelierTimeline.forkReach + SIMD3(0, p.fork - 0.02, 0)
+      batch.simdPosition = heel + forward * AtelierTimeline.forkReach + SIMD3(0, AtelierTimeline.lift(p.fork), 0)
       batch.simdEulerAngles = SIMD3(0, p.heading - .pi, 0)
       batch.opacity = 1
     case .slot(let k):
@@ -799,6 +851,36 @@ final class ShippingAtelierScene: NSObject, SCNSceneRendererDelegate {
     }
   }
 
+  /// Real extent of a mover's loaded geometry in its own frame (forklift: fork heel at the
+  /// origin, +x forward; batch: centred on its position) — checked against the safety envelope
+  /// the timeline uses, so the clearance tests cover the actual kit, not declared numbers.
+  func envelope(of subject: AtelierSubject) -> (min: SIMD3<Float>, max: SIMD3<Float>)? {
+    let root: SCNNode
+    switch subject {
+    case .forklift: root = forklift
+    case .batch: root = batch
+    case .truck: return nil
+    }
+    var lo = SIMD3<Float>(repeating: .greatestFiniteMagnitude), hi = -lo
+    root.enumerateHierarchy { n, _ in
+      guard n.geometry != nil, n.name != "ContactShadow" else { return }
+      let (a, b) = n.boundingBox
+      for i in 0..<8 {
+        let c = SIMD3<Float>(Float(i & 1 == 0 ? a.x : b.x), Float(i & 2 == 0 ? a.y : b.y), Float(i & 4 == 0 ? a.z : b.z))
+        let w = n.simdConvertPosition(c, to: nil)
+        let local: SIMD3<Float>
+        if subject == .forklift {
+          local = forklift.simdConvertPosition(w, from: nil)
+        } else {
+          local = w - SIMD3(batch.simdWorldPosition.x, layout.floor, batch.simdWorldPosition.z)
+        }
+        lo = simd_min(lo, local)
+        hi = simd_max(hi, local)
+      }
+    }
+    return lo.x <= hi.x ? (lo, hi) : nil
+  }
+
   /// World position on screen of a subject (for the card's anchor line).
   func focusPoint(of subject: AtelierSubject) -> SIMD3<Float> {
     switch subject {
@@ -819,11 +901,13 @@ final class AtelierMaterials {
     var transparency: CGFloat = 1
     /// Micro relief from the concrete scan (normal intensity; 0 = smooth).
     var relief: CGFloat = 0
+    /// Profiled sheet: horizontal ribs every 10 cm (procedural normal map, intensity).
+    var ribs: CGFloat = 0
   }
   static let specs: [String: Spec] = [
     // Architecture: porcelain white / light grey, with real relief from the concrete scan.
-    "M_Panel": Spec(color: 0xEFEEEA, rough: 0.48, relief: 0.18), "M_Plinth": Spec(color: 0xD4D2CC, rough: 0.82, relief: 0.6),
-    "M_Section": Spec(color: 0x84837F, rough: 0.9, relief: 0.5), "M_Floor": Spec(color: 0xDCDDD9, rough: 0.42),
+    "M_Panel": Spec(color: 0xE9EBEB, rough: 0.42, ribs: 0.55), "M_Plinth": Spec(color: 0xD4D2CC, rough: 0.82, relief: 0.6),
+    "M_Section": Spec(color: 0x84837F, rough: 0.9, relief: 0.5), "M_Floor": Spec(color: 0xC8CAC8, rough: 0.3),
     "M_Slab": Spec(color: 0xC9C6BF, rough: 0.88, relief: 0.7), "M_Asphalt": Spec(color: 0x55595C, rough: 0.9),
     "M_Paving": Spec(color: 0xCCC9C1, rough: 0.9, relief: 0.7), "M_Curb": Spec(color: 0xE0DED7, rough: 0.8, relief: 0.6),
     "M_Grass": Spec(color: 0x7D9068, rough: 0.97), "M_LineWhite": Spec(color: 0xE6E6E1, rough: 0.75),
@@ -846,6 +930,14 @@ final class AtelierMaterials {
     "M_Trousers": Spec(color: 0x2E3540, rough: 0.85), "M_Skin": Spec(color: 0xC99A80, rough: 0.7),
     "M_Hair": Spec(color: 0x2A2522, rough: 0.8), "M_Workwear": Spec(color: 0x34506E, rough: 0.8),
     "M_Ceramic": Spec(color: 0xF6F6F3, rough: 0.12),
+    "M_Coping": Spec(color: 0x454C54, rough: 0.5, metal: 0.4),
+    "M_Frame": Spec(color: 0x7F888F, rough: 0.36, metal: 0.75), "M_LampHousing": Spec(color: 0xE9EAEA, rough: 0.4, metal: 0.3), "M_Joint": Spec(color: 0x7C7F80, rough: 0.8),
+    "M_Roof": Spec(color: 0x6B6F72, rough: 0.95, relief: 1.0), "M_Facade": Spec(color: 0xD7DADC, rough: 0.45, ribs: 0.4),
+    "M_Curtain": Spec(color: 0xA8B0B8, rough: 0.8), "M_Chassis": Spec(color: 0x23272B, rough: 0.5, metal: 0.4),
+    "M_TrailerRoof": Spec(color: 0xD9DCDE, rough: 0.5), "M_Grille": Spec(color: 0x15181B, rough: 0.4, metal: 0.5),
+    "M_Headlight": Spec(color: 0xF2F2EE, rough: 0.1), "M_TailLight": Spec(color: 0x8A1C14, rough: 0.2),
+    // Services: powder-coated cabinets (RAL 7035), blue water line.
+    "M_Cabinet": Spec(color: 0xD3D5D0, rough: 0.5, metal: 0.1), "M_PipeWater": Spec(color: 0x3F6D8C, rough: 0.38, metal: 0.3),
   ]
   /// Emission per material: colour, day intensity, night intensity.
   static let nightEmission: [String: (AtelierColor, CGFloat, CGFloat)] = [
@@ -933,6 +1025,14 @@ final class AtelierMaterials {
           m.roughness.wrapT = .repeat
         }
       }
+      if spec.ribs > 0, let ribs = Self.ribNormal {
+        // UV0 is a 2 m cube projection (V = height on walls): 20 ribs per UV unit.
+        m.normal.contents = ribs
+        m.normal.intensity = spec.ribs
+        m.normal.contentsTransform = SCNMatrix4MakeScale(1, 5, 1)
+        m.normal.wrapS = .repeat
+        m.normal.wrapT = .repeat
+      }
       if spec.transparency < 1 {
         m.transparency = spec.transparency
         m.transparencyMode = .dualLayer
@@ -943,8 +1043,9 @@ final class AtelierMaterials {
     }
     guard let entry = map[name] else { return }
     applied.insert(name)
-    // Our light concrete keeps the porcelain palette; the scanned floor only adds relief.
-    if let base = url("base", entry), name != "M_Floor" {
+    // Kit textures (downloaded props and the generated surfaces) are authored per UV0 unit.
+    for p in [m.diffuse, m.roughness, m.normal] { p.contentsTransform = SCNMatrix4Identity }
+    if let base = url("base", entry) {
       m.diffuse.contents = base
       m.diffuse.wrapS = .repeat
       m.diffuse.wrapT = .repeat
@@ -961,7 +1062,8 @@ final class AtelierMaterials {
     }
     if let normal = url("normal", entry) {
       m.normal.contents = normal
-      m.normal.intensity = 0.8
+      // Generated surface maps carry their intended strength; scanned props are softened.
+      m.normal.intensity = (entry["asset"] as? String) == "generated" ? 1.0 : 0.8
     }
     if (entry["foliage"] as? Bool) == true {
       m.isDoubleSided = true
@@ -997,24 +1099,27 @@ final class AtelierMaterials {
     }
     let mean = hdr.meanLuminance
     guard mean.isFinite, mean > 0 else { return nil }
-    // The HDRI's own sun disc is clamped (as in the bake): the real-time sun replaces it.
+    // The HDRI's own sun disc is clamped and the sky desaturated 85 % (as in the bake): the
+    // real-time sun replaces the disc, and the yard's warm-green cast does not tint the scene.
     var px = hdr.pixels
     let limit = 6 * mean
     for i in stride(from: 0, to: px.count, by: 3) {
-      let l = 0.2126 * px[i] + 0.7152 * px[i + 1] + 0.0722 * px[i + 2]
+      var l = 0.2126 * px[i] + 0.7152 * px[i + 1] + 0.0722 * px[i + 2]
       if l > limit {
         let k = limit / l
         px[i] *= k
         px[i + 1] *= k
         px[i + 2] *= k
+        l = limit
       }
+      for c in 0..<3 { px[i + c] = px[i + c] * 0.15 + l * 0.85 }
     }
     return RadianceImage(width: hdr.width, height: hdr.height, pixels: px).cgImage(scale: 1 / mean)
   }
 
   /// A baked irradiance lightmap as a linear half-float image. The kit stores it as an 8-bit PNG
   /// with gamma 2.2 over 0…range (atelier_materials.json «gi»); decoded here back to linear.
-  func lightmap(_ mode: AtelierLighting) -> CGImage? {
+  func lightmap(_ mode: AtelierLighting, scale: Float = 1) -> CGImage? {
     guard let gi = gi, let file = gi[mode == .day ? "day" : "night"] as? String else { return nil }
     let range = Float(gi["range"] as? Double ?? 4), gamma = Float(gi["gamma"] as? Double ?? 2.2)
     let url = folder.appendingPathComponent(file)
@@ -1033,7 +1138,7 @@ final class AtelierMaterials {
     }
     guard drawn else { return nil }
     var table = [Float](repeating: 0, count: 256)
-    for i in 0..<256 { table[i] = pow(Float(i) / 255, gamma) * range }
+    for i in 0..<256 { table[i] = pow(Float(i) / 255, gamma) * range * scale }
     var pixels = [Float](repeating: 0, count: w * h * 3)
     for i in 0..<(w * h) {
       pixels[i * 3] = table[Int(bytes[i * 4])]
@@ -1042,6 +1147,24 @@ final class AtelierMaterials {
     }
     return RadianceImage(width: w, height: h, pixels: pixels).cgImage(scale: 1)
   }
+
+  /// Tangent-space normal map of a profiled sheet: 4 trapezoid ribs across V (RGBA 8-bit).
+  static let ribNormal: CGImage? = {
+    let w = 8, h = 128
+    guard let ctx = CGContext(
+      data: nil, width: w, height: h, bitsPerComponent: 8, bytesPerRow: w * 4, space: CGColorSpaceCreateDeviceRGB(),
+      bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)
+    else { return nil }
+    for y in 0..<h {
+      let u = Double(y % 32) / 32                     // one rib = 32 px
+      // Slope of a trapezoid profile: rising flank, flat crest, falling flank, flat valley.
+      let slope: Double = u < 0.15 ? 1 : u < 0.5 ? 0 : u < 0.65 ? -1 : 0
+      let n = simd_normalize(SIMD3<Double>(0, -slope * 0.8, 1))
+      ctx.setFillColor(red: 0.5, green: CGFloat(n.y * 0.5 + 0.5), blue: CGFloat(n.z * 0.5 + 0.5), alpha: 1)
+      ctx.fill(CGRect(x: 0, y: y, width: w, height: 1))
+    }
+    return ctx.makeImage()
+  }()
 
   /// Radial falloff used by contact shadows (white = no darkening).
   static let blobImage: CGImage? = {
