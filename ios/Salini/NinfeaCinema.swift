@@ -21,16 +21,55 @@ struct NinfeaPlaybackState {
   mutating func completeAmbientCycle() { ambientCycles += 1 }
 }
 
+/// One accepted film per collection, named explicitly. Adopting a new generation means changing
+/// exactly one entry here (and the release test), after Codex accepts the visuals — never by
+/// globbing the bundle or computing names. `source` records the generation job or file it came
+/// from; `loopFrames` is the measured loop length (frames) the release test checks.
+struct CinemaRelease: Equatable {
+  let version: String
+  let intro: String
+  let loop: String
+  let startPoster: String
+  let finalPoster: String
+  let loopFrames: Int
+  let source: String
+}
+
 enum CollectionCinemaAssets: String, CaseIterable {
   case ninfea, aria, opera, greca
   var name: String { rawValue.capitalized }
-  var introName: String { self == .ninfea ? "ninfea-film-v3" : "\(rawValue)-film-v1" }
-  var loopName: String { "\(rawValue)-loop-v1" }
-  var startPoster: String { self == .ninfea ? "ninfea-interior.png" : "\(rawValue)-start-v1.png" }
-  var finalPoster: String { self == .ninfea ? "ninfea-poster-v3.png" : "\(rawValue)-final-v1.png" }
+
+  /// Shipped releases (build 9, accepted by Codex 8 Oct 2026). Replace an entry only with an
+  /// accepted, measured take (research/higgsfield-2026-10-08/tools/adopt_release.py).
+  static let releases: [CollectionCinemaAssets: CinemaRelease] = [
+    .ninfea: CinemaRelease(
+      version: "v4", intro: "ninfea-film-v4", loop: "ninfea-loop-v4",
+      startPoster: "ninfea-start-v4.png", finalPoster: "ninfea-final-v4.png", loopFrames: 220,
+      source: "Kling 3.0 Pro open take ninfea-source-v1 (sha256 d8541094…) frames 77–223 + Kling bridge ea7a6e59-b313-4e9f-a84b-fa8a3c852321, tone-matched"),
+    .aria: CinemaRelease(
+      version: "v2", intro: "aria-film-v2", loop: "aria-loop-v2",
+      startPoster: "aria-start-v2.png", finalPoster: "aria-final-v2.png", loopFrames: 217,
+      source: "Kling 3.0 Pro open take aria-source-v1 (sha256 5b949a50…) frames 76–221 + Kling bridge 52472280-8c84-413b-89c2-5688eb0e3c54, tone-matched"),
+    .opera: CinemaRelease(
+      version: "v2", intro: "opera-film-v2", loop: "opera-loop-v2",
+      startPoster: "opera-start-v2.png", finalPoster: "opera-final-v2.png", loopFrames: 241,
+      source: "Kling 3.0 Pro start=end opera-closed-source-v1 (sha256 8bd166e7…), rotated from frame 48"),
+    .greca: CinemaRelease(
+      version: "v2", intro: "greca-film-v2", loop: "greca-loop-v2",
+      startPoster: "greca-start-v2.png", finalPoster: "greca-final-v2.png", loopFrames: 193,
+      source: "Kling 3.0 Pro start=end greca-closed-source-v1 (sha256 c8673f73…), whole clip rotated from frame 46"),
+  ]
+  var release: CinemaRelease { Self.releases[self]! }
+
+  var introName: String { release.intro }
+  var loopName: String { release.loop }
+  var startPoster: String { release.startPoster }
+  var finalPoster: String { release.finalPoster }
+  /// Shown when a film cannot play: Ninfea's own release poster (it has no separate catalogue
+  /// photograph), otherwise the collection's official photograph.
   var fallbackPoster: String {
     switch self {
-    case .ninfea: return "ninfea-poster-v3.png"
+    case .ninfea: return release.finalPoster
     case .greca: return "greca-editorial.jpg"
     default: return "\(rawValue).jpg"
     }
@@ -39,10 +78,11 @@ enum CollectionCinemaAssets: String, CaseIterable {
   var loopURL: URL? { Bundle.main.url(forResource: loopName, withExtension: "mp4") }
 }
 
+/// Ninfea's film as released — read from the release table, never a hard-coded file name
+/// (the rejected layer-warp V2 movie is excluded from the bundle).
 enum NinfeaCinemaAssets {
-  // Never silently fall back to the rejected layer-warp V2 movie.
-  static let filmURL = Bundle.main.url(forResource: "ninfea-film-v3", withExtension: "mp4")
-  static let posterName = "ninfea-poster-v3.png"
+  static var filmURL: URL? { CollectionCinemaAssets.ninfea.introURL }
+  static var posterName: String { CollectionCinemaAssets.ninfea.release.finalPoster }
 }
 
 private final class CinemaPlayerSurface: UIView {

@@ -1765,8 +1765,10 @@ final class SaliniTests: XCTestCase {
       let rate = try await loopTrack.load(.nominalFrameRate)
       XCTAssertGreaterThanOrEqual(rate, 24)
       let duration = try await loop.load(.duration).seconds
+      // The loop's length is the release's measured frame count (8–10 s takes since 8 Oct).
+      let expected = Double(collection.release.loopFrames) / Double(rate)
       XCTAssertGreaterThan(duration, 2)
-      XCTAssertLessThan(duration, 9)
+      XCTAssertEqual(duration, expected, accuracy: 0.1, "\(collection.name): loop length as released")
       let audio = try await loop.loadTracks(withMediaType: .audio)
       XCTAssertTrue(audio.isEmpty)
       let generator = AVAssetImageGenerator(asset: loop)
@@ -1777,31 +1779,40 @@ final class SaliniTests: XCTestCase {
                         "The ending must retain actual motion: \(collection.name)")
     }
   }
-  func testBundledGenerativeNinfeaFilmDecodes() async throws {
-    let url = try XCTUnwrap(NinfeaCinemaAssets.filmURL, "The selected generative film must ship in the app bundle")
-    let asset = AVURLAsset(url: url)
-    let duration = try await asset.load(.duration)
-    XCTAssertGreaterThan(duration.seconds, 7)
-    XCTAssertLessThan(duration.seconds, 16)
-    let tracks = try await asset.loadTracks(withMediaType: .video)
-    let track = try XCTUnwrap(tracks.first)
-    let size = try await track.load(.naturalSize)
-    let rate = try await track.load(.nominalFrameRate)
-    XCTAssertGreaterThanOrEqual(min(size.width, size.height), 720)
-    XCTAssertGreaterThanOrEqual(rate, 24)
-    XCTAssertEqual(size.width / size.height, 2.0 / 3.0, accuracy: 0.001,
-                   "Preserve the source product composition without stretching")
-    let audioTracks = try await asset.loadTracks(withMediaType: .audio)
-    XCTAssertTrue(audioTracks.isEmpty, "The collection film is intentionally silent")
-    let generator = AVAssetImageGenerator(asset: asset)
-    generator.requestedTimeToleranceBefore = .zero
-    generator.requestedTimeToleranceAfter = .zero
-    var samples: [Data] = []
-    for fraction in [0.0, 0.2, 0.5, 0.8, 0.98] {
-      let frame = try await generator.image(at: CMTime(seconds: duration.seconds * fraction, preferredTimescale: 600))
-      samples.append(try XCTUnwrap(frame.image.dataProvider?.data) as Data)
+  /// Every released reveal decodes, is silent, sharp enough for a 3× phone and actually moves.
+  /// Durations and proportions come from the release itself (2:3 films of 6 Oct, 3:4 takes of 8 Oct).
+  func testEveryReleasedRevealDecodesSilentlyAndMoves() async throws {
+    for collection in CollectionCinemaAssets.allCases {
+      let url = try XCTUnwrap(collection.introURL, "\(collection.name): the released reveal ships in the bundle")
+      let asset = AVURLAsset(url: url)
+      let duration = try await asset.load(.duration)
+      let tracks = try await asset.loadTracks(withMediaType: .video)
+      let audioTracks = try await asset.loadTracks(withMediaType: .audio)
+      let track = try XCTUnwrap(tracks.first, collection.name)
+      let size = try await track.load(.naturalSize)
+      let rate = try await track.load(.nominalFrameRate)
+      XCTAssertGreaterThanOrEqual(duration.seconds, 1.5, "\(collection.name): a reveal, not a flash")
+      XCTAssertLessThan(duration.seconds, 16, collection.name)
+      XCTAssertGreaterThanOrEqual(min(size.width, size.height), 720, collection.name)
+      XCTAssertGreaterThanOrEqual(rate, 24, collection.name)
+      XCTAssertTrue(audioTracks.isEmpty, "\(collection.name): the collection film is intentionally silent")
+      let poster = try XCTUnwrap(UIImage(named: collection.release.startPoster), collection.release.startPoster)
+      XCTAssertEqual(size.width / size.height, poster.size.width / poster.size.height, accuracy: 0.01,
+                     "\(collection.name): the reveal keeps its poster's composition, nothing stretched")
+      let generator = AVAssetImageGenerator(asset: asset)
+      generator.requestedTimeToleranceBefore = .zero
+      generator.requestedTimeToleranceAfter = .zero
+      generator.maximumSize = CGSize(width: 256, height: 384)
+      var samples: [Data] = []
+      for fraction in [0.0, 0.33, 0.66, 0.95] {
+        let frame = try await generator.image(at: CMTime(seconds: duration.seconds * fraction, preferredTimescale: 600))
+        let data = try XCTUnwrap(frame.image.dataProvider?.data, collection.name) as Data
+        samples.append(data)
+      }
+      for index in 1..<samples.count {
+        XCTAssertNotEqual(samples[index - 1], samples[index], "\(collection.name): the reveal moves")
+      }
     }
-    for index in 1..<samples.count { XCTAssertNotEqual(samples[index-1], samples[index]) }
   }
   @MainActor func testNinfeaAmbientLifecycleAndNoPlayerControls() throws {
     XCTAssertNotNil(UIImage(named: NinfeaCinemaAssets.posterName))
@@ -1830,6 +1841,14 @@ final class SaliniTests: XCTestCase {
     let info = NinfeaInformationController()
     info.loadViewIfNeeded()
   }
+  /// Actual reveal and loop durations of a collection's release (seconds), loaded before any assertion.
+  static func cinemaDurations(_ collection: CollectionCinemaAssets) async throws -> (intro: Double, loop: Double) {
+    let introURL = try XCTUnwrap(collection.introURL)
+    let loopURL = try XCTUnwrap(collection.loopURL)
+    let intro = try await AVURLAsset(url: introURL).load(.duration).seconds
+    let loop = try await AVURLAsset(url: loopURL).load(.duration).seconds
+    return (intro, loop)
+  }
   @MainActor func testVisibleCollectionAdvancesIntoLoopAndReleasesOffscreen() async throws {
     let scene = try XCTUnwrap(UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.first)
     let previousKey = scene.windows.first(where: \.isKeyWindow)
@@ -1843,8 +1862,10 @@ final class SaliniTests: XCTestCase {
       window.isHidden = true
       previousKey?.makeKey()
     }
+    // The reveal plus one full loop, with headroom for decoder start-up — from the shipped files.
+    let durations = try await Self.cinemaDurations(.greca)
     cinema.active = true
-    let deadline = Date().addingTimeInterval(16)
+    let deadline = Date().addingTimeInterval(durations.intro + durations.loop + 6)
     while cinema.playback.ambientCycles == 0 && Date() < deadline {
       try await Task.sleep(nanoseconds: 100_000_000)
     }
@@ -1858,6 +1879,53 @@ final class SaliniTests: XCTestCase {
     XCTAssertEqual(cinema.playback.ambientCycles, 0)
     XCTAssertFalse(cinema.playback.finished)
   }
+  /// Every released collection: reveal, then three complete loop cycles with no pause at the
+  /// handoff or a loop boundary and no playhead stall longer than 0.4 s. Deadlines and the
+  /// observed share come from each release's actual durations (8–10 s loops since build 9).
+  @MainActor func testEveryCollectionRunsThreeFullCyclesWithoutStalling() async throws {
+    let scene = try XCTUnwrap(UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.first)
+    let previousKey = scene.windows.first(where: \.isKeyWindow)
+    defer { previousKey?.makeKey() }
+    for collection in CollectionCinemaAssets.allCases {
+      let durations = try await Self.cinemaDurations(collection)
+      let window = UIWindow(windowScene: scene)
+      window.rootViewController = UIViewController()
+      let cinema = NinfeaCinemaView(collection: collection)
+      window.rootViewController?.view.pin(cinema)
+      window.makeKeyAndVisible()
+      cinema.active = true
+      var loopSamples = 0
+      var pausedSamples = 0
+      var stalledRun = 0
+      var longestStall = 0
+      var previousPlayhead = Double.nan
+      let deadline = Date().addingTimeInterval((durations.intro + 3 * durations.loop) * 1.5 + 6)
+      while cinema.playback.ambientCycles < 3 && Date() < deadline {
+        try await Task.sleep(nanoseconds: 100_000_000)
+        guard cinema.playback.finished else { continue }
+        loopSamples += 1
+        if !cinema.isPlaying { pausedSamples += 1 }
+        let playhead = cinema.playheadSeconds
+        if playhead == previousPlayhead {
+          stalledRun += 1
+          longestStall = max(longestStall, stalledRun)
+        } else {
+          stalledRun = 0
+        }
+        previousPlayhead = playhead
+      }
+      let cycles = cinema.playback.ambientCycles
+      let playing = cinema.isPlaying
+      cinema.active = false
+      window.isHidden = true
+      XCTAssertGreaterThanOrEqual(cycles, 3, "\(collection.name): three full loop cycles must complete")
+      XCTAssertGreaterThan(loopSamples, Int(3 * durations.loop * 10 * 0.625),
+                           "\(collection.name): most of three \(String(format: "%.1f", durations.loop)) s cycles observed")
+      XCTAssertEqual(pausedSamples, 0, "\(collection.name): the living ending paused during \(pausedSamples) samples")
+      XCTAssertLessThanOrEqual(longestStall, 4, "\(collection.name): playhead stood still for \(longestStall * 100) ms")
+      XCTAssertTrue(playing, "\(collection.name): still playing after three cycles")
+    }
+  }
   /// The ending must keep running through three complete loop cycles: the player never
   /// pauses at the reveal handoff or at a loop boundary, and the playhead never stalls.
   @MainActor func testLivingLoopRunsThreeFullCyclesWithoutStalling() async throws {
@@ -1865,8 +1933,9 @@ final class SaliniTests: XCTestCase {
     let previousKey = scene.windows.first(where: \.isKeyWindow)
     let window = UIWindow(windowScene: scene)
     window.rootViewController = UIViewController()
-    // Greca has the shortest reveal, so three 4 s cycles fit in a reasonable test.
+    // Greca has the shortest reveal; deadlines and sample counts follow its actual durations.
     let cinema = NinfeaCinemaView(collection: .greca)
+    let durations = try await Self.cinemaDurations(.greca)
     window.rootViewController?.view.pin(cinema)
     window.makeKeyAndVisible()
     defer {
@@ -1880,7 +1949,8 @@ final class SaliniTests: XCTestCase {
     var stalledRun = 0
     var longestStall = 0
     var previousPlayhead = Double.nan
-    let deadline = Date().addingTimeInterval(45)
+    // Reveal + three cycles at 1.5× real time, plus decoder start-up.
+    let deadline = Date().addingTimeInterval((durations.intro + 3 * durations.loop) * 1.5 + 6)
     while cinema.playback.ambientCycles < 3 && Date() < deadline {
       try await Task.sleep(nanoseconds: 100_000_000)
       guard cinema.playback.finished else { continue }
@@ -1896,7 +1966,11 @@ final class SaliniTests: XCTestCase {
       previousPlayhead = playhead
     }
     XCTAssertGreaterThanOrEqual(cinema.playback.ambientCycles, 3, "Three full loop cycles must complete")
-    XCTAssertGreaterThan(loopSamples, 75, "Most of three 4 s cycles must have been observed")
+    // Sampled every 0.1 s: most of the three cycles must have been observed (the same 62.5 %
+    // share the 4 s loops were held to: 75 of 120 samples).
+    let expectedSamples = Int(3 * durations.loop * 10 * 0.625)
+    XCTAssertGreaterThan(loopSamples, expectedSamples,
+                         "Most of three \(String(format: "%.1f", durations.loop)) s cycles must have been observed")
     XCTAssertEqual(pausedSamples, 0, "The living ending paused during \(pausedSamples) samples")
     XCTAssertLessThanOrEqual(longestStall, 4,
                              "The playhead stood still for \(longestStall * 100) ms inside the loop")

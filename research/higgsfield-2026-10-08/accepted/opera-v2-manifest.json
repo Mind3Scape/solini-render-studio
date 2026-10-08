@@ -1,0 +1,190 @@
+{
+  "collection": "opera",
+  "version": 2,
+  "source": {
+    "file": "opera-closed-source-v1.mp4",
+    "sha256": "8bd166e75bb7fddcb8f375c90b6ebfc9e937e89d28001d31e6268fe59e41d340",
+    "job": "opera closed start=end v1",
+    "fps": 24.0,
+    "frames": 241,
+    "width": 1244,
+    "height": 1660
+  },
+  "encode": {
+    "codec": "hevc",
+    "crf": 20
+  },
+  "interval": {
+    "a": 48,
+    "b": 241,
+    "reveal_frames": 48,
+    "loop_frames": 241,
+    "reveal_seconds": 2.0,
+    "loop_seconds": 10.042,
+    "mode": "closed-rotated"
+  },
+  "files": {
+    "intro": "opera-film-v2.mp4",
+    "loop": "opera-loop-v2.mp4",
+    "start_poster": "opera-start-v2.png",
+    "final_poster": "opera-final-v2.png"
+  },
+  "seam": null,
+  "blend": null,
+  "closed": true,
+  "bridge": null,
+  "joints": {
+    "median_step": 0.997,
+    "largest": [
+      {
+        "after_frame": 192,
+        "ratio": 1.64
+      },
+      {
+        "after_frame": 194,
+        "ratio": 1.61
+      },
+      {
+        "after_frame": 195,
+        "ratio": 1.55
+      },
+      {
+        "after_frame": 21,
+        "ratio": 1.54
+      }
+    ],
+    "slowest_half_second_ratio": 0.59
+  },
+  "audit": {
+    "result": "PASS",
+    "failures": [],
+    "loop": {
+      "file": "tmp/higgsfield-loop/round2/candidates/opera/opera-loop-v2.mp4",
+      "width": 1244,
+      "height": 1660,
+      "fps": 24.0,
+      "duration": 10.041667,
+      "audio": false,
+      "frames": 241,
+      "median_window_alive": 0.4166666666666667,
+      "min_window_alive": 0.3958333333333333,
+      "dead_windows": 0,
+      "windows": 59,
+      "mean_lagged_change": 5.206884384155273,
+      "median_step": 1.133098840713501,
+      "seam_step": 1.60596764087677,
+      "seam_ratio": 1.4173235230436811,
+      "alive_tile_map": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          0,
+          0,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    "intro": {
+      "file": "tmp/higgsfield-loop/round2/candidates/opera/opera-film-v2.mp4",
+      "width": 1244,
+      "height": 1660,
+      "fps": 24.0,
+      "duration": 2.0,
+      "audio": false,
+      "frames": 48,
+      "alive_by_window": [
+        0.417,
+        0.417,
+        0.417
+      ],
+      "tail_alive": 0.4166666666666667,
+      "loop_median_alive": 0.4166666666666667,
+      "handoff_step_ratio": 1.3045908212661743,
+      "handoff_min_window_alive": 0.4166666666666667,
+      "median_alive": 0.4166666666666667
+    },
+    "regions": {
+      "tub": {
+        "kind": "rigid",
+        "mean": 0.18254020810127258,
+        "min_window": 0.10036147385835648,
+        "max_window": 0.434326171875
+      },
+      "niche": {
+        "kind": "rigid",
+        "mean": 0.0885501578450203,
+        "min_window": 0.01972390152513981,
+        "max_window": 0.2351747304201126
+      },
+      "water": {
+        "kind": "alive",
+        "mean": 16.299400329589844,
+        "min_window": 10.689099311828613,
+        "max_window": 20.904829025268555
+      },
+      "light": {
+        "kind": "alive",
+        "mean": 8.902885437011719,
+        "min_window": 4.8121747970581055,
+        "max_window": 11.486312866210938
+      }
+    }
+  }
+}

@@ -1,6 +1,6 @@
 {
   "date": "2026-10-08",
-  "status": "submitted; not visually accepted",
+  "status": "all jobs completed and downloaded; acceptance recorded separately in release report",
   "runs": [
     {
       "name": "ninfea",
@@ -37,7 +37,20 @@
           }
         ]
       },
-      "quoted_credits": 15
+      "quoted_credits": 15,
+      "downloaded": {
+        "path": "research/collection-worlds-2026-10-08/ninfea-source-v1.mp4",
+        "sha256": "d854109425c4914fa07651a27bb9ed5ba3ca0d7061ab0f29dfa10c0cdd159eca",
+        "bytes": 19637110,
+        "video": {
+          "width": 1244,
+          "height": 1660,
+          "r_frame_rate": "24/1",
+          "duration": "10.041667",
+          "nb_frames": "241"
+        }
+      },
+      "generation_status": "completed"
     },
     {
       "name": "aria",
@@ -74,7 +87,20 @@
           }
         ]
       },
-      "quoted_credits": 15
+      "quoted_credits": 15,
+      "downloaded": {
+        "path": "research/collection-worlds-2026-10-08/aria-source-v1.mp4",
+        "sha256": "5b949a5077d29acd82fa3f3441243ce33319091c46d600e7c52fc0a84396c0fb",
+        "bytes": 14888076,
+        "video": {
+          "width": 1244,
+          "height": 1660,
+          "r_frame_rate": "24/1",
+          "duration": "10.041667",
+          "nb_frames": "241"
+        }
+      },
+      "generation_status": "completed"
     },
     {
       "name": "opera",
@@ -111,7 +137,20 @@
           }
         ]
       },
-      "quoted_credits": 15
+      "quoted_credits": 15,
+      "downloaded": {
+        "path": "research/collection-worlds-2026-10-08/opera-source-v1.mp4",
+        "sha256": "3b4919506ef8be28123a1063b8fbb86e35a5a075548ae1229d825a10bbe522ad",
+        "bytes": 19998955,
+        "video": {
+          "width": 1244,
+          "height": 1660,
+          "r_frame_rate": "24/1",
+          "duration": "10.041667",
+          "nb_frames": "241"
+        }
+      },
+      "generation_status": "completed"
     },
     {
       "name": "greca-closed",
@@ -153,7 +192,20 @@
           }
         ]
       },
-      "quoted_credits": 12
+      "quoted_credits": 12,
+      "downloaded": {
+        "path": "research/collection-worlds-2026-10-08/greca-closed-source-v1.mp4",
+        "sha256": "c8673f733ac71878b1d70821ff115a92a63273cd1277a9778fdfd1edb9573d67",
+        "bytes": 19232759,
+        "video": {
+          "width": 1244,
+          "height": 1660,
+          "r_frame_rate": "24/1",
+          "duration": "8.041667",
+          "nb_frames": "193"
+        }
+      },
+      "generation_status": "completed"
     },
     {
       "name": "greca-seed",
@@ -198,7 +250,20 @@
           }
         ]
       },
-      "quoted_credits": 56
+      "quoted_credits": 56,
+      "downloaded": {
+        "path": "research/collection-worlds-2026-10-08/greca-seed-source-v1.mp4",
+        "sha256": "61bc139cf9fe6e32c102e593f3d7b2573806dc040f93ece2f577cbb5c0914032",
+        "bytes": 3144604,
+        "video": {
+          "width": 834,
+          "height": 1112,
+          "r_frame_rate": "24/1",
+          "duration": "8.041667",
+          "nb_frames": "193"
+        }
+      },
+      "generation_status": "completed"
     }
   ]
 }

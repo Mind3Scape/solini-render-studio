@@ -1,0 +1,6 @@
+Continue in this Salini worktree only. Read OPUS-ENGINEERING.txt and PLAYBOOK.html.
+New downloaded takes: research/collection-worlds-2026-10-08/ninfea-source-v1.mp4, aria-source-v1.mp4, opera-source-v1.mp4, greca-closed-source-v1.mp4.
+Greca closed tests identical start/end anchors with steady motion. Seedance comparison will arrive as greca-seed-source-v1.mp4.
+Analyze each with regions from its actual composition; prepare the best loop intervals and three-cycle phone-crop previews. Do not change app assets until Codex visually accepts. Greca candC/candD are not accepted yet (seam/doubling).
+If a generative bridge is necessary, extract exact start/end PNGs for Codex to upload. Kling min duration is 3s (not 1–2s in previous report).
+Implement editing and Swift yourself. No xcodebuild, simulator, credits, commits. Codex performs visual QA/build/release. Report in OPUS-ROUND2.txt with concrete output paths and honest acceptance limits.

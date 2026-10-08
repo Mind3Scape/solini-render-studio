@@ -15,6 +15,22 @@ targets:
     sources:
       - path: Salini
         excludes:
+          - Resources/greca-start-v1.png
+          - Resources/greca-loop-v1.mp4
+          - Resources/greca-final-v1.png
+          - Resources/greca-film-v1.mp4
+          - Resources/opera-start-v1.png
+          - Resources/opera-loop-v1.mp4
+          - Resources/opera-final-v1.png
+          - Resources/opera-film-v1.mp4
+          - Resources/aria-start-v1.png
+          - Resources/aria-loop-v1.mp4
+          - Resources/aria-final-v1.png
+          - Resources/aria-film-v1.mp4
+          - Resources/ninfea-loop-v1.mp4
+          - Resources/ninfea-interior.png
+          - Resources/ninfea-film-v3.mp4
+          - Resources/ninfea-poster-v3.png
           - CatalogMedia
           - CatalogMedia/**
           - Resources/ninfea-film-v2.mp4
@@ -31,7 +47,7 @@ targets:
         DEVELOPMENT_TEAM: TQ5SCF3KQZ
         CODE_SIGN_STYLE: Automatic
         MARKETING_VERSION: '1.0'
-        CURRENT_PROJECT_VERSION: '8'
+        CURRENT_PROJECT_VERSION: '9'
         INFOPLIST_KEY_CFBundleDisplayName: Salini
         GENERATE_INFOPLIST_FILE: YES
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon

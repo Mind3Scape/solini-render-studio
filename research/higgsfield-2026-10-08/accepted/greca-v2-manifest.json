@@ -1,0 +1,204 @@
+{
+  "collection": "greca",
+  "version": 2,
+  "source": {
+    "file": "greca-closed-source-v1.mp4",
+    "sha256": "c8673f733ac71878b1d70821ff115a92a63273cd1277a9778fdfd1edb9573d67",
+    "job": "greca closed start=end v1",
+    "fps": 24.0,
+    "frames": 193,
+    "width": 1244,
+    "height": 1660
+  },
+  "encode": {
+    "codec": "hevc",
+    "crf": 20
+  },
+  "interval": {
+    "a": 46,
+    "b": 193,
+    "reveal_frames": 46,
+    "loop_frames": 193,
+    "reveal_seconds": 1.917,
+    "loop_seconds": 8.042,
+    "mode": "closed-rotated"
+  },
+  "files": {
+    "intro": "greca-film-v2.mp4",
+    "loop": "greca-loop-v2.mp4",
+    "start_poster": "greca-start-v2.png",
+    "final_poster": "greca-final-v2.png"
+  },
+  "seam": null,
+  "blend": null,
+  "closed": true,
+  "bridge": null,
+  "joints": {
+    "median_step": 2.24,
+    "largest": [
+      {
+        "after_frame": 146,
+        "ratio": 1.33
+      },
+      {
+        "after_frame": 148,
+        "ratio": 1.2
+      },
+      {
+        "after_frame": 105,
+        "ratio": 1.2
+      },
+      {
+        "after_frame": 66,
+        "ratio": 1.19
+      }
+    ],
+    "slowest_half_second_ratio": 0.91
+  },
+  "audit": {
+    "result": "FAIL",
+    "failures": [
+      "rigid region rim moves (mean 2.80)"
+    ],
+    "loop": {
+      "file": "tmp/higgsfield-loop/round2/candidates/greca/greca-loop-v2.mp4",
+      "width": 1244,
+      "height": 1660,
+      "fps": 24.0,
+      "duration": 8.041667,
+      "audio": false,
+      "frames": 193,
+      "median_window_alive": 0.625,
+      "min_window_alive": 0.6041666666666666,
+      "dead_windows": 0,
+      "windows": 47,
+      "mean_lagged_change": 11.101127624511719,
+      "median_step": 2.731677532196045,
+      "seam_step": 2.525155544281006,
+      "seam_ratio": 0.9243973765274511,
+      "alive_tile_map": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          0,
+          0,
+          0,
+          1,
+          1
+        ],
+        [
+          1,
+          0,
+          0,
+          0,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    "intro": {
+      "file": "tmp/higgsfield-loop/round2/candidates/greca/greca-film-v2.mp4",
+      "width": 1244,
+      "height": 1660,
+      "fps": 24.0,
+      "duration": 1.916667,
+      "audio": false,
+      "frames": 46,
+      "alive_by_window": [
+        0.646,
+        0.625,
+        0.604
+      ],
+      "tail_alive": 0.625,
+      "loop_median_alive": 0.625,
+      "handoff_step_ratio": 0.8990402221679688,
+      "handoff_min_window_alive": 0.6041666666666666,
+      "median_alive": 0.625
+    },
+    "regions": {
+      "rim": {
+        "kind": "rigid",
+        "mean": 2.795330762863159,
+        "min_window": 2.2837202548980713,
+        "max_window": 3.6116225719451904
+      },
+      "bowl": {
+        "kind": "rigid",
+        "mean": 0.124575175344944,
+        "min_window": 0.03805825486779213,
+        "max_window": 0.3080712854862213
+      },
+      "cliff": {
+        "kind": "rigid",
+        "mean": 0.15148039162158966,
+        "min_window": 0.05636553466320038,
+        "max_window": 0.4153631627559662
+      },
+      "foreground": {
+        "kind": "alive",
+        "mean": 27.761829376220703,
+        "min_window": 24.884084701538086,
+        "max_window": 30.346792221069336
+      },
+      "left": {
+        "kind": "alive",
+        "mean": 16.323627471923828,
+        "min_window": 13.988476753234863,
+        "max_window": 18.814586639404297
+      },
+      "right": {
+        "kind": "alive",
+        "mean": 24.07474708557129,
+        "min_window": 20.98531723022461,
+        "max_window": 27.309064865112305
+      }
+    }
+  }
+}

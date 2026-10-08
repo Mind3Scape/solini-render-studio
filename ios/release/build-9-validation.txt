@@ -1,0 +1,26 @@
+Salini 1.0 (9) — living collection films — 8 October 2026
+
+Four home stories now use the new environments and generated motion: Ninfea garden/pond,
+Aria linen pavilion, Opera stone loggia/pool, Greca limestone island/sea. Each visit starts
+the intro automatically, then a silent 8–10 second ambient loop repeats without controls.
+These are living established environments; this release does not add a new growth reveal.
+
+Implemented by Opus 5.5 in Claude Code, reviewed and validated by Codex.
+110 XCTest tests passed, 0 failures (iOS 27 simulator 1917B285-7063-4C68-8096-8EB4F7318E2D).
+Includes all four collections through three native playback cycles, no paused samples or
+playhead stalls over 400 ms; reveal decoding, poster proportions, frame counts and silence.
+Python motion-tool self-tests: 18 passed. git diff --check passed.
+Manual simulator check: all four home selectors load the correct new scene; Ninfea first;
+official logo and glass controls remain visible; automatic playback and repeat visit work.
+Browser QA also ran at least three full repeats per collection at phone-card dimensions.
+
+Sources and exact requests: research/collection-worlds-2026-10-08 and
+research/higgsfield-2026-10-08/generation-*.json. Accepted cut measurements: accepted/*.json.
+Higgsfield usage: 11 completed jobs, 179 credits spent, 710 remaining after generation.
+127 catalog entries and 115 tool capabilities documented in PLAYBOOK.html; only the listed
+video workflows were experimentally tested. Ninfea's distant garden remains calmer than
+its foreground foliage and water. Bridge tone correction is documented, no still crossfade.
+
+New app media: 49.4 MB (49,369,134 bytes, 16 files); previous 51.4 MB (51,366,172 bytes,
+16 files) excluded from the bundle but retained as sources. Net media reduction: 2.0 MB.
+Build/upload/processing status is recorded separately in build-9-upload-receipt.txt.

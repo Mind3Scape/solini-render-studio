@@ -1,0 +1,276 @@
+OPUS 5.5 — ENGINEERING READOUT, collection films (Higgsfield / Kling 3.0 Pro)
+8 October 2026 · worktree salini-native-materials, HEAD c564623 · no build, no simulator, no commit,
+no credits spent. Media and test output only in tmp/higgsfield-loop/ (own .gitignore "*").
+
+=====================================================================================================
+1. CURRENT STATE (re-read)
+=====================================================================================================
+Player (ios/Salini/NinfeaCinema.swift): one AVPlayerLayer, AVQueuePlayer(reveal) + AVPlayerLooper(loop),
+aspect fill, muted, no transport, no fades/seeks/reverse. New visit (page becomes active / re-entry) =
+reveal again, then the loop; returning from Control Center resumes; offscreen releases decoders;
+Reduce Motion shows the final poster. That contract already gives "automatic replay on re-entry, no
+play button, no stretched imagery". Gallery (CollectionGallery.swift): Ninfea first.
+
+Why the shipped endings look static: each loop is a SEPARATE 4 s generation anchored start=end on the
+reveal's last frame. The analyzer (collection-motion-2026-10-07) measured 0 % live share at hero scale
+for all four; generation anchored on both ends tends to settle near the anchor = near-still clip.
+
+=====================================================================================================
+2. PROPOSED FINISHING (no ping-pong, no slow-down, no still-to-still opacity)
+=====================================================================================================
+Generate ONE continuous take that moves from frame 0 to the end (the Greca pilot does), then cut it:
+
+    reveal = take[0, a)          loop = take[a, b)          (b ≤ last frame)
+
+* The reveal→loop handoff is the take's OWN continuity (frame a−1 → a): never a seam.
+* The only artificial transition is the loop seam b−1 → a, repeated by AVPlayerLooper.
+* (a, b) is chosen by measurement, not by eye-balling a timeline: the seam should look like one more
+  frame of the take's own motion (magnitude, direction, speed, exposure, product, and no local pop).
+* Works with the existing player unchanged (two files, same proportions; posters cut from the same
+  frames: start = take frame 0, final/Reduce Motion = loop frame 0).
+
+Order of preference when no interval passes:
+  1. another generative take (8–10 s, steady-state motion, see §6);
+  2. a generated BRIDGE: Kling start_image = frame b−1, end_image = frame a, 1–2 s; loop = take[a,b) +
+     bridge. Both seams then coincide with real frames. Risk (documented by the v1 loops): anchored
+     ends slow down/settle — the bridge must pass the same gates (tail/head live share);
+  3. last resort: short crossfade of MOVING footage (--blend K): measured and reported, see §4.
+
+=====================================================================================================
+3. IMPLEMENTATION (research/higgsfield-2026-10-08/tools/)
+=====================================================================================================
+loop_interval.py — reuses collection-motion-2026-10-07/motion_regions.py (imported, not forked):
+same hero-scale decode (360 px, visible 1:1.30 aspect-fill crop), blur, lag/window timeline, region
+syntax and gates.
+  scan  every admissible (a, b) (defaults: reveal 1.5–4 s, loop 3–6 s) on the phone crop:
+        jump        mean |F[a]−F[b]| in the moving area / median step (F[b] = natural successor of b−1)
+        local       the same for the worst 8×6 tile (catches a wave breaking in one place)
+        seam_step   displayed step |F[a]−F[b−1]| / median step (≈1 natural, ≫1 pop, ≪1 hitch)
+        direction   corr(F[a]−F[b−1], F[b]−F[b−1]) — motion keeps its direction (> 0)
+        speed       0.25 s lagged change after a / before b (≈1: no speed jump)
+        exposure    |mean luma F[a] − F[b]|
+        rigid       |F[a]−F[b]| in rigid (product) regions
+        + per-take: live share per 0.5 s window (ease-out/freeze detector), product drift vs frame 0,
+          EDGE drift (high-pass) in rigid regions — separates light/caustics from geometry change.
+        Top candidates are re-gated with motion_regions' own loop×3 measurement.
+  cut   frame-exact reveal/loop from the full-res YUV (no RGB round trip), posters, manifest JSON
+        (source sha256, job id, interval, seam metrics, encode, analyzer audit), heatmap; re-runs
+        motion_regions.py on the ENCODED files. Options: --codec h264|hevc (hvc1, closed GOP 24),
+        --crf, --blend K (reported doubling metric).
+  Normalisation floor: median step ≥ 0.25 luma, so a frozen take's codec noise is not called a "jump".
+selftest.py — synthetic takes, no generated media: 10/10 PASS
+        periodic water over a still product → finds the 96-frame period, jump 0.011, seam ×1.009,
+        direction 1.0, speed 1.0; cut writes exactly a and b−a frames; encoded re-audit PASS;
+        drifting take → larger jump (gate, not silent pass); eased-out take holding a still for 1.5 s
+        → last window dead; --blend reports HF dip 0.69.
+
+Native integration (ios/Salini/NinfeaCinema.swift, not compiled — per instruction no xcodebuild):
+  CinemaRelease { version, intro, loop, startPoster, finalPoster, loopFrames, source } and
+  CollectionCinemaAssets.releases — explicit, one entry per collection; the old computed names are now
+  read from it (current v1/v3 values, behaviour unchanged). Adopting an accepted take = copy the four
+  files from the cut folder into ios/Salini/Resources, change ONE entry (version, names, loopFrames,
+  source = job id), run the tests.
+  ios/SaliniTests/CinemaReleaseTests.swift (written, not run; project regenerated with xcodegen):
+    • gallery order == releases order, Ninfea first; one release per collection; files unique and
+      prefixed by their collection; reveal ≠ loop; the rejected ninfea-film-v2 never ships;
+    • for every release: reveal and loop exist with identical frame size (no reframing at the
+      handoff), loop frame count == loopFrames, silent loop, both posters have the film's aspect
+      (nothing stretched). Checked offline on the current files: all loops 96 frames, all posters and
+      films 1176×1764 (2:3).
+  Existing playback tests (three cycles, interruption) stay valid: the player is untouched.
+
+=====================================================================================================
+4. MEASUREMENTS
+=====================================================================================================
+Baselines (old reveals scanned as if they were takes): no admissible loop anywhere.
+  greca-reveal (2026-10-06): best seam ×15, live share median 2 %   → almost still.
+  opera-reveal: seam ×74 (curtains open = transformation, not a steady state).
+  ninfea-film-v3 (12 s): seam ×19 — growth over time cannot self-loop.
+  aria-reveal: seam ×24, curtains still opening.
+  → a reveal that TRANSFORMS cannot provide its own loop; steady-state motion is a generation request.
+
+Greca pilot — research/collection-worlds-2026-10-08/greca-source-v1.mp4
+  sha256 06bc2734acbd481d…, 1244×1660 (3:4, the old films are 2:3), 24 fps, 193 frames, 8.04 s.
+  Motion: excellent and steady — 58–65 % live tiles in EVERY 0.5 s window, first to last; no ease-out.
+  Regions for this composition (visible crop):
+    rim 0.17,0.35,0.84,0.395 rigid · bowl 0.20,0.40,0.80,0.52 rigid · cliff 0.0,0.02,0.55,0.27 rigid
+    foreground 0.0,0.68,1.0,1.0 · horizon 0.0,0.30,1.0,0.34 · left 0.0,0.36,0.14,0.52 · right 0.87,0.36,1.0,0.52 (alive)
+  Product: rim edge drift 0.85 ≈ cliff 0.82 (the noise floor of a still object) → geometry stable.
+    Bowl: lagged 1.03–1.15 (gate 1.0) with edge drift 1.05 → moving caustic LIGHT that the prompt
+    requested, not deformation. Pedestal at the waterline: edge drift 2.07 — check visually.
+  Water events: foam/white water breaks on the island edges in sets ~96 frames apart (≈ frames 56–80
+    and 152–176). Not in the prompt ("no splash"), visible at phone size.
+  Loop seam: NO interval passes the seam gate. Floor of the jump ≈ 2.25 median steps for every (a, b):
+    a chaotic water surface never returns to the same state, so any cut injects ~2.3 frames of change.
+    Best phase-matched natural interval: a=46, b=190 (reveal 1.92 s, loop 6.0 s):
+      jump 2.28, local 3.61, direction +0.30, speed 1.05, exposure 0.007, handoff ×1.03,
+      encoded loop ×3: live median 62.5 %, min 58 %, seam ×2.69 (gate 0.5–2.0) → FAIL on seam only.
+    Seam strip (tmp/higgsfield-loop/greca-v1/candC/seam-strip.png): at b−1 the island top is nearly dry,
+      at a a thin water sheet lies on its edges and the foreground ripple pattern changes → likely a
+      visible "wash" every 6 s. An earlier pick (55–168) jumped from calm to FOAM — caught only after
+      adding the worst-tile metric.
+    Crossfade candidate D (same interval, --blend 8 = 0.33 s): seam ×1.14 (passes), but water high-
+      frequency energy drops to 0.75 at the middle of the blend (doubled ripples for ~0.15 s), product
+      pair MAE 1.37 (rims do not double). Visible softening is likely; it is a dissolve of moving
+      footage and must be judged at phone size, not accepted on numbers.
+  Size: 6 s loop of busy water at 1244×1660: h264 CRF16 11.7 MB, CRF20 7.5 MB, HEVC CRF22 5.2 MB
+    (old loops 1.9–3.0 MB). Proposal: HEVC (hvc1) CRF 20–22 after a visual check of glints.
+
+Review files (ignored tmp):
+  tmp/higgsfield-loop/greca-v1/candC/  natural 46–190: greca-film-v2.mp4, greca-loop-v2.mp4, posters,
+      manifest, heatmap, preview-reveal-plus-3-cycles-phonecrop.mp4, seam-strip.png
+  tmp/higgsfield-loop/greca-v1/candD/  same with --blend 8 (+ preview)
+  tmp/higgsfield-loop/greca-v1/scan4.json  ranked candidates; regions.txt  exact region flags
+
+=====================================================================================================
+5. ACCEPTANCE GATES (per film; numbers are heuristics, the final gate is Codex on device, 3 cycles)
+=====================================================================================================
+  take       live share ≥ 18 % in every 0.5 s window, median ≥ 30 %, last 1.5 s ≥ 0.6× median (no ease-out)
+  product    rigid lagged ≤ 1.0 for geometry regions (rim/silhouette); edge drift ≤ 1.5× a still
+             reference region (cliff/wall); lit areas (caustics) reported, judged visually
+  seam       jump ≤ 1.5, local ≤ 3.0, displayed step 0.5–2.0×, direction ≥ 0, speed 0.67–1.5,
+             exposure ≤ 0.8 luma
+  handoff    reveal = take[0,a) → automatically natural (measured ×1.03 here)
+  blend      only if no interval passes AND another take is not available: K ≤ 12 frames, HF ratio
+             ≥ 0.85 in moving areas, product pair MAE ≤ 1.0, explicitly reported in the manifest
+  files      reveal/loop same size, posters from the same frames, silent, closed GOP, ≤ ~6 MB per loop
+  Greca pilot today: passes take/product/handoff; fails the seam gate (×2.69) and the local-pop review.
+
+=====================================================================================================
+6. RECOMMENDATIONS FOR THE NEXT TAKES (reasoning, trade-offs)
+=====================================================================================================
+* Ask for STEADY STATE, not events: "uniform small ripples everywhere, no breaking waves, no foam, no
+  water over the stone, nothing begins or ends". Events (foam sets, curtain gusts, leaf falls) are what
+  make seams visible; uniform micro-motion hides them. Trade-off: less drama per frame.
+* Prefer slower, finer water (smaller median step): the seam penalty is ~2.3 steps; a smaller step makes
+  the same jump less visible. The pilot moves fast (median step 12 luma at hero scale).
+* Longer take (10 s) gives more (a, b) pairs and a longer loop (6–7 s) that hides repetition.
+* For Ninfea/Aria/Opera use the same pattern: a steady-state living take from the accepted final frame;
+  growth/opening belongs to the reveal only if a separate steady take continues from its exact last
+  frame (then the handoff is again a cut between takes and needs the same seam gates).
+* Bridge generation (start = b−1, end = a) is the most promising way to an exact seam without blending;
+  it costs one short generation per film and must pass the head/tail live-share gates.
+
+=====================================================================================================
+7. NOT DONE / LIMITS
+=====================================================================================================
+* Swift changes and CinemaReleaseTests are not compiled or run (no xcodebuild by instruction).
+* No asset replaced, no release entry changed, no build number touched, no commit.
+* Kling capabilities (end_image, durations) are taken from greca-pilot.json/models.json context only;
+  I spent no credits and generated nothing.
+* Metrics are heuristics at hero scale; they find seams and freezes, they do not prove invisibility or
+  production quality.
+
+Awaiting Codex: visual review of candC (natural) and candD (blend) at phone size, accepted asset paths
+for the other collections, and a decision between natural seam / bridge generation / another take.
+
+=====================================================================================================
+8. ADDENDUM — v1 takes of 8 Oct (Ninfea, Aria, Opera, Greca closed start=end)
+=====================================================================================================
+App assets and the release table are unchanged; candC/candD (Greca open) remain unaccepted.
+
+Tool changes (loop_interval.py; selftest 15/15 PASS):
+  • cut --closed       start=end take: loop = take[a:b) + take[0:a), reveal = take[0:a). The reveal hands
+                       over by continuity and the loop wraps by continuity; the generation's anchor is
+                       the only joint. Manifest mode "closed-rotated", loop_frames = real length.
+  • bridge-frames      lossless full-res PNGs for a generated bridge: start = frame b−1, end = frame a,
+                       plus a request JSON (size, fps, minimum 3 s for Kling).
+  • cut --bridge clip  loop = take[a:b) + bridge; bridge endpoints that duplicate b−1 / a are dropped;
+                       refuses a bridge of another size (must be generated at the take size or scaled
+                       explicitly and reported).
+  • joints             every displayed step of the finished loop vs its median (seam, anchor, bridge
+                       ends) and the slowest 0.5 s — written into every manifest.
+  • rigid_shift_px_max sub-pixel phase correlation of rigid regions vs frame 0 at full resolution. Light
+                       (caustics, glints) does not move the peak; a sliding/breathing product does.
+  • regions.json + regions_overlay.py: region presets per composition, drawn on the frame for checking.
+  Region note: lagged change inside a "rigid" box is often LIGHT. Geometry is judged by rigid_shift.
+
+Measurements (hero crop 360 px, 1:1.30; all takes 1244×1660, 24 fps; sha256 prefixes)
+  take          frames  live share/0.5 s   geometry shift (px)             best natural loop
+  ninfea d854…  241     31–42 %            rim 0.07, body 0.06             77–224 (6.1 s): seam ×2.48, local 6.0
+                                                                            (a large foreground leaf), dir +0.34,
+                                                                            speed 0.98; garden region barely moves
+  aria   5b94…  241     56–81 %            tub 1.00 (!), plinth 0.09       none: curtains/light change state;
+                                                                            best jump 11–15 steps → needs a bridge
+  opera  3b49…  241     35–46 %            tub 0.02, niche 0.05            73–190 (4.9 s): seam ×2.64, local 4.0,
+                                                                            speed 1.36; ripple pattern changes at the cut
+  greca-closed  193     62–65 %, no        rim 0.06, bowl 0.04, cliff 0.01 WHOLE take closes: anchor joint ×1.78–1.94,
+         c867…          slowdown at end                                     jump 1.10, local 1.9, direction +0.86,
+                                                                            speed 0.90, exposure 0.27
+  greca (open)  193     58–65 %            rim 0.08, bowl 0.25             46–190 (6.0 s): seam ×2.69 (see §4)
+
+Control result (start=end vs open, same scene): in THIS pair the anchored take did NOT lose motion
+(62.5 % live in every window, slowest half-second 0.91 of the median) and its joint is the only seam
+under ×2 of all takes. One pair is not a law: the v1 loops of 6 Oct were anchored and nearly still.
+Recommendation: for steady water/foliage scenes generate start=end on the accepted frame and gate it
+with this tool; keep the open take as the reveal source if a growth/opening reveal is wanted.
+Aria: tub displacement up to 1.0 px between sampled frames — curtain shadows may bias the correlation;
+check the tub outline visually before accepting any Aria loop.
+
+Prepared for review — tmp/higgsfield-loop/candidates-2026-10-08/ (ignored):
+  greca-closed/   reveal 0–45 (1.92 s) + rotated closed loop 192 frames (8.0 s): loop audit seam ×0.93,
+                  handoff ×0.90, largest joint ×1.94 (the anchor). Strongest candidate.
+  ninfea/         reveal 0–76 (3.2 s) + loop 77–223 (6.1 s): seam ×2.48.
+  opera/          reveal 0–72 (3.0 s) + loop 73–189 (4.9 s): seam ×2.64.
+  each: *-film-v*.mp4, *-loop-v*.mp4, posters, manifest, heatmap,
+        preview-reveal-plus-3-cycles-phonecrop.mp4
+  seam-strips.png  three frames either side of each joint (red line) at phone crop.
+  bridges/        start/end PNGs + request JSON (Kling ≥ 3 s, generate at 1244×1660, silent):
+                  aria   start f221 → end f76   (required: no natural interval)
+                  ninfea start f223 → end f77   (optional: seam ×2.48)
+                  opera  start f189 → end f73   (optional: seam ×2.64)
+                  greca  start f189 → end f46   (open take; the closed take does not need one)
+  Version names in the cuts (greca-v2, ninfea-v4, opera-v2) are review labels, not release decisions.
+
+Bridge request guidance (reasoning): a bridge must keep the take's steady motion between two real
+frames; ask for "the same continuous motion as the clip, no new gust/wave/event, no slowdown toward
+the end frame, locked camera". Accept only if `cut --bridge` reports both joints ≤ ×2, no slow half-
+second (< 0.6 of the median), and the product's geometry shift stays at the take's level.
+
+Seedance Greca: run `scan` (and `--closed` if start=end) with regions.json["greca"/"greca-closed"]
+after checking the overlay; compare against greca-closed's ×1.94 joint and 62 % live share.
+
+=====================================================================================================
+9. INTEGRATION — build 9 (Codex accepted round2/candidates after 3+ cycles each on the QA page)
+=====================================================================================================
+Applied with research/higgsfield-2026-10-08/tools/integrate_films.sh --apply (adopt_release.py ×4):
+  collection  release  reveal                      loop                                   source
+  ninfea      v4       77 fr (3.21 s)              220 fr (9.17 s)  open 77–223 + bridge    Kling bridge ea7a6e59…, tone-matched
+  aria        v2       76 fr (3.17 s)              217 fr (9.04 s)  open 76–221 + bridge    Kling bridge 52472280…, tone-matched
+  opera       v2       48 fr (2.00 s)              241 fr (10.04 s) closed, rotated at 48   opera-closed-source-v1 8bd166e7…
+  greca       v2       46 fr (1.92 s)              193 fr (8.04 s)  closed whole clip, rot. greca-closed-source-v1 c8673f73…
+  All HEVC hvc1 CRF 20, closed GOP, 1244×1660 (3:4), 24 fps, silent; posters = reveal frame 0 and loop
+  frame 0, same proportions (checked on disk).
+  Measured joints (manifests): ninfea ≤ ×1.41, aria ≤ ×1.72, opera ≤ ×1.64, greca ≤ ×1.33; no half-second
+  slower than 0.59 of its loop's median; product geometry shift ≤ 0.11 px (Aria rim/faucet ≤ 0.10 px;
+  the textureless tub body is not a valid correlation target).
+
+Code (ios/):
+  • NinfeaCinema.swift — four CinemaRelease entries (version, files, measured loopFrames, source);
+    NinfeaCinemaAssets and Ninfea's fallback poster now read the release (no hard-coded v3 names).
+  • CollectionGallery.swift — Ninfea's story image = its release poster; Design.photo() falls back to
+    the exact file name when no .jpg exists (that image never loaded before).
+  • project.yml — previous films/posters excluded from the app target (files kept in the repository as
+    sources): {aria,opera,greca}-{film,loop}-v1.mp4 and -{start,final}-v1.png, ninfea-film-v3.mp4,
+    ninfea-loop-v1.mp4, ninfea-interior.png, ninfea-poster-v3.png. CURRENT_PROJECT_VERSION 9.
+    xcodegen regenerated: new files referenced, excluded ones absent.
+  • Tests (not compiled/run here):
+    CinemaReleaseTests — async loads bound before assertions; names, sizes, measured loop length,
+      silence, poster proportions.
+    SaliniTests — testEveryReleasedRevealDecodesSilentlyAndMoves (replaces the Ninfea-only 7–16 s/2:3
+      check: every reveal ≥ 1.5 s, ≥ 720 px, ≥ 24 fps, silent, poster-proportioned, moving);
+      the matching-loop test checks the loop length against the release (was "< 9 s");
+      cinemaDurations() feeds actual durations into the playback deadlines;
+      NEW testEveryCollectionRunsThreeFullCyclesWithoutStalling — each of the four: reveal, then three
+      complete cycles, zero paused samples, no stall > 0.4 s, ≥ 62.5 % of 3·loop observed; deadline
+      (intro + 3·loop)·1.5 + 6 s (≈ 50 s worst case per collection). The Greca three-cycle +
+      interruption test is kept unchanged apart from duration-derived limits.
+
+Bundle media size (corrected by Codex against the 16 adopted files): 49,369,134 bytes new vs
+51,366,172 bytes excluded — a 2.0 MB reduction. The eight PNG posters account for about 18.1 MB.
+JPEG/HEIC conversion was not done in this pass.
+
+QA page: tmp/higgsfield-loop/qa.html (HEVC with H.264 QA copies as browser fallback; pause/restart,
+time and cycle counter). Not part of the app.
+
+Not done here (by instruction): xcodebuild, simulator, tests, commit, push, TestFlight.

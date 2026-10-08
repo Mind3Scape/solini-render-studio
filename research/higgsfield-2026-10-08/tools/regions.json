@@ -1,0 +1,46 @@
+{
+  "_note": "Fractions of the VISIBLE 1:1.30 aspect-fill card (x0,y0,x1,y1). rigid = product geometry or a still reference; alive = must move. Per composition: re-check on overlay/heatmap when a take changes.",
+  "greca": [
+    "rim=0.17,0.35,0.84,0.395:rigid",
+    "bowl=0.20,0.40,0.80,0.52:rigid",
+    "cliff=0.0,0.02,0.55,0.27:rigid",
+    "foreground=0.0,0.68,1.0,1.0:alive",
+    "left=0.0,0.36,0.14,0.52:alive",
+    "right=0.87,0.36,1.0,0.52:alive"
+  ],
+  "greca-closed": [
+    "rim=0.22,0.338,0.78,0.36:rigid",
+    "bowl=0.20,0.37,0.80,0.48:rigid",
+    "cliff=0.0,0.02,0.55,0.24:rigid",
+    "foreground=0.0,0.68,1.0,1.0:alive",
+    "left=0.0,0.33,0.12,0.50:alive",
+    "right=0.88,0.33,1.0,0.50:alive"
+  ],
+  "ninfea": [
+    "rim=0.08,0.405,0.92,0.45:rigid",
+    "body=0.12,0.47,0.88,0.59:rigid",
+    "foreground=0.0,0.78,1.0,1.0:alive",
+    "pond=0.20,0.66,0.80,0.76:alive",
+    "garden=0.0,0.0,0.22,0.55:alive"
+  ],
+  "aria": [
+    "tub=0.20,0.645,0.83,0.73:rigid",
+    "plinth=0.08,0.76,0.92,0.80:rigid",
+    "curtains=0.0,0.0,1.0,0.45:alive",
+    "floor=0.0,0.86,1.0,1.0:alive"
+  ],
+  "opera": [
+    "tub=0.35,0.50,0.72,0.61:rigid",
+    "niche=0.32,0.12,0.68,0.38:rigid",
+    "water=0.0,0.76,1.0,1.0:alive",
+    "light=0.88,0.30,1.0,0.72:alive"
+  ],
+  "greca-seed": [
+    "rim=0.25,0.35,0.75,0.37:rigid",
+    "bowl=0.22,0.39,0.78,0.50:rigid",
+    "cliff=0.0,0.02,0.55,0.24:rigid",
+    "foreground=0.0,0.70,1.0,1.0:alive",
+    "left=0.0,0.33,0.10,0.50:alive",
+    "right=0.92,0.33,1.0,0.50:alive"
+  ]
+}

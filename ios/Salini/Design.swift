@@ -90,7 +90,8 @@ extension UIView {
   func height(_ h: CGFloat) { heightAnchor.constraint(equalToConstant: h).isActive = true }
 }
 func photo(_ name: String, height: CGFloat? = nil) -> UIImageView {
-  let v = UIImageView(image: UIImage(named: name + ".jpg"))
+  // Catalogue photographs are JPEG by name; a full file name (a film's PNG poster) is used as is.
+  let v = UIImageView(image: UIImage(named: name + ".jpg") ?? UIImage(named: name))
   v.contentMode = .scaleAspectFill
   v.clipsToBounds = true
   v.isAccessibilityElement = false

@@ -1,0 +1,9 @@
+Final engineering pass before Codex builds/TestFlight 9. Salini only.
+Read REVIEW-UPDATE.txt (async XCTest autoclosures and actual-duration deadlines).
+All sources are in research/collection-worlds-2026-10-08/.
+Accept Greca closed candidate visually: geometry and composition are good; no frozen tail. Keep Kling vs Seedance final choice after checking the Seedance crop/joints. Greca candidate in tmp/higgsfield-loop/candidates-2026-10-08/greca-closed is visually approved subject to final simulator playback.
+Opera closed source (new, not open source) passes base motion: median 42%, min 40%, seam 1.72. Prepare closed rotated cut for review. Aria closed rejected static. Ninfea closed rejected low movement/odd drifting vine over rim.
+GENERATIVE BRIDGES HAVE COMPLETED and are downloading: aria-bridge-v1.mp4 (job 52472280-8c84-413b-89c2-5688eb0e3c54), ninfea-bridge-v1.mp4 (job ea7a6e59-b313-4e9f-a84b-fa8a3c852321). Assemble with your chosen source/a/b values from bridges/*.json. QA joints and motion, prepare phone previews. No crossfade/pingpong/freeze.
+After reporting concrete accepted candidates, Codex will visually review and authorize copying them to bundle. Then implement all four release entries/new posters, update stale NinfeaCinemaAssets references, exclude old movies/posters from bundle (preserve sources), update tests for real new assets, bump build to 9 and xcodegen. Do not build, run sim, commit or upload yourself. Codex handles final QA and release.
+Please create one local QA HTML page under tmp/higgsfield-loop/ with the four final candidates autoplay/muted/loop at 360px wide and 1:1.30 crop, filenames visible, individual pause/restart and a displayed playback-time/cycle counter. This is a QA page only, not a new product/site.
+Append completed results and exact paths to OPUS-ENGINEERING.txt, rather than waiting for further unspecified inputs. If any movie fails, identify exact failure and least-cost corrective generation required.

@@ -1,6 +1,6 @@
 {
   "date": "2026-10-08",
-  "status": "completed; awaiting visual acceptance",
+  "status": "all jobs completed and downloaded; acceptance recorded separately in release report",
   "runs": [
     {
       "name": "ninfea-closed",
@@ -43,7 +43,20 @@
         ]
       },
       "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_2x37l8uuRLNjKyUzM7nmeqoSzVG/hf_20261008_095120_bd4846e6-7faa-4fd7-9007-4cca648fc6e1.mp4",
-      "quoted_credits": 15
+      "quoted_credits": 15,
+      "downloaded": {
+        "path": "research/collection-worlds-2026-10-08/ninfea-closed-source-v1.mp4",
+        "sha256": "bfca2d3e26f827c5c84cd159ba8fafaa1627640646964264b576086091801a9d",
+        "bytes": 15163040,
+        "video": {
+          "width": 1244,
+          "height": 1660,
+          "r_frame_rate": "24/1",
+          "duration": "10.041667",
+          "nb_frames": "241"
+        }
+      },
+      "generation_status": "completed"
     },
     {
       "name": "aria-closed",
@@ -86,7 +99,20 @@
         ]
       },
       "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_2x37l8uuRLNjKyUzM7nmeqoSzVG/hf_20261008_095123_2d2298fe-58f8-4c12-a9a6-eb5dd001fe55.mp4",
-      "quoted_credits": 15
+      "quoted_credits": 15,
+      "downloaded": {
+        "path": "research/collection-worlds-2026-10-08/aria-closed-source-v1.mp4",
+        "sha256": "da632c59f53bca09983f827dd3190406f9e270a4c01a1bcff0d27297fe57c87b",
+        "bytes": 7206328,
+        "video": {
+          "width": 1244,
+          "height": 1660,
+          "r_frame_rate": "24/1",
+          "duration": "10.041667",
+          "nb_frames": "241"
+        }
+      },
+      "generation_status": "completed"
     },
     {
       "name": "opera-closed",
@@ -129,7 +155,20 @@
         ]
       },
       "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_2x37l8uuRLNjKyUzM7nmeqoSzVG/hf_20261008_095126_2131e61b-46a2-4dfe-8a54-94f9cf23629f.mp4",
-      "quoted_credits": 15
+      "quoted_credits": 15,
+      "downloaded": {
+        "path": "research/collection-worlds-2026-10-08/opera-closed-source-v1.mp4",
+        "sha256": "8bd166e75bb7fddcb8f375c90b6ebfc9e937e89d28001d31e6268fe59e41d340",
+        "bytes": 16522086,
+        "video": {
+          "width": 1244,
+          "height": 1660,
+          "r_frame_rate": "24/1",
+          "duration": "10.041667",
+          "nb_frames": "241"
+        }
+      },
+      "generation_status": "completed"
     }
   ]
 }

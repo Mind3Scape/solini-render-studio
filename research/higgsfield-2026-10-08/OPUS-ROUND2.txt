@@ -1,0 +1,82 @@
+OPUS 5.5 — ROUND 2: closed takes, Seedance Greca, XCTest review, release adoption
+8 October 2026 · worktree salini-native-materials · no xcodebuild/simulator, no credits, no commit.
+App bundle and the release table are UNCHANGED (dry run only). Media/output in ignored tmp/.
+
+1. CODE REVIEW FIXES (REVIEW-UPDATE.txt)
+   • CinemaReleaseTests: every async load (tracks, size, rate, duration, audio tracks) is bound to a
+     local `let` before any XCTUnwrap/XCTAssert — no `await` inside an autoclosure.
+   • Playback tests (SaliniTests.swift): new `cinemaDurations(_:)` loads the release's reveal and loop
+     durations first. testVisibleCollectionAdvancesIntoLoopAndReleasesOffscreen waits
+     intro + loop + 6 s; testLivingLoopRunsThreeFullCycles waits (intro + 3·loop)·1.5 + 6 s and
+     requires the same observed share as before (62.5 % of 3·loop·10 samples; 75 of 120 for 4 s).
+     Pause/stall/interruption checks unchanged — not weakened, only scaled to real lengths.
+   Not compiled (no xcodebuild by instruction); braces/structure checked.
+
+2. TOOLING (research/higgsfield-2026-10-08/tools; selftest 18/18 PASS)
+   • loop_interval.py closure — whole start=end clip: last frame duplicate or continuation (picks
+     b = N−1 or N), anchor joint step, direction in/out, speed across the joint, live share per
+     window, slowest half-second, sub-pixel product shift, motion_regions gate on the loop ×3.
+   • cut --closed now accepts b = N (whole clip incl. the last frame when it is a continuation);
+     manifest records mode and the real loop length.
+   • adopt_release.py — adopts ONE accepted cut folder: copies reveal/loop/posters into
+     ios/Salini/Resources, rewrites only that collection's CinemaRelease entry (version, names,
+     measured loopFrames, source), lists the previous release's now-unreferenced files
+     (--remove-old deletes them only if no Swift source/project.yml mentions them). Dry run by
+     default. Verified dry run for Greca (diff printed, nothing written).
+   • regions.json: closed takes share the open compositions; new "greca-seed" preset (Seedance
+     framing differs); the calm far-horizon band removed from Greca presets (calm by design, not a
+     defect).
+
+3. MEASUREMENTS (hero crop 360 px, 1:1.30; product geometry = sub-pixel phase correlation)
+   take (sha256)            size       motion / 0.5 s        anchor joint (chosen b)          product shift   verdict
+   greca-closed  c8673f73…  1244×1660  60–65 %, no slowdown   ×1.08 whole clip (b=193; last     ≤0.06 px        PASS
+                                                               frame is a continuation, ×1.78
+                                                               if dropped), dir +0.56
+   opera-closed  8bd166e7…  1244×1660  40–44 % every window   ×1.44 (b=241), dir +0.62          ≤0.02 px        PASS (slowest
+                                                                                                                 ½ s 0.54)
+   greca-seed 61bc139c…     834×1112   44–52 %                ×1.15 (b=192, last frame is a     ≤0.14 px        PASS, lower res
+                                                               duplicate and is dropped)
+   ninfea-closed bfca2d3e…  1244×1660  19–35 %, median 25 %   ×1.73                             ≤0.06 px        FAIL motion
+   aria-closed  da632c59…   1244×1660  0–4 %                  ×2.87                             ≤0.04 px        FAIL: still
+   (Codex's whole-frame seam 1.289 for greca-closed = my loop×3 seam ×1.29: same measurement.)
+
+4. CANDIDATES FOR VISUAL REVIEW — tmp/higgsfield-loop/round2/candidates/
+   Each: *-film-vN.mp4 (reveal), *-loop-vN.mp4, start/final posters, manifest, heatmap,
+   preview-reveal-plus-3-cycles-phonecrop.mp4. Encoded HEVC (hvc1) CRF 20, closed GOP, silent.
+   greca/       reveal 0–45 (1.92 s) + closed loop rotated, 193 frames (8.04 s).
+                joints: anchor ×1.33, loop wrap ×0.92, reveal→loop ×0.90; slowest ½ s 0.91;
+                live 60–62 %. Audit "rim moves" = light on the rim (geometry 0.06 px). 1.6 + 7.0 MB.
+                → recommended Greca release.
+   opera/       reveal 0–47 (2.0 s) + closed loop rotated, 241 frames (10.04 s). Audit PASS;
+                joints ×1.64/1.61; slowest ½ s 0.59; live 40–42 %. 1.2 + 6.0 MB.
+   greca-seed/  comparison only: Seedance, 834×1112 (would be upscaled on a 3× phone), less motion
+                (44–52 %), joints ≤ ×1.94. Not recommended over greca-closed.
+   Version labels (greca v2, opera v2) are proposals; adoption waits for Codex.
+
+5. NINFEA AND ARIA
+   Ninfea: closed take moves too little (median 25 % < 30 %). Options, in order:
+     a) the submitted Kling bridge f223 → f77 on the open take: when it arrives,
+        `cut <ninfea-source-v1> --a 77 --b 224 --bridge <bridge.mp4>` → loop 6.1 s + bridge;
+     b) the open natural interval 77–224 (seam ×2.48, a large foreground leaf jumps) — review only.
+   Aria: closed take is still; the open take never repeats (seam ×11–15) → only the submitted bridge
+     f221 → f76 can close it: `cut <aria-source-v1> --a 76 --b 222 --bridge <bridge.mp4>`.
+     Before acceptance: Aria's tub showed up to 1.0 px correlation shift in the open take (curtain
+     shadows may cause it) — check the outline at phone size.
+   Bridge acceptance: both bridge joints ≤ ×2, no half-second slower than 0.6 of the median,
+     product shift at the take's level, the bridge's own frames moving (bridge_live_by_step in the
+     manifest).
+
+6. INTEGRATION PATH (after Codex accepts each preview)
+   python3 research/higgsfield-2026-10-08/tools/adopt_release.py --collection greca \
+     --cut tmp/higgsfield-loop/round2/candidates/greca --version v2 \
+     --source "Kling 3.0 Pro start=end, greca-closed-source-v1.mp4 sha256 c8673f73…" --apply --remove-old
+   (same for opera; ninfea/aria after their bridged cuts). Then Codex: xcodegen, CinemaReleaseTests,
+   playback tests (now duration-derived), visual QA, commit/push, TestFlight. Note: new films are 3:4
+   (1244×1660) where the old were 2:3; the card is 1:1.30, so both crop slightly — the release test
+   checks posters against their own film, not against the old aspect.
+
+7. LIMITS
+   • Numbers are heuristics at hero scale; they find seams, freezes and drift, not beauty.
+   • Swift edits and tests are not compiled or run here.
+   • Four accepted videos do not exist yet: two strong candidates (Greca, Opera), two waiting for
+     bridges (Ninfea, Aria). I have not marked any generation as done or replaced any film.

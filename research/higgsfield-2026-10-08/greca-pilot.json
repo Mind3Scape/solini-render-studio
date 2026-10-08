@@ -33,5 +33,9 @@
     ]
   },
   "quotedCredits": 12,
-  "status": "submitted; not yet accepted as production"
+  "status": "completed; rejected as final loop because unclosed seam",
+  "downloaded": {
+    "path": "research/collection-worlds-2026-10-08/greca-source-v1.mp4",
+    "sha256": "06bc2734acbd481d7118d7ae09404207f4614910e1bb233f9e480f1c87d09aec"
+  }
 }

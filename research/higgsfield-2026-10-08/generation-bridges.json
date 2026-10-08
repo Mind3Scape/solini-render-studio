@@ -1,0 +1,116 @@
+{
+  "date": "2026-10-08",
+  "status": "all jobs completed and downloaded; acceptance recorded separately in release report",
+  "runs": [
+    {
+      "name": "aria",
+      "params": {
+        "model": "kling3_0",
+        "mode": "pro",
+        "duration": 3,
+        "sound": "off",
+        "count": 1,
+        "medias": [
+          {
+            "role": "start_image",
+            "value": "https://raw.githubusercontent.com/Mind3Scape/solini-render-studio/3cebde35591d0f385535fbf683f74684ea4593c7/research/collection-worlds-2026-10-08/bridges/aria-bridge-start-f221.png"
+          },
+          {
+            "role": "end_image",
+            "value": "https://raw.githubusercontent.com/Mind3Scape/solini-render-studio/3cebde35591d0f385535fbf683f74684ea4593c7/research/collection-worlds-2026-10-08/bridges/aria-bridge-end-f76.png"
+          }
+        ],
+        "prompt": "A three-second continuation between two frames of the SAME single take. Exact stationary camera and identical product geometry throughout; the bathtub, base, architecture and perspective remain rigid and unchanged. The linen sails are already drifting. Continue the gentle breeze: both hanging fabrics gradually fill with air and lift into the final reference pose, with heavy flowing folds and transmitted daylight. Maintain natural ongoing velocity at both ends, no hesitation or sudden acceleration. Sails remain behind the bath. The curtain shadows travel continuously on the floor. Silent photoreal luxury product film. No camera movement, no cut, no dissolve, no product morph, no static hold or slowdown at either end. The endpoint is an in-motion frame, not a final pose."
+      },
+      "result": {
+        "results": [
+          {
+            "id": "52472280-8c84-413b-89c2-5688eb0e3c54",
+            "type": "video",
+            "status": "pending",
+            "model": "kling3_0",
+            "params": {
+              "prompt": "A three-second continuation between two frames of the SAME single take. Exact stationary camera and identical product geometry throughout; the bathtub, base, architecture and perspective remain rigid and unchanged. The linen sails are already drifting. Continue the gentle breeze: both hanging fabrics gradually fill with air and lift into the final reference pose, with heavy flowing folds and transmitted daylight. Maintain natural ongoing velocity at both ends, no hesitation or sudden acceleration. Sails remain behind the bath. The curtain shadows travel continuously on the floor. Silent photoreal luxury product film. No camera movement, no cut, no dissolve, no product morph, no static hold or slowdown at either end. The endpoint is an in-motion frame, not a final pose.",
+              "duration": 3,
+              "reference_images": [
+                "4d7a816a-fe28-446c-9a97-cf06ddb8a659",
+                "54770f48-cb13-4b6d-8463-882807de461c"
+              ],
+              "mode": "pro",
+              "sound": "off"
+            }
+          }
+        ]
+      },
+      "quoted_credits": 4.5,
+      "downloaded": {
+        "path": "research/collection-worlds-2026-10-08/aria-bridge-v1.mp4",
+        "sha256": "6abf06f10749741ae3d610f711676df3aeb445405767d4adca622bfb4e11ff3e",
+        "bytes": 4526396,
+        "video": {
+          "width": 1244,
+          "height": 1660,
+          "r_frame_rate": "24/1",
+          "duration": "3.041667",
+          "nb_frames": "73"
+        }
+      },
+      "generation_status": "completed"
+    },
+    {
+      "name": "ninfea",
+      "params": {
+        "model": "kling3_0",
+        "mode": "pro",
+        "duration": 3,
+        "sound": "off",
+        "count": 1,
+        "medias": [
+          {
+            "role": "start_image",
+            "value": "https://raw.githubusercontent.com/Mind3Scape/solini-render-studio/3cebde35591d0f385535fbf683f74684ea4593c7/research/collection-worlds-2026-10-08/bridges/ninfea-bridge-start-f223.png"
+          },
+          {
+            "role": "end_image",
+            "value": "https://raw.githubusercontent.com/Mind3Scape/solini-render-studio/3cebde35591d0f385535fbf683f74684ea4593c7/research/collection-worlds-2026-10-08/bridges/ninfea-bridge-end-f77.png"
+          }
+        ],
+        "prompt": "A three-second continuation between two frames of the SAME single take. Exact stationary camera and identical product geometry throughout; the bathtub, base, architecture and perspective remain rigid and unchanged. Continue simultaneous continuous garden motion: the broad foreground leaves and upper ferns sway softly, pond ripples flow across the foreground and the water inside the bath keeps rippling; lily pads bob lightly and leaf shadows drift. The mature vine rests on the left rim, its leaves move gently. No growth, no sprouting, no disappearing or new plants. Maintain steady movement until the final frame. Silent photoreal luxury product film. No camera movement, no cut, no dissolve, no product morph, no static hold or slowdown at either end. The endpoint is an in-motion frame, not a final pose."
+      },
+      "result": {
+        "results": [
+          {
+            "id": "ea7a6e59-b313-4e9f-a84b-fa8a3c852321",
+            "type": "video",
+            "status": "pending",
+            "model": "kling3_0",
+            "params": {
+              "prompt": "A three-second continuation between two frames of the SAME single take. Exact stationary camera and identical product geometry throughout; the bathtub, base, architecture and perspective remain rigid and unchanged. Continue simultaneous continuous garden motion: the broad foreground leaves and upper ferns sway softly, pond ripples flow across the foreground and the water inside the bath keeps rippling; lily pads bob lightly and leaf shadows drift. The mature vine rests on the left rim, its leaves move gently. No growth, no sprouting, no disappearing or new plants. Maintain steady movement until the final frame. Silent photoreal luxury product film. No camera movement, no cut, no dissolve, no product morph, no static hold or slowdown at either end. The endpoint is an in-motion frame, not a final pose.",
+              "duration": 3,
+              "reference_images": [
+                "cb5b7afa-8738-4e81-8b54-274167a0c22b",
+                "8667c42c-12ed-4770-8ef9-eee8b581c7b5"
+              ],
+              "mode": "pro",
+              "sound": "off"
+            }
+          }
+        ]
+      },
+      "quoted_credits": 4.5,
+      "downloaded": {
+        "path": "research/collection-worlds-2026-10-08/ninfea-bridge-v1.mp4",
+        "sha256": "952ae204c181a55fe3462f12b58a091354c20a0280cb9c02239838f94e9b1351",
+        "bytes": 5077208,
+        "video": {
+          "width": 1244,
+          "height": 1660,
+          "r_frame_rate": "24/1",
+          "duration": "3.041667",
+          "nb_frames": "73"
+        }
+      },
+      "generation_status": "completed"
+    }
+  ]
+}

@@ -1,0 +1,288 @@
+{
+  "collection": "ninfea",
+  "version": 4,
+  "source": {
+    "file": "ninfea-source-v1.mp4",
+    "sha256": "d854109425c4914fa07651a27bb9ed5ba3ca0d7061ab0f29dfa10c0cdd159eca",
+    "job": "open take + Kling bridge ea7a6e59-b313-4e9f-a84b-fa8a3c852321, tone-matched",
+    "fps": 24.0,
+    "frames": 241,
+    "width": 1244,
+    "height": 1660
+  },
+  "encode": {
+    "codec": "hevc",
+    "crf": 20
+  },
+  "interval": {
+    "a": 77,
+    "b": 224,
+    "reveal_frames": 77,
+    "loop_frames": 220,
+    "reveal_seconds": 3.208,
+    "loop_seconds": 9.167,
+    "mode": "bridged"
+  },
+  "files": {
+    "intro": "ninfea-film-v4.mp4",
+    "loop": "ninfea-loop-v4.mp4",
+    "start_poster": "ninfea-start-v4.png",
+    "final_poster": "ninfea-final-v4.png"
+  },
+  "seam": null,
+  "blend": null,
+  "closed": false,
+  "bridge": {
+    "frames_in": 73,
+    "frames_used": 73,
+    "typical_step": 0.641,
+    "head_vs_loop_end": 0.774,
+    "tail_vs_loop_start": 1.163,
+    "dropped_head": false,
+    "dropped_tail": false,
+    "bridge_live_by_step": [
+      0.49,
+      0.71,
+      0.67,
+      0.59,
+      0.58,
+      0.58,
+      0.62,
+      0.65,
+      0.58,
+      0.63,
+      0.62,
+      0.71,
+      0.68,
+      0.66,
+      0.64,
+      0.66,
+      0.6,
+      0.64,
+      0.64,
+      0.64,
+      0.64,
+      0.7,
+      0.73,
+      0.69,
+      0.65,
+      0.67,
+      0.65,
+      0.62,
+      0.62,
+      0.64,
+      0.67,
+      0.74,
+      0.7,
+      0.66,
+      0.66,
+      0.68,
+      0.61,
+      0.66,
+      0.67,
+      0.69,
+      0.63,
+      0.71,
+      0.7,
+      0.62,
+      0.57,
+      0.58,
+      0.64,
+      0.66,
+      0.64,
+      0.65,
+      0.64,
+      0.72,
+      0.71,
+      0.64,
+      0.63,
+      0.65,
+      0.63,
+      0.64,
+      0.61,
+      0.64,
+      0.64,
+      0.71,
+      0.69,
+      0.65,
+      0.55,
+      0.53,
+      0.52,
+      0.5,
+      0.47,
+      0.46,
+      0.48,
+      0.5
+    ],
+    "tone_match": {
+      "radius": 24,
+      "head_lowpass_mae": 1.55,
+      "tail_lowpass_mae": 1.277,
+      "structure_mae": 2.065
+    }
+  },
+  "joints": {
+    "median_step": 0.876,
+    "largest": [
+      {
+        "after_frame": 34,
+        "ratio": 1.41
+      },
+      {
+        "after_frame": 35,
+        "ratio": 1.4
+      },
+      {
+        "after_frame": 42,
+        "ratio": 1.38
+      },
+      {
+        "after_frame": 25,
+        "ratio": 1.33
+      }
+    ],
+    "slowest_half_second_ratio": 0.64
+  },
+  "audit": {
+    "result": "FAIL",
+    "failures": [
+      "region garden stalls (min window 0.26 < 1.5)"
+    ],
+    "loop": {
+      "file": "tmp/higgsfield-loop/round2/candidates/ninfea-tone/ninfea-loop-v4.mp4",
+      "width": 1244,
+      "height": 1660,
+      "fps": 24.0,
+      "duration": 9.166667,
+      "audio": false,
+      "frames": 220,
+      "median_window_alive": 0.375,
+      "min_window_alive": 0.3333333333333333,
+      "dead_windows": 0,
+      "windows": 54,
+      "mean_lagged_change": 3.0623388290405273,
+      "median_step": 1.0436550378799438,
+      "seam_step": 1.1850783824920654,
+      "seam_ratio": 1.1355077487091958,
+      "alive_tile_map": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          0,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    "intro": {
+      "file": "tmp/higgsfield-loop/round2/candidates/ninfea-tone/ninfea-film-v4.mp4",
+      "width": 1244,
+      "height": 1660,
+      "fps": 24.0,
+      "duration": 3.208333,
+      "audio": false,
+      "frames": 77,
+      "alive_by_window": [
+        0.375,
+        0.312,
+        0.354,
+        0.333,
+        0.354
+      ],
+      "tail_alive": 0.34722222222222227,
+      "loop_median_alive": 0.375,
+      "handoff_step_ratio": 1.0422669649124146,
+      "handoff_min_window_alive": 0.3333333333333333,
+      "median_alive": 0.3541666666666667
+    },
+    "regions": {
+      "rim": {
+        "kind": "rigid",
+        "mean": 0.7724174857139587,
+        "min_window": 0.5323557257652283,
+        "max_window": 1.07493257522583
+      },
+      "body": {
+        "kind": "rigid",
+        "mean": 0.2755783498287201,
+        "min_window": 0.1845264881849289,
+        "max_window": 0.5029061436653137
+      },
+      "foreground": {
+        "kind": "alive",
+        "mean": 8.991034507751465,
+        "min_window": 6.74656867980957,
+        "max_window": 11.7720308303833
+      },
+      "pond": {
+        "kind": "alive",
+        "mean": 4.896585941314697,
+        "min_window": 3.07214617729187,
+        "max_window": 7.517940521240234
+      },
+      "garden": {
+        "kind": "alive",
+        "mean": 0.34752604365348816,
+        "min_window": 0.26070356369018555,
+        "max_window": 0.5623949766159058
+      }
+    }
+  }
+}
