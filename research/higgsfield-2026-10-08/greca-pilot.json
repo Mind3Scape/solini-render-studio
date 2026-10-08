@@ -1,0 +1,37 @@
+{
+  "params": {
+    "model": "kling3_0",
+    "mode": "pro",
+    "duration": 8,
+    "sound": "off",
+    "count": 1,
+    "medias": [
+      {
+        "role": "start_image",
+        "value": "https://raw.githubusercontent.com/Mind3Scape/solini-render-studio/02bf542bc928903660886d07d0c12f8f88f32383/research/collection-worlds-2026-10-07/greca-tidal-keyframe-v2.png"
+      }
+    ],
+    "prompt": "One continuous locked-off camera take of this exact turquoise and ivory GRECA bathtub on its limestone island, using the reference composition unchanged. MOTION: The sea is already moving on the first frame. Gentle but clearly visible Mediterranean wavelets roll across the entire foreground and background continuously, lap around all sides of the island, and break the bathtub reflection into travelling ribbons. Sun glints flow over the moving crests. Restrained water-caustic light moves naturally on the low stone and lower turquoise bowl. All these motions occur together at a steady unhurried pace, including the final second. RIGID ELEMENTS: bathtub, broad white rim, ivory pedestal, limestone island and distant cliff remain completely stationary and preserve their exact manufactured geometry throughout. CAMERA: fixed tripod, identical perspective and framing, zero pan or zoom. LIGHT: constant golden sunlight and exposure. Natural photoreal water physics; soft 5-centimetre waves, quiet luxury. No cuts, no dissolve, no morphing the product, no final still or slowdown, no text, no mist or splash. Silent ambient footage for a living cinemagraph."
+  },
+  "submission": {
+    "results": [
+      {
+        "id": "a05818b2-dd50-46fd-85e5-cba267fa8715",
+        "type": "video",
+        "status": "pending",
+        "model": "kling3_0",
+        "params": {
+          "prompt": "One continuous locked-off camera take of this exact turquoise and ivory GRECA bathtub on its limestone island, using the reference composition unchanged. MOTION: The sea is already moving on the first frame. Gentle but clearly visible Mediterranean wavelets roll across the entire foreground and background continuously, lap around all sides of the island, and break the bathtub reflection into travelling ribbons. Sun glints flow over the moving crests. Restrained water-caustic light moves naturally on the low stone and lower turquoise bowl. All these motions occur together at a steady unhurried pace, including the final second. RIGID ELEMENTS: bathtub, broad white rim, ivory pedestal, limestone island and distant cliff remain completely stationary and preserve their exact manufactured geometry throughout. CAMERA: fixed tripod, identical perspective and framing, zero pan or zoom. LIGHT: constant golden sunlight and exposure. Natural photoreal water physics; soft 5-centimetre waves, quiet luxury. No cuts, no dissolve, no morphing the product, no final still or slowdown, no text, no mist or splash. Silent ambient footage for a living cinemagraph.",
+          "duration": 8,
+          "reference_images": [
+            "f7238e15-0ab8-4587-8bea-e134046014b5"
+          ],
+          "mode": "pro",
+          "sound": "off"
+        }
+      }
+    ]
+  },
+  "quotedCredits": 12,
+  "status": "submitted; not yet accepted as production"
+}

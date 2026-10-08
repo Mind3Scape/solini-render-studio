@@ -1,0 +1,16 @@
+{
+  "take": "aria-source-v1.mp4",
+  "take_sha256": "5b949a5077d29acd82fa3f3441243ce33319091c46d600e7c52fc0a84396c0fb",
+  "a": 76,
+  "b": 222,
+  "start_image": "aria-bridge-start-f221.png",
+  "end_image": "aria-bridge-end-f76.png",
+  "size": [
+    1244,
+    1660
+  ],
+  "fps": 24.0,
+  "loop_seconds_without_bridge": 6.083,
+  "bridge_seconds_min": 3,
+  "note": "Generate at the take's size, silent, locked camera, the same steady motion as the take (no new event, no slowdown toward the end frame). Then: cut --bridge."
+}

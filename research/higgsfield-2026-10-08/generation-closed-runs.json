@@ -1,0 +1,135 @@
+{
+  "date": "2026-10-08",
+  "status": "completed; awaiting visual acceptance",
+  "runs": [
+    {
+      "name": "ninfea-closed",
+      "params": {
+        "model": "kling3_0",
+        "mode": "pro",
+        "duration": 10,
+        "sound": "off",
+        "count": 1,
+        "medias": [
+          {
+            "role": "start_image",
+            "value": "6fd8416a-aeab-4b5f-a941-0f8fdaea5aab"
+          },
+          {
+            "role": "end_image",
+            "value": "6fd8416a-aeab-4b5f-a941-0f8fdaea5aab"
+          }
+        ],
+        "prompt": "A seamless ambient loop. The starting and ending composition match, but the environment keeps moving at steady speed across the boundary; never settle to a still. One full slow natural motion cycle over ten seconds. One continuous locked-off tripod shot, exact reference framing and perspective throughout. The bathtub is a real rigid manufactured product: preserve every edge, silhouette, material, position and proportion perfectly. Architecture and camera are completely still. Constant natural exposure, no edits, no zoom, no camera drift, no morphing, no text. Motion is ongoing from frame one through the last second at the same relaxed pace, never slowing into a still. Photoreal premium design campaign, silent. This is the exact green NINFEA bath with its wide flat flared rim. Simultaneously animate the whole environment: large mature leaves and fern fronds gently sway in overlapping phases at both edges and above; a mature leafy vine resting on the left bath rim moves softly in the breeze without growing or changing shape; slow water ripples continuously move through the full foreground lily pond and inside the bath; lily pads bob almost imperceptibly; dappled leaf shadows shift naturally on the stone wall and floor. Keep all rigid bath contours and limestone edges fixed. Not seedlings, no sprouting, no creeping new plants; this is an established lush garden alive with a light breeze. Clear restrained motion over broad areas, never just one leaf."
+      },
+      "result": {
+        "results": [
+          {
+            "id": "bd4846e6-7faa-4fd7-9007-4cca648fc6e1",
+            "type": "video",
+            "status": "pending",
+            "model": "kling3_0",
+            "params": {
+              "prompt": "A seamless ambient loop. The starting and ending composition match, but the environment keeps moving at steady speed across the boundary; never settle to a still. One full slow natural motion cycle over ten seconds. One continuous locked-off tripod shot, exact reference framing and perspective throughout. The bathtub is a real rigid manufactured product: preserve every edge, silhouette, material, position and proportion perfectly. Architecture and camera are completely still. Constant natural exposure, no edits, no zoom, no camera drift, no morphing, no text. Motion is ongoing from frame one through the last second at the same relaxed pace, never slowing into a still. Photoreal premium design campaign, silent. This is the exact green NINFEA bath with its wide flat flared rim. Simultaneously animate the whole environment: large mature leaves and fern fronds gently sway in overlapping phases at both edges and above; a mature leafy vine resting on the left bath rim moves softly in the breeze without growing or changing shape; slow water ripples continuously move through the full foreground lily pond and inside the bath; lily pads bob almost imperceptibly; dappled leaf shadows shift naturally on the stone wall and floor. Keep all rigid bath contours and limestone edges fixed. Not seedlings, no sprouting, no creeping new plants; this is an established lush garden alive with a light breeze. Clear restrained motion over broad areas, never just one leaf.",
+              "duration": 10,
+              "reference_images": [
+                "6fd8416a-aeab-4b5f-a941-0f8fdaea5aab",
+                "6fd8416a-aeab-4b5f-a941-0f8fdaea5aab"
+              ],
+              "mode": "pro",
+              "sound": "off"
+            }
+          }
+        ]
+      },
+      "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_2x37l8uuRLNjKyUzM7nmeqoSzVG/hf_20261008_095120_bd4846e6-7faa-4fd7-9007-4cca648fc6e1.mp4",
+      "quoted_credits": 15
+    },
+    {
+      "name": "aria-closed",
+      "params": {
+        "model": "kling3_0",
+        "mode": "pro",
+        "duration": 10,
+        "sound": "off",
+        "count": 1,
+        "medias": [
+          {
+            "role": "start_image",
+            "value": "68bb56d2-ae7f-40d0-8bc7-b4a83f1cdc44"
+          },
+          {
+            "role": "end_image",
+            "value": "68bb56d2-ae7f-40d0-8bc7-b4a83f1cdc44"
+          }
+        ],
+        "prompt": "A seamless ambient loop. The starting and ending composition match, but the environment keeps moving at steady speed across the boundary; never settle to a still. One full slow natural motion cycle over ten seconds. One continuous locked-off tripod shot, exact reference framing and perspective throughout. The bathtub is a real rigid manufactured product: preserve every edge, silhouette, material, position and proportion perfectly. Architecture and camera are completely still. Constant natural exposure, no edits, no zoom, no camera drift, no morphing, no text. Motion is ongoing from frame one through the last second at the same relaxed pace, never slowing into a still. Photoreal premium design campaign, silent. This is the exact white ARIA bathtub with dark curved side supports. Two large translucent linen sails already fill with a gentle sea breeze: their broad fabric folds lift, drift and settle in overlapping unhurried phases, each side slightly out of phase. Light passes through the actual fabric weave and the soft fabric shadows travel on the limestone floor. The sails stay behind and above the bath and never hide it, their lower edges remain above its rim. Fine sea ripples in the background. Keep the bath's straight upper edge, sculpted belly and separate black side supports perfectly fixed. Fluid cloth physics with weight, no snapping, no sudden gusts, no curtain closing or reveal wipe."
+      },
+      "result": {
+        "results": [
+          {
+            "id": "2d2298fe-58f8-4c12-a9a6-eb5dd001fe55",
+            "type": "video",
+            "status": "pending",
+            "model": "kling3_0",
+            "params": {
+              "prompt": "A seamless ambient loop. The starting and ending composition match, but the environment keeps moving at steady speed across the boundary; never settle to a still. One full slow natural motion cycle over ten seconds. One continuous locked-off tripod shot, exact reference framing and perspective throughout. The bathtub is a real rigid manufactured product: preserve every edge, silhouette, material, position and proportion perfectly. Architecture and camera are completely still. Constant natural exposure, no edits, no zoom, no camera drift, no morphing, no text. Motion is ongoing from frame one through the last second at the same relaxed pace, never slowing into a still. Photoreal premium design campaign, silent. This is the exact white ARIA bathtub with dark curved side supports. Two large translucent linen sails already fill with a gentle sea breeze: their broad fabric folds lift, drift and settle in overlapping unhurried phases, each side slightly out of phase. Light passes through the actual fabric weave and the soft fabric shadows travel on the limestone floor. The sails stay behind and above the bath and never hide it, their lower edges remain above its rim. Fine sea ripples in the background. Keep the bath's straight upper edge, sculpted belly and separate black side supports perfectly fixed. Fluid cloth physics with weight, no snapping, no sudden gusts, no curtain closing or reveal wipe.",
+              "duration": 10,
+              "reference_images": [
+                "68bb56d2-ae7f-40d0-8bc7-b4a83f1cdc44",
+                "68bb56d2-ae7f-40d0-8bc7-b4a83f1cdc44"
+              ],
+              "mode": "pro",
+              "sound": "off"
+            }
+          }
+        ]
+      },
+      "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_2x37l8uuRLNjKyUzM7nmeqoSzVG/hf_20261008_095123_2d2298fe-58f8-4c12-a9a6-eb5dd001fe55.mp4",
+      "quoted_credits": 15
+    },
+    {
+      "name": "opera-closed",
+      "params": {
+        "model": "kling3_0",
+        "mode": "pro",
+        "duration": 10,
+        "sound": "off",
+        "count": 1,
+        "medias": [
+          {
+            "role": "start_image",
+            "value": "08c4fe9c-5436-4a49-b60e-675fed650f47"
+          },
+          {
+            "role": "end_image",
+            "value": "08c4fe9c-5436-4a49-b60e-675fed650f47"
+          }
+        ],
+        "prompt": "A seamless ambient loop. The starting and ending composition match, but the environment keeps moving at steady speed across the boundary; never settle to a still. One full slow natural motion cycle over ten seconds. One continuous locked-off tripod shot, exact reference framing and perspective throughout. The bathtub is a real rigid manufactured product: preserve every edge, silhouette, material, position and proportion perfectly. Architecture and camera are completely still. Constant natural exposure, no edits, no zoom, no camera drift, no morphing, no text. Motion is ongoing from frame one through the last second at the same relaxed pace, never slowing into a still. Photoreal premium design campaign, silent. This is the exact ivory OPERA bath with rolled rim and stepped mouldings. The large foreground reflecting pool is already flowing with clearly visible broad gentle ripples, moving luminous amber caustic networks slide organically through the pool and up the side pillars. Real leafy branches at the upper-left softly sway, their dappled shadows move naturally across the oxblood recess and limestone arches. Moving water reflections and swaying shadows occur together through the entire take. Caustics stay subtle on the bath, preserve its sculpted edges. No turning on lights, no exposure pulsation, no fire, smoke, curtains, particles or supernatural rays. Deep warm stone and velvet red, optically real restrained luxury."
+      },
+      "result": {
+        "results": [
+          {
+            "id": "2131e61b-46a2-4dfe-8a54-94f9cf23629f",
+            "type": "video",
+            "status": "pending",
+            "model": "kling3_0",
+            "params": {
+              "prompt": "A seamless ambient loop. The starting and ending composition match, but the environment keeps moving at steady speed across the boundary; never settle to a still. One full slow natural motion cycle over ten seconds. One continuous locked-off tripod shot, exact reference framing and perspective throughout. The bathtub is a real rigid manufactured product: preserve every edge, silhouette, material, position and proportion perfectly. Architecture and camera are completely still. Constant natural exposure, no edits, no zoom, no camera drift, no morphing, no text. Motion is ongoing from frame one through the last second at the same relaxed pace, never slowing into a still. Photoreal premium design campaign, silent. This is the exact ivory OPERA bath with rolled rim and stepped mouldings. The large foreground reflecting pool is already flowing with clearly visible broad gentle ripples, moving luminous amber caustic networks slide organically through the pool and up the side pillars. Real leafy branches at the upper-left softly sway, their dappled shadows move naturally across the oxblood recess and limestone arches. Moving water reflections and swaying shadows occur together through the entire take. Caustics stay subtle on the bath, preserve its sculpted edges. No turning on lights, no exposure pulsation, no fire, smoke, curtains, particles or supernatural rays. Deep warm stone and velvet red, optically real restrained luxury.",
+              "duration": 10,
+              "reference_images": [
+                "08c4fe9c-5436-4a49-b60e-675fed650f47",
+                "08c4fe9c-5436-4a49-b60e-675fed650f47"
+              ],
+              "mode": "pro",
+              "sound": "off"
+            }
+          }
+        ]
+      },
+      "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_2x37l8uuRLNjKyUzM7nmeqoSzVG/hf_20261008_095126_2131e61b-46a2-4dfe-8a54-94f9cf23629f.mp4",
+      "quoted_credits": 15
+    }
+  ]
+}

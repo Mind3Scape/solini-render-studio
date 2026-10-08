@@ -1,0 +1,16 @@
+{
+  "take": "ninfea-source-v1.mp4",
+  "take_sha256": "d854109425c4914fa07651a27bb9ed5ba3ca0d7061ab0f29dfa10c0cdd159eca",
+  "a": 77,
+  "b": 224,
+  "start_image": "ninfea-bridge-start-f223.png",
+  "end_image": "ninfea-bridge-end-f77.png",
+  "size": [
+    1244,
+    1660
+  ],
+  "fps": 24.0,
+  "loop_seconds_without_bridge": 6.125,
+  "bridge_seconds_min": 3,
+  "note": "Generate at the take's size, silent, locked camera, the same steady motion as the take (no new event, no slowdown toward the end frame). Then: cut --bridge."
+}
