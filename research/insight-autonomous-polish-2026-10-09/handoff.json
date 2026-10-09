@@ -97,5 +97,10 @@
     "Simulator only: no device FPS/thermal/memory; no TestFlight upload (expired credentials; build number unchanged)"
   ],
   "release_gaps": "Not archived/uploaded. Build 12 should follow Codex acceptance and credential renewal.",
-  "git": "see commit after this file"
+  "git": {
+    "commit": "05e433c",
+    "branch": "codex/salini-native-materials",
+    "pushed": true,
+    "note": "handoff commit hash recorded in the follow-up commit"
+  }
 }
