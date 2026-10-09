@@ -1,0 +1,17 @@
+{
+  "state": "ready_for_integration",
+  "updated_at": "2026-10-09T11:40+07:00",
+  "owner": "Opus 5.5",
+  "completed": [
+    "EssenceFeatureView API incl. animationBounds",
+    "Layered 2.5D stage with manifest, focus swap, matte/gloss asset variants, opening, float, scroll parallax, contact shadows, callouts, lifecycle, Reduce Motion",
+    "7 tests pass on isolated simulator",
+    "handoff.json"
+  ],
+  "remaining": [
+    "Remaining 5 PNGs from imagegen → visual tuning of positions/labels (JSON or manifest)",
+    "Codex: xcodegen + Home integration + AR"
+  ],
+  "shared_simulator": "not used; isolated simulators 'Salini Essence 18 Pro' and 'Salini Essence SE'",
+  "actual_blockers": []
+}
