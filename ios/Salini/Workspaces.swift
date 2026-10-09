@@ -352,23 +352,13 @@ final class CompareController: ScrollController {
   }
 }
 
-/// Opening an official USDZ. On a device: QuickLook with AR. QuickLook in the iOS Simulator
-/// shows only a file card, so there the same form opens in the material studio, whose SceneKit
-/// scene renders the model. The original file is always shared as is.
+/// Room placement uses a catalogue-calibrated model, with an explicit unavailable state on the
+/// simulator. The original design file can still be shared, independently of the AR session.
 enum ModelViewing {
-  static var subtitle: String {
-    #if targetEnvironment(simulator)
-      return "просмотр в студии"
-    #else
-      return "просмотр и AR"
-    #endif
-  }
-  static func open(_ form: StudioForm, from host: UIViewController) {
-    #if targetEnvironment(simulator)
-      MaterialStudioController.present(form: form, from: host)
-    #else
-      host.present(ProposalPreviewController(fileURL: form.modelURL), animated: true)
-    #endif
+  static var subtitle: String { "примерка в комнате · масштаб 1:1" }
+  static func open(_ form: StudioForm, finish: StudioFinish? = nil, ral: RALColour? = nil, from host: UIViewController) {
+    if let product = RoomProduct(form: form, finish: finish, ral: ral) { RoomPlacementController.present(product, from: host) }
+    else { MaterialStudioController.present(form: form, finish: finish, ral: ral, from: host) }
   }
   static func share(_ form: StudioForm, from host: UIViewController) {
     let sheet = UIActivityViewController(activityItems: [form.modelURL], applicationActivities: nil)
@@ -439,7 +429,7 @@ final class ResourcesController: ScrollController {
         self.map { MaterialStudioController.present(form: model, finish: finish, ral: ral, from: $0) }
       })
       rows.append(ActionButton("3D-модель · \(ModelViewing.subtitle)", icon: "cube.transparent") { [weak self] in
-        self.map { ModelViewing.open(model, from: $0) }
+        self.map { ModelViewing.open(model, finish: finish, ral: ral, from: $0) }
       })
       rows.append(ActionButton("Поделиться USDZ", icon: "square.and.arrow.up") { [weak self] in
         self.map { ModelViewing.share(model, from: $0) }

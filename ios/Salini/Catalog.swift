@@ -564,6 +564,21 @@ final class CatalogProductController: ScrollController {
     }
     add(summary)
     add(quantityRow())
+    if StudioForm.all.contains(where: { $0.product.id == product.id }) {
+      let room = ActionButton("Примерить в комнате", icon: "viewfinder", prominent: false) { [weak self] in
+        guard let self, let selected = RoomProduct.selection(self.product, variant: self.variant, colour: self.colour) else { return }
+        RoomPlacementController.present(selected, from: self)
+      }
+      room.accessibilityIdentifier = "product.room"
+      room.accessibilityHint = "Задняя камера, установка изделия в натуральную величину"
+      add(room)
+      let studio = ActionButton("Форма и материалы в 3D", icon: "cube.transparent") { [weak self] in
+        guard let self, let selected = RoomProduct.selection(self.product, variant: self.variant, colour: self.colour) else { return }
+        MaterialStudioController.present(form: selected.form, finish: selected.finish, ral: selected.ral, from: self)
+      }
+      studio.accessibilityIdentifier = "product.studio"
+      add(studio)
+    }
     let addButton = ActionButton("Добавить в проект", icon: "plus", prominent: true) { [weak self] in self?.addToProject() }
     addButton.accessibilityIdentifier = "product.add"
     add(addButton)

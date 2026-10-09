@@ -1,0 +1,33 @@
+{
+  "state": "implemented; integration and release pending",
+  "scope": "Native camera-backed ARKit room placement; no network rendering/camera recording",
+  "architecture": "ARSCNView with world tracking, horizontal plane geometry raycasts, ARAnchor, automatic environment texture/reflection and light estimation",
+  "selection": "13 bundled official product meshes. Product/variant/RAL passed from catalog, studio and project documents. No substitute geometry for unsupported products.",
+  "size": "Catalogue mm converted to metres. Official mesh orientation retained; centered horizontal origin, base at floor. Proportions validated within 5%/25mm first, then calibrated per axis to exact catalogue bounds. CAD/catalogue discrepancies up to 30mm exist before calibration. Gesture scale remains fixed at 1.",
+  "controls": [
+    "Detected-plane footprint, explicit placement",
+    "One-finger drag constrained to established floor with grab offset",
+    "Two-finger yaw rotation and accessible 15-degree buttons",
+    "Replace and reset scan",
+    "Tracking loss, camera interruption, background pause, resume, permission denial and unsupported-device fallback"
+  ],
+  "validation": {
+    "focused_tests": "4 tests passed, 0 failures, 4.095s; every bundled mesh matches catalogue envelope within 1mm after calibration",
+    "simulator": "BC58C81F-D28D-4E26-A59E-F8689EED523F, isolated Salini AR — QA",
+    "native_UI": "Unavailable screen, studio fallback, product card -> colour RAL1001 -> room screen verified with CUA; exact Noemi170 S-Sense gloss and RAL retained",
+    "screenshots": [
+      "evidence/ar-entry-simulator.png",
+      "evidence/studio-room-entry.png"
+    ],
+    "build": "Debug build succeeded; full integrated suite and Release pending"
+  },
+  "limitations": [
+    "No connected iPhone or iPad. Real camera permission sheet, surface scanning, anchor stability, drag/rotate tracking and lighting in a physical room cannot be certified in the simulator.",
+    "AR placement is an approximate visual planning aid; not a measurement or installation approval.",
+    "No room mesh occlusion or room persistence; session is local and temporary."
+  ],
+  "sources": [
+    "https://developer.apple.com/documentation/arkit/arworldtrackingconfiguration",
+    "https://developer.apple.com/documentation/arkit/adding-realistic-reflections-to-an-ar-experience"
+  ]
+}

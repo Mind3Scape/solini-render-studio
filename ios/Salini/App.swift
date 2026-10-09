@@ -22,6 +22,14 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     self.window = window
     setRoot(MainTabs(), animated: false)
     window.makeKeyAndVisible()
+    #if DEBUG
+    if ProcessInfo.processInfo.arguments.contains("-room-placement"), let form = StudioForm.noemi,
+      let product = RoomProduct(form: form) {
+      DispatchQueue.main.async {
+        window.rootViewController?.present(RoomPlacementController(product: product), animated: false)
+      }
+    }
+    #endif
     // QA: open the shipping-section proof directly (projects and settings are untouched).
     if ProcessInfo.processInfo.arguments.contains("-shipping-atelier-reality") {
       (window.rootViewController as? MainTabs)?.openShippingAtelier()

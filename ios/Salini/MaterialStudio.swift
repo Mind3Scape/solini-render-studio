@@ -490,7 +490,7 @@ final class MaterialStudioController: UIViewController {
       navigationItem.leftBarButtonItem = UIBarButtonItem(
         systemItem: .close, primaryAction: UIAction { [weak self] _ in self?.dismiss(animated: true) })
     }
-    navigationItem.rightBarButtonItem = formItem()
+    navigationItem.rightBarButtonItems = [formItem(), roomItem()]
 
     compare.rounded(26)
     compare.accessibilityIdentifier = "studio.compare"
@@ -635,6 +635,18 @@ final class MaterialStudioController: UIViewController {
     return item
   }
 
+  private func roomItem() -> UIBarButtonItem {
+    let item = UIBarButtonItem(title: "В комнате", image: UIImage(systemName: "viewfinder"), primaryAction: UIAction { [weak self] _ in
+      guard let self, let form = self.form,
+        let product = RoomProduct(form: form, finish: self.chosenFinish, ral: self.ral) else { return }
+      RoomPlacementController.present(product, from: self)
+    })
+    item.accessibilityIdentifier = "studio.room"
+    item.accessibilityLabel = "Примерить в комнате: \(chosenFinish.title)"
+    item.isEnabled = form.flatMap { RoomProduct(form: $0) } != nil
+    return item
+  }
+
   private func reloadScene() {
     guard let form else { return }
     compare.comparing = comparing
@@ -648,7 +660,7 @@ final class MaterialStudioController: UIViewController {
   }
   /// Controls whose state depends on the form and compare mode.
   private func renderChrome() {
-    navigationItem.rightBarButtonItem = formItem()
+    navigationItem.rightBarButtonItems = [formItem(), roomItem()]
     formChip.text = form.map { "  \($0.name)  " }
     formChip.isHidden = form == nil
     shotControl.selectedSegmentIndex = shot == .form ? 0 : 1

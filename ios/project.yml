@@ -64,6 +64,7 @@ targets:
     info:
       path: Salini/Info.plist
       properties:
+        NSCameraUsageDescription: "Камера нужна, чтобы поставить выбранное изделие Salini в вашей комнате в натуральную величину. Кадры не сохраняются и не отправляются."
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         UIApplicationSceneManifest:

@@ -11,6 +11,7 @@
 		01C959B14340E03E7D4D41B2 /* NinfeaCinema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205C91FAD53CEC3928277F81 /* NinfeaCinema.swift */; };
 		073AB33A6033AC73D703E608 /* ObjectViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC46B7DC8500987396D0C75D /* ObjectViewer.swift */; };
 		0C3BB687CDA086420032F89A /* Greca.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 922ABBCE95E286DB90AA532E /* Greca.usdz */; };
+		117E058D6341136DAB82EF6D /* RoomPlacementModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D219A42F0F11722004A9ED1B /* RoomPlacementModel.swift */; };
 		1A25BEA4CEBD7F396CEDDA60 /* NinfeaStory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BD1EE31F7C199D6DAD475C /* NinfeaStory.swift */; };
 		1C50403690C3AF89F09F7A46 /* aria-loop-v2.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = E72B0B9A2065ECA016C9E530 /* aria-loop-v2.mp4 */; };
 		1E422D8F743225E5DC1C6C4B /* production.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D857B43F6F8433444EA53ADE /* production.jpg */; };
@@ -50,11 +51,13 @@
 		81634AAE6E395D21A11163B0 /* opera-start-v2.png in Resources */ = {isa = PBXBuildFile; fileRef = AAF170DB4D3D010ACD2B57ED /* opera-start-v2.png */; };
 		821FA71B237BBCDDCF147CA7 /* CampusOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632403708ED41F88A65A300E /* CampusOverview.swift */; };
 		865AFC3CCA56E15332577F41 /* salini-logo.svg in Resources */ = {isa = PBXBuildFile; fileRef = 71A0945E0526B6B9D34EAD27 /* salini-logo.svg */; };
+		8BC38A8738DEDBFFA383B4AF /* RoomPlacement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165524023E4E1A1C0554C962 /* RoomPlacement.swift */; };
 		8CC5A6E694E7E63798777106 /* aria-red.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FF8CC4938E4FEB8C56D0CF20 /* aria-red.jpg */; };
 		8FC069A099ADB312115687EE /* RealityAtelier.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B10B0199550F2DC9B839A2 /* RealityAtelier.swift */; };
 		8FCBD77FB5FBC3C00B8CE17A /* catalog.json in Resources */ = {isa = PBXBuildFile; fileRef = B84ADB80CC317232BF921570 /* catalog.json */; };
 		91E66E3CEF0191412D36DC43 /* ChooseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A13434667EE01D075E390AA /* ChooseHelper.swift */; };
 		9331D02F97215CADCBFC3871 /* RALPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293C35086983E07FB5BECC98 /* RALPalette.swift */; };
+		949A4DFF154A134C3E367315 /* RoomPlacementTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B3995E14D30E24FDDFB60D /* RoomPlacementTests.swift */; };
 		9DFECD395E16A807C5F7F7D6 /* opera-final-v2.png in Resources */ = {isa = PBXBuildFile; fileRef = F7D8C5E7B7199DC9F26EE9D0 /* opera-final-v2.png */; };
 		9F12BE1700174BE037319AFC /* DesignerHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BAC5A124656A35A461B387B /* DesignerHome.swift */; };
 		A6F6AD4F5F554684091311E1 /* CinemaReleaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B441EB9417092B4E01FDB9C /* CinemaReleaseTests.swift */; };
@@ -108,6 +111,7 @@
 		115177084A87D881A3F70994 /* MaterialStudio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaterialStudio.swift; sourceTree = "<group>"; };
 		1378F961C27F7E433530BB7C /* DesignerPassTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignerPassTests.swift; sourceTree = "<group>"; };
 		143757887A660060C31EEA9F /* InsightBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightBoard.swift; sourceTree = "<group>"; };
+		165524023E4E1A1C0554C962 /* RoomPlacement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomPlacement.swift; sourceTree = "<group>"; };
 		1BAC5A124656A35A461B387B /* DesignerHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignerHome.swift; sourceTree = "<group>"; };
 		1BC98A5F99D057EA8E7B64E9 /* StudioLighting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudioLighting.swift; sourceTree = "<group>"; };
 		1C21E6FCCD97876F706ADB2E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -161,10 +165,12 @@
 		AAF170DB4D3D010ACD2B57ED /* opera-start-v2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "opera-start-v2.png"; sourceTree = "<group>"; };
 		B002A96E28C44197F2418A95 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		B84ADB80CC317232BF921570 /* catalog.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = catalog.json; sourceTree = "<group>"; };
+		C2B3995E14D30E24FDDFB60D /* RoomPlacementTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomPlacementTests.swift; sourceTree = "<group>"; };
 		CBE7AB302AA433C80A3F4A14 /* MaterialStudioScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaterialStudioScene.swift; sourceTree = "<group>"; };
 		CC1EBD781C5BE290AC553C42 /* RealityAtelierTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealityAtelierTests.swift; sourceTree = "<group>"; };
 		CE36A7414A56B3C7827CC603 /* RealityAtelierScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealityAtelierScene.swift; sourceTree = "<group>"; };
 		CEF9612034EAAC3B2E8AFDEE /* Aria-drawing.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "Aria-drawing.pdf"; sourceTree = "<group>"; };
+		D219A42F0F11722004A9ED1B /* RoomPlacementModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomPlacementModel.swift; sourceTree = "<group>"; };
 		D4BD1EE31F7C199D6DAD475C /* NinfeaStory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NinfeaStory.swift; sourceTree = "<group>"; };
 		D546A670C08A873DB3EF1008 /* InsightAssets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = InsightAssets; path = Salini/InsightAssets; sourceTree = SOURCE_ROOT; };
 		D80E2E88706C9C8634614E62 /* studio_small_09_2k.hdr */ = {isa = PBXFileReference; path = studio_small_09_2k.hdr; sourceTree = "<group>"; };
@@ -204,6 +210,7 @@
 				1378F961C27F7E433530BB7C /* DesignerPassTests.swift */,
 				E4FAF20A36EDC10E0096E5FE /* InsideOperationsTests.swift */,
 				CC1EBD781C5BE290AC553C42 /* RealityAtelierTests.swift */,
+				C2B3995E14D30E24FDDFB60D /* RoomPlacementTests.swift */,
 				0151CE5C734FB58E9B195E9D /* SaliniTests.swift */,
 				3250D2DC9188A757B21D78F4 /* ShippingAtelierTests.swift */,
 			);
@@ -297,6 +304,8 @@
 				293C35086983E07FB5BECC98 /* RALPalette.swift */,
 				F0B10B0199550F2DC9B839A2 /* RealityAtelier.swift */,
 				CE36A7414A56B3C7827CC603 /* RealityAtelierScene.swift */,
+				165524023E4E1A1C0554C962 /* RoomPlacement.swift */,
+				D219A42F0F11722004A9ED1B /* RoomPlacementModel.swift */,
 				055566B28CC5912E72E0A949 /* ShippingAtelier.swift */,
 				80A7C41726D2086E623F4A8A /* ShippingAtelierScene.swift */,
 				1BC98A5F99D057EA8E7B64E9 /* StudioLighting.swift */,
@@ -440,6 +449,7 @@
 				A81D85D526685B827BFD87FA /* DesignerPassTests.swift in Sources */,
 				6A5FFEFDCD82D51ECE33C0B1 /* InsideOperationsTests.swift in Sources */,
 				3CB03EA0EBD37421E707494E /* RealityAtelierTests.swift in Sources */,
+				949A4DFF154A134C3E367315 /* RoomPlacementTests.swift in Sources */,
 				F8C623113C63A0FB6739DD71 /* SaliniTests.swift in Sources */,
 				E52C6B57271B598998C369C3 /* ShippingAtelierTests.swift in Sources */,
 			);
@@ -478,6 +488,8 @@
 				9331D02F97215CADCBFC3871 /* RALPalette.swift in Sources */,
 				8FC069A099ADB312115687EE /* RealityAtelier.swift in Sources */,
 				B5FD9ADCFDAAC468914F9F92 /* RealityAtelierScene.swift in Sources */,
+				8BC38A8738DEDBFFA383B4AF /* RoomPlacement.swift in Sources */,
+				117E058D6341136DAB82EF6D /* RoomPlacementModel.swift in Sources */,
 				DDE9235998F60E78C7E81591 /* ShippingAtelier.swift in Sources */,
 				3A923864B299F30FCCB37D58 /* ShippingAtelierScene.swift in Sources */,
 				6BC074B032EB288957F741A9 /* StudioLighting.swift in Sources */,

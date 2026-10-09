@@ -375,11 +375,8 @@ final class SaliniTests: XCTestCase {
     window.isHidden = true
   }
   func testOfficialModelsOpenWhereTheyCanBeSeen() {
-    #if targetEnvironment(simulator)
-      XCTAssertEqual(ModelViewing.subtitle, "просмотр в студии", "No AR promise in the Simulator")
-    #else
-      XCTAssertEqual(ModelViewing.subtitle, "просмотр и AR")
-    #endif
+    XCTAssertEqual(ModelViewing.subtitle, "примерка в комнате · масштаб 1:1")
+    // Unsupported devices use the explicitly labelled room screen with a studio fallback.
     XCTAssertTrue(StudioForm.all.allSatisfy { FileManager.default.fileExists(atPath: $0.modelURL.path) })
   }
   func testSpecificationNumberColumnFitsThreeDigits() {
