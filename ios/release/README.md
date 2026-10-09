@@ -5,14 +5,14 @@ Source: `def568a65e8246093a6093ff9f07c2fdcd312bf7`, branch `codex/salini-room-ar
 
 The signed archive includes native room AR for 13 official models, the new animated **«Камень изнутри»** Home block with six generated fragments, and the accepted Insight loading/material improvements. Home selections carry into the existing full 3D studio.
 
-**Upload failed at completion on 9 October 2026, 12:05 UTC+7: `Account credentials have expired`. Build12 is not successfully delivered to TestFlight.** Network connectivity was restored and checked at 15:45; renewed Xcode/App Store Connect sign-in remains necessary. [Upload receipt](build-12-upload-receipt.txt). Processing, internal testing and external review are unverified for build12. Public build10 approval does not apply to build12.
+**Upload succeeded on 9 October 2026, 16:08:15 UTC+7**, after renewed account sign-in. Xcode returned `Upload succeeded` and `EXPORT SUCCEEDED`, exit0; Apple started processing. The earlier 12:05 credentials failure is preserved in the [upload receipt](build-12-upload-receipt.txt). Processing completion, internal testing and external review/group availability still require App Store Connect verification. Public build10 approval does not apply to build12.
 
 - Final focused integration tests: **13 passed, 0 failed**, normal command exit0. Earlier AR+Insight full suite: **141 passed**, with a separately recorded post-test runner finalization interruption.
 - Signed archive verified; all195 audited assets verified. Six PNGs were losslessly re-encoded by Xcode; decoded pixels and alpha are identical.
 - [Home reveal in the running app](../../research/room-ar-2026-10-09/evidence/essence/home-reveal.mp4) · [Material selection](../../research/room-ar-2026-10-09/evidence/essence/home-selection.mp4).
 - [Validation and limits](build-12-validation.txt). Real room AR still requires physical-iPhone verification; simulator fallback is not a camera AR test.
 
-Resume distribution from the existing archive after the user renews sign-in; verify successful upload, processing, group assignment and external review separately. The heartbeat is paused pending this already-requested action.
+The archive is already uploaded: do not upload it again. Finish processing/group verification and external review in App Store Connect. Test notes and beta review notes for build12 are prepared in testflight-metadata.json. Browser sign-in is valid in Safari; native UI operations are currently interrupted by concurrent window switching. The user has been asked for a short uninterrupted App Store Connect window. Monitoring continues quietly until the UI is available.
 
 ---
 

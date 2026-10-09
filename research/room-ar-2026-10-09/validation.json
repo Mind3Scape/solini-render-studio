@@ -1,5 +1,5 @@
 {
-  "state": "implemented, integrated, simulator accepted, signed build12 archived; TestFlight blocked by expired Apple credentials",
+  "state": "implemented, integrated, simulator accepted, signed build12 uploaded; distribution verification in progress",
   "scope": "Native camera-backed ARKit room placement; no network rendering/camera recording",
   "architecture": "ARSCNView with world tracking, horizontal plane geometry raycasts, ARAnchor, automatic environment texture/reflection and light estimation",
   "selection": "13 bundled official product meshes. Product/variant/RAL passed from catalog, studio and project documents. No substitute geometry for unsupported products.",
@@ -38,12 +38,12 @@
   "source_revision": "def568a65e8246093a6093ff9f07c2fdcd312bf7",
   "release": {
     "build": "1.0 (12)",
-    "upload": "failed at completion, Account credentials have expired, 2026-10-09T12:05:18+07:00",
-    "processing": "unverified; upload did not succeed",
+    "upload": "CONFIRMED: Upload succeeded / EXPORT SUCCEEDED, exit0, 2026-10-09T16:08:15+07:00",
+    "processing": "started per Apple upload service; completion awaits UI verification",
     "internal_testing": "unverified for build12",
     "external_beta": "unverified for build12; build10 approval is not build12 approval",
     "receipt": "../../ios/release/build-12-upload-receipt.txt",
     "network": "App Store Connect HTTP200 at 2026-10-09T15:45+07:00; browser remains at authResult=FAILED",
-    "next_action": "After user renews Xcode and App Store Connect sign-in, retry the existing verified archive and verify processing/groups/review. Do not rebuild merely to retry upload."
+    "next_action": "Verify processed build12, attach internal/public groups, supply test notes and submit external review as needed."
   }
 }

@@ -24,3 +24,12 @@ In-app browser still showed App Store Connect login with authResult=FAILED.
 A renewed account login was already requested; the request is not repeated.
 No second build12 upload attempted without evidence of renewed authorization.
 Next: after sign-in renewal, retry this verified archive; check upload completion, processing, internal group, and external group/review independently.
+
+SUCCESSFUL RETRY AFTER SIGN-IN RENEWAL
+2026-10-09 16:08:15.268 +0700 Uploaded package is processing.
+2026-10-09 16:08:15.279 +0700 Upload succeeded.
+Uploaded Salini
+** EXPORT SUCCEEDED **
+Exit code: 0.
+Upload confirmed. Processing started; processing completion, internal and external group states await UI verification.
+Same signed archive, no rebuild.

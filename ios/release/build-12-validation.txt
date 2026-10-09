@@ -16,4 +16,4 @@ Insight actual app follow/pause/day/night/manual/return-to-action checked; loadi
 
 Limits: no connected iPhone/iPad; physical camera permission, plane scanning, anchor stability, tracking and lighting unverified. Simulator fallback is not a physical AR test. No physical-device FPS/thermal measurement. Insight is still a bounded simulated production scene; no claim of final concept-render parity or live plant data.
 
-Distribution: build12 upload failed at completion due expired Apple credentials. See build-12-upload-receipt.txt.
+Distribution: first upload failed due expired Apple credentials. Retry after sign-in renewal succeeded at 16:08:15 UTC+7 on 9 October; EXPORT SUCCEEDED, exit0. Apple started processing. Processing completion and internal/external group states await UI verification. See build-12-upload-receipt.txt.

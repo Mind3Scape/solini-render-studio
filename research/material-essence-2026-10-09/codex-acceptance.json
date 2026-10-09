@@ -1,5 +1,5 @@
 {
-  "state": "accepted and integrated; build12 signed; distribution blocked by Apple credentials",
+  "state": "accepted and integrated; build12 successfully uploaded, processing/group verification pending",
   "date": "2026-10-09",
   "engineer": "Opus 5.5 via Claude Code",
   "engineer_commit": "3148b31",
