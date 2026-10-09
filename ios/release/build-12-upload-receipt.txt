@@ -1,0 +1,26 @@
+Salini 1.0 (12) — upload attempt, not successful distribution
+Date: 2026-10-09, Asia/Bangkok (UTC+7)
+App Store Connect app: 6819688748
+Bundle: design.salini.experience
+Source: def568a65e8246093a6093ff9f07c2fdcd312bf7
+Branch: codex/salini-room-ar
+Archive: ios/build/testflight/Salini-1.0-12.xcarchive
+
+Command:
+xcodebuild -exportArchive -archivePath ios/build/testflight/Salini-1.0-12.xcarchive -exportOptionsPlist ios/release/UploadOptions.plist -exportPath ios/build/testflight/export-12 -allowProvisioningUpdates
+
+Final upload log excerpt (local timestamps):
+2026-10-09 12:05:18.505 Progress 100 %: Upload failed.
+Account credentials have expired.
+error: exportArchive Account credentials have expired. Open Xcode's Accounts settings, sign in to your account, and try again.
+** EXPORT FAILED **
+
+100% progress was payload transfer, not successful acceptance. No Upload succeeded or EXPORT SUCCEEDED was returned.
+Processing: unverified. Internal testing: unverified for build12. External Beta App Review: not verified for build12.
+The previously approved public build10 is separate.
+
+Network rechecked at 15:45 UTC+7: App Store Connect returned HTTP200.
+In-app browser still showed App Store Connect login with authResult=FAILED.
+A renewed account login was already requested; the request is not repeated.
+No second build12 upload attempted without evidence of renewed authorization.
+Next: after sign-in renewal, retry this verified archive; check upload completion, processing, internal group, and external group/review independently.

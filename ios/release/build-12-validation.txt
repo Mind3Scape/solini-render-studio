@@ -1,0 +1,19 @@
+Salini 1.0 (12) — Codex integration acceptance
+Source: def568a65e8246093a6093ff9f07c2fdcd312bf7, codex/salini-room-ar
+
+Changes: official-model AR room placement; generated layered S-Stone/S-Sense Home presentation; improved Insight forklift/loading motion and materials.
+
+Build: signed Release archive succeeded; codesign --verify --deep --strict passed. CFBundleVersion12 and Russian NSCameraUsageDescription verified.
+Assets: 195 checked; 189 byte-identical. Six Xcode-reencoded PNGs are exactly pixel-identical including alpha (CoreGraphics/ImageIO).
+Final targeted tests: 13 passed, 0 failed, normal TEST SUCCEEDED exit0.
+Earlier AR+Insight suite: 141 tests passed, 0 failed, 251.569 seconds. XCTest completed; xcodebuild hung during finalization and was interrupted (exit75). xcresult reports Passed. This is not claimed as a normal successful xcodebuild command.
+
+Native simulator: BC58C81F-D28D-4E26-A59E-F8689EED523F (Salini AR — QA), iPhone18Pro/iOS27.
+Verified actual Home material appearance, overflow and animation, selection of Stone/matte/gloss, studio CTA and comparison selection.
+Verified catalog Noemi170 S-Sense gloss + RAL1001 -> AR fallback preserves choice; studio fallback works. Direct studio navbar AR button was not independently activated by CUA.
+All13 official AR meshes calibrated to catalogue bounds within1mm; gesture scale fixed1:1.
+Insight actual app follow/pause/day/night/manual/return-to-action checked; loading video reviewed.
+
+Limits: no connected iPhone/iPad; physical camera permission, plane scanning, anchor stability, tracking and lighting unverified. Simulator fallback is not a physical AR test. No physical-device FPS/thermal measurement. Insight is still a bounded simulated production scene; no claim of final concept-render parity or live plant data.
+
+Distribution: build12 upload failed at completion due expired Apple credentials. See build-12-upload-receipt.txt.

@@ -1,0 +1,23 @@
+{
+  "state": "accepted and integrated; build12 signed; distribution blocked by Apple credentials",
+  "date": "2026-10-09",
+  "engineer": "Opus 5.5 via Claude Code",
+  "engineer_commit": "3148b31",
+  "integration_source_revision": "def568a65e8246093a6093ff9f07c2fdcd312bf7",
+  "assets": "Six transparent 1254x1254 generated PNGs made by Codex with built-in image_gen. Final artwork inspected; prompts and provenance in generated/. No Higgsfield or procedural fallback.",
+  "implementation": "Native 2.5D layers with opening separation, continuous gentle movement, hero selection, matching matte/gloss assets, overflow beyond card inside reserved stage. Original full 3D studio retained.",
+  "review": "Codex independently checked actual Home on Salini AR — QA. Selected S-Stone, S-Sense matte, S-Sense gloss and opened the Noemi studio comparison with selection retained. Cropping/aspect, overflow and label placement visually checked.",
+  "tests": "Final integrated focused suite: 13 passed, 0 failed; normal xcodebuild exit0. Earlier pre-Essence full suite: 141 passed; post-completion runner finalization interruption recorded separately.",
+  "archive": "All six archived generated PNGs pixel-identical to source including alpha, despite Xcode re-encoding. 195 resources verified.",
+  "evidence": [
+    "../room-ar-2026-10-09/evidence/essence/home-stone.png",
+    "../room-ar-2026-10-09/evidence/essence/home-matte.png",
+    "../room-ar-2026-10-09/evidence/essence/home-gloss.png",
+    "../room-ar-2026-10-09/evidence/essence/home-reveal.mp4",
+    "../room-ar-2026-10-09/evidence/essence/home-selection.mp4"
+  ],
+  "limits": [
+    "Material fragment view is a layered artistic illustration, not a measured microscopic section. Full product geometry remains inside 3D studio.",
+    "Physical-device performance and actual AR tracking require a connected iPhone; simulator UI is not evidence of camera AR working in a physical room."
+  ]
+}

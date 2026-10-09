@@ -1,0 +1,56 @@
+[
+  {
+    "file" : "essence-sense-cap-gloss.png",
+    "height" : 1254,
+    "max_alpha_difference_255" : 0,
+    "max_rgba_difference_255" : 0,
+    "mean_rgba_difference_255" : 0,
+    "pixels_identical" : true,
+    "width" : 1254
+  },
+  {
+    "file" : "essence-sense-cap-matte.png",
+    "height" : 1254,
+    "max_alpha_difference_255" : 0,
+    "max_rgba_difference_255" : 0,
+    "mean_rgba_difference_255" : 0,
+    "pixels_identical" : true,
+    "width" : 1254
+  },
+  {
+    "file" : "essence-sense-core-gloss.png",
+    "height" : 1254,
+    "max_alpha_difference_255" : 0,
+    "max_rgba_difference_255" : 0,
+    "mean_rgba_difference_255" : 0,
+    "pixels_identical" : true,
+    "width" : 1254
+  },
+  {
+    "file" : "essence-sense-core-matte.png",
+    "height" : 1254,
+    "max_alpha_difference_255" : 0,
+    "max_rgba_difference_255" : 0,
+    "mean_rgba_difference_255" : 0,
+    "pixels_identical" : true,
+    "width" : 1254
+  },
+  {
+    "file" : "essence-stone-fragment.png",
+    "height" : 1254,
+    "max_alpha_difference_255" : 0,
+    "max_rgba_difference_255" : 0,
+    "mean_rgba_difference_255" : 0,
+    "pixels_identical" : true,
+    "width" : 1254
+  },
+  {
+    "file" : "essence-stone-mass.png",
+    "height" : 1254,
+    "max_alpha_difference_255" : 0,
+    "max_rgba_difference_255" : 0,
+    "mean_rgba_difference_255" : 0,
+    "pixels_identical" : true,
+    "width" : 1254
+  }
+]

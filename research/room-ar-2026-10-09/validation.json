@@ -1,5 +1,5 @@
 {
-  "state": "implemented; integration and release pending",
+  "state": "implemented, integrated, simulator accepted, signed build12 archived; TestFlight blocked by expired Apple credentials",
   "scope": "Native camera-backed ARKit room placement; no network rendering/camera recording",
   "architecture": "ARSCNView with world tracking, horizontal plane geometry raycasts, ARAnchor, automatic environment texture/reflection and light estimation",
   "selection": "13 bundled official product meshes. Product/variant/RAL passed from catalog, studio and project documents. No substitute geometry for unsupported products.",
@@ -19,9 +19,12 @@
       "evidence/ar-entry-simulator.png",
       "evidence/studio-room-entry.png"
     ],
-    "build": "Integrated Debug build succeeded. Release and final Essence integration pending.",
+    "build": "Release archive 1.0 (12) succeeded; signature verified. All 195 audited resources verified, including six pixel-identical re-encoded PNGs.",
     "integrated_suite": "141 tests, 0 failures, 251.569 seconds: AR + Insight merged, before Essence integration",
-    "test_runner_note": "XCTest completed all 141 cases with 0 failures; xcresult reports Passed. xcodebuild remained idle after completion and was interrupted with SIGINT (exit75). Finalization issue recorded rather than represented as a normal successful command exit."
+    "test_runner_note": "XCTest completed all 141 cases with 0 failures; xcresult reports Passed. xcodebuild remained idle after completion and was interrupted with SIGINT (exit75). Finalization issue recorded rather than represented as a normal successful command exit.",
+    "final_feature_tests": "13 tests passed, 0 failures; final Essence + AR + Home/audience integration; normal TEST SUCCEEDED exit0",
+    "final_feature_test_summary": "build12-feature-tests-summary.json",
+    "home_materials": "Final six generated image layers verified in actual Home. S-Stone, S-Sense matte/gloss and studio CTA preserve selection. Evidence in evidence/essence/."
   },
   "limitations": [
     "No connected iPhone or iPad. Real camera permission sheet, surface scanning, anchor stability, drag/rotate tracking and lighting in a physical room cannot be certified in the simulator.",
@@ -31,5 +34,16 @@
   "sources": [
     "https://developer.apple.com/documentation/arkit/arworldtrackingconfiguration",
     "https://developer.apple.com/documentation/arkit/adding-realistic-reflections-to-an-ar-experience"
-  ]
+  ],
+  "source_revision": "def568a65e8246093a6093ff9f07c2fdcd312bf7",
+  "release": {
+    "build": "1.0 (12)",
+    "upload": "failed at completion, Account credentials have expired, 2026-10-09T12:05:18+07:00",
+    "processing": "unverified; upload did not succeed",
+    "internal_testing": "unverified for build12",
+    "external_beta": "unverified for build12; build10 approval is not build12 approval",
+    "receipt": "../../ios/release/build-12-upload-receipt.txt",
+    "network": "App Store Connect HTTP200 at 2026-10-09T15:45+07:00; browser remains at authResult=FAILED",
+    "next_action": "After user renews Xcode and App Store Connect sign-in, retry the existing verified archive and verify processing/groups/review. Do not rebuild merely to retry upload."
+  }
 }

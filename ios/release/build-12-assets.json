@@ -1,0 +1,1819 @@
+{
+  "build": "12",
+  "bundle": "design.salini.experience",
+  "camera_usage": "Камера нужна, чтобы поставить выбранное изделие Salini в вашей комнате в натуральную величину. Кадры не сохраняются и не отправляются.",
+  "files": [
+    {
+      "source": "ios/Salini/InsightAssets/factory_yard_1k.hdr",
+      "bundle": "InsightAssets/factory_yard_1k.hdr",
+      "sha256": "a87b1fa5f4690b4dd53c39355ec98337d3216b514912fb5a62b820cddc59e9bd",
+      "archive_sha256": "a87b1fa5f4690b4dd53c39355ec98337d3216b514912fb5a62b820cddc59e9bd",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/atelier_kit.usdc",
+      "bundle": "InsightAssets/atelier_kit.usdc",
+      "sha256": "c80d50bb1b60cb84b34955bb198cbf42ca9d58b7bba490dbabf65a1c22e8341b",
+      "archive_sha256": "c80d50bb1b60cb84b34955bb198cbf42ca9d58b7bba490dbabf65a1c22e8341b",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/atelier_gi_night.png",
+      "bundle": "InsightAssets/atelier_gi_night.png",
+      "sha256": "8b10de1232a2b9cf49b9b4d95fb5fafb270fc0ad3ee6c799d13cc325255fe529",
+      "archive_sha256": "8b10de1232a2b9cf49b9b4d95fb5fafb270fc0ad3ee6c799d13cc325255fe529",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/probe_dock_night.hdr",
+      "bundle": "InsightAssets/probe_dock_night.hdr",
+      "sha256": "83870a7ae36e4cd6c1c41a8e2811e1530f3c69bc696f9a34fb18f8dcc477ff33",
+      "archive_sha256": "83870a7ae36e4cd6c1c41a8e2811e1530f3c69bc696f9a34fb18f8dcc477ff33",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/atelier_gi_day.png",
+      "bundle": "InsightAssets/atelier_gi_day.png",
+      "sha256": "59b224b482f81d4653994b777a34100ee28f5b19db2d332831ab8061d020bb9f",
+      "archive_sha256": "59b224b482f81d4653994b777a34100ee28f5b19db2d332831ab8061d020bb9f",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/atelier_ao.png",
+      "bundle": "InsightAssets/atelier_ao.png",
+      "sha256": "655d52eacd50be72a73a99247eb35a7361b72e42eab93b4d1cabdee682ed27ae",
+      "archive_sha256": "655d52eacd50be72a73a99247eb35a7361b72e42eab93b4d1cabdee682ed27ae",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/atelier_materials.json",
+      "bundle": "InsightAssets/atelier_materials.json",
+      "sha256": "2a57e20bb223bb7a5675eeef2b07313a6f98525563f6c0d15c28c03820f8b69f",
+      "archive_sha256": "2a57e20bb223bb7a5675eeef2b07313a6f98525563f6c0d15c28c03820f8b69f",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/ASSETS.json",
+      "bundle": "InsightAssets/ASSETS.json",
+      "sha256": "0f19b9721b988b7568cad5ef7716ef0deae12050dee3eafea1d1a044dcf4c32d",
+      "archive_sha256": "0f19b9721b988b7568cad5ef7716ef0deae12050dee3eafea1d1a044dcf4c32d",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/probe_hall_night.hdr",
+      "bundle": "InsightAssets/probe_hall_night.hdr",
+      "sha256": "324dfdb2a1997362a6cd316d462e2d59cd2aacc469a662d5cd242e57a8de82c0",
+      "archive_sha256": "324dfdb2a1997362a6cd316d462e2d59cd2aacc469a662d5cd242e57a8de82c0",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/probe_dock.hdr",
+      "bundle": "InsightAssets/probe_dock.hdr",
+      "sha256": "c3f17780d56bf3048cf7a3ea47151c94e5ef55fe3572b5e85cbde8ba5f0f26cb",
+      "archive_sha256": "c3f17780d56bf3048cf7a3ea47151c94e5ef55fe3572b5e85cbde8ba5f0f26cb",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/probe_hall.hdr",
+      "bundle": "InsightAssets/probe_hall.hdr",
+      "sha256": "9162733190b736341545152267646cb9f5764e7dcec31e65c0fc4836f6432e9f",
+      "archive_sha256": "9162733190b736341545152267646cb9f5764e7dcec31e65c0fc4836f6432e9f",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_galv_nor.jpg",
+      "bundle": "InsightAssets/textures/gen_galv_nor.jpg",
+      "sha256": "7e253f98c4e63b2330d4adae9d1a0df67d9c99829ef3dfee9f5ece526f705bfb",
+      "archive_sha256": "7e253f98c4e63b2330d4adae9d1a0df67d9c99829ef3dfee9f5ece526f705bfb",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_linewhite_albedo.jpg",
+      "bundle": "InsightAssets/textures/gen_linewhite_albedo.jpg",
+      "sha256": "81aa0af17630a3d85d34f2f8677159babe21434910138acd23ff3a5c34400593",
+      "archive_sha256": "81aa0af17630a3d85d34f2f8677159babe21434910138acd23ff3a5c34400593",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_curtain_albedo.jpg",
+      "bundle": "InsightAssets/textures/gen_curtain_albedo.jpg",
+      "sha256": "1a2166979ce0112a383579b55e561938fd24973ca9518caae2806db926c08ff6",
+      "archive_sha256": "1a2166979ce0112a383579b55e561938fd24973ca9518caae2806db926c08ff6",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_carton_nor.jpg",
+      "bundle": "InsightAssets/textures/gen_carton_nor.jpg",
+      "sha256": "b3a17715b93e423ce193a0ec451bd660ecac8959b020de28ce75e22c90b7d7d8",
+      "archive_sha256": "b3a17715b93e423ce193a0ec451bd660ecac8959b020de28ce75e22c90b7d7d8",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_bollard_nor.jpg",
+      "bundle": "InsightAssets/textures/gen_bollard_nor.jpg",
+      "sha256": "b71b785f8119610f1c86be1c8a646e70656e523932ce345ffcaf777664929c29",
+      "archive_sha256": "b71b785f8119610f1c86be1c8a646e70656e523932ce345ffcaf777664929c29",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/hand_truck_arm.jpg",
+      "bundle": "InsightAssets/textures/hand_truck_arm.jpg",
+      "sha256": "d877f0638db7608a11791d464141e79fdd961af1651e963219c912ea15bc4d3e",
+      "archive_sha256": "d877f0638db7608a11791d464141e79fdd961af1651e963219c912ea15bc4d3e",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_boothframe_nor.jpg",
+      "bundle": "InsightAssets/textures/gen_boothframe_nor.jpg",
+      "sha256": "b71b785f8119610f1c86be1c8a646e70656e523932ce345ffcaf777664929c29",
+      "archive_sha256": "b71b785f8119610f1c86be1c8a646e70656e523932ce345ffcaf777664929c29",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/overhead_crane_trim_arm.jpg",
+      "bundle": "InsightAssets/textures/overhead_crane_trim_arm.jpg",
+      "sha256": "9ddfa8edcaccc9c62abfd74e8881f35efd6a6e11045dd4cb7a11dd856cf1b0ce",
+      "archive_sha256": "9ddfa8edcaccc9c62abfd74e8881f35efd6a6e11045dd4cb7a11dd856cf1b0ce",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_slab_rough.jpg",
+      "bundle": "InsightAssets/textures/gen_slab_rough.jpg",
+      "sha256": "4a0575e555949cfb1686d2bf9d8d3a1b1275ff81c805cf1e411b300267bf2947",
+      "archive_sha256": "4a0575e555949cfb1686d2bf9d8d3a1b1275ff81c805cf1e411b300267bf2947",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/shrub_02_arm.jpg",
+      "bundle": "InsightAssets/textures/shrub_02_arm.jpg",
+      "sha256": "8a50b20a63d10043e05a800750a7a9b5b4fc70dabea2cc2d32e0d70cab4b9f32",
+      "archive_sha256": "8a50b20a63d10043e05a800750a7a9b5b4fc70dabea2cc2d32e0d70cab4b9f32",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_frame_albedo.jpg",
+      "bundle": "InsightAssets/textures/gen_frame_albedo.jpg",
+      "sha256": "f8eb7607f9b2155f5eb35931c822f2e36f97deaa5f2d0426e34a03aa4306ae53",
+      "archive_sha256": "f8eb7607f9b2155f5eb35931c822f2e36f97deaa5f2d0426e34a03aa4306ae53",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_roof_rough.jpg",
+      "bundle": "InsightAssets/textures/gen_roof_rough.jpg",
+      "sha256": "a455f3882c1c124592e4adba26410b887d7d7a4dcc0696e0c4623880c9061868",
+      "archive_sha256": "a455f3882c1c124592e4adba26410b887d7d7a4dcc0696e0c4623880c9061868",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_panel_nor.jpg",
+      "bundle": "InsightAssets/textures/gen_panel_nor.jpg",
+      "sha256": "c11122b61363b9b26e424eb4cd8fb3cf3f69b82ea243f3dc734ac2a9475b1d9f",
+      "archive_sha256": "c11122b61363b9b26e424eb4cd8fb3cf3f69b82ea243f3dc734ac2a9475b1d9f",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_pipewater_nor.jpg",
+      "bundle": "InsightAssets/textures/gen_pipewater_nor.jpg",
+      "sha256": "b71b785f8119610f1c86be1c8a646e70656e523932ce345ffcaf777664929c29",
+      "archive_sha256": "b71b785f8119610f1c86be1c8a646e70656e523932ce345ffcaf777664929c29",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_forklift_nor.jpg",
+      "bundle": "InsightAssets/textures/gen_forklift_nor.jpg",
+      "sha256": "b71b785f8119610f1c86be1c8a646e70656e523932ce345ffcaf777664929c29",
+      "archive_sha256": "b71b785f8119610f1c86be1c8a646e70656e523932ce345ffcaf777664929c29",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_leveler_rough.jpg",
+      "bundle": "InsightAssets/textures/gen_leveler_rough.jpg",
+      "sha256": "77f6fbaf30176d0b24fb1d16afd8905bd19bd846f7deb6ff21b07388831ab03b",
+      "archive_sha256": "77f6fbaf30176d0b24fb1d16afd8905bd19bd846f7deb6ff21b07388831ab03b",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/shrub_03_nor_gl.jpg",
+      "bundle": "InsightAssets/textures/shrub_03_nor_gl.jpg",
+      "sha256": "31d68cd541323846c81ecae98dec3b3147f837396a98064a3ed73f2324cc84ca",
+      "archive_sha256": "31d68cd541323846c81ecae98dec3b3147f837396a98064a3ed73f2324cc84ca",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/shrub_03_arm.jpg",
+      "bundle": "InsightAssets/textures/shrub_03_arm.jpg",
+      "sha256": "c69c4b67210c4e92933ef28a0997f85c2c7e95a4908fc82192156c86d6d0c0aa",
+      "archive_sha256": "c69c4b67210c4e92933ef28a0997f85c2c7e95a4908fc82192156c86d6d0c0aa",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_plinth_nor.jpg",
+      "bundle": "InsightAssets/textures/gen_plinth_nor.jpg",
+      "sha256": "c6dc8968cb49e4464c441ad6da193199093cbd8a0289cd5f22a6ca8bc40b374e",
+      "archive_sha256": "c6dc8968cb49e4464c441ad6da193199093cbd8a0289cd5f22a6ca8bc40b374e",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_rackbeam_nor.jpg",
+      "bundle": "InsightAssets/textures/gen_rackbeam_nor.jpg",
+      "sha256": "b71b785f8119610f1c86be1c8a646e70656e523932ce345ffcaf777664929c29",
+      "archive_sha256": "b71b785f8119610f1c86be1c8a646e70656e523932ce345ffcaf777664929c29",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_coping_rough.jpg",
+      "bundle": "InsightAssets/textures/gen_coping_rough.jpg",
+      "sha256": "2c060e69f10ae4fba412ab104e0e070210ed736e1a8607287ffaf75710c4c436",
+      "archive_sha256": "2c060e69f10ae4fba412ab104e0e070210ed736e1a8607287ffaf75710c4c436",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_chassis_nor.jpg",
+      "bundle": "InsightAssets/textures/gen_chassis_nor.jpg",
+      "sha256": "b71b785f8119610f1c86be1c8a646e70656e523932ce345ffcaf777664929c29",
+      "archive_sha256": "b71b785f8119610f1c86be1c8a646e70656e523932ce345ffcaf777664929c29",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_rackbeam_rough.jpg",
+      "bundle": "InsightAssets/textures/gen_rackbeam_rough.jpg",
+      "sha256": "2c060e69f10ae4fba412ab104e0e070210ed736e1a8607287ffaf75710c4c436",
+      "archive_sha256": "2c060e69f10ae4fba412ab104e0e070210ed736e1a8607287ffaf75710c4c436",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_paving_nor.jpg",
+      "bundle": "InsightAssets/textures/gen_paving_nor.jpg",
+      "sha256": "b599ddb59b16dc8e91077e14d1eb980a23673523983bb418f7bd2cde81373f2b",
+      "archive_sha256": "b599ddb59b16dc8e91077e14d1eb980a23673523983bb418f7bd2cde81373f2b",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_cabinet_rough.jpg",
+      "bundle": "InsightAssets/textures/gen_cabinet_rough.jpg",
+      "sha256": "2c060e69f10ae4fba412ab104e0e070210ed736e1a8607287ffaf75710c4c436",
+      "archive_sha256": "2c060e69f10ae4fba412ab104e0e070210ed736e1a8607287ffaf75710c4c436",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/clean_asphalt_nor_gl.jpg",
+      "bundle": "InsightAssets/textures/clean_asphalt_nor_gl.jpg",
+      "sha256": "26d3055e70c18d967e32582d4c34f2836afffda5706eacafd052dbb359b4ceba",
+      "archive_sha256": "26d3055e70c18d967e32582d4c34f2836afffda5706eacafd052dbb359b4ceba",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_floor_nor.jpg",
+      "bundle": "InsightAssets/textures/gen_floor_nor.jpg",
+      "sha256": "b599ddb59b16dc8e91077e14d1eb980a23673523983bb418f7bd2cde81373f2b",
+      "archive_sha256": "b599ddb59b16dc8e91077e14d1eb980a23673523983bb418f7bd2cde81373f2b",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_frame_nor.jpg",
+      "bundle": "InsightAssets/textures/gen_frame_nor.jpg",
+      "sha256": "a0d022220c42fae1944f2ead977f06d79e13c28e7a58848c533de692cc6e369c",
+      "archive_sha256": "a0d022220c42fae1944f2ead977f06d79e13c28e7a58848c533de692cc6e369c",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/modular_airduct_rectangular_01_parts01_arm.jpg",
+      "bundle": "InsightAssets/textures/modular_airduct_rectangular_01_parts01_arm.jpg",
+      "sha256": "23e2da6a272532012d81e89718ef39f9776fe3811b07da50f4b8772776f1df05",
+      "archive_sha256": "23e2da6a272532012d81e89718ef39f9776fe3811b07da50f4b8772776f1df05",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/power_box_01_diff.jpg",
+      "bundle": "InsightAssets/textures/power_box_01_diff.jpg",
+      "sha256": "337ec9c627df42c5a37c558e3f3a4193f4d8af8ed30e5e307f5caa7d11e14f61",
+      "archive_sha256": "337ec9c627df42c5a37c558e3f3a4193f4d8af8ed30e5e307f5caa7d11e14f61",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/clean_asphalt_diff.jpg",
+      "bundle": "InsightAssets/textures/clean_asphalt_diff.jpg",
+      "sha256": "18653e1626e779ffb01c8bb5aedd4954d479f20355bfa211381740a89edb334e",
+      "archive_sha256": "18653e1626e779ffb01c8bb5aedd4954d479f20355bfa211381740a89edb334e",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/shrub_02_diff.jpg",
+      "bundle": "InsightAssets/textures/shrub_02_diff.jpg",
+      "sha256": "a82cc866b5934413c8a3cad4dcdbc09d06c03a3cf0e44377c39a34bc7b6f507d",
+      "archive_sha256": "a82cc866b5934413c8a3cad4dcdbc09d06c03a3cf0e44377c39a34bc7b6f507d",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/shrub_03_diff.jpg",
+      "bundle": "InsightAssets/textures/shrub_03_diff.jpg",
+      "sha256": "425d01dc6fb62c2c2183dd445ea8fa815619c39705bc5ee55f9c0e17760d9361",
+      "archive_sha256": "425d01dc6fb62c2c2183dd445ea8fa815619c39705bc5ee55f9c0e17760d9361",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_slab_nor.jpg",
+      "bundle": "InsightAssets/textures/gen_slab_nor.jpg",
+      "sha256": "c6dc8968cb49e4464c441ad6da193199093cbd8a0289cd5f22a6ca8bc40b374e",
+      "archive_sha256": "c6dc8968cb49e4464c441ad6da193199093cbd8a0289cd5f22a6ca8bc40b374e",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/exterior_aircon_unit_rusted_02_arm.jpg",
+      "bundle": "InsightAssets/textures/exterior_aircon_unit_rusted_02_arm.jpg",
+      "sha256": "abf12335d695a771e326ae8186d88262813024845cb5edde1d1521a08d610a6e",
+      "archive_sha256": "abf12335d695a771e326ae8186d88262813024845cb5edde1d1521a08d610a6e",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/wooden_crate_01_diff.jpg",
+      "bundle": "InsightAssets/textures/wooden_crate_01_diff.jpg",
+      "sha256": "e282627abe109ac9214c0cd628f14933dc943d556958ac82edc8169f11cd0ba2",
+      "archive_sha256": "e282627abe109ac9214c0cd628f14933dc943d556958ac82edc8169f11cd0ba2",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/clean_asphalt_rough.jpg",
+      "bundle": "InsightAssets/textures/clean_asphalt_rough.jpg",
+      "sha256": "117639ccc53f73af668d81ce756b02f4bfb180d54fd2ec65d92e6487a97a684a",
+      "archive_sha256": "117639ccc53f73af668d81ce756b02f4bfb180d54fd2ec65d92e6487a97a684a",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_linewhite_nor.jpg",
+      "bundle": "InsightAssets/textures/gen_linewhite_nor.jpg",
+      "sha256": "98762b09ce6412bd3c59327d7aff40563e950501e901d6ff87b7a88890aee0ad",
+      "archive_sha256": "98762b09ce6412bd3c59327d7aff40563e950501e901d6ff87b7a88890aee0ad",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_trailerroof_albedo.jpg",
+      "bundle": "InsightAssets/textures/gen_trailerroof_albedo.jpg",
+      "sha256": "0f935e830a50347867f9ee22da155c2c2b242233b16d81c3b46383ca5a8fd3ea",
+      "archive_sha256": "0f935e830a50347867f9ee22da155c2c2b242233b16d81c3b46383ca5a8fd3ea",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/wooden_crate_01_nor_gl.jpg",
+      "bundle": "InsightAssets/textures/wooden_crate_01_nor_gl.jpg",
+      "sha256": "1e4093180e24047b053288ed0a8185d2ce5430f00412ba648a90b3df3a3eeb4b",
+      "archive_sha256": "1e4093180e24047b053288ed0a8185d2ce5430f00412ba648a90b3df3a3eeb4b",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_plinth_rough.jpg",
+      "bundle": "InsightAssets/textures/gen_plinth_rough.jpg",
+      "sha256": "1694fb6b658e58fb415fa1c748972d869c3031ba64b5574c68b0a9a438328a82",
+      "archive_sha256": "1694fb6b658e58fb415fa1c748972d869c3031ba64b5574c68b0a9a438328a82",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_facade_rough.jpg",
+      "bundle": "InsightAssets/textures/gen_facade_rough.jpg",
+      "sha256": "211f9fc6ae9133fec68a9399debaaff0c07a73232765bfb2e95301527ff58275",
+      "archive_sha256": "211f9fc6ae9133fec68a9399debaaff0c07a73232765bfb2e95301527ff58275",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/modular_airduct_rectangular_01_parts02_diff.jpg",
+      "bundle": "InsightAssets/textures/modular_airduct_rectangular_01_parts02_diff.jpg",
+      "sha256": "8275e5d794433d837230439eb4546dacc02cad343bae59d27813c2056e25125e",
+      "archive_sha256": "8275e5d794433d837230439eb4546dacc02cad343bae59d27813c2056e25125e",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_rackupright_albedo.jpg",
+      "bundle": "InsightAssets/textures/gen_rackupright_albedo.jpg",
+      "sha256": "673f845e7075e3d7ba6bd71e6722df254fcbb099a630a2bc255ad21802cc27f8",
+      "archive_sha256": "673f845e7075e3d7ba6bd71e6722df254fcbb099a630a2bc255ad21802cc27f8",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/power_box_01_nor_gl.jpg",
+      "bundle": "InsightAssets/textures/power_box_01_nor_gl.jpg",
+      "sha256": "cb8f3c2a2a485abe66a0415cf19544870261205e4fd729ef54016d0ddf104390",
+      "archive_sha256": "cb8f3c2a2a485abe66a0415cf19544870261205e4fd729ef54016d0ddf104390",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_forklift_albedo.jpg",
+      "bundle": "InsightAssets/textures/gen_forklift_albedo.jpg",
+      "sha256": "2f2bb31a2565b9401539e72748a212c61f4449b234c06201c169ccb34376a10d",
+      "archive_sha256": "2f2bb31a2565b9401539e72748a212c61f4449b234c06201c169ccb34376a10d",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_mat_nor.jpg",
+      "bundle": "InsightAssets/textures/gen_mat_nor.jpg",
+      "sha256": "a9b9b6b5ba10e41edf4110e412da6457bd0ed6a374aefa968f09f418a0669b8c",
+      "archive_sha256": "a9b9b6b5ba10e41edf4110e412da6457bd0ed6a374aefa968f09f418a0669b8c",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_trailerroof_nor.jpg",
+      "bundle": "InsightAssets/textures/gen_trailerroof_nor.jpg",
+      "sha256": "b71b785f8119610f1c86be1c8a646e70656e523932ce345ffcaf777664929c29",
+      "archive_sha256": "b71b785f8119610f1c86be1c8a646e70656e523932ce345ffcaf777664929c29",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/tree_small_02_branch_nor_gl.jpg",
+      "bundle": "InsightAssets/textures/tree_small_02_branch_nor_gl.jpg",
+      "sha256": "f4379591142c851ac6e4819e02bd5b7f5a386c3a3f946f161db8cdc80dfda4e7",
+      "archive_sha256": "f4379591142c851ac6e4819e02bd5b7f5a386c3a3f946f161db8cdc80dfda4e7",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_lineyellow_albedo.jpg",
+      "bundle": "InsightAssets/textures/gen_lineyellow_albedo.jpg",
+      "sha256": "0dd9a0120b659fa44d20991e1baca6fe4fab3334993785d7643158f14d7a4e10",
+      "archive_sha256": "0dd9a0120b659fa44d20991e1baca6fe4fab3334993785d7643158f14d7a4e10",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/overhead_crane_trim_diff.jpg",
+      "bundle": "InsightAssets/textures/overhead_crane_trim_diff.jpg",
+      "sha256": "b4ddb78b99e621d3c985f4e3b9afb6e705c78af3a8e2e26f6abfc949b8a60718",
+      "archive_sha256": "b4ddb78b99e621d3c985f4e3b9afb6e705c78af3a8e2e26f6abfc949b8a60718",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_rubber_rough.jpg",
+      "bundle": "InsightAssets/textures/gen_rubber_rough.jpg",
+      "sha256": "1dc443eb3e90abe4e753f8a9d29946785677fcc5ba44f7ef223c78a7726d6573",
+      "archive_sha256": "1dc443eb3e90abe4e753f8a9d29946785677fcc5ba44f7ef223c78a7726d6573",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_coping_albedo.jpg",
+      "bundle": "InsightAssets/textures/gen_coping_albedo.jpg",
+      "sha256": "60979a84a677238a4f67cbda1acc18ff4d2d7290d916c859f4ed09348ec5f0b7",
+      "archive_sha256": "60979a84a677238a4f67cbda1acc18ff4d2d7290d916c859f4ed09348ec5f0b7",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_boothframe_rough.jpg",
+      "bundle": "InsightAssets/textures/gen_boothframe_rough.jpg",
+      "sha256": "642e04b7022d48533fce9af38c09650672549ff03b35de2f0c2f9a687ca33719",
+      "archive_sha256": "642e04b7022d48533fce9af38c09650672549ff03b35de2f0c2f9a687ca33719",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/steel_frame_shelves_01_nor_gl.jpg",
+      "bundle": "InsightAssets/textures/steel_frame_shelves_01_nor_gl.jpg",
+      "sha256": "e16cf62fd027b60d0fceb4064d8d193bd9db887cd9af32c971858f350144a593",
+      "archive_sha256": "e16cf62fd027b60d0fceb4064d8d193bd9db887cd9af32c971858f350144a593",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_grass_rough.jpg",
+      "bundle": "InsightAssets/textures/gen_grass_rough.jpg",
+      "sha256": "3666ecc73cc0e7b946aeaef0ac17d1c6b995b7a33e22f23a2b65a921eef6b72b",
+      "archive_sha256": "3666ecc73cc0e7b946aeaef0ac17d1c6b995b7a33e22f23a2b65a921eef6b72b",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_roof_nor.jpg",
+      "bundle": "InsightAssets/textures/gen_roof_nor.jpg",
+      "sha256": "c97763df0bdfff6a3b273b3240783a88c96243d526993c85dcc1c58b386731ae",
+      "archive_sha256": "c97763df0bdfff6a3b273b3240783a88c96243d526993c85dcc1c58b386731ae",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_boothframe_albedo.jpg",
+      "bundle": "InsightAssets/textures/gen_boothframe_albedo.jpg",
+      "sha256": "b27000e628f12931f715e944a1caf041b0cca5e40a9ad32996bca52dbc7a55ef",
+      "archive_sha256": "b27000e628f12931f715e944a1caf041b0cca5e40a9ad32996bca52dbc7a55ef",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_coping_nor.jpg",
+      "bundle": "InsightAssets/textures/gen_coping_nor.jpg",
+      "sha256": "b71b785f8119610f1c86be1c8a646e70656e523932ce345ffcaf777664929c29",
+      "archive_sha256": "b71b785f8119610f1c86be1c8a646e70656e523932ce345ffcaf777664929c29",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/shrub_04_diff.jpg",
+      "bundle": "InsightAssets/textures/shrub_04_diff.jpg",
+      "sha256": "55a04bbeef88fb413aad78a1f440a4b279d895698f9485a621af86bb00e9f4c2",
+      "archive_sha256": "55a04bbeef88fb413aad78a1f440a4b279d895698f9485a621af86bb00e9f4c2",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/exterior_aircon_unit_rusted_02_nor_gl.jpg",
+      "bundle": "InsightAssets/textures/exterior_aircon_unit_rusted_02_nor_gl.jpg",
+      "sha256": "e12c93e919421f056943d12b9b4cd223ff9190985321e9bb2bc15b10b3a43df6",
+      "archive_sha256": "e12c93e919421f056943d12b9b4cd223ff9190985321e9bb2bc15b10b3a43df6",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_cabinet_albedo.jpg",
+      "bundle": "InsightAssets/textures/gen_cabinet_albedo.jpg",
+      "sha256": "1b46ec544256576a14ae21cea177ef1b9c85928374f17f93bb60c83ffe439d7e",
+      "archive_sha256": "1b46ec544256576a14ae21cea177ef1b9c85928374f17f93bb60c83ffe439d7e",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_desk_nor.jpg",
+      "bundle": "InsightAssets/textures/gen_desk_nor.jpg",
+      "sha256": "a0d022220c42fae1944f2ead977f06d79e13c28e7a58848c533de692cc6e369c",
+      "archive_sha256": "a0d022220c42fae1944f2ead977f06d79e13c28e7a58848c533de692cc6e369c",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_steel_rough.jpg",
+      "bundle": "InsightAssets/textures/gen_steel_rough.jpg",
+      "sha256": "f2770b3056bbc75b6a727dd809bc616f146eca2a3eef1d4973816bb8988b2fc6",
+      "archive_sha256": "f2770b3056bbc75b6a727dd809bc616f146eca2a3eef1d4973816bb8988b2fc6",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_rubber_nor.jpg",
+      "bundle": "InsightAssets/textures/gen_rubber_nor.jpg",
+      "sha256": "a9b9b6b5ba10e41edf4110e412da6457bd0ed6a374aefa968f09f418a0669b8c",
+      "archive_sha256": "a9b9b6b5ba10e41edf4110e412da6457bd0ed6a374aefa968f09f418a0669b8c",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/shrub_04_nor_gl.jpg",
+      "bundle": "InsightAssets/textures/shrub_04_nor_gl.jpg",
+      "sha256": "c8e0ebf4cac45bc74d62102be1e34a26c1b2a2065042dd8da12fefb9021ed33b",
+      "archive_sha256": "c8e0ebf4cac45bc74d62102be1e34a26c1b2a2065042dd8da12fefb9021ed33b",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_timber_nor.jpg",
+      "bundle": "InsightAssets/textures/gen_timber_nor.jpg",
+      "sha256": "07f30a382a385a1ff514d74ba0f937501386fff085a309120f7ad9d6dd7a3e72",
+      "archive_sha256": "07f30a382a385a1ff514d74ba0f937501386fff085a309120f7ad9d6dd7a3e72",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/plastic_crate_01_arm.jpg",
+      "bundle": "InsightAssets/textures/plastic_crate_01_arm.jpg",
+      "sha256": "6f89e387b97e66d5a066c9108f0f3708859cafd45a705ba381b39de8ef7864cf",
+      "archive_sha256": "6f89e387b97e66d5a066c9108f0f3708859cafd45a705ba381b39de8ef7864cf",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_timber_albedo.jpg",
+      "bundle": "InsightAssets/textures/gen_timber_albedo.jpg",
+      "sha256": "a06a06606ee6d05daf9f03c57a9d50cab9d2b77f9ca62dd75f4c88a981416c78",
+      "archive_sha256": "a06a06606ee6d05daf9f03c57a9d50cab9d2b77f9ca62dd75f4c88a981416c78",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_floor_rough.jpg",
+      "bundle": "InsightAssets/textures/gen_floor_rough.jpg",
+      "sha256": "07e9a7b2db380deae3c3efbf834340a1f591051af9bde1cd00f1997ee694a2ee",
+      "archive_sha256": "07e9a7b2db380deae3c3efbf834340a1f591051af9bde1cd00f1997ee694a2ee",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/exterior_aircon_unit_rusted_01_arm.jpg",
+      "bundle": "InsightAssets/textures/exterior_aircon_unit_rusted_01_arm.jpg",
+      "sha256": "c88685094d622d3153d245f19339784aea3f5faadbe5ff85087499f0675e3250",
+      "archive_sha256": "c88685094d622d3153d245f19339784aea3f5faadbe5ff85087499f0675e3250",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_floor_albedo.jpg",
+      "bundle": "InsightAssets/textures/gen_floor_albedo.jpg",
+      "sha256": "18aa751b62ce40283d1bf95eeee4b6df47cfea2a24b0ef7942a662229cb66925",
+      "archive_sha256": "18aa751b62ce40283d1bf95eeee4b6df47cfea2a24b0ef7942a662229cb66925",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_curb_albedo.jpg",
+      "bundle": "InsightAssets/textures/gen_curb_albedo.jpg",
+      "sha256": "c08570684af9c85c35bbd32fd61cac802700c5070c26735c01484dfbe92433fc",
+      "archive_sha256": "c08570684af9c85c35bbd32fd61cac802700c5070c26735c01484dfbe92433fc",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/modular_airduct_rectangular_01_parts02_arm.jpg",
+      "bundle": "InsightAssets/textures/modular_airduct_rectangular_01_parts02_arm.jpg",
+      "sha256": "3c6e989d4e58cd22662387bda110f8ba67f600888bea4b8d081db8ee6a9f9ccd",
+      "archive_sha256": "3c6e989d4e58cd22662387bda110f8ba67f600888bea4b8d081db8ee6a9f9ccd",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_cabinet_nor.jpg",
+      "bundle": "InsightAssets/textures/gen_cabinet_nor.jpg",
+      "sha256": "b71b785f8119610f1c86be1c8a646e70656e523932ce345ffcaf777664929c29",
+      "archive_sha256": "b71b785f8119610f1c86be1c8a646e70656e523932ce345ffcaf777664929c29",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/exterior_aircon_unit_01_nor_gl.jpg",
+      "bundle": "InsightAssets/textures/exterior_aircon_unit_01_nor_gl.jpg",
+      "sha256": "b88f0ed09b159143b772f821333a68b01c9a563d719be56b9d925a97117a2e6a",
+      "archive_sha256": "b88f0ed09b159143b772f821333a68b01c9a563d719be56b9d925a97117a2e6a",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/tree_small_02_leaves_arm.jpg",
+      "bundle": "InsightAssets/textures/tree_small_02_leaves_arm.jpg",
+      "sha256": "2272310e875b8127fe7dab0b4d97ed09c1fc52f47130598aa92ddd05df55b082",
+      "archive_sha256": "2272310e875b8127fe7dab0b4d97ed09c1fc52f47130598aa92ddd05df55b082",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_rubber_albedo.jpg",
+      "bundle": "InsightAssets/textures/gen_rubber_albedo.jpg",
+      "sha256": "2a04006771d2761a2567fd43967597037e8c5327faa36609d5b69fecaa8f32d3",
+      "archive_sha256": "2a04006771d2761a2567fd43967597037e8c5327faa36609d5b69fecaa8f32d3",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_carton_rough.jpg",
+      "bundle": "InsightAssets/textures/gen_carton_rough.jpg",
+      "sha256": "211b98f7ffeb4b27c8ad654afd4b47b906a34b95372df37624f459f8885190be",
+      "archive_sha256": "211b98f7ffeb4b27c8ad654afd4b47b906a34b95372df37624f459f8885190be",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_bollard_albedo.jpg",
+      "bundle": "InsightAssets/textures/gen_bollard_albedo.jpg",
+      "sha256": "97ee02f0e7bb247abca4b1167b4d23e0fbe7c18c5bd66104df8834393686abe4",
+      "archive_sha256": "97ee02f0e7bb247abca4b1167b4d23e0fbe7c18c5bd66104df8834393686abe4",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/tree_small_02_leaves_diff.jpg",
+      "bundle": "InsightAssets/textures/tree_small_02_leaves_diff.jpg",
+      "sha256": "a248918b714b0641dedab553b149fdc96bc7056ad7c9c7abcfa3d66179df0c61",
+      "archive_sha256": "a248918b714b0641dedab553b149fdc96bc7056ad7c9c7abcfa3d66179df0c61",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/modular_airduct_rectangular_01_parts01_nor_gl.jpg",
+      "bundle": "InsightAssets/textures/modular_airduct_rectangular_01_parts01_nor_gl.jpg",
+      "sha256": "f5487d0c1a8d8a79fcde689be02793897f29709a16b545d4e3f102078eff981a",
+      "archive_sha256": "f5487d0c1a8d8a79fcde689be02793897f29709a16b545d4e3f102078eff981a",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_frame_rough.jpg",
+      "bundle": "InsightAssets/textures/gen_frame_rough.jpg",
+      "sha256": "d1cb08ff61e963296d2f85eb392755114d4dc2c386c6b8b2ecc7aae573520aa4",
+      "archive_sha256": "d1cb08ff61e963296d2f85eb392755114d4dc2c386c6b8b2ecc7aae573520aa4",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/exterior_aircon_unit_01_diff.jpg",
+      "bundle": "InsightAssets/textures/exterior_aircon_unit_01_diff.jpg",
+      "sha256": "9c4ed8d8ddb3717f6defe21b0fbd769b51abd44b52701c3571cb2239afaa46af",
+      "archive_sha256": "9c4ed8d8ddb3717f6defe21b0fbd769b51abd44b52701c3571cb2239afaa46af",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_chassis_albedo.jpg",
+      "bundle": "InsightAssets/textures/gen_chassis_albedo.jpg",
+      "sha256": "1dab1051c3eaffafa407b7d3dfaa1e0f92a2943f2501f799637335b9b06147f5",
+      "archive_sha256": "1dab1051c3eaffafa407b7d3dfaa1e0f92a2943f2501f799637335b9b06147f5",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_forklift_rough.jpg",
+      "bundle": "InsightAssets/textures/gen_forklift_rough.jpg",
+      "sha256": "09655541ab0572d4624395d50cb83516f1829785c87a60849131afbfc14a9e29",
+      "archive_sha256": "09655541ab0572d4624395d50cb83516f1829785c87a60849131afbfc14a9e29",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_leveler_nor.jpg",
+      "bundle": "InsightAssets/textures/gen_leveler_nor.jpg",
+      "sha256": "7e253f98c4e63b2330d4adae9d1a0df67d9c99829ef3dfee9f5ece526f705bfb",
+      "archive_sha256": "7e253f98c4e63b2330d4adae9d1a0df67d9c99829ef3dfee9f5ece526f705bfb",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/concrete_road_barrier_diff.jpg",
+      "bundle": "InsightAssets/textures/concrete_road_barrier_diff.jpg",
+      "sha256": "0c0f94ec0cf61721c38e190a17b6979c4e5808f0e0d820eb3cd7f4cbdfed8fdf",
+      "archive_sha256": "0c0f94ec0cf61721c38e190a17b6979c4e5808f0e0d820eb3cd7f4cbdfed8fdf",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_carton_albedo.jpg",
+      "bundle": "InsightAssets/textures/gen_carton_albedo.jpg",
+      "sha256": "d5d8dff6c9ac49c6eda583088557eb6115ed83012d9fd48af3a2c8ef9729fda3",
+      "archive_sha256": "d5d8dff6c9ac49c6eda583088557eb6115ed83012d9fd48af3a2c8ef9729fda3",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/plastic_crate_01_diff.jpg",
+      "bundle": "InsightAssets/textures/plastic_crate_01_diff.jpg",
+      "sha256": "4d3f4c7c0a3c2a5cac39a4f243b5c086a3f1b6bf93d1901fe270ca30a26bc288",
+      "archive_sha256": "4d3f4c7c0a3c2a5cac39a4f243b5c086a3f1b6bf93d1901fe270ca30a26bc288",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/tree_small_02_nor_gl.jpg",
+      "bundle": "InsightAssets/textures/tree_small_02_nor_gl.jpg",
+      "sha256": "647e17db4bb05904b980c18e844908d06ad26b73b6815e52a19fb0957b4a738f",
+      "archive_sha256": "647e17db4bb05904b980c18e844908d06ad26b73b6815e52a19fb0957b4a738f",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/shrub_02_nor_gl.jpg",
+      "bundle": "InsightAssets/textures/shrub_02_nor_gl.jpg",
+      "sha256": "d35d107417eb1d64f6289418a201c9c0cd3326c62fae31c454251d053fdc2891",
+      "archive_sha256": "d35d107417eb1d64f6289418a201c9c0cd3326c62fae31c454251d053fdc2891",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_desk_rough.jpg",
+      "bundle": "InsightAssets/textures/gen_desk_rough.jpg",
+      "sha256": "4099b3302a6daf13f0b945fda5c8603c5de69dec6fdbbbb9e8eddf0a5609445b",
+      "archive_sha256": "4099b3302a6daf13f0b945fda5c8603c5de69dec6fdbbbb9e8eddf0a5609445b",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_linewhite_rough.jpg",
+      "bundle": "InsightAssets/textures/gen_linewhite_rough.jpg",
+      "sha256": "10f4247d5b2d6fc4522a3a531a15bb0c61238855d004274490af8b6b0b8134c8",
+      "archive_sha256": "10f4247d5b2d6fc4522a3a531a15bb0c61238855d004274490af8b6b0b8134c8",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_plinth_albedo.jpg",
+      "bundle": "InsightAssets/textures/gen_plinth_albedo.jpg",
+      "sha256": "81920644c428cea8894275b4d78b09f1bbcd4a1f635568edc02c4dfe66eba485",
+      "archive_sha256": "81920644c428cea8894275b4d78b09f1bbcd4a1f635568edc02c4dfe66eba485",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/tree_small_02_branch_arm.jpg",
+      "bundle": "InsightAssets/textures/tree_small_02_branch_arm.jpg",
+      "sha256": "844954a987a20317f57f3d117bd88af43f0f0d1951a60cc623f7e999a56f1954",
+      "archive_sha256": "844954a987a20317f57f3d117bd88af43f0f0d1951a60cc623f7e999a56f1954",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_rackbeam_albedo.jpg",
+      "bundle": "InsightAssets/textures/gen_rackbeam_albedo.jpg",
+      "sha256": "3c29a616535919edae26305542a611995c47508239e1a9168aaa449061380663",
+      "archive_sha256": "3c29a616535919edae26305542a611995c47508239e1a9168aaa449061380663",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/steel_frame_shelves_01_arm.jpg",
+      "bundle": "InsightAssets/textures/steel_frame_shelves_01_arm.jpg",
+      "sha256": "ad83014a473db9946fae215b69870af0e4b4d597795505e28c1544a412c3ac66",
+      "archive_sha256": "ad83014a473db9946fae215b69870af0e4b4d597795505e28c1544a412c3ac66",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_rackupright_nor.jpg",
+      "bundle": "InsightAssets/textures/gen_rackupright_nor.jpg",
+      "sha256": "b71b785f8119610f1c86be1c8a646e70656e523932ce345ffcaf777664929c29",
+      "archive_sha256": "b71b785f8119610f1c86be1c8a646e70656e523932ce345ffcaf777664929c29",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/exterior_aircon_unit_02_nor_gl.jpg",
+      "bundle": "InsightAssets/textures/exterior_aircon_unit_02_nor_gl.jpg",
+      "sha256": "6e158205486b2deeb742b6692d2817b9fa0c921debfcbeff2fb7630166f9b3ef",
+      "archive_sha256": "6e158205486b2deeb742b6692d2817b9fa0c921debfcbeff2fb7630166f9b3ef",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_truckcab_albedo.jpg",
+      "bundle": "InsightAssets/textures/gen_truckcab_albedo.jpg",
+      "sha256": "c033627fbb383852cc65720f72a27ff38b9e977b468cc2a0a3eabe5453eeca82",
+      "archive_sha256": "c033627fbb383852cc65720f72a27ff38b9e977b468cc2a0a3eabe5453eeca82",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_leveler_albedo.jpg",
+      "bundle": "InsightAssets/textures/gen_leveler_albedo.jpg",
+      "sha256": "4865769a727a58e8cae3bd1a2e28ecbc30eca2944da22ad4f9e4b7719e309d1f",
+      "archive_sha256": "4865769a727a58e8cae3bd1a2e28ecbc30eca2944da22ad4f9e4b7719e309d1f",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_section_albedo.jpg",
+      "bundle": "InsightAssets/textures/gen_section_albedo.jpg",
+      "sha256": "23868f4e9a648a2e0c2550a85e9e4b1cee7418fbbbac47411fec3a2949012473",
+      "archive_sha256": "23868f4e9a648a2e0c2550a85e9e4b1cee7418fbbbac47411fec3a2949012473",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_slab_albedo.jpg",
+      "bundle": "InsightAssets/textures/gen_slab_albedo.jpg",
+      "sha256": "870011fa169c06e01f335f1bb4d88baedd15c10d6ba3f5269476b4419ae42f39",
+      "archive_sha256": "870011fa169c06e01f335f1bb4d88baedd15c10d6ba3f5269476b4419ae42f39",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/modular_airduct_rectangular_01_parts01_diff.jpg",
+      "bundle": "InsightAssets/textures/modular_airduct_rectangular_01_parts01_diff.jpg",
+      "sha256": "9bb9a49588702ac1288910628bb9423348d685c4ae15ac9f53ddcbae0e6b5cc2",
+      "archive_sha256": "9bb9a49588702ac1288910628bb9423348d685c4ae15ac9f53ddcbae0e6b5cc2",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_truckcab_rough.jpg",
+      "bundle": "InsightAssets/textures/gen_truckcab_rough.jpg",
+      "sha256": "02f74cde25dc664bc23d37f4ca062d69798484f7dfcfdc648a5378883eaa24a8",
+      "archive_sha256": "02f74cde25dc664bc23d37f4ca062d69798484f7dfcfdc648a5378883eaa24a8",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/plastic_crate_01_nor_gl.jpg",
+      "bundle": "InsightAssets/textures/plastic_crate_01_nor_gl.jpg",
+      "sha256": "583fdf95f5f65d07263453c17973a4b79bea55bd96e3e2f14e37cc9e9a20b4ae",
+      "archive_sha256": "583fdf95f5f65d07263453c17973a4b79bea55bd96e3e2f14e37cc9e9a20b4ae",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/power_box_01_arm.jpg",
+      "bundle": "InsightAssets/textures/power_box_01_arm.jpg",
+      "sha256": "170f4d9f1996087f8902432cfe386128f9c1e741bd8e3cc4f8af5f1a39ca8fd0",
+      "archive_sha256": "170f4d9f1996087f8902432cfe386128f9c1e741bd8e3cc4f8af5f1a39ca8fd0",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/tree_small_02_arm.jpg",
+      "bundle": "InsightAssets/textures/tree_small_02_arm.jpg",
+      "sha256": "a305562186d01c0c97bebd6d6a21e657d905713617d5c78a29f2599b714c6cb4",
+      "archive_sha256": "a305562186d01c0c97bebd6d6a21e657d905713617d5c78a29f2599b714c6cb4",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_galv_rough.jpg",
+      "bundle": "InsightAssets/textures/gen_galv_rough.jpg",
+      "sha256": "aec544b79bc964de78449be531d876fb03f4943a485ec0d4bd9e9d4c80007d46",
+      "archive_sha256": "aec544b79bc964de78449be531d876fb03f4943a485ec0d4bd9e9d4c80007d46",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_mat_albedo.jpg",
+      "bundle": "InsightAssets/textures/gen_mat_albedo.jpg",
+      "sha256": "ec9dfb24c23337a62d2373a36d08973296ebf9f2fd69c5c3c66425f39ce1f296",
+      "archive_sha256": "ec9dfb24c23337a62d2373a36d08973296ebf9f2fd69c5c3c66425f39ce1f296",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/modular_airduct_rectangular_01_parts02_nor_gl.jpg",
+      "bundle": "InsightAssets/textures/modular_airduct_rectangular_01_parts02_nor_gl.jpg",
+      "sha256": "7017be85ec0f1c520b6db2ea163d2829ce2aeca689c55ecf9d5846eb7a36364c",
+      "archive_sha256": "7017be85ec0f1c520b6db2ea163d2829ce2aeca689c55ecf9d5846eb7a36364c",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/wooden_crate_01_arm.jpg",
+      "bundle": "InsightAssets/textures/wooden_crate_01_arm.jpg",
+      "sha256": "2a634e45156f7f9bd39361de041957267aa3a3c25694221914e15bbb006053c4",
+      "archive_sha256": "2a634e45156f7f9bd39361de041957267aa3a3c25694221914e15bbb006053c4",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_paving_rough.jpg",
+      "bundle": "InsightAssets/textures/gen_paving_rough.jpg",
+      "sha256": "cb281f02a826aa795fd784381956d6ef382959d4dac297b008d6e3febd1c9ee0",
+      "archive_sha256": "cb281f02a826aa795fd784381956d6ef382959d4dac297b008d6e3febd1c9ee0",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/exterior_aircon_unit_01_arm.jpg",
+      "bundle": "InsightAssets/textures/exterior_aircon_unit_01_arm.jpg",
+      "sha256": "fbc752e03c472ac6dca3a5c825abe46af6e500026d7ac2da4283a4a159955485",
+      "archive_sha256": "fbc752e03c472ac6dca3a5c825abe46af6e500026d7ac2da4283a4a159955485",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/tree_small_02_branch_diff.jpg",
+      "bundle": "InsightAssets/textures/tree_small_02_branch_diff.jpg",
+      "sha256": "6a23cf3a51a29e5d7ef4e2748057d6dd9dbc0cef8309318d88ce86d9e94d2eb1",
+      "archive_sha256": "6a23cf3a51a29e5d7ef4e2748057d6dd9dbc0cef8309318d88ce86d9e94d2eb1",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_steel_nor.jpg",
+      "bundle": "InsightAssets/textures/gen_steel_nor.jpg",
+      "sha256": "b71b785f8119610f1c86be1c8a646e70656e523932ce345ffcaf777664929c29",
+      "archive_sha256": "b71b785f8119610f1c86be1c8a646e70656e523932ce345ffcaf777664929c29",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_section_rough.jpg",
+      "bundle": "InsightAssets/textures/gen_section_rough.jpg",
+      "sha256": "164866e43881470317c2112957f259d1560a9092a9a458c2a2c3b5fb08252c13",
+      "archive_sha256": "164866e43881470317c2112957f259d1560a9092a9a458c2a2c3b5fb08252c13",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/overhead_crane_diff.jpg",
+      "bundle": "InsightAssets/textures/overhead_crane_diff.jpg",
+      "sha256": "68afc2d8bd0dacc972eeb0b1f0c0c0582f610de29e4f426c510faed41cf605b6",
+      "archive_sha256": "68afc2d8bd0dacc972eeb0b1f0c0c0582f610de29e4f426c510faed41cf605b6",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_trailer_albedo.jpg",
+      "bundle": "InsightAssets/textures/gen_trailer_albedo.jpg",
+      "sha256": "f306a1930608c3febaf837dd2377419b8635794baa46112fdaa604f940146515",
+      "archive_sha256": "f306a1930608c3febaf837dd2377419b8635794baa46112fdaa604f940146515",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/overhead_crane_trim_nor_gl.jpg",
+      "bundle": "InsightAssets/textures/overhead_crane_trim_nor_gl.jpg",
+      "sha256": "9436bc8ae6b8227926dca038375188d356f7629ae2e46a0cb85c49a527e526bf",
+      "archive_sha256": "9436bc8ae6b8227926dca038375188d356f7629ae2e46a0cb85c49a527e526bf",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_trailerroof_rough.jpg",
+      "bundle": "InsightAssets/textures/gen_trailerroof_rough.jpg",
+      "sha256": "48d4268d8edd86448cc1f6ba4cbed55509b68da0cc814762b14eef302d1bccc9",
+      "archive_sha256": "48d4268d8edd86448cc1f6ba4cbed55509b68da0cc814762b14eef302d1bccc9",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/security_camera_01_arm.jpg",
+      "bundle": "InsightAssets/textures/security_camera_01_arm.jpg",
+      "sha256": "44763224809c646217a9620f9559d5c11ea37576816cd3dc5b0b01bc7acc9693",
+      "archive_sha256": "44763224809c646217a9620f9559d5c11ea37576816cd3dc5b0b01bc7acc9693",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_curtain_rough.jpg",
+      "bundle": "InsightAssets/textures/gen_curtain_rough.jpg",
+      "sha256": "d28f8ec472ebb7acf70dd9e762c4180ec1aadd2fd35463c1453eda0bdd5166e4",
+      "archive_sha256": "d28f8ec472ebb7acf70dd9e762c4180ec1aadd2fd35463c1453eda0bdd5166e4",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_timber_rough.jpg",
+      "bundle": "InsightAssets/textures/gen_timber_rough.jpg",
+      "sha256": "fcda345becc7de18e88538b0e050bf41b5d43d5e69fea97983b6da50e5f7af96",
+      "archive_sha256": "fcda345becc7de18e88538b0e050bf41b5d43d5e69fea97983b6da50e5f7af96",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_grass_albedo.jpg",
+      "bundle": "InsightAssets/textures/gen_grass_albedo.jpg",
+      "sha256": "3a0bbba88bb464c7987cbabe690aaf5d8b34f54afa8d49443eb799058641178f",
+      "archive_sha256": "3a0bbba88bb464c7987cbabe690aaf5d8b34f54afa8d49443eb799058641178f",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/concrete_road_barrier_nor_gl.jpg",
+      "bundle": "InsightAssets/textures/concrete_road_barrier_nor_gl.jpg",
+      "sha256": "402277394580e6c0030779e926b753e8438a7afad99ff2b0573c0691294a715b",
+      "archive_sha256": "402277394580e6c0030779e926b753e8438a7afad99ff2b0573c0691294a715b",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/exterior_aircon_unit_rusted_01_nor_gl.jpg",
+      "bundle": "InsightAssets/textures/exterior_aircon_unit_rusted_01_nor_gl.jpg",
+      "sha256": "e0755e6ce5aa13d639f5c639993cbec46c3fa9f8bb7aedf5a929a8146b9eaa91",
+      "archive_sha256": "e0755e6ce5aa13d639f5c639993cbec46c3fa9f8bb7aedf5a929a8146b9eaa91",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/shrub_04_arm.jpg",
+      "bundle": "InsightAssets/textures/shrub_04_arm.jpg",
+      "sha256": "96bb48e48b7ff1e274d14dd3420ef32ff4f23117c3ee46ec1e2de5ce29f9102d",
+      "archive_sha256": "96bb48e48b7ff1e274d14dd3420ef32ff4f23117c3ee46ec1e2de5ce29f9102d",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_trailer_nor.jpg",
+      "bundle": "InsightAssets/textures/gen_trailer_nor.jpg",
+      "sha256": "bb44e2438cf0db4aafe3d808fb6e8153d22c0b001ccb1164a68fc247ed5e40fe",
+      "archive_sha256": "bb44e2438cf0db4aafe3d808fb6e8153d22c0b001ccb1164a68fc247ed5e40fe",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/tree_small_02_diff.jpg",
+      "bundle": "InsightAssets/textures/tree_small_02_diff.jpg",
+      "sha256": "d7ecf70329aef319698ad90438040491c81e3a3df6a9739de81efe4951de41d4",
+      "archive_sha256": "d7ecf70329aef319698ad90438040491c81e3a3df6a9739de81efe4951de41d4",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_curtain_nor.jpg",
+      "bundle": "InsightAssets/textures/gen_curtain_nor.jpg",
+      "sha256": "c7e3736f31a28d0dcc09dc3e0440a6d29cda53aee83880b9b88e03eb3350508e",
+      "archive_sha256": "c7e3736f31a28d0dcc09dc3e0440a6d29cda53aee83880b9b88e03eb3350508e",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_curb_rough.jpg",
+      "bundle": "InsightAssets/textures/gen_curb_rough.jpg",
+      "sha256": "10dd8a461c8eff4ec0095f14c85b2d8d8943bff3f99be23a8976162e819eabdf",
+      "archive_sha256": "10dd8a461c8eff4ec0095f14c85b2d8d8943bff3f99be23a8976162e819eabdf",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_bollard_rough.jpg",
+      "bundle": "InsightAssets/textures/gen_bollard_rough.jpg",
+      "sha256": "f470cbeaac8662a4c02bb566c64a2ffe2a616dc263d4313b22c0fb9aa9a5608e",
+      "archive_sha256": "f470cbeaac8662a4c02bb566c64a2ffe2a616dc263d4313b22c0fb9aa9a5608e",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_chassis_rough.jpg",
+      "bundle": "InsightAssets/textures/gen_chassis_rough.jpg",
+      "sha256": "2c060e69f10ae4fba412ab104e0e070210ed736e1a8607287ffaf75710c4c436",
+      "archive_sha256": "2c060e69f10ae4fba412ab104e0e070210ed736e1a8607287ffaf75710c4c436",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_section_nor.jpg",
+      "bundle": "InsightAssets/textures/gen_section_nor.jpg",
+      "sha256": "c6dc8968cb49e4464c441ad6da193199093cbd8a0289cd5f22a6ca8bc40b374e",
+      "archive_sha256": "c6dc8968cb49e4464c441ad6da193199093cbd8a0289cd5f22a6ca8bc40b374e",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_facade_nor.jpg",
+      "bundle": "InsightAssets/textures/gen_facade_nor.jpg",
+      "sha256": "06ba7ed381164b7a9f3ba7ab1df0c5652d40e662535f54b64224c20690e1fe87",
+      "archive_sha256": "06ba7ed381164b7a9f3ba7ab1df0c5652d40e662535f54b64224c20690e1fe87",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/exterior_aircon_unit_02_arm.jpg",
+      "bundle": "InsightAssets/textures/exterior_aircon_unit_02_arm.jpg",
+      "sha256": "4e11546c2ff180fe9d38862bb681145832c1ff182c861f202a389a06d84a9ee9",
+      "archive_sha256": "4e11546c2ff180fe9d38862bb681145832c1ff182c861f202a389a06d84a9ee9",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/steel_frame_shelves_01_diff.jpg",
+      "bundle": "InsightAssets/textures/steel_frame_shelves_01_diff.jpg",
+      "sha256": "505a3124258109eb5756d4df0bb2c485a9f14978af2daaf2e63522935b4c23a0",
+      "archive_sha256": "505a3124258109eb5756d4df0bb2c485a9f14978af2daaf2e63522935b4c23a0",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/security_camera_01_nor_gl.jpg",
+      "bundle": "InsightAssets/textures/security_camera_01_nor_gl.jpg",
+      "sha256": "4cf3f63aa24ae05e2b6b4e121cd9f5d7ac714832a35d028e623b3e2f4716c39d",
+      "archive_sha256": "4cf3f63aa24ae05e2b6b4e121cd9f5d7ac714832a35d028e623b3e2f4716c39d",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/exterior_aircon_unit_rusted_01_diff.jpg",
+      "bundle": "InsightAssets/textures/exterior_aircon_unit_rusted_01_diff.jpg",
+      "sha256": "ed3ad7f1cfed2155e3eefd8526888bdfe8d999a678da4e54db9c08c56a05c085",
+      "archive_sha256": "ed3ad7f1cfed2155e3eefd8526888bdfe8d999a678da4e54db9c08c56a05c085",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_panel_rough.jpg",
+      "bundle": "InsightAssets/textures/gen_panel_rough.jpg",
+      "sha256": "91d7b03ba8117b2a47ca79b86675646125192280bf3ac7f3e91c8c3ce30a3b75",
+      "archive_sha256": "91d7b03ba8117b2a47ca79b86675646125192280bf3ac7f3e91c8c3ce30a3b75",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_curb_nor.jpg",
+      "bundle": "InsightAssets/textures/gen_curb_nor.jpg",
+      "sha256": "c6dc8968cb49e4464c441ad6da193199093cbd8a0289cd5f22a6ca8bc40b374e",
+      "archive_sha256": "c6dc8968cb49e4464c441ad6da193199093cbd8a0289cd5f22a6ca8bc40b374e",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_trailer_rough.jpg",
+      "bundle": "InsightAssets/textures/gen_trailer_rough.jpg",
+      "sha256": "c8c16de36dfefe1ceea7dc198f047144c4390d284760324e432a14ef55688699",
+      "archive_sha256": "c8c16de36dfefe1ceea7dc198f047144c4390d284760324e432a14ef55688699",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_roof_albedo.jpg",
+      "bundle": "InsightAssets/textures/gen_roof_albedo.jpg",
+      "sha256": "d6b267d47e338165c03c764dc9e6072991536a8f27c413877638f48ca29800a5",
+      "archive_sha256": "d6b267d47e338165c03c764dc9e6072991536a8f27c413877638f48ca29800a5",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/overhead_crane_arm.jpg",
+      "bundle": "InsightAssets/textures/overhead_crane_arm.jpg",
+      "sha256": "be696c7e706d2175ade2e9bd06d068df178f75689a2645a0ec8218eb1ae088db",
+      "archive_sha256": "be696c7e706d2175ade2e9bd06d068df178f75689a2645a0ec8218eb1ae088db",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/overhead_crane_nor_gl.jpg",
+      "bundle": "InsightAssets/textures/overhead_crane_nor_gl.jpg",
+      "sha256": "260c13ec832752f169751f00c71322655f57c40949e02ac034d898bd66f2300a",
+      "archive_sha256": "260c13ec832752f169751f00c71322655f57c40949e02ac034d898bd66f2300a",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_truckcab_nor.jpg",
+      "bundle": "InsightAssets/textures/gen_truckcab_nor.jpg",
+      "sha256": "b71b785f8119610f1c86be1c8a646e70656e523932ce345ffcaf777664929c29",
+      "archive_sha256": "b71b785f8119610f1c86be1c8a646e70656e523932ce345ffcaf777664929c29",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_pipewater_rough.jpg",
+      "bundle": "InsightAssets/textures/gen_pipewater_rough.jpg",
+      "sha256": "3a42dd0594f3867289df95e3ce9dc8f316921ac1a3b5279f43a75e778f073d95",
+      "archive_sha256": "3a42dd0594f3867289df95e3ce9dc8f316921ac1a3b5279f43a75e778f073d95",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_grass_nor.jpg",
+      "bundle": "InsightAssets/textures/gen_grass_nor.jpg",
+      "sha256": "5355bf3f8119b2e84bb71c86fcc7140dceb03e3320b2d547aac72b9f47b60785",
+      "archive_sha256": "5355bf3f8119b2e84bb71c86fcc7140dceb03e3320b2d547aac72b9f47b60785",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/hand_truck_diff.jpg",
+      "bundle": "InsightAssets/textures/hand_truck_diff.jpg",
+      "sha256": "6cd9ea1089acf72070d6bfaaafd27839f53c6a9e2962d0d9ac9c831c86246860",
+      "archive_sha256": "6cd9ea1089acf72070d6bfaaafd27839f53c6a9e2962d0d9ac9c831c86246860",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_steel_albedo.jpg",
+      "bundle": "InsightAssets/textures/gen_steel_albedo.jpg",
+      "sha256": "4d6b1621f0e0ddd5c7db930fde327ab7aa42c1d98dfae74442d68c0d83447700",
+      "archive_sha256": "4d6b1621f0e0ddd5c7db930fde327ab7aa42c1d98dfae74442d68c0d83447700",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_lineyellow_nor.jpg",
+      "bundle": "InsightAssets/textures/gen_lineyellow_nor.jpg",
+      "sha256": "1ab57916bfacc99cadbd66626de45d2f294870161196ab6fc53aac7960af7389",
+      "archive_sha256": "1ab57916bfacc99cadbd66626de45d2f294870161196ab6fc53aac7960af7389",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/security_camera_01_diff.jpg",
+      "bundle": "InsightAssets/textures/security_camera_01_diff.jpg",
+      "sha256": "337282ace2c829379be48f04fede0b36559578ae864e8f022407b5c86f633168",
+      "archive_sha256": "337282ace2c829379be48f04fede0b36559578ae864e8f022407b5c86f633168",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/tree_small_02_leaves_nor_gl.jpg",
+      "bundle": "InsightAssets/textures/tree_small_02_leaves_nor_gl.jpg",
+      "sha256": "613a8b832dfd28ec0143d6e8fb38e20ee05332bffecf2d8af6b5965361f063db",
+      "archive_sha256": "613a8b832dfd28ec0143d6e8fb38e20ee05332bffecf2d8af6b5965361f063db",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_panel_albedo.jpg",
+      "bundle": "InsightAssets/textures/gen_panel_albedo.jpg",
+      "sha256": "89ad53f94d56f2769dff13d97d3bdfde6ae1702946c25715d1fa6614e01f5678",
+      "archive_sha256": "89ad53f94d56f2769dff13d97d3bdfde6ae1702946c25715d1fa6614e01f5678",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_facade_albedo.jpg",
+      "bundle": "InsightAssets/textures/gen_facade_albedo.jpg",
+      "sha256": "ea5a9e07645fcfb8b89991537c81292cf074e7bf601944c071fdcf33c55ac488",
+      "archive_sha256": "ea5a9e07645fcfb8b89991537c81292cf074e7bf601944c071fdcf33c55ac488",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_desk_albedo.jpg",
+      "bundle": "InsightAssets/textures/gen_desk_albedo.jpg",
+      "sha256": "d63e4037e2f7549fd2d1f0e6a7213bfa641546096cdfc0e99a9fd8c9fdd41d48",
+      "archive_sha256": "d63e4037e2f7549fd2d1f0e6a7213bfa641546096cdfc0e99a9fd8c9fdd41d48",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_paving_albedo.jpg",
+      "bundle": "InsightAssets/textures/gen_paving_albedo.jpg",
+      "sha256": "90b62a7aaa919eb5d66d7dfd62c07e1d88759eddce6c164f8b0d83cbf53709f8",
+      "archive_sha256": "90b62a7aaa919eb5d66d7dfd62c07e1d88759eddce6c164f8b0d83cbf53709f8",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/hand_truck_nor_gl.jpg",
+      "bundle": "InsightAssets/textures/hand_truck_nor_gl.jpg",
+      "sha256": "3302956a179d770c3d5ef260da6dd19edfe55c5d97f46fc2dca6016a88f44c50",
+      "archive_sha256": "3302956a179d770c3d5ef260da6dd19edfe55c5d97f46fc2dca6016a88f44c50",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_mat_rough.jpg",
+      "bundle": "InsightAssets/textures/gen_mat_rough.jpg",
+      "sha256": "f9397fcb6484b97b178b8c1ad91a452ed57aa340c9e10fe0ac5ccf6d89914f6a",
+      "archive_sha256": "f9397fcb6484b97b178b8c1ad91a452ed57aa340c9e10fe0ac5ccf6d89914f6a",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_rackupright_rough.jpg",
+      "bundle": "InsightAssets/textures/gen_rackupright_rough.jpg",
+      "sha256": "f2770b3056bbc75b6a727dd809bc616f146eca2a3eef1d4973816bb8988b2fc6",
+      "archive_sha256": "f2770b3056bbc75b6a727dd809bc616f146eca2a3eef1d4973816bb8988b2fc6",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_galv_albedo.jpg",
+      "bundle": "InsightAssets/textures/gen_galv_albedo.jpg",
+      "sha256": "f118c2f991fe6185824741efbd87dd75b6189e45643ba6e196eb9767ccb21e77",
+      "archive_sha256": "f118c2f991fe6185824741efbd87dd75b6189e45643ba6e196eb9767ccb21e77",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_lineyellow_rough.jpg",
+      "bundle": "InsightAssets/textures/gen_lineyellow_rough.jpg",
+      "sha256": "448ce6d09d9712690029fddf9f4166551a81945481715b257e01901e23d7f8d9",
+      "archive_sha256": "448ce6d09d9712690029fddf9f4166551a81945481715b257e01901e23d7f8d9",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/gen_pipewater_albedo.jpg",
+      "bundle": "InsightAssets/textures/gen_pipewater_albedo.jpg",
+      "sha256": "889592f9729bd45188be671d416ba1dbdf87792d7727721a6f92bca6169d6e62",
+      "archive_sha256": "889592f9729bd45188be671d416ba1dbdf87792d7727721a6f92bca6169d6e62",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/InsightAssets/textures/concrete_road_barrier_arm.jpg",
+      "bundle": "InsightAssets/textures/concrete_road_barrier_arm.jpg",
+      "sha256": "64f82271e97e0c0ee78cea616826f835b2a13d44e5e8ac6774f88457f49aa1de",
+      "archive_sha256": "64f82271e97e0c0ee78cea616826f835b2a13d44e5e8ac6774f88457f49aa1de",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/EssenceAssets/essence-sense-cap-matte.png",
+      "bundle": "essence-sense-cap-matte.png",
+      "sha256": "d657697831f039be1bcaafab612c12d8ae09051506003a029fbb6b0e1dffd4a1",
+      "archive_sha256": "614022dd9eae0b8e731218907480e29b4cc5f7f909fddfc45cf3760edaf9517d",
+      "byte_identical": false,
+      "verified": true,
+      "verification": "CoreGraphics decoded RGBA pixel comparison, including alpha",
+      "pixel_validation": "build-12-png-validation.json"
+    },
+    {
+      "source": "ios/Salini/EssenceAssets/essence-sense-core-gloss.png",
+      "bundle": "essence-sense-core-gloss.png",
+      "sha256": "8ba9216375f49327f035a0c07cb69d73c1fccf3240511d4a6eeb68c477779757",
+      "archive_sha256": "f3c9773a36cccfc0ddc51ba9496f3bc196226d2d64dc5b3a55f17359bb24d688",
+      "byte_identical": false,
+      "verified": true,
+      "verification": "CoreGraphics decoded RGBA pixel comparison, including alpha",
+      "pixel_validation": "build-12-png-validation.json"
+    },
+    {
+      "source": "ios/Salini/EssenceAssets/essence-stone-mass.png",
+      "bundle": "essence-stone-mass.png",
+      "sha256": "8691536769a3a29f87609164114646d66f930a8f7a30a5c4075e9d213f775e30",
+      "archive_sha256": "c3320813d731827924c25c5f7f110f1f415338f6c650d1adf2310020b80283a1",
+      "byte_identical": false,
+      "verified": true,
+      "verification": "CoreGraphics decoded RGBA pixel comparison, including alpha",
+      "pixel_validation": "build-12-png-validation.json"
+    },
+    {
+      "source": "ios/Salini/EssenceAssets/essence-sense-core-matte.png",
+      "bundle": "essence-sense-core-matte.png",
+      "sha256": "e15e1138fdc47a0f06e26fdd3cf2553e48ee55ff545c2a52b7633001cdf0cf44",
+      "archive_sha256": "773c7309ddf178fadaf92d58afa01f3805f3d73690b241e3174d4f88802dc16f",
+      "byte_identical": false,
+      "verified": true,
+      "verification": "CoreGraphics decoded RGBA pixel comparison, including alpha",
+      "pixel_validation": "build-12-png-validation.json"
+    },
+    {
+      "source": "ios/Salini/EssenceAssets/essence-sense-cap-gloss.png",
+      "bundle": "essence-sense-cap-gloss.png",
+      "sha256": "f0790bf5d4267a5c7f1d0ef82aa477a9a3e5e230914b79f007f9f19244498ec6",
+      "archive_sha256": "0fc5fc330fcfb5be4ac936c419b6393d58236c05bcf63b46378a7261167cce8c",
+      "byte_identical": false,
+      "verified": true,
+      "verification": "CoreGraphics decoded RGBA pixel comparison, including alpha",
+      "pixel_validation": "build-12-png-validation.json"
+    },
+    {
+      "source": "ios/Salini/EssenceAssets/essence-stone-fragment.png",
+      "bundle": "essence-stone-fragment.png",
+      "sha256": "99c758a1abf7707b268badb1952a78e079362a376e75e475225a8b6e9bac5ef9",
+      "archive_sha256": "46f56d77194f5021a0e50bb0cba96152356814c0115660c2415268d1ac8ddb9a",
+      "byte_identical": false,
+      "verified": true,
+      "verification": "CoreGraphics decoded RGBA pixel comparison, including alpha",
+      "pixel_validation": "build-12-png-validation.json"
+    },
+    {
+      "source": "ios/Salini/CatalogMedia/models/Cascata-180x80.usdz",
+      "bundle": "CatalogMedia/models/Cascata-180x80.usdz",
+      "sha256": "0589bd1557ed73b43d0fc7fed5c6e4a910375c2e71f2646babab13c39991f1b6",
+      "archive_sha256": "0589bd1557ed73b43d0fc7fed5c6e4a910375c2e71f2646babab13c39991f1b6",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/CatalogMedia/models/Sofia-170_Corona-fbx.usdz",
+      "bundle": "CatalogMedia/models/Sofia-170_Corona-fbx.usdz",
+      "sha256": "db17e3ec4864e977d661e8e97e838dc65c647325bf94200fccf815ba8b9423da",
+      "archive_sha256": "db17e3ec4864e977d661e8e97e838dc65c647325bf94200fccf815ba8b9423da",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/CatalogMedia/models/Mona-170.usdz",
+      "bundle": "CatalogMedia/models/Mona-170.usdz",
+      "sha256": "1429f9fcadcd455aeec09428c8451d41b630f9a496ad475de4dce6cc9f417ce7",
+      "archive_sha256": "1429f9fcadcd455aeec09428c8451d41b630f9a496ad475de4dce6cc9f417ce7",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/CatalogMedia/models/Alda-160-70.usdz",
+      "bundle": "CatalogMedia/models/Alda-160-70.usdz",
+      "sha256": "e6f0f01368ffef7f9b61a37f979112dc302fe30dd0995a1fc381b70e7507df69",
+      "archive_sha256": "e6f0f01368ffef7f9b61a37f979112dc302fe30dd0995a1fc381b70e7507df69",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/CatalogMedia/models/Ninfea.usdz",
+      "bundle": "CatalogMedia/models/Ninfea.usdz",
+      "sha256": "b095a0510a36210c94671208516d8a95c4391efe26e7db144d1984a25865137c",
+      "archive_sha256": "b095a0510a36210c94671208516d8a95c4391efe26e7db144d1984a25865137c",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/CatalogMedia/models/Sofia-185_Corona-fbx.usdz",
+      "bundle": "CatalogMedia/models/Sofia-185_Corona-fbx.usdz",
+      "sha256": "62fd8d7f24282e5e3bb3b748d9b3892922ea320ec5dfa6b5e658d87f9c9945fa",
+      "archive_sha256": "62fd8d7f24282e5e3bb3b748d9b3892922ea320ec5dfa6b5e658d87f9c9945fa",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/CatalogMedia/models/Orlanda-160x70.usdz",
+      "bundle": "CatalogMedia/models/Orlanda-160x70.usdz",
+      "sha256": "cb421ef043698f7e2897a33b1b62107b9403513fbeddd394b6a63c1c66ceda83",
+      "archive_sha256": "cb421ef043698f7e2897a33b1b62107b9403513fbeddd394b6a63c1c66ceda83",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/CatalogMedia/models/Sofia-165_Corona-fbx.usdz",
+      "bundle": "CatalogMedia/models/Sofia-165_Corona-fbx.usdz",
+      "sha256": "f3d40897f7577e857fe09913101216b96b4e7e150571bf9b0fecbb14f18fec1a",
+      "archive_sha256": "f3d40897f7577e857fe09913101216b96b4e7e150571bf9b0fecbb14f18fec1a",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/CatalogMedia/models/Sofia-150-2015-Corona-fbx.usdz",
+      "bundle": "CatalogMedia/models/Sofia-150-2015-Corona-fbx.usdz",
+      "sha256": "d3d6ed6d4c00628da5705885d994fa50d42f54b570ffe2b828a7ff3a0118f04e",
+      "archive_sha256": "d3d6ed6d4c00628da5705885d994fa50d42f54b570ffe2b828a7ff3a0118f04e",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/CatalogMedia/models/Luce.usdz",
+      "bundle": "CatalogMedia/models/Luce.usdz",
+      "sha256": "78cc4633d3c42383b4d5e0d36b126c53d7129358a2fb6638db2de7d284f6c82a",
+      "archive_sha256": "78cc4633d3c42383b4d5e0d36b126c53d7129358a2fb6638db2de7d284f6c82a",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/CatalogMedia/models/Noemi-170.usdz",
+      "bundle": "CatalogMedia/models/Noemi-170.usdz",
+      "sha256": "8196ca4d9ed24b402537d212e5552860ed0c8760ec560196a8bc19cdcf2d9e77",
+      "archive_sha256": "8196ca4d9ed24b402537d212e5552860ed0c8760ec560196a8bc19cdcf2d9e77",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    },
+    {
+      "source": "ios/Salini/CatalogMedia/models/Ornella-170x75.usdz",
+      "bundle": "CatalogMedia/models/Ornella-170x75.usdz",
+      "sha256": "d32c4874cd14e44e53536a60c4703cd8af58ea74665a51b6417a7a769948e7f9",
+      "archive_sha256": "d32c4874cd14e44e53536a60c4703cd8af58ea74665a51b6417a7a769948e7f9",
+      "byte_identical": true,
+      "verified": true,
+      "verification": "SHA-256"
+    }
+  ],
+  "mismatches": [
+    {
+      "source": "ios/Salini/EssenceAssets/essence-sense-cap-matte.png",
+      "bundle": "essence-sense-cap-matte.png",
+      "sha256": "d657697831f039be1bcaafab612c12d8ae09051506003a029fbb6b0e1dffd4a1",
+      "archive_sha256": "614022dd9eae0b8e731218907480e29b4cc5f7f909fddfc45cf3760edaf9517d",
+      "matches": false
+    },
+    {
+      "source": "ios/Salini/EssenceAssets/essence-sense-core-gloss.png",
+      "bundle": "essence-sense-core-gloss.png",
+      "sha256": "8ba9216375f49327f035a0c07cb69d73c1fccf3240511d4a6eeb68c477779757",
+      "archive_sha256": "f3c9773a36cccfc0ddc51ba9496f3bc196226d2d64dc5b3a55f17359bb24d688",
+      "matches": false
+    },
+    {
+      "source": "ios/Salini/EssenceAssets/essence-stone-mass.png",
+      "bundle": "essence-stone-mass.png",
+      "sha256": "8691536769a3a29f87609164114646d66f930a8f7a30a5c4075e9d213f775e30",
+      "archive_sha256": "c3320813d731827924c25c5f7f110f1f415338f6c650d1adf2310020b80283a1",
+      "matches": false
+    },
+    {
+      "source": "ios/Salini/EssenceAssets/essence-sense-core-matte.png",
+      "bundle": "essence-sense-core-matte.png",
+      "sha256": "e15e1138fdc47a0f06e26fdd3cf2553e48ee55ff545c2a52b7633001cdf0cf44",
+      "archive_sha256": "773c7309ddf178fadaf92d58afa01f3805f3d73690b241e3174d4f88802dc16f",
+      "matches": false
+    },
+    {
+      "source": "ios/Salini/EssenceAssets/essence-sense-cap-gloss.png",
+      "bundle": "essence-sense-cap-gloss.png",
+      "sha256": "f0790bf5d4267a5c7f1d0ef82aa477a9a3e5e230914b79f007f9f19244498ec6",
+      "archive_sha256": "0fc5fc330fcfb5be4ac936c419b6393d58236c05bcf63b46378a7261167cce8c",
+      "matches": false
+    },
+    {
+      "source": "ios/Salini/EssenceAssets/essence-stone-fragment.png",
+      "bundle": "essence-stone-fragment.png",
+      "sha256": "99c758a1abf7707b268badb1952a78e079362a376e75e475225a8b6e9bac5ef9",
+      "archive_sha256": "46f56d77194f5021a0e50bb0cba96152356814c0115660c2415268d1ac8ddb9a",
+      "matches": false
+    }
+  ],
+  "summary": {
+    "files_checked": 195,
+    "byte_identical": 189,
+    "losslessly_reencoded_pngs": 6,
+    "all_verified": true,
+    "note": "Xcode re-encoded six Essence PNGs. Encoded bytes differ; decoded source/archive RGBA pixels and dimensions are exactly identical."
+  }
+}
