@@ -1,0 +1,53 @@
+{
+  "title": "Autonomous Opus 5.5 engineering assignment: Insight reference-quality polish",
+  "date": "2026-10-09 Asia/Bangkok",
+  "authorization": "User explicitly delegates the whole implementation to Opus 5.5 through Claude Code. Codex performs final acceptance after Opus completes a substantive, self-reviewed result. No step-by-step approval requests for routine implementation. Only Salini; never touch Balance.",
+  "workspace": "/Users/daviddoronin/.codex/worktrees/salini-native-materials/Salini",
+  "branch": "codex/salini-native-materials",
+  "baseline_commit": "a9b9cbb5ac9b2555e55b90e0455c5c4f9c6623c1",
+  "delivery_state": "Build 11 code pushed, 133 simulator tests passed; archive valid. Upload failed at completion with expired Xcode credentials, so NOT delivered. Build 10 previously public approved. Preserve build11 archive/evidence. New changed release should use build12 after checking latest git/release state.",
+  "reference_images": [
+    "research/insight-style-directions-2026-10-08/01-porcelain-architecture.png",
+    "research/insight-style-directions-2026-10-08/02-graphite-control.png"
+  ],
+  "baseline_evidence": "research/insight-poc-2026-10-08/qa-build11/",
+  "context": [
+    "AGENTS.md",
+    "research/insight-poc-2026-10-08/realism-review-2026-10-09.json",
+    "research/insight-poc-2026-10-08/graphics-probes-review.txt",
+    "research/insight-poc-2026-10-08/lighting-and-cutaway-validation.txt",
+    "ios/release/build-11-validation.txt"
+  ],
+  "objective": "Substantially close the visual gap to the architectural day/night references in the REAL interactive iOS shipping/QC scene, and remove jerky forklift/pallet handling. Retain stylized architectural abstraction, gain convincing physical surfaces, light and industrial detail. No rendered screenshot pasted over a fake interactive scene.",
+  "workstreams": {
+    "motion": "Reproduce the reported rough forklift pickup and pallet lift. Diagnose trajectory/timing/attachment/camera/render-frame issues rather than blindly add easing. Make pickup, lifting, carrying, turning, trailer placement, lowering and release physically coherent, continuous and appropriately slow; no teleport, foot/fork/pallet slide, penetration, floating loads, snapping camera or sudden state transitions. Fork mast/lift and carried object must share correct relative transforms; wheels and steer should support motion. Loaded truck departs only after forklift clears. Pause/resume, manual/follow transition and lifecycle must not jump. Use meaningful continuity and geometry clearance tests plus real-time and slow-motion recording. Instrument frame time on available simulator; distinguish simulated measurements from device FPS.",
+    "art": "Compare current iOS frames to both references at comparable framing. Priority deficits: simplistic worker silhouettes, box-like cab/forklift, uniform surfaces, low local detail, flat product highlights, abrupt light differences and weak grounding. Improve high-visibility models and proportions/bevels/normals, functional workshop equipment, services, layers of structure, credible clean factory details, industrial organization and contact shadows. Preserve premium cleanliness and original Salini product geometry; do not just add grime, noise or clutter. Improve a coherent bounded section deeply before expanding the campus.",
+    "materials": "Prefer free licensed scanned PBR materials (e.g. Poly Haven/ambientCG) with provenance, real physical scale and coherent albedo/normal/roughness/metalness, proper UVs and texel density. Target concrete, coated/galvanized steel, cab paint, rubber, pallet wood/cardboard and Salini mineral surfaces. Avoid merely applying one noise texture or turning roughness down globally. Detail geometry must support the material. Generated albedo/decals may be useful if unique material is missing; do not fake depth with baked specular/illumination in an albedo map or claim independently generated maps are physically consistent. Do not use Higgsfield credits. If Codex image generation is materially necessary, provide exact seamless/de-lit material spec in status/handoff, but continue all independent work and use proven assets as fallback.",
+    "lighting": "Use existing RealityKit 27 + Blender pipeline as baseline. Evaluate calibrated baked irradiance and probes, color management, soft directional shadows, local occlusion/contact, environment reflections on products, exposure consistency and day/night art direction. Compare matched-camera native output and offline target to locate actual bottleneck. Do not silently turn the app into a video, use postprocess blur to hide defects, or claim real-time ray tracing. Keep selected-object clarity, useful camera framing and labelled contextual trailer cutaway.",
+    "engineering": "Own all implementation, asset download/conversion/optimization, Blender baking, Swift fixes, meaningful tests, simulator build/install/visual loops, profiling and integration. Make multiple independent self-review passes until coherent, not a tiny patch followed by a question. Preserve working business board, manual camera, follow, day/night, accessibility and Reduce Motion. Keep content below glass controls legible. Bound asset loading/memory and avoid per-frame heavy work. No changes outside Salini or unrelated catalog/film/PDF flows."
+  },
+  "execution": {
+    "simulator": "Use only Salini simulator 1917B285-7063-4C68-8096-8EB4F7318E2D, iPhone 18 Pro / iOS27. Xcode /Applications/Xcode.app; xcodegen /opt/homebrew/bin/xcodegen. If unavailable, create a Salini-only simulator rather than touch another project.",
+    "build": "ios/Salini.xcodeproj, scheme Salini. xcodegen from ios/. DerivedData ios/.build; generated logs and experiments tmp/, do not commit tmp or builds.",
+    "qa_launch": [
+      "-shipping-atelier-reality",
+      "-shipping-atelier-time <seconds>",
+      "-shipping-atelier-night"
+    ],
+    "status": "Maintain research/insight-autonomous-polish-2026-10-09/status.json with state working/ready_for_acceptance/blocked, updated_at, completed, remaining, evidence_paths, actual_blockers. At completion write handoff.json with changed files, key decisions, source licenses, exact tests and results, measured performance and limits, baseline-vs-after images, motion clips, git commit and device/release gaps. Never use ready_for_acceptance while still rendering or tests are running.",
+    "git": "Commit and push all task changes after own QA; keep credentials/temp/builds out. Preserve baseline evidence and unrelated changes. No release is complete until final Codex review and successful upload/verified state, but expired account is not a reason to stop graphics work. Do not repeat failed uploads or read credentials. Prepare next archive if signing works; final publication follows Codex acceptance.",
+    "autonomy": "Choose implementation details yourself. You are authorized to use your own subagents for independent engineering/review. Do not wait for Codex between passes, do not require owner to babysit. If one technique fails, choose another credible approach. Report unavoidable blockers precisely, preserve progress."
+  },
+  "acceptance": [
+    "Visible material/light/model improvement in actual iOS daylight AND night screenshots, with baseline-matched camera comparisons; attractive offline render alone is insufficient.",
+    "Complete real-time loading/departure loop plus close-up pickup/setdown recording without visible snapping, sliding or intersections.",
+    "User selection, manual camera, following, zone buttons, pause, day/night and resumed app remain functional.",
+    "Relevant tests pass and release build compiles; performance claims measured and device limits explicit.",
+    "Complete source/assets/provenance committed and pushed. Handoff ready for independent Codex visual/code acceptance."
+  ],
+  "consulted_primary_sources": [
+    "https://polyhaven.com/license",
+    "https://developer.apple.com/documentation/realitykit/physicallybasedmaterial",
+    "https://developer.apple.com/documentation/realitykit/lightmapcomponent"
+  ]
+}

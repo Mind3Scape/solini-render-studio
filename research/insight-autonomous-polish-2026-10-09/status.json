@@ -1,0 +1,12 @@
+{
+  "state": "assigned",
+  "updated_at": "2026-10-09",
+  "completed": [],
+  "remaining": [
+    "Opus autonomous implementation and QA",
+    "Codex final acceptance",
+    "GitHub and TestFlight release after credentials renewed"
+  ],
+  "evidence_paths": [],
+  "actual_blockers": []
+}
