@@ -1,0 +1,35 @@
+{
+  "date": "2026-10-09",
+  "reviewer": "Codex",
+  "source_commits": [
+    "05e433c",
+    "e9225d7"
+  ],
+  "integration": "codex/salini-room-ar",
+  "verdict": "Accepted as a concrete improvement for integration, not parity with generated concepts 01/02",
+  "source_review": [
+    "AtelierMotion path/distance/curvature and physical speed profile",
+    "Load attachment, mast/carriage/wheel transforms, source mesh generation",
+    "Asset manifest, ambientCG/Poly Haven official CC0 licenses rechecked"
+  ],
+  "native_review": {
+    "simulator": "BC58C81F-D28D-4E26-A59E-F8689EED523F",
+    "checks": [
+      "Integrated build launched as actual app, not offline render",
+      "Follow forklift through pickup and trailer approach",
+      "Pause, night mode, whole-site view, return-to-action verified with native accessibility UI"
+    ],
+    "evidence": "../room-ar-2026-10-09/evidence/insight/"
+  },
+  "motion_review": [
+    "Opus slow pickup and set-down frame sequences inspected",
+    "Independent integrated capture inspected via contact frames: load stays on carriage, no baseline sideways slide or turn on the spot seen",
+    "Continuous frame pacing measured by Opus simulator harness; no physical device performance claim"
+  ],
+  "visual_comparison": "01/02 retain stronger campus density, landscaping, material subtlety and composition. This update meaningfully improves forklift geometry and mechanical motion; the bounded section and static staff still remain simplified.",
+  "licenses": [
+    "https://docs.ambientcg.com/license/",
+    "https://polyhaven.com/license"
+  ],
+  "release": "Pending combined Essence integration, tests and signed build12; Apple account refresh remains a known distribution dependency"
+}

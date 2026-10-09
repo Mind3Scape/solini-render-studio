@@ -250,7 +250,8 @@ final class RoomPlacementController: UIViewController, ARSessionDelegate, ARSCNV
     return config
   }
   private func startSession(reset: Bool) {
-    guard visible, AVCaptureDevice.authorizationStatus(for: .video) == .authorized else { return }
+    guard visible, UIApplication.shared.applicationState == .active,
+      AVCaptureDevice.authorizationStatus(for: .video) == .authorized else { return }
     if sceneView == nil {
       let ar = ARSCNView(frame: view.bounds)
       ar.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -294,7 +295,10 @@ final class RoomPlacementController: UIViewController, ARSessionDelegate, ARSCNV
     trackingNormal = false
   }
   @objc private func background() {
-    guard sceneView != nil else { return }
+    // A model may finish loading after the camera permission sheet or the app backgrounds.
+    // Invalidate that result too, before an ARSCNView has been created.
+    loadGeneration += 1
+    guard sceneView != nil || stage == .loading else { return }
     stopCamera()
     placementNode?.isHidden = true
     renderStage(.interrupted)
@@ -302,7 +306,7 @@ final class RoomPlacementController: UIViewController, ARSessionDelegate, ARSCNV
   @objc private func foreground() {
     guard visible else { return }
     // This also handles a permission change in Settings without creating a second camera session.
-    if stage == .denied || sceneView != nil { openCamera() }
+    if stage == .denied || stage == .interrupted || sceneView != nil { openCamera() }
   }
 
   @objc private func updateTarget() {
