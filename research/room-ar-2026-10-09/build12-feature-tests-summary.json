@@ -1,0 +1,53 @@
+{
+  "devicesAndConfigurations" : [
+    {
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "BC58C81F-D28D-4E26-A59E-F8689EED523F",
+        "deviceName" : "Salini AR — QA",
+        "modelName" : "iPhone 18 Pro",
+        "osBuildNumber" : "24A434",
+        "osVersion" : "27.0",
+        "platform" : "iOS Simulator"
+      },
+      "expectedFailures" : 0,
+      "failedTests" : 0,
+      "passedTests" : 13,
+      "skippedTests" : 0,
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription" : "Salini · Built with macOS 27.0",
+  "expectedFailures" : 0,
+  "failedTests" : 0,
+  "finishTime" : 1791521259.574,
+  "passedTests" : 13,
+  "result" : "Passed",
+  "runtimeWarnings" : [
+    {
+      "issueType" : "Runtime Warning",
+      "message" : "[Internal] Thread running at User-interactive quality-of-service class waiting on a lower QoS thread running at Default quality-of-service class. Investigate ways to avoid priority inversions",
+      "sourceURL" : "file:///Users/daviddoronin/.codex/worktrees/salini-room-ar/Salini/ios/SaliniTests/SaliniTests.swift"
+    }
+  ],
+  "skippedTests" : 0,
+  "startTime" : 1791521244.074,
+  "statistics" : [
+
+  ],
+  "testFailures" : [
+
+  ],
+  "title" : "Test - Salini",
+  "topInsights" : [
+    {
+      "category" : "Longest Test Runs",
+      "impact" : "83% of duration",
+      "text" : "1 longest test run with outlier durations exceeding 3.81s (three standard deviations)"
+    }
+  ],
+  "totalTestCount" : 13
+}
