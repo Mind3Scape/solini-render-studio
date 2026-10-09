@@ -1,0 +1,16 @@
+{
+  "reviewer": "Codex",
+  "status": "changes_requested",
+  "basis": "Actual iOS SE preview tmp/essence-preview/se2-small.png inspected, not source alone",
+  "strengths": [
+    "Live geometry and material selection, honest schematic label, original studio retained",
+    "Your motion/Reduce Motion/small-device verification is useful"
+  ],
+  "issues": [
+    "Two 4-layer rounded square stacks look like stacked iPhones/plates, not distinctive mineral specimens. User asked stones revealing their interior, premium sculptural composition.",
+    "Bauxite looks like an extruded brown cookie; marble like a cracked white disc. Their roughness/normals/form need credible geological detail, not a token raw-stone icon.",
+    "Sense cap is nearly blown-out white and core terrazzo too sparkly/noisy; weak lighting hierarchy/depth.",
+    "In this preview there is no convincing stone crossing the top or side edge of the visual card. Main bodies sit inside it. Overflow is a key request."
+  ],
+  "next_pass": "Please improve the composition while preserving your isolated file ownership and public API. Prefer 2-3 large asymmetrical mineral-derived specimen masses with polished cut faces, a controlled oblique split/exploded opening (not four identical rounded square slabs). S-Stone homogeneous and Sense core/coating must remain intelligible. One hero should visibly float past card top edge within reserved overflow. Realistic mineral facets/veining/micro-roughness and directional grazing light; avoid blown highlights or uniformly glittering core. Use existing licensed textures if appropriate. Keep labels sparse and anchored to actual composition; detailed note below. Capture native before/after at same viewport. Finish your current check then apply second pass; do not modify Home or other shared files. Codex integrates afterward."
+}

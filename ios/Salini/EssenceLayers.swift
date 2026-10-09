@@ -7,9 +7,8 @@ import UIKit
 ///
 /// Art is described by a manifest: `EssenceLayers.json` in the bundle if present, otherwise the
 /// built-in default below. Every layer names its image (asset catalogue name or bundled file),
-/// the group it belongs to and where it rests/flies in card coordinates. The stage is used
-/// only when every image of the manifest resolves; otherwise the feature falls back to the
-/// procedural SceneKit stage.
+/// the group it belongs to and where it rests/flies in card coordinates. The stage is shown
+/// only when every image of the manifest resolves.
 struct EssenceLayer: Codable, Equatable {
   enum Group: String, Codable { case stone, sense, raw }
   var id: String
@@ -63,25 +62,25 @@ enum EssenceLayers {
   /// continuous focus move. Positions are in card units (see `EssenceLayer`).
   static let fallbackManifest: [EssenceLayer] = [
     EssenceLayer(id: "stone-mass", image: "essence-stone-mass", group: .stone,
-                 x: 0.46, y: 0.35, width: 0.86, rotation: -3,
-                 backX: 0.18, backY: 0.12, backWidth: 0.34, backRotation: -12,
+                 x: 0.46, y: 0.4, width: 0.84, rotation: -3,
+                 backX: 0.84, backY: 0.14, backWidth: 0.3, backRotation: 8,
                  depth: 0.6, z: 2, lift: 0.05,
-                 labels: [EssenceLabel(key: "stone", x: 0.42, y: 0.42)]),
+                 labels: [EssenceLabel(key: "stone", x: 0.38, y: 0.42)]),
     EssenceLayer(id: "stone-fragment", image: "essence-stone-fragment", group: .stone,
-                 x: 0.86, y: -0.08, width: 0.32, rotation: 16,
-                 backX: 0.36, backY: -0.06, backWidth: 0.16, backRotation: 24,
-                 closedDX: -0.24, closedDY: 0.34, closedRotation: -16, depth: 0.9, z: 3, lift: 0.22),
+                 x: 0.86, y: -0.06, width: 0.38, rotation: 14,
+                 backX: 0.66, backY: -0.1, backWidth: 0.16, backRotation: 22,
+                 closedDX: -0.28, closedDY: 0.32, closedRotation: -14, depth: 0.9, z: 3, lift: 0.22),
     EssenceLayer(id: "sense-core", image: "essence-sense-core-matte",
                  finishImages: ["senseMatte": "essence-sense-core-matte", "senseGloss": "essence-sense-core-gloss"],
-                 group: .sense, x: 0.5, y: 0.4, width: 0.82, rotation: 2,
-                 backX: 0.82, backY: 0.14, backWidth: 0.32, backRotation: 10,
+                 group: .sense, x: 0.52, y: 0.44, width: 0.8, rotation: 2,
+                 backX: 0.14, backY: 0.14, backWidth: 0.3, backRotation: -8,
                  depth: 0.6, z: 2, lift: 0.05,
-                 labels: [EssenceLabel(key: "core", x: 0.45, y: 0.5), EssenceLabel(key: "coat", x: 0.3, y: 0.12, above: true)]),
+                 labels: [EssenceLabel(key: "core", x: 0.4, y: 0.46), EssenceLabel(key: "coat", x: 0.86, y: 0.42, above: true)]),
     EssenceLayer(id: "sense-cap", image: "essence-sense-cap-matte",
                  finishImages: ["senseMatte": "essence-sense-cap-matte", "senseGloss": "essence-sense-cap-gloss"],
-                 group: .sense, x: 0.16, y: -0.06, width: 0.36, rotation: -14,
-                 backX: 0.66, backY: -0.04, backWidth: 0.16, backRotation: -20,
-                 closedDX: 0.26, closedDY: 0.36, closedRotation: 14, depth: 0.9, z: 3, lift: 0.22),
+                 group: .sense, x: 0.16, y: -0.06, width: 0.38, rotation: -12,
+                 backX: 0.34, backY: -0.1, backWidth: 0.16, backRotation: -20,
+                 closedDX: 0.3, closedDY: 0.34, closedRotation: 12, depth: 0.9, z: 3, lift: 0.22),
   ]
 
   /// The manifest in use: `EssenceLayers.json` from the bundle, else the default.
@@ -105,8 +104,7 @@ enum EssenceLayers {
     return nil
   }
 
-  /// The layers whose main image resolves (a missing finish variant falls back to the main
-  /// image); the layered stage shows these. Empty → the procedural fallback stage.
+  /// The layers whose main image resolves (a missing finish variant falls back to one present).
   static func resolved(_ layers: [EssenceLayer], bundle: Bundle = .main) -> [EssenceLayer] {
     layers.compactMap { l in
       if image(l.image, bundle: bundle) != nil { return l }
@@ -126,19 +124,10 @@ enum EssenceLayers {
   }
 }
 
-/// The stages the feature can show (layered 2.5D or the procedural SceneKit fallback).
-@MainActor
-protocol EssenceStage: UIView {
-  var onSelect: ((StudioFinish) -> Void)? { get set }
-  func show(_ f: StudioFinish, animated: Bool)
-  func setRunning(_ on: Bool)
-}
-
-extension EssenceStageView: EssenceStage {}
 
 // MARK: - Layered stage
 
-final class EssenceLayerStage: UIView, EssenceStage {
+final class EssenceLayerStage: UIView {
   /// Margins of the stage around the card where fragments may fly (part of this view's bounds,
   /// never over the copy or neighbouring cards).
   static let overflowTop: CGFloat = 84
@@ -238,6 +227,8 @@ final class EssenceLayerStage: UIView, EssenceStage {
   // MARK: State
 
   func setRunning(_ on: Bool) {
+    // Repeated calls with the same state (host visibility updates) change nothing.
+    if on == running && (link != nil) == (on && !UIAccessibility.isReduceMotionEnabled) && (opened || !on) { return }
     running = on
     let reduce = UIAccessibility.isReduceMotionEnabled
     if on && !opened {
@@ -265,7 +256,7 @@ final class EssenceLayerStage: UIView, EssenceStage {
     finish = f
     emphasisTarget = f == .stoneMatte ? 0 : 1
     if !animated || link == nil { emphasis = emphasisTarget }
-    accessibilityLabel = EssenceStageView.description(f)
+    accessibilityLabel = Self.description(f)
     accessibilityValue = f.title
     for p in pieces {
       guard let variants = p.spec.finishImages else { continue }
@@ -339,7 +330,7 @@ final class EssenceLayerStage: UIView, EssenceStage {
       p.view.bounds = CGRect(origin: .zero, size: size)
       p.view.center = CGPoint(x: cx, y: cy)
       p.view.transform = CGAffineTransform(rotationAngle: angle)
-      p.view.alpha = 0.62 + 0.38 * CGFloat(f)
+      p.view.alpha = 0.72 + 0.28 * CGFloat(f)
       p.view.layer.zPosition = CGFloat(s.z) + 10 * CGFloat(f)
       // Contact shadow on the card: below the fragment by its lift, wider and lighter when high.
       let lift = CGFloat(s.lift) * h
@@ -377,6 +368,15 @@ final class EssenceLayerStage: UIView, EssenceStage {
     callouts["stone"]?.alpha = open && !sense ? 1 : 0
     callouts["core"]?.alpha = open && sense ? 1 : 0
     callouts["coat"]?.alpha = open && sense ? 1 : 0
+  }
+
+  static func description(_ f: StudioFinish) -> String {
+    let base = "Художественная визуализация состава. S-Stone — однородная минеральная масса. S-Sense — минеральное ядро под тонким слоем Gelcoat. Форма и толщина слоёв условны."
+    switch f {
+    case .stoneMatte: return "\(base) Крупным планом S-Stone."
+    case .senseMatte: return "\(base) Крупным планом S-Sense, матовый Gelcoat."
+    case .senseGloss: return "\(base) Крупным планом S-Sense, глянцевый Gelcoat."
+    }
   }
 
   // MARK: Interaction

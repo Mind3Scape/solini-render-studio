@@ -1,0 +1,79 @@
+{
+  "mode": "built-in image_gen; transparent PNG, independent layers",
+  "state": "all_six_assets_ready",
+  "assets": [
+    {
+      "name": "essence-stone-mass.png",
+      "purpose": "S-Stone hero oblique homogeneous cut",
+      "ready": true,
+      "sha256": "8691536769a3a29f87609164114646d66f930a8f7a30a5c4075e9d213f775e30",
+      "mode": "RGBA",
+      "pixels": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "name": "essence-stone-fragment.png",
+      "purpose": "S-Stone flying wedge",
+      "ready": true,
+      "sha256": "99c758a1abf7707b268badb1952a78e079362a376e75e475225a8b6e9bac5ef9",
+      "mode": "RGBA",
+      "pixels": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "name": "essence-sense-core-gloss.png",
+      "purpose": "S-Sense core and shiny Gelcoat body",
+      "ready": true,
+      "sha256": "8ba9216375f49327f035a0c07cb69d73c1fccf3240511d4a6eeb68c477779757",
+      "mode": "RGBA",
+      "pixels": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "name": "essence-sense-core-matte.png",
+      "purpose": "Same S-Sense body, matte outer coating",
+      "ready": true,
+      "sha256": "e15e1138fdc47a0f06e26fdd3cf2553e48ee55ff545c2a52b7633001cdf0cf44",
+      "mode": "RGBA",
+      "pixels": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "name": "essence-sense-cap-gloss.png",
+      "purpose": "Separate matching S-Sense shell fragment, glossy",
+      "ready": true,
+      "sha256": "f0790bf5d4267a5c7f1d0ef82aa477a9a3e5e230914b79f007f9f19244498ec6",
+      "mode": "RGBA",
+      "pixels": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "name": "essence-sense-cap-matte.png",
+      "purpose": "Same separate fragment, matte",
+      "ready": true,
+      "sha256": "d657697831f039be1bcaafab612c12d8ae09051506003a029fbb6b0e1dffd4a1",
+      "mode": "RGBA",
+      "pixels": [
+        1254,
+        1254
+      ]
+    }
+  ],
+  "direction": "Use final six PNGs in ios/Salini/EssenceAssets. No bauxite/marble cookies. One chosen material hero should dominate; the other can sit smaller behind, or swap coherently with a beautiful focus transition. One large mineral and a separate fracture fly beyond the card top/side bounds but remain inside reserved view margins and away from text. Do not place cutout assets as 4 unrelated equal stickers or retain weak temporary generated procedural renders. Preserve image proportions/alpha, no card masks on the image layers. Gloss/matte must change actual matching asset. This is a designed illustrative material campaign, not literal fractured product test; no fake exact layer claim from image. 2.5D animation on home, full real 3D in studio. For integration please expose var animationBounds: CGRect in EssenceFeatureView, representing stage rect in feature coordinates, so Home activates only when the stage is in viewport; initialize active false before attaching in Home.",
+  "final_notes": [
+    "All six are original built-in image_gen images, not Higgsfield, not procedural stand-ins. Inspect every image. You may commit these six assets and all relevant research alongside your component.",
+    "No need to ship unused procedural fallback SceneKit geometry/render path. Asset completeness should be verified by a test and archive check; fall back to a quiet studio link on exceptional missing resources. Keep original full 3D studio untouched.",
+    "Shorten copy: lead can say «Однородный S-Stone. Минеральное ядро под тонким слоем Gelcoat — S-Sense.» Note «Художественная визуализация состава. Форма и толщина слоёв условны.» Remove bauxite/marble raw-stone mentions. This shows qualities, not a literal fractured product.",
+    "Deliver integrated-ready screenshot/video of actual six images, not temporary layers. First full motion, selection, Reduce Motion, small phone; then commit/push and handoff."
+  ]
+}
