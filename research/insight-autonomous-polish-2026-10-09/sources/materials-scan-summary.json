@@ -1,0 +1,211 @@
+{
+  "generated": "2026-10-09",
+  "license": "CC0-1.0 (all)",
+  "targets": [
+    {
+      "target": "polished_concrete_floor",
+      "asset": "Concrete016",
+      "source": "ambientcg",
+      "folder": "tmp/insight-poc-source/Concrete016",
+      "maps": {
+        "albedo": "Concrete016_1K-JPG_Color.jpg",
+        "normal_gl": "Concrete016_1K-JPG_NormalGL.jpg",
+        "roughness": "Concrete016_1K-JPG_Roughness.jpg"
+      },
+      "albedo_size_px": [
+        1024,
+        1024
+      ],
+      "dimensions_m": null,
+      "dimensions_note": "est. ~2.0 x 2.0 m (ambientCG publishes no dimensions; cloud mottling suggests floor-scale capture)",
+      "mean_albedo_srgb": "#7e8387",
+      "visual": "Light/mid neutral grey smooth troweled concrete with soft burnished cloud mottling and a few tiny pinholes; no cracks, stains or scratches.",
+      "visually_checked": "Albedo viewed; clean, no rust/dirt/graffiti/cracks; suitable."
+    },
+    {
+      "target": "painted_metal",
+      "asset": "Metal027",
+      "source": "ambientcg",
+      "folder": "tmp/insight-poc-source/Metal027",
+      "maps": {
+        "albedo": "Metal027_1K-JPG_Color.jpg",
+        "metalness": "Metal027_1K-JPG_Metalness.jpg",
+        "normal_gl": "Metal027_1K-JPG_NormalGL.jpg",
+        "roughness": "Metal027_1K-JPG_Roughness.jpg"
+      },
+      "albedo_size_px": [
+        1024,
+        1024
+      ],
+      "dimensions_m": null,
+      "dimensions_note": "est. ~0.5 x 0.5 m (no published dimensions; fine powder texture)",
+      "mean_albedo_srgb": "#2e2d35",
+      "visual": "Very dark charcoal/near-black powder-coated steel, uniform with a very fine orange-peel/powder grain; no scratches or rust.",
+      "visually_checked": "Albedo viewed; clean, no rust/dirt/graffiti/cracks; suitable."
+    },
+    {
+      "target": "galvanized_steel",
+      "asset": "Metal040",
+      "source": "ambientcg",
+      "folder": "tmp/insight-poc-source/Metal040",
+      "maps": {
+        "albedo": "Metal040_1K-JPG_Color.jpg",
+        "metalness": "Metal040_1K-JPG_Metalness.jpg",
+        "normal_gl": "Metal040_1K-JPG_NormalGL.jpg",
+        "roughness": "Metal040_1K-JPG_Roughness.jpg"
+      },
+      "albedo_size_px": [
+        1024,
+        1024
+      ],
+      "dimensions_m": null,
+      "dimensions_note": "est. ~0.5 x 0.5 m (no published dimensions; spangle crystals ~1 cm)",
+      "mean_albedo_srgb": "#6a6f6c",
+      "visual": "Hot-dip galvanized zinc spangle: crystalline flake pattern in cool mid-grey/green-grey, clean, no white rust or corrosion.",
+      "visually_checked": "Albedo viewed; clean, no rust/dirt/graffiti/cracks; suitable."
+    },
+    {
+      "target": "brushed_metal",
+      "asset": "Metal011",
+      "source": "ambientcg",
+      "folder": "tmp/insight-poc-source/Metal011",
+      "maps": {
+        "albedo": "Metal011_1K-JPG_Color.jpg",
+        "metalness": "Metal011_1K-JPG_Metalness.jpg",
+        "normal_gl": "Metal011_1K-JPG_NormalGL.jpg",
+        "roughness": "Metal011_1K-JPG_Roughness.jpg"
+      },
+      "albedo_size_px": [
+        1024,
+        1024
+      ],
+      "dimensions_m": null,
+      "dimensions_note": "est. ~0.5 x 0.5 m (no published dimensions)",
+      "mean_albedo_srgb": "#9ca0a5",
+      "visual": "Light silver-grey linear brushed steel with fine horizontal brushing and faint soft smudges; clean.",
+      "visually_checked": "Albedo viewed; clean, no rust/dirt/graffiti/cracks; suitable."
+    },
+    {
+      "target": "rubber",
+      "asset": "Rubber004",
+      "source": "ambientcg",
+      "folder": "tmp/insight-poc-source/Rubber004",
+      "maps": {
+        "albedo": "Rubber004_1K-JPG_Color.jpg",
+        "normal_gl": "Rubber004_1K-JPG_NormalGL.jpg",
+        "roughness": "Rubber004_1K-JPG_Roughness.jpg"
+      },
+      "albedo_size_px": [
+        1024,
+        1024
+      ],
+      "dimensions_m": {
+        "width": 0.75,
+        "height": 0.75
+      },
+      "dimensions_note": "Published by ambientCG API (dimensionX/dimensionY in cm).",
+      "mean_albedo_srgb": "#2a2b32",
+      "visual": "Near-black fine-grained rubber with very subtle speckle; uniform, no coloured EPDM flecks.",
+      "visually_checked": "Albedo viewed; clean, no rust/dirt/graffiti/cracks; suitable."
+    },
+    {
+      "target": "pallet_wood",
+      "asset": "Wood061",
+      "source": "ambientcg",
+      "folder": "tmp/insight-poc-source/Wood061",
+      "maps": {
+        "ao": "Wood061_1K-JPG_AmbientOcclusion.jpg",
+        "albedo": "Wood061_1K-JPG_Color.jpg",
+        "normal_gl": "Wood061_1K-JPG_NormalGL.jpg",
+        "roughness": "Wood061_1K-JPG_Roughness.jpg"
+      },
+      "albedo_size_px": [
+        1024,
+        1024
+      ],
+      "dimensions_m": null,
+      "dimensions_note": "est. ~1.0 x 1.0 m (no published dimensions; grain runs horizontally)",
+      "mean_albedo_srgb": "#ddc2ab",
+      "visual": "Light, pale pinkish-beige rough-sawn softwood with horizontal grain and fine saw fibres; no knots of note, no nails, no weathering.",
+      "visually_checked": "Albedo viewed; clean, no rust/dirt/graffiti/cracks; suitable."
+    },
+    {
+      "target": "cardboard",
+      "asset": "Cardboard002",
+      "source": "ambientcg",
+      "folder": "tmp/insight-poc-source/Cardboard002",
+      "maps": {
+        "albedo": "Cardboard002_1K-JPG_Color.jpg",
+        "normal_gl": "Cardboard002_1K-JPG_NormalGL.jpg",
+        "roughness": "Cardboard002_1K-JPG_Roughness.jpg"
+      },
+      "albedo_size_px": [
+        1024,
+        1024
+      ],
+      "dimensions_m": null,
+      "dimensions_note": "est. ~0.5 x 0.5 m (no published dimensions; fine vertical liner/flute lines)",
+      "mean_albedo_srgb": "#ba904d",
+      "visual": "Clean warm kraft-brown cardboard liner with faint vertical flute ribbing and soft tonal variation; no tape, print or tears.",
+      "visually_checked": "Albedo viewed; clean, no rust/dirt/graffiti/cracks; suitable."
+    },
+    {
+      "target": "white_plastic",
+      "asset": "Plastic013A",
+      "source": "ambientcg",
+      "folder": "tmp/insight-poc-source/Plastic013A",
+      "maps": {
+        "albedo": "Plastic013A_1K-JPG_Color.jpg",
+        "normal_gl": "Plastic013A_1K-JPG_NormalGL.jpg",
+        "roughness": "Plastic013A_1K-JPG_Roughness.jpg"
+      },
+      "albedo_size_px": [
+        1024,
+        1024
+      ],
+      "dimensions_m": null,
+      "dimensions_note": "est. ~0.5 x 0.5 m (no published dimensions)",
+      "mean_albedo_srgb": "#eeeae9",
+      "visual": "Off-white matte plastic, very uniform with an extremely faint surface texture; clean.",
+      "visually_checked": "Albedo viewed; clean, no rust/dirt/graffiti/cracks; suitable."
+    },
+    {
+      "target": "concrete_wall",
+      "asset": "Concrete034",
+      "source": "ambientcg",
+      "folder": "tmp/insight-poc-source/Concrete034",
+      "maps": {
+        "albedo": "Concrete034_1K-JPG_Color.jpg",
+        "normal_gl": "Concrete034_1K-JPG_NormalGL.jpg",
+        "roughness": "Concrete034_1K-JPG_Roughness.jpg"
+      },
+      "albedo_size_px": [
+        1024,
+        512
+      ],
+      "dimensions_m": {
+        "width": 1.1,
+        "height": 0.55
+      },
+      "dimensions_note": "Published by ambientCG API (dimensionX/dimensionY in cm).",
+      "mean_albedo_srgb": "#b8b8b8",
+      "visual": "Light grey (~#b8b8b8) smooth fine plaster-like concrete with soft trowel marks; clean, no cracks or stains. Map is 1024x512 (2:1).",
+      "visually_checked": "Albedo viewed; clean, no rust/dirt/graffiti/cracks; suitable."
+    }
+  ],
+  "skipped": [
+    {
+      "target": "asphalt",
+      "reason": "Existing clean_asphalt kept; Poly Haven asphalt_floor is brown and the other asphalt scans are cracked/dirty/worn, so no clearly better clean option."
+    },
+    {
+      "target": "plastic_wrap",
+      "reason": "No stretch-wrap film scan exists on Poly Haven/ambientCG; white_plastic (Plastic013A) chosen instead."
+    }
+  ],
+  "notes": [
+    "Existing Poly Haven smooth_concrete_floor albedo is brown/rust-toned (mean #553c29) with scratches, not light grey; Concrete016 is the recommended clean grey floor.",
+    "ambientCG does not publish md5 hashes; archive byte size was verified against the API instead.",
+    "All normals are OpenGL (+Y) convention (ambientCG *_NormalGL)."
+  ]
+}

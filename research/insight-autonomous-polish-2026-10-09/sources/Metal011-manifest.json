@@ -1,0 +1,53 @@
+{
+  "asset": "Metal011",
+  "source": "ambientcg",
+  "page_url": "https://ambientcg.com/a/Metal011",
+  "license": "CC0-1.0",
+  "license_url": "https://docs.ambientcg.com/license/",
+  "authors": [
+    "ambientCG (Lennart Demes)"
+  ],
+  "creation_method": "Height field photogrammetry",
+  "dimensions_m": null,
+  "dimensions_note": "est. ~0.5 x 0.5 m (no published dimensions)",
+  "archive": {
+    "url": "https://ambientcg.com/get?file=Metal011_1K-JPG.zip",
+    "size": 4305137,
+    "size_verified": true,
+    "sha256": "d366e840e8361182fc69a5657e71bee762646ec54c2473abf921ecae57fa4b8c",
+    "md5": "not published by ambientCG API",
+    "deleted_after_extract": true
+  },
+  "files": [
+    {
+      "url": "https://ambientcg.com/get?file=Metal011_1K-JPG.zip",
+      "zip_member": "Metal011_1K-JPG_Color.jpg",
+      "path": "tmp/insight-poc-source/Metal011/Metal011_1K-JPG_Color.jpg",
+      "sha256": "8e7823f54208e8765e4ceaf9221ccc475710cb80e6dfe39c89bca3ea9023aa6f",
+      "size": 622004
+    },
+    {
+      "url": "https://ambientcg.com/get?file=Metal011_1K-JPG.zip",
+      "zip_member": "Metal011_1K-JPG_Metalness.jpg",
+      "path": "tmp/insight-poc-source/Metal011/Metal011_1K-JPG_Metalness.jpg",
+      "sha256": "843102638fa0a5bf897888868877efab8ccdc4cb84a48e57bdb52bfb30f5e714",
+      "size": 4257
+    },
+    {
+      "url": "https://ambientcg.com/get?file=Metal011_1K-JPG.zip",
+      "zip_member": "Metal011_1K-JPG_NormalGL.jpg",
+      "path": "tmp/insight-poc-source/Metal011/Metal011_1K-JPG_NormalGL.jpg",
+      "sha256": "e9f4e6eae2c860538f1fdd0ed88d06b606deb13e0a342a392c914130bc138249",
+      "size": 664103
+    },
+    {
+      "url": "https://ambientcg.com/get?file=Metal011_1K-JPG.zip",
+      "zip_member": "Metal011_1K-JPG_Roughness.jpg",
+      "path": "tmp/insight-poc-source/Metal011/Metal011_1K-JPG_Roughness.jpg",
+      "sha256": "14e89c4d658bb67e1eca246bc404c37ea06a227aa7a877730d4d28827cb7fa7b",
+      "size": 423697
+    }
+  ],
+  "target": "brushed_metal",
+  "notes": "Cleanest/lightest of the linear-brushed series (Metal009/010 darker with more scratches, Metal012 mirror-like, Metal051 is circular-brushed). Brush direction is horizontal (U)."
+}

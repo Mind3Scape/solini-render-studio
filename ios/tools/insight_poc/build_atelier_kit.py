@@ -63,6 +63,7 @@ PALETTE = {
     "M_Grille": (0.03, 0.035, 0.04), "M_Headlight": (0.9, 0.9, 0.85), "M_TailLight": (0.5, 0.04, 0.03),
     "M_Window": (0.55, 0.62, 0.68), "M_GlassClear": (0.8, 0.85, 0.88), "M_BoothFrame": (0.86, 0.86, 0.85),
     "M_Cabinet": (0.82, 0.83, 0.81), "M_PipeWater": (0.2, 0.36, 0.48),
+    "M_Strap": (0.03, 0.035, 0.04),
 }
 MATS = {}
 for name, rgb in PALETTE.items():
@@ -191,6 +192,13 @@ def anchor(name, x, y, z, heading=0.0):
     return e
 
 
+# Models with their own module (forklift, workers): executed into this namespace.
+exec(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "atelier_models.py")).read(), globals())
+if "--proto" in argv:                       # quick look-development scene (tmp/ scripts)
+    exec(open(argv[argv.index("--proto") + 1]).read(), globals())
+    raise SystemExit
+
+
 # ----------------------------------------------------------------------------- site & yard
 rect(-8, 36, -8, 32, 0.0, "M_Paving")
 rect(14.2, 36, -8, 23.0, 0.004, "M_Asphalt")                 # dock yard
@@ -255,6 +263,7 @@ for x in (24.0, 30.0):
     for y in range(14):
         box(x - 1.5, x + 1.5, 0.1 + y * 0.29, 0.36 + y * 0.29, NZ1 + 0.06, NZ1 + 0.09, "M_Galv", bevel=0.01, segments=1)
     box(x - 2.0, x + 2.0, 4.4, 4.55, NZ1, NZ1 + 1.4, "M_Coping", bevel=0.02)          # canopy
+text("salini", (NX0 + NX1) / 2 + 3.0, NZ1 + 0.035, 1.7, "M_Coping", stand=True, y=6.6)   # facade lettering
 anchor("anchor_neighbour_roof", (NX0 + NX1) / 2, NH + 0.45, (NZ0 + NZ1) / 2)
 
 # ----------------------------------------------------------------------------- hall shell
@@ -394,12 +403,18 @@ def crate(cx, y0, cz, along_z=True):
 
 
 def pallet(cx, y0, cz, lx=1.0, lz=1.8, group="Static"):
-    for i in range(5):                                                      # deck boards
-        z = cz - lz / 2 + 0.08 + i * (lz - 0.16) / 4
-        box(cx - lx / 2, cx + lx / 2, y0 + 0.11, y0 + 0.14, z - 0.06, z + 0.06, "M_Timber", group, bevel=0.005, segments=1)
-    for sx in (-1, 0, 1):                                                   # stringers
-        x = cx + sx * (lx / 2 - 0.05)
-        box(x - 0.05, x + 0.05, y0, y0 + 0.11, cz - lz / 2, cz + lz / 2, "M_Timber", group, bevel=0.005, segments=1)
+    """A stringer pallet entered from ±x: runners along x (the fork pockets between them),
+    deck boards across, thin bottom boards at the two ends (below the fork blades)."""
+    n = max(4, round(lx / 0.2))
+    for i in range(n):                                                      # deck boards (across z)
+        x = cx - lx / 2 + 0.06 + i * (lx - 0.12) / (n - 1)
+        box(x - 0.055, x + 0.055, y0 + 0.11, y0 + 0.14, cz - lz / 2, cz + lz / 2, "M_Timber", group, bevel=0.004, segments=1)
+    for sz in (-1, 0, 1):                                                   # runners (along x)
+        z = cz + sz * (lz / 2 - 0.05)
+        box(cx - lx / 2, cx + lx / 2, y0 + 0.022, y0 + 0.11, z - 0.05, z + 0.05, "M_Timber", group, bevel=0.004, segments=1)
+    for sx in (-1, 1):                                                      # bottom boards
+        x = cx + sx * (lx / 2 - 0.055)
+        box(x - 0.05, x + 0.05, y0, y0 + 0.022, cz - lz / 2, cz + lz / 2, "M_Timber", group, bevel=0.003, segments=1)
     return y0 + 0.14
 
 
@@ -527,8 +542,8 @@ stripe(8.9, 7.6, 8.9, 19.5, 0.1, FLOOR + 0.009, "M_LineYellow")
 stripe(12.0, 0.6, 12.0, 11.6, 0.1, FLOOR + 0.009, "M_LineYellow")
 for i in range(6):
     stripe(12.6 + i * 0.22, 12.0, 12.6 + i * 0.22 + 0.4, 15.0, 0.07, FLOOR + 0.01, "M_LineWhite")
-for cz in (2.3, 4.5, 6.7, 8.9):                                            # staged for dock 1
-    batch(12.9, FLOOR, cz, layers=2 if cz != 8.9 else 1)
+for cz in (2.3, 4.5, 6.7):                                                 # staged for dock 1 (clear of the forklift route)
+    batch(12.9, FLOOR, cz, layers=2 if cz != 6.7 else 1)
 
 # ----------------------------------------------------------------------------- interior: racking
 def rack_run(x0, depth, z0, bays, levels, seed):
@@ -632,11 +647,13 @@ def person(x, z, heading, coat="M_Coat", reach=0.0, cap="M_Hair"):
     ball(P(-0.01, 1.68, 0), 0.11, cap, squash=0.6)                           # hair / cap
 
 
-person(2.9, 4.5, -math.pi / 2, reach=0.25)                     # inspector at the Alda
-person(6.0, 6.6, 0.0, reach=0.3)                               # inspector at the Luce/Noemi row
-person(4.9, 10.25, math.pi / 2, coat="M_Workwear", reach=0.35)  # packer at the packing table
-person(11.3, 1.8, -2.4, coat="M_Coat")                         # in the QC booth
-person(16.4, 17.0, 2.2, coat="M_Vest", cap="M_Toolbox")         # yard marshal with a hard hat
+person2(2.9, 4.5, -math.pi / 2, kind="inspect", reach=0.25)                 # inspector at the Alda
+person2(6.0, 6.6, 0.0, kind="inspect", reach=0.3)                           # inspector at the Luce/Noemi row
+person2(6.9, 2.45, -math.pi / 2, kind="inspect", reach=0.15)                # inspector at QC 02
+person2(4.9, 10.25, math.pi / 2, kind="inspect", coat="M_Workwear", reach=0.35)  # packer at the packing table
+person2(11.3, 1.8, -2.4, kind="stand")                                      # in the QC booth
+person2(6.2, 16.2, math.pi / 2, kind="walk", coat="M_Workwear")             # walking along the racking
+person2(16.4, 17.0, 2.2, kind="stand", coat="M_Workwear", vest=True, hat="M_Toolbox")   # yard marshal
 
 # More planting south of the road (the site keeps going into the haze).
 rect(-8, 36, 30.6, 38, 0.006, "M_Grass")
@@ -697,9 +714,14 @@ def wheel(x, y, z, r, width, group, outward, dual=False):
     bmesh.ops.rotate(bm, cent=Vector((0, 0, 0)), matrix=Matrix.Rotation(math.pi / 2, 3, "X"), verts=bm.verts)
     bmesh.ops.translate(bm, vec=S(x, y, zr + outward * 0.04), verts=bm.verts)
     _obj("hub", bm, "M_Steel", group, 0.01)
+    for k in range(10):                                         # wheel nuts: a turning wheel reads
+        a = 2 * math.pi * k / 10
+        cyl(x + math.cos(a) * r * 0.32, min(zr, zr + outward * 0.04), max(zr, zr + outward * 0.04),
+            y + math.sin(a) * r * 0.32, 0.018, "M_Galv", group, seg=6, bevel=0, axis="z")
 
 
 TRAILER = dict(x0=14.4, x1=27.95, zc=13.5, w=1.275, deck=FLOOR, roof=3.9)
+TRUCK_WHEELS = []      # radius per «Truck_Wheel_<i>» (the app spins them with the truck's travel)
 
 
 def truck():
@@ -741,7 +763,7 @@ def truck():
         dz = 0.06 if k % 2 else 0.0
         box(x - 0.09, x + 0.09, deck + 0.05, roof - 0.17, zn - 0.08 + dz, zn + 0.02 + dz, "M_Curtain", g, bevel=0.035, segments=2)
         for y in (deck + 0.25, deck + 1.3):                                             # buckle straps
-            box(x - 0.1, x + 0.1, y, y + 0.05, zn - 0.09 + dz, zn + 0.03 + dz, "M_Chassis", g, bevel=0.005, segments=1)
+            box(x - 0.1, x + 0.1, y, y + 0.05, zn - 0.09 + dz, zn + 0.03 + dz, "M_Strap", g, bevel=0.005, segments=1)
     for zz in (zf, zn - 0.075):                                                         # rear posts + header
         box(x0, x0 + 0.08, deck - 0.3, roof, zz, zz + 0.075, "M_Chassis", g, bevel=0.01)
     box(x0, x0 + 0.08, roof - 0.22, roof, zf, zn, "M_Chassis", g, bevel=0.01)
@@ -751,7 +773,8 @@ def truck():
         box(x0 - 0.03, x0, 0.66, 0.8, zz, zz + 0.2, "M_TailLight", g, bevel=0.01)
     for ax in (16.2, 17.5, 18.8):
         for side in (-1, 1):
-            wheel(ax, 0.5, zc + side * 0.92, 0.5, 0.38, g, side)
+            wheel(ax, 0.5, zc + side * 0.92, 0.5, 0.38, f"Truck_Wheel_{len(TRUCK_WHEELS)}", side)
+            TRUCK_WHEELS.append(0.5)
         box(ax - 0.06, ax + 0.06, 0.45, 0.8, zc - 0.85, zc + 0.85, "M_Chassis", g, bevel=0.01)
     for side in (-1, 1):                                                                 # mudflaps, legs
         box(19.3, 19.33, 0.12, 0.95, zc + side * 0.95 - 0.25, zc + side * 0.95 + 0.25, "M_Rubber", g, bevel=0.005)
@@ -763,24 +786,9 @@ def truck():
     box(27.2, 28.2, 0.92, 1.06, zc - 0.55, zc + 0.55, "M_Chassis", g, bevel=0.03)        # fifth wheel
     for ax, dual in ((28.6, True), (31.1, False)):
         for side in (-1, 1):
-            wheel(ax, 0.52, zc + side * (0.78 if dual else 0.98), 0.52, 0.32, g, side, dual=dual)
-    box(29.9, 32.3, 0.95, 3.7, zc - 1.25, zc + 1.25, "M_TruckCab", g, bevel=0.14, segments=3)   # cab
-    box(29.9, 31.7, 3.7, 3.98, zc - 1.18, zc + 1.18, "M_TruckCab", g, bevel=0.12, segments=3)  # roof spoiler
-    box(32.27, 32.33, 2.2, 3.4, zc - 1.1, zc + 1.1, "M_Glass", g, bevel=0.02)                 # windscreen
-    for side in (-1, 1):
-        box(31.1, 32.15, 2.25, 3.35, zc + side * 1.25 - 0.03, zc + side * 1.25 + 0.03, "M_Glass", g, bevel=0.02)
-        zm = zc + side * 1.47                                                           # mirror + arm
-        box(31.95, 32.08, 2.45, 3.05, zm - 0.05, zm + 0.05, "M_Chassis", g, bevel=0.02)
-        box(31.98, 32.02, 2.88, 2.93, min(zc + side * 1.25, zm), max(zc + side * 1.25, zm), "M_Galv", g, bevel=0)
-        box(30.4, 31.2, 0.62, 0.95, zc + side * 1.2 - 0.12, zc + side * 1.2 + 0.12, "M_Chassis", g, bevel=0.03)   # steps
-        box(29.95, 30.3, 1.0, 3.6, zc + side * 1.25 - 0.02, zc + side * 1.25 + 0.02, "M_Chassis", g, bevel=0.01)   # handrail stripe
-    box(32.3, 32.36, 1.25, 2.05, zc - 0.85, zc + 0.85, "M_Grille", g, bevel=0.01)         # grille
-    for k in range(5):
-        y = 1.32 + k * 0.15
-        box(32.34, 32.38, y, y + 0.04, zc - 0.82, zc + 0.82, "M_Galv", g, bevel=0)
-    for side in (-1, 1):
-        box(32.3, 32.37, 1.12, 1.3, zc + side * 0.95 - 0.22, zc + side * 0.95 + 0.22, "M_Headlight", g, bevel=0.02)
-    box(32.25, 32.45, 0.7, 1.12, zc - 1.25, zc + 1.25, "M_Chassis", g, bevel=0.05)         # bumper
+            wheel(ax, 0.52, zc + side * (0.78 if dual else 0.98), 0.52, 0.32, f"Truck_Wheel_{len(TRUCK_WHEELS)}", side, dual=dual)
+            TRUCK_WHEELS.append(0.52)
+    tractor_cab(zc, g)
     bm = bmesh.new()                                                                     # fuel tank
     bmesh.ops.create_cone(bm, cap_ends=True, segments=20, radius1=0.28, radius2=0.28, depth=1.3)
     bmesh.ops.rotate(bm, cent=Vector((0, 0, 0)), matrix=Matrix.Rotation(math.pi / 2, 3, "Y"), verts=bm.verts)
@@ -844,8 +852,7 @@ def forklift_asset():
     return True
 
 
-if not forklift_asset():
-    forklift()
+forklift2()
 truck()
 # The demo batch: pallet + two packed crates (Swift moves and clones it).
 batch(0, 0, 0, group="Batch", layers=2)
@@ -878,7 +885,11 @@ body = realize("Forklift_Body", "Forklift_Body")
 carriage = realize("Forklift_Carriage", "Forklift_Carriage")
 truck_body = realize("Truck_Body", "Truck_Body")
 batch_ob = realize("Batch", "Batch")
-for ob in (static, body, carriage, truck_body, batch_ob):
+# Separately moving parts: the forklift's mast and wheels, the truck's wheels.
+PARTS = {g: realize(g, g) for g in sorted(GROUPS)
+         if (g.startswith("Forklift_") and g not in ("Forklift_Body", "Forklift_Carriage")) or g.startswith("Truck_Wheel_")}
+MOVERS = (body, carriage, truck_body, batch_ob) + tuple(PARTS.values())
+for ob in (static,) + MOVERS:
     me = ob.data
     if not me.uv_layers:
         me.uv_layers.new(name="UVMap")
@@ -1427,6 +1438,17 @@ if os.path.exists(hdr):
     shutil.copyfile(hdr, os.path.join(OUT, "factory_yard_1k.hdr"))
     USED_ASSETS.append("factory_yard")
 
+def set_origin(ob, p):
+    """Moves an object's origin (its pivot in the app) to scene point p, geometry unchanged."""
+    for o in scene.objects:
+        o.select_set(o == ob)
+    bpy.context.view_layer.objects.active = ob
+    keep = scene.cursor.location.copy()
+    scene.cursor.location = p
+    bpy.ops.object.origin_set(type="ORIGIN_CURSOR")
+    scene.cursor.location = keep
+
+
 root = bpy.data.objects.new("Forklift", None)
 scene.collection.objects.link(root)
 body.parent = root
@@ -1434,6 +1456,18 @@ carriage.parent = root
 truck_root = bpy.data.objects.new("Truck", None)
 scene.collection.objects.link(truck_root)
 truck_body.parent = truck_root
+for name, ob in PARTS.items():
+    if "Wheel" in name:                                       # spin (and steer) about the wheel centre
+        lo = Vector(map(min, *[ob.matrix_world @ v.co for v in ob.data.vertices]))
+        hi = Vector(map(max, *[ob.matrix_world @ v.co for v in ob.data.vertices]))
+        c = (lo + hi) / 2
+        if name.startswith("Forklift_"):                      # the hub sticks out: centre on the tyre
+            r = FRONT_R if "WheelF" in name else REAR_R
+            c.z = r
+        set_origin(ob, c)
+    elif name == "Forklift_Mast":
+        set_origin(ob, S(*MAST_PIVOT))
+    ob.parent = root if name.startswith("Forklift_") else truck_root
 
 # Lightmap UV + AO bake for the static scene only. Only architecture and ground get atlas space;
 # props, people and foliage still occlude (they are in the bake scene) but their own lightmap UVs
@@ -1520,6 +1554,26 @@ def apply_app_palette():
 # Fine, realistic surface variation instead of constant fills: albedo (the app's colour ×
 # subtle variation), roughness (the app's value ± variation) and normal maps per surface kind.
 # Tileable over one UV0 unit = 2 m (cube projection). Same files for SceneKit and RealityKit.
+# Scanned CC0 sets (ambientCG photogrammetry, tmp/insight-poc-source/<id>, manifests there):
+# material → (scan id, tiles per 2 m UV unit, albedo variation, roughness variation, keep hue).
+# Albedo = the scan normalised to the app's colour (its relative variation kept, scaled);
+# roughness = the scan's variation around the app's value; normal = the scan's (OpenGL).
+SCANS = {
+    "M_Floor": ("Concrete016", 1, 0.6, 0.35, False),
+    "M_Plinth": ("Concrete034", 2, 0.8, 0.4, False), "M_Slab": ("Concrete034", 2, 0.8, 0.4, False),
+    "M_Section": ("Concrete034", 2, 0.8, 0.4, False), "M_Curb": ("Concrete034", 2, 0.7, 0.4, False),
+    "M_Paving": ("Concrete016", 1, 0.8, 0.4, False),
+    "M_Steel": ("Metal027", 4, 0.25, 0.5, False), "M_Coping": ("Metal027", 4, 0.25, 0.5, False),
+    "M_Forklift": ("Metal027", 4, 0.2, 0.5, False), "M_TruckCab": ("Metal027", 4, 0.15, 0.4, False),
+    "M_RackUpright": ("Metal027", 4, 0.25, 0.5, False), "M_RackBeam": ("Metal027", 4, 0.25, 0.5, False),
+    "M_Bollard": ("Metal027", 4, 0.3, 0.5, False), "M_BoothFrame": ("Metal027", 4, 0.2, 0.4, False),
+    "M_Chassis": ("Metal027", 4, 0.3, 0.5, False), "M_Cabinet": ("Metal027", 4, 0.2, 0.5, False),
+    "M_PipeWater": ("Metal027", 4, 0.2, 0.5, False), "M_TrailerRoof": ("Metal027", 4, 0.2, 0.4, False),
+    "M_Galv": ("Metal040", 4, 0.8, 0.8, False), "M_Leveler": ("Metal040", 4, 0.8, 0.8, False),
+    "M_Frame": ("Metal011", 4, 0.6, 0.6, False), "M_Desk": ("Metal011", 4, 0.3, 0.5, False),
+    "M_Rubber": ("Rubber004", 3, 0.8, 0.6, False), "M_Mat": ("Rubber004", 3, 0.8, 0.6, False),
+    "M_Timber": ("Wood061", 2, 1.0, 0.6, True), "M_Carton": ("Cardboard002", 4, 1.0, 0.6, True),
+}
 SURFACE_KIND = {
     "M_Floor": "concrete_polished", "M_Plinth": "concrete", "M_Slab": "concrete", "M_Paving": "concrete",
     "M_Curb": "concrete", "M_Section": "concrete", "M_Panel": "panel_ribs", "M_Facade": "sheet_ribs_v",
@@ -1580,13 +1634,60 @@ def surface_textures(swift):
 
     specs = {n: (int(c, 16), float(r)) for n, c, r in
              re.findall(r'"(M_\w+)": Spec\(color: 0x([0-9A-Fa-f]{6}), rough: ([\d.]+)', swift)}
+    scan_cache = {}
+    used_concrete_scan = False
+
+    def scan_set(sid, tiles):
+        """A scanned set at N × N, tiled `tiles` times (seamless sets; non-square ones are
+        repeated to square first), as float arrays top-down: albedo (linear), roughness, normal."""
+        key = (sid, tiles)
+        if key in scan_cache:
+            return scan_cache[key]
+        out = {}
+        for kind, suffix in (("albedo", "Color"), ("rough", "Roughness"), ("nor", "NormalGL")):
+            img = bpy.data.images.load(os.path.join(SRC, sid, f"{sid}_1K-JPG_{suffix}.jpg"))
+            if kind != "albedo":
+                img.colorspace_settings.name = "Non-Color"
+            w, h = img.size
+            a = np.empty(w * h * 4, dtype=np.float32)
+            img.pixels.foreach_get(a)          # linear for the sRGB colour map
+            bpy.data.images.remove(img)
+            a = a.reshape(h, w, 4)[::-1, :, :3]
+            if h != w:                          # e.g. 1.10 × 0.55 m → stack to a square tile
+                rep = w // h if w > h else h // w
+                a = np.concatenate([a] * rep, axis=0 if w > h else 1)
+            a = np.tile(a, (tiles, tiles, 1))
+            step = a.shape[0] / N
+            idx = (np.arange(N) * step).astype(int)
+            out[kind] = a[idx][:, idx]
+        scan_cache[key] = out
+        USED_ASSETS.append(sid)
+        return out
+
     for name, kind in SURFACE_KIND.items():
         if name not in MATS or name not in specs:
             continue
         hexc, rough = specs[name]
         base = np.array([(hexc >> 16 & 255), (hexc >> 8 & 255), (hexc & 255)], np.float32) / 255
         av, rv, h, ns = np.zeros((N, N)), np.zeros((N, N)), np.zeros((N, N)), 0.0
-        if kind.startswith("concrete"):
+        scanned = None
+        if name in SCANS and os.path.exists(os.path.join(SRC, SCANS[name][0])):
+            sid, tiles, ka, kr, hue = SCANS[name]
+            sc = scan_set(sid, tiles)
+            lin = lambda c: c / 12.92 if c <= 0.04045 else ((c + 0.055) / 1.055) ** 2.4
+            target = np.array([lin(c) for c in base], np.float32)
+            alb = sc["albedo"]
+            if hue:                               # wood, cardboard: the scan's hue variation, app mean
+                rel = alb / np.maximum(alb.reshape(-1, 3).mean(0), 1e-4)
+            else:                                 # neutral relative luminance variation
+                L = alb @ np.array([0.2126, 0.7152, 0.0722], np.float32)
+                rel = np.repeat((L / max(float(L.mean()), 1e-4))[:, :, None], 3, 2)
+            rel = 1 + (rel - 1) * ka
+            alb_lin = np.clip(target[None, None, :] * rel, 0, 1)
+            enc = lambda x: np.where(x <= 0.0031308, x * 12.92, 1.055 * np.power(np.maximum(x, 0), 1 / 2.4) - 0.055)
+            scanned = (enc(alb_lin), np.clip(rough + (sc["rough"].mean(2) - sc["rough"].mean()) * kr, 0.04, 1.0), sc["nor"], sid)
+        if kind.startswith("concrete") and scanned is None:
+            used_concrete_scan = True
             av, rv = 0.07 * concrete_diff + 0.03 * fbm(1.4, 0.002, 0.05), 0.10 * concrete_rough
             nrm = concrete_nor
         else:
@@ -1612,6 +1713,9 @@ def surface_textures(swift):
         albedo = np.clip(base[None, None, :] * (1 + av[:, :, None]), 0, 1)
         rmap = np.clip(rough + rv, 0.04, 1.0)
         entry = {"asset": "generated", "kind": kind}
+        if scanned is not None:
+            albedo, rmap, nrm, sid = scanned
+            entry = {"asset": sid, "kind": "scan", "tiles_per_2m": SCANS[name][1]}
         for suffix, data in (("albedo", albedo), ("rough", np.repeat(rmap[:, :, None], 3, 2)), ("nor", nrm)):
             fname = f"gen_{name[2:].lower()}_{suffix}.jpg"
             img = bpy.data.images.new(fname, N, N, float_buffer=False, is_data=True)
@@ -1641,7 +1745,8 @@ def surface_textures(swift):
         nm = nt.nodes.new("ShaderNodeNormalMap")
         nt.links.new(t.outputs["Color"], nm.inputs["Color"])
         nt.links.new(nm.outputs["Normal"], b.inputs["Normal"])
-    USED_ASSETS.append("smooth_concrete_floor")
+    if used_concrete_scan:
+        USED_ASSETS.append("smooth_concrete_floor")
     print("SURFACES", len([k for k in MATERIAL_MAP if k.startswith("M_")]))
 
 
@@ -1830,7 +1935,7 @@ if BAKE:
     world = bpy.data.worlds.new("w")
     scene.world = world
     world.light_settings.distance = 2.5
-    for o in (body, carriage, truck_body, batch_ob):
+    for o in MOVERS:
         o.hide_render = True
     bake_only = place_instances()
     img = bpy.data.images.new("atelier_ao", SIZE, SIZE, float_buffer=False, is_data=True)
@@ -1859,7 +1964,7 @@ if BAKE:
         bpy.data.objects.remove(o, do_unlink=True)
     for ob in PROTOS.values():
         ob.hide_render = False
-    for o in (body, carriage, truck_body, batch_ob):
+    for o in MOVERS:
         o.hide_render = False
 
 # Geometry without lightmap texels (props, people, basins, lamps, glass) becomes «StaticProps»:
@@ -1965,6 +2070,15 @@ for asset in sorted(set(USED_ASSETS)):
             "use": "three basins on the basin inspection table, normalised to 540 mm, joined into atelier_kit.usdc",
         })
         continue
+    if m.get("page_url"):                    # ambientCG scans (manifest written at download)
+        shipped.append({
+            "asset": asset, "source": m["page_url"], "license": m.get("license"), "license_url": m.get("license_url"),
+            "authors": m.get("authors", []), "dimensions_note": m.get("dimensions_note"),
+            "source_files": [{"url": f.get("url"), "file": f.get("zip_member"), "sha256": f.get("sha256")} for f in m.get("files", [])],
+            "use": "scanned CC0 PBR set: albedo normalised to the app's colour, roughness re-centred, normal as scanned, "
+                   "tiled to its real size into textures/gen_*",
+        })
+        continue
     shipped.append({
         "asset": asset, "source": m.get("source"), "license": m.get("license"),
         "license_url": m.get("license_url"), "authors": sorted(meta.get("authors", {}).keys()),
@@ -1978,8 +2092,8 @@ json.dump({"generated_by": "ios/tools/insight_poc/build_atelier_kit.py", "assets
            "products": "Alda 160×70, Mona 170, Luce 170, Noemi 170, Sofia 150 — Salini catalogue USDZ "
                        "(CatalogMedia/models), loaded at runtime; Ninfea 02 basin in the kit"},
           open(os.path.join(OUT, "ASSETS.json"), "w"), indent=1, ensure_ascii=False)
-tris = sum(len(p.vertices) - 2 for o in (static, props_ob, body, carriage, truck_body, batch_ob) for p in o.data.polygons)
-for o in (static, props_ob, body, carriage, truck_body, batch_ob):
+tris = sum(len(p.vertices) - 2 for o in (static, props_ob) + MOVERS for p in o.data.polygons)
+for o in (static, props_ob) + MOVERS:
     print("PART", o.name, sum(len(p.vertices) - 2 for p in o.data.polygons))
 print("KIT", usd, "triangles", tris, "static materials", [s.material.name for s in static.material_slots])
 
@@ -2147,7 +2261,7 @@ def probe_panoramas(out_dir):
     Movers are hidden (they are dynamic); trees/shrubs and props are in. Radiance .hdr, linear."""
     import numpy as np
     place_instances()
-    for o in (body, carriage, truck_body, batch_ob):
+    for o in MOVERS:
         o.hide_render = True
     scene.render.engine = "CYCLES"
     prefs = bpy.context.preferences.addons["cycles"].preferences

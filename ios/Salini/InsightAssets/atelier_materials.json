@@ -49,53 +49,60 @@
    "tile": 2.0
   },
   "M_Bollard": {
-   "asset": "generated",
+   "asset": "Metal027",
    "base": "textures/gen_bollard_albedo.jpg",
-   "kind": "paint",
+   "kind": "scan",
    "normal": "textures/gen_bollard_nor.jpg",
-   "rough": "textures/gen_bollard_rough.jpg"
+   "rough": "textures/gen_bollard_rough.jpg",
+   "tiles_per_2m": 4
   },
   "M_BoothFrame": {
-   "asset": "generated",
+   "asset": "Metal027",
    "base": "textures/gen_boothframe_albedo.jpg",
-   "kind": "paint",
+   "kind": "scan",
    "normal": "textures/gen_boothframe_nor.jpg",
-   "rough": "textures/gen_boothframe_rough.jpg"
+   "rough": "textures/gen_boothframe_rough.jpg",
+   "tiles_per_2m": 4
   },
   "M_Cabinet": {
-   "asset": "generated",
+   "asset": "Metal027",
    "base": "textures/gen_cabinet_albedo.jpg",
-   "kind": "paint",
+   "kind": "scan",
    "normal": "textures/gen_cabinet_nor.jpg",
-   "rough": "textures/gen_cabinet_rough.jpg"
+   "rough": "textures/gen_cabinet_rough.jpg",
+   "tiles_per_2m": 4
   },
   "M_Carton": {
-   "asset": "generated",
+   "asset": "Cardboard002",
    "base": "textures/gen_carton_albedo.jpg",
-   "kind": "fibre",
+   "kind": "scan",
    "normal": "textures/gen_carton_nor.jpg",
-   "rough": "textures/gen_carton_rough.jpg"
+   "rough": "textures/gen_carton_rough.jpg",
+   "tiles_per_2m": 4
   },
   "M_Chassis": {
-   "asset": "generated",
+   "asset": "Metal027",
    "base": "textures/gen_chassis_albedo.jpg",
-   "kind": "paint",
+   "kind": "scan",
    "normal": "textures/gen_chassis_nor.jpg",
-   "rough": "textures/gen_chassis_rough.jpg"
+   "rough": "textures/gen_chassis_rough.jpg",
+   "tiles_per_2m": 4
   },
   "M_Coping": {
-   "asset": "generated",
+   "asset": "Metal027",
    "base": "textures/gen_coping_albedo.jpg",
-   "kind": "paint",
+   "kind": "scan",
    "normal": "textures/gen_coping_nor.jpg",
-   "rough": "textures/gen_coping_rough.jpg"
+   "rough": "textures/gen_coping_rough.jpg",
+   "tiles_per_2m": 4
   },
   "M_Curb": {
-   "asset": "generated",
+   "asset": "Concrete034",
    "base": "textures/gen_curb_albedo.jpg",
-   "kind": "concrete",
+   "kind": "scan",
    "normal": "textures/gen_curb_nor.jpg",
-   "rough": "textures/gen_curb_rough.jpg"
+   "rough": "textures/gen_curb_rough.jpg",
+   "tiles_per_2m": 2
   },
   "M_Curtain": {
    "asset": "generated",
@@ -105,11 +112,12 @@
    "rough": "textures/gen_curtain_rough.jpg"
   },
   "M_Desk": {
-   "asset": "generated",
+   "asset": "Metal011",
    "base": "textures/gen_desk_albedo.jpg",
-   "kind": "paint",
+   "kind": "scan",
    "normal": "textures/gen_desk_nor.jpg",
-   "rough": "textures/gen_desk_rough.jpg"
+   "rough": "textures/gen_desk_rough.jpg",
+   "tiles_per_2m": 4
   },
   "M_Facade": {
    "asset": "generated",
@@ -119,32 +127,36 @@
    "rough": "textures/gen_facade_rough.jpg"
   },
   "M_Floor": {
-   "asset": "generated",
+   "asset": "Concrete016",
    "base": "textures/gen_floor_albedo.jpg",
-   "kind": "concrete_polished",
+   "kind": "scan",
    "normal": "textures/gen_floor_nor.jpg",
-   "rough": "textures/gen_floor_rough.jpg"
+   "rough": "textures/gen_floor_rough.jpg",
+   "tiles_per_2m": 1
   },
   "M_Forklift": {
-   "asset": "generated",
+   "asset": "Metal027",
    "base": "textures/gen_forklift_albedo.jpg",
-   "kind": "paint",
+   "kind": "scan",
    "normal": "textures/gen_forklift_nor.jpg",
-   "rough": "textures/gen_forklift_rough.jpg"
+   "rough": "textures/gen_forklift_rough.jpg",
+   "tiles_per_2m": 4
   },
   "M_Frame": {
-   "asset": "generated",
+   "asset": "Metal011",
    "base": "textures/gen_frame_albedo.jpg",
-   "kind": "brushed",
+   "kind": "scan",
    "normal": "textures/gen_frame_nor.jpg",
-   "rough": "textures/gen_frame_rough.jpg"
+   "rough": "textures/gen_frame_rough.jpg",
+   "tiles_per_2m": 4
   },
   "M_Galv": {
-   "asset": "generated",
+   "asset": "Metal040",
    "base": "textures/gen_galv_albedo.jpg",
-   "kind": "brushed",
+   "kind": "scan",
    "normal": "textures/gen_galv_nor.jpg",
-   "rough": "textures/gen_galv_rough.jpg"
+   "rough": "textures/gen_galv_rough.jpg",
+   "tiles_per_2m": 4
   },
   "M_Grass": {
    "asset": "generated",
@@ -154,11 +166,12 @@
    "rough": "textures/gen_grass_rough.jpg"
   },
   "M_Leveler": {
-   "asset": "generated",
+   "asset": "Metal040",
    "base": "textures/gen_leveler_albedo.jpg",
-   "kind": "brushed",
+   "kind": "scan",
    "normal": "textures/gen_leveler_nor.jpg",
-   "rough": "textures/gen_leveler_rough.jpg"
+   "rough": "textures/gen_leveler_rough.jpg",
+   "tiles_per_2m": 4
   },
   "M_LineWhite": {
    "asset": "generated",
@@ -175,11 +188,12 @@
    "rough": "textures/gen_lineyellow_rough.jpg"
   },
   "M_Mat": {
-   "asset": "generated",
+   "asset": "Rubber004",
    "base": "textures/gen_mat_albedo.jpg",
-   "kind": "rubber",
+   "kind": "scan",
    "normal": "textures/gen_mat_nor.jpg",
-   "rough": "textures/gen_mat_rough.jpg"
+   "rough": "textures/gen_mat_rough.jpg",
+   "tiles_per_2m": 3
   },
   "M_Panel": {
    "asset": "generated",
@@ -189,39 +203,44 @@
    "rough": "textures/gen_panel_rough.jpg"
   },
   "M_Paving": {
-   "asset": "generated",
+   "asset": "Concrete016",
    "base": "textures/gen_paving_albedo.jpg",
-   "kind": "concrete",
+   "kind": "scan",
    "normal": "textures/gen_paving_nor.jpg",
-   "rough": "textures/gen_paving_rough.jpg"
+   "rough": "textures/gen_paving_rough.jpg",
+   "tiles_per_2m": 1
   },
   "M_PipeWater": {
-   "asset": "generated",
+   "asset": "Metal027",
    "base": "textures/gen_pipewater_albedo.jpg",
-   "kind": "paint",
+   "kind": "scan",
    "normal": "textures/gen_pipewater_nor.jpg",
-   "rough": "textures/gen_pipewater_rough.jpg"
+   "rough": "textures/gen_pipewater_rough.jpg",
+   "tiles_per_2m": 4
   },
   "M_Plinth": {
-   "asset": "generated",
+   "asset": "Concrete034",
    "base": "textures/gen_plinth_albedo.jpg",
-   "kind": "concrete",
+   "kind": "scan",
    "normal": "textures/gen_plinth_nor.jpg",
-   "rough": "textures/gen_plinth_rough.jpg"
+   "rough": "textures/gen_plinth_rough.jpg",
+   "tiles_per_2m": 2
   },
   "M_RackBeam": {
-   "asset": "generated",
+   "asset": "Metal027",
    "base": "textures/gen_rackbeam_albedo.jpg",
-   "kind": "paint",
+   "kind": "scan",
    "normal": "textures/gen_rackbeam_nor.jpg",
-   "rough": "textures/gen_rackbeam_rough.jpg"
+   "rough": "textures/gen_rackbeam_rough.jpg",
+   "tiles_per_2m": 4
   },
   "M_RackUpright": {
-   "asset": "generated",
+   "asset": "Metal027",
    "base": "textures/gen_rackupright_albedo.jpg",
-   "kind": "paint",
+   "kind": "scan",
    "normal": "textures/gen_rackupright_nor.jpg",
-   "rough": "textures/gen_rackupright_rough.jpg"
+   "rough": "textures/gen_rackupright_rough.jpg",
+   "tiles_per_2m": 4
   },
   "M_Roof": {
    "asset": "generated",
@@ -231,39 +250,44 @@
    "rough": "textures/gen_roof_rough.jpg"
   },
   "M_Rubber": {
-   "asset": "generated",
+   "asset": "Rubber004",
    "base": "textures/gen_rubber_albedo.jpg",
-   "kind": "rubber",
+   "kind": "scan",
    "normal": "textures/gen_rubber_nor.jpg",
-   "rough": "textures/gen_rubber_rough.jpg"
+   "rough": "textures/gen_rubber_rough.jpg",
+   "tiles_per_2m": 3
   },
   "M_Section": {
-   "asset": "generated",
+   "asset": "Concrete034",
    "base": "textures/gen_section_albedo.jpg",
-   "kind": "concrete",
+   "kind": "scan",
    "normal": "textures/gen_section_nor.jpg",
-   "rough": "textures/gen_section_rough.jpg"
+   "rough": "textures/gen_section_rough.jpg",
+   "tiles_per_2m": 2
   },
   "M_Slab": {
-   "asset": "generated",
+   "asset": "Concrete034",
    "base": "textures/gen_slab_albedo.jpg",
-   "kind": "concrete",
+   "kind": "scan",
    "normal": "textures/gen_slab_nor.jpg",
-   "rough": "textures/gen_slab_rough.jpg"
+   "rough": "textures/gen_slab_rough.jpg",
+   "tiles_per_2m": 2
   },
   "M_Steel": {
-   "asset": "generated",
+   "asset": "Metal027",
    "base": "textures/gen_steel_albedo.jpg",
-   "kind": "paint",
+   "kind": "scan",
    "normal": "textures/gen_steel_nor.jpg",
-   "rough": "textures/gen_steel_rough.jpg"
+   "rough": "textures/gen_steel_rough.jpg",
+   "tiles_per_2m": 4
   },
   "M_Timber": {
-   "asset": "generated",
+   "asset": "Wood061",
    "base": "textures/gen_timber_albedo.jpg",
-   "kind": "timber",
+   "kind": "scan",
    "normal": "textures/gen_timber_nor.jpg",
-   "rough": "textures/gen_timber_rough.jpg"
+   "rough": "textures/gen_timber_rough.jpg",
+   "tiles_per_2m": 2
   },
   "M_Trailer": {
    "asset": "generated",
@@ -273,18 +297,20 @@
    "rough": "textures/gen_trailer_rough.jpg"
   },
   "M_TrailerRoof": {
-   "asset": "generated",
+   "asset": "Metal027",
    "base": "textures/gen_trailerroof_albedo.jpg",
-   "kind": "paint",
+   "kind": "scan",
    "normal": "textures/gen_trailerroof_nor.jpg",
-   "rough": "textures/gen_trailerroof_rough.jpg"
+   "rough": "textures/gen_trailerroof_rough.jpg",
+   "tiles_per_2m": 4
   },
   "M_TruckCab": {
-   "asset": "generated",
+   "asset": "Metal027",
    "base": "textures/gen_truckcab_albedo.jpg",
-   "kind": "paint",
+   "kind": "scan",
    "normal": "textures/gen_truckcab_nor.jpg",
-   "rough": "textures/gen_truckcab_rough.jpg"
+   "rough": "textures/gen_truckcab_rough.jpg",
+   "tiles_per_2m": 4
   },
   "concrete_road_barrier": {
    "arm": "textures/concrete_road_barrier_arm.jpg",
@@ -425,7 +451,14 @@
   }
  },
  "sources": [
-  "car-factory-production-line-seated-forklift-driver-5efd32f9",
+  "Cardboard002",
+  "Concrete016",
+  "Concrete034",
+  "Metal011",
+  "Metal027",
+  "Metal040",
+  "Rubber004",
+  "Wood061",
   "clean_asphalt",
   "concrete_road_barrier",
   "exterior_aircon_unit",
@@ -433,7 +466,6 @@
   "hand_truck",
   "modular_airduct_rectangular_01",
   "overhead_crane",
-  "parcel-depot-and-sorting-hall-parcel-depot-and-sorting-528c9054",
   "plastic_crate_01",
   "power_box_01",
   "salini-ninfea-02",
@@ -441,7 +473,6 @@
   "shrub_02",
   "shrub_03",
   "shrub_04",
-  "smooth_concrete_floor",
   "steel_frame_shelves_01",
   "tree_small_02",
   "wooden_crate_01"

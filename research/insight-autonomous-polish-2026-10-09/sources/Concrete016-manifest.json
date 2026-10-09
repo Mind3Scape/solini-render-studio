@@ -1,0 +1,46 @@
+{
+  "asset": "Concrete016",
+  "source": "ambientcg",
+  "page_url": "https://ambientcg.com/a/Concrete016",
+  "license": "CC0-1.0",
+  "license_url": "https://docs.ambientcg.com/license/",
+  "authors": [
+    "ambientCG (Lennart Demes)"
+  ],
+  "creation_method": "Height field photogrammetry",
+  "dimensions_m": null,
+  "dimensions_note": "est. ~2.0 x 2.0 m (ambientCG publishes no dimensions; cloud mottling suggests floor-scale capture)",
+  "archive": {
+    "url": "https://ambientcg.com/get?file=Concrete016_1K-JPG.zip",
+    "size": 7177049,
+    "size_verified": true,
+    "sha256": "ec312de0cfa5ce8d97f5319a58551a8240dab1d9c3f045de54579796664aadc3",
+    "md5": "not published by ambientCG API",
+    "deleted_after_extract": true
+  },
+  "files": [
+    {
+      "url": "https://ambientcg.com/get?file=Concrete016_1K-JPG.zip",
+      "zip_member": "Concrete016_1K-JPG_Color.jpg",
+      "path": "tmp/insight-poc-source/Concrete016/Concrete016_1K-JPG_Color.jpg",
+      "sha256": "8c874515553c3cd1078911db8a73a8d3faefc862729ab6d2fd79d65aefc4d9c2",
+      "size": 578904
+    },
+    {
+      "url": "https://ambientcg.com/get?file=Concrete016_1K-JPG.zip",
+      "zip_member": "Concrete016_1K-JPG_NormalGL.jpg",
+      "path": "tmp/insight-poc-source/Concrete016/Concrete016_1K-JPG_NormalGL.jpg",
+      "sha256": "9c4f4097806a0f7117404a00f4e6ddfb4ee94589d7949e6cbe54d5e421356a9c",
+      "size": 2032757
+    },
+    {
+      "url": "https://ambientcg.com/get?file=Concrete016_1K-JPG.zip",
+      "zip_member": "Concrete016_1K-JPG_Roughness.jpg",
+      "path": "tmp/insight-poc-source/Concrete016/Concrete016_1K-JPG_Roughness.jpg",
+      "sha256": "e9a22435de41aff7b122f1b086bab39ea8442eb583e0b22537c8eff7433fb6ea",
+      "size": 608151
+    }
+  ],
+  "target": "polished_concrete_floor",
+  "notes": "Chosen as a clean, neutral grey alternative. The existing Poly Haven smooth_concrete_floor albedo is actually brown/rust-toned (mean ~#553c29) with scratches, so this is much closer to a premium light-grey factory floor. Pinholes are tiny; can be brightened/tinted in shader."
+}

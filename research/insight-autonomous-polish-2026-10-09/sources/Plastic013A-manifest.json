@@ -1,0 +1,46 @@
+{
+  "asset": "Plastic013A",
+  "source": "ambientcg",
+  "page_url": "https://ambientcg.com/a/Plastic013A",
+  "license": "CC0-1.0",
+  "license_url": "https://docs.ambientcg.com/license/",
+  "authors": [
+    "ambientCG (Lennart Demes)"
+  ],
+  "creation_method": "Height field photogrammetry",
+  "dimensions_m": null,
+  "dimensions_note": "est. ~0.5 x 0.5 m (no published dimensions)",
+  "archive": {
+    "url": "https://ambientcg.com/get?file=Plastic013A_1K-JPG.zip",
+    "size": 6300537,
+    "size_verified": true,
+    "sha256": "2bf612fa6fe5556930196865beb55cefb833b83bd0bc3db1db7188074fb41260",
+    "md5": "not published by ambientCG API",
+    "deleted_after_extract": true
+  },
+  "files": [
+    {
+      "url": "https://ambientcg.com/get?file=Plastic013A_1K-JPG.zip",
+      "zip_member": "Plastic013A_1K-JPG_Color.jpg",
+      "path": "tmp/insight-poc-source/Plastic013A/Plastic013A_1K-JPG_Color.jpg",
+      "sha256": "d6a768442a9e4f3eb48e29fb4a1b9a24d1c981f88e752b298e9f48b2326c95ce",
+      "size": 391120
+    },
+    {
+      "url": "https://ambientcg.com/get?file=Plastic013A_1K-JPG.zip",
+      "zip_member": "Plastic013A_1K-JPG_NormalGL.jpg",
+      "path": "tmp/insight-poc-source/Plastic013A/Plastic013A_1K-JPG_NormalGL.jpg",
+      "sha256": "95a71f9d06f46a349f187ab8ced8cdc09319964c16023a82281839f5b1f6d3f4",
+      "size": 1609471
+    },
+    {
+      "url": "https://ambientcg.com/get?file=Plastic013A_1K-JPG.zip",
+      "zip_member": "Plastic013A_1K-JPG_Roughness.jpg",
+      "path": "tmp/insight-poc-source/Plastic013A/Plastic013A_1K-JPG_Roughness.jpg",
+      "sha256": "2e1713c864352c21e39337c733273b145cdabbf459ab085a207c0486462eb960",
+      "size": 584881
+    }
+  ],
+  "target": "white_plastic",
+  "notes": "Clean neutral white plastic (Plastic010 is greyer with micro-scratches, 013B scratched). Usable for white plastic parts and, with low roughness/translucency tweaks, stretch-wrap."
+}
