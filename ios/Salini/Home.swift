@@ -2,7 +2,7 @@ import UIKit
 
 final class HomeController: ScrollController, UIScrollViewDelegate {
   private var gallery: CollectionGallery?
-  private var materials: MaterialFeatureView?
+  private var materials: EssenceFeatureView?
   private var materialChoice: StudioFinish?
   private var designerWorkspace: DesignerWorkspace?
   private var visible = false
@@ -32,13 +32,16 @@ final class HomeController: ScrollController, UIScrollViewDelegate {
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
     visible = false
-    materials?.sceneView.active = false
+    materials?.active = false
     gallery?.active = false
   }
   func scrollViewDidScroll(_ scrollView: UIScrollView) { updateMaterialPlayback() }
   private func updateMaterialPlayback() {
-    if let scene = materials?.sceneView {
-      scene.active = visible && scene.convert(scene.bounds, to: scroll).intersects(scroll.bounds)
+    if let materials {
+      let rect = materials.convert(materials.animationBounds, to: scroll)
+      let intersection = rect.intersection(scroll.bounds)
+      let play = visible && !intersection.isNull && intersection.height > 64
+      if materials.active != play { materials.active = play }
     }
     if let gallery {
       let rect = gallery.convert(gallery.bounds, to: scroll)
@@ -52,16 +55,17 @@ final class HomeController: ScrollController, UIScrollViewDelegate {
     MaterialStudioController.present(form: form, finish: finish, from: self)
   }
   private func materialFeature() {
-    let feature = MaterialFeatureView { [weak self] form, finish in self?.openMaterials(form, finish) }
+    let feature = EssenceFeatureView { [weak self] form, finish in self?.openMaterials(form, finish) }
+    feature.active = false
     if let materialChoice { feature.select(materialChoice, animated: false) }
     feature.accessibilityIdentifier = "material.feature"
     materials = feature
-    // One large editorial block: its own heading, one hero render, real executions only.
+    // The animation has its own reserved overflow; it starts when the artwork enters view.
     section(feature, top: 26, bottom: 28, inset: 20)
   }
   private func render() {
     materialChoice = materials?.finish ?? materialChoice
-    materials?.sceneView.active = false
+    materials?.active = false
     gallery?.active = false
     content.arrangedSubviews.forEach { $0.removeFromSuperview() }
     let role = DemoStore.shared.role
