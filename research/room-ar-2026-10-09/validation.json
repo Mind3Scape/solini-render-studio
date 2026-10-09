@@ -19,7 +19,8 @@
       "evidence/ar-entry-simulator.png",
       "evidence/studio-room-entry.png"
     ],
-    "build": "Debug build succeeded; full integrated suite and Release pending"
+    "build": "Integrated Debug build succeeded. Release and final Essence integration pending.",
+    "integrated_suite": "141 tests, 0 failures, 251.569 seconds: AR + Insight merged, before Essence integration"
   },
   "limitations": [
     "No connected iPhone or iPad. Real camera permission sheet, surface scanning, anchor stability, drag/rotate tracking and lighting in a physical room cannot be certified in the simulator.",

@@ -250,8 +250,11 @@ final class RoomPlacementController: UIViewController, ARSessionDelegate, ARSCNV
     return config
   }
   private func startSession(reset: Bool) {
-    guard visible, UIApplication.shared.applicationState == .active,
-      AVCaptureDevice.authorizationStatus(for: .video) == .authorized else { return }
+    guard visible, AVCaptureDevice.authorizationStatus(for: .video) == .authorized else { return }
+    guard UIApplication.shared.applicationState == .active else {
+      renderStage(.interrupted)
+      return
+    }
     if sceneView == nil {
       let ar = ARSCNView(frame: view.bounds)
       ar.autoresizingMask = [.flexibleWidth, .flexibleHeight]
