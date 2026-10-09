@@ -1,0 +1,53 @@
+{
+  "asset": "Metal040",
+  "source": "ambientcg",
+  "page_url": "https://ambientcg.com/a/Metal040",
+  "license": "CC0-1.0",
+  "license_url": "https://docs.ambientcg.com/license/",
+  "authors": [
+    "ambientCG (Lennart Demes)"
+  ],
+  "creation_method": "Height field photogrammetry",
+  "dimensions_m": null,
+  "dimensions_note": "est. ~0.5 x 0.5 m (no published dimensions; spangle crystals ~1 cm)",
+  "archive": {
+    "url": "https://ambientcg.com/get?file=Metal040_1K-JPG.zip",
+    "size": 5924085,
+    "size_verified": true,
+    "sha256": "40b04ad7e95144d19f7e63a780a4b4e5ffc587885560d7a6c8bb961dd3458b58",
+    "md5": "not published by ambientCG API",
+    "deleted_after_extract": true
+  },
+  "files": [
+    {
+      "url": "https://ambientcg.com/get?file=Metal040_1K-JPG.zip",
+      "zip_member": "Metal040_1K-JPG_Color.jpg",
+      "path": "tmp/insight-poc-source/Metal040/Metal040_1K-JPG_Color.jpg",
+      "sha256": "54610404baed6b8deb8f8bf21f5ea0e8604cec6602f6a213055b7f39568de3ef",
+      "size": 951815
+    },
+    {
+      "url": "https://ambientcg.com/get?file=Metal040_1K-JPG.zip",
+      "zip_member": "Metal040_1K-JPG_Metalness.jpg",
+      "path": "tmp/insight-poc-source/Metal040/Metal040_1K-JPG_Metalness.jpg",
+      "sha256": "4730d63928f08e81c952975b194895c6dc11a57b38751aa39bd45b0bc3f54468",
+      "size": 4354
+    },
+    {
+      "url": "https://ambientcg.com/get?file=Metal040_1K-JPG.zip",
+      "zip_member": "Metal040_1K-JPG_NormalGL.jpg",
+      "path": "tmp/insight-poc-source/Metal040/Metal040_1K-JPG_NormalGL.jpg",
+      "sha256": "56ba9664444880222bf08f88e0aa82f89b9401ac3b37262b4fe66cc3b2d0fa64",
+      "size": 1349713
+    },
+    {
+      "url": "https://ambientcg.com/get?file=Metal040_1K-JPG.zip",
+      "zip_member": "Metal040_1K-JPG_Roughness.jpg",
+      "path": "tmp/insight-poc-source/Metal040/Metal040_1K-JPG_Roughness.jpg",
+      "sha256": "f896773bfb135b0b51d2382483d4631cd9203716fe7ffacde6cf057ae718910b",
+      "size": 311940
+    }
+  ],
+  "target": "galvanized_steel",
+  "notes": "The only genuine galvanized spangle scan found (no Poly Haven/ambientCG asset tagged galvanized/zinc). Albedo is somewhat dark and slightly green; brighten/desaturate a little in the material for fresh galvanizing."
+}

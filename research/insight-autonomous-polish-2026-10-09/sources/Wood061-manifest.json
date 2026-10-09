@@ -1,0 +1,53 @@
+{
+  "asset": "Wood061",
+  "source": "ambientcg",
+  "page_url": "https://ambientcg.com/a/Wood061",
+  "license": "CC0-1.0",
+  "license_url": "https://docs.ambientcg.com/license/",
+  "authors": [
+    "ambientCG (Lennart Demes)"
+  ],
+  "creation_method": "Height field photogrammetry",
+  "dimensions_m": null,
+  "dimensions_note": "est. ~1.0 x 1.0 m (no published dimensions; grain runs horizontally)",
+  "archive": {
+    "url": "https://ambientcg.com/get?file=Wood061_1K-JPG.zip",
+    "size": 10688989,
+    "size_verified": true,
+    "sha256": "7dd9edc97d36f2cdb12fd698751e8f2705194c32bba2caa337da0e5506a6549c",
+    "md5": "not published by ambientCG API",
+    "deleted_after_extract": true
+  },
+  "files": [
+    {
+      "url": "https://ambientcg.com/get?file=Wood061_1K-JPG.zip",
+      "zip_member": "Wood061_1K-JPG_AmbientOcclusion.jpg",
+      "path": "tmp/insight-poc-source/Wood061/Wood061_1K-JPG_AmbientOcclusion.jpg",
+      "sha256": "b383db0f64ab62eae98da82ac29135b92671fa9b609856ce1db8d0b29d0c8380",
+      "size": 701029
+    },
+    {
+      "url": "https://ambientcg.com/get?file=Wood061_1K-JPG.zip",
+      "zip_member": "Wood061_1K-JPG_Color.jpg",
+      "path": "tmp/insight-poc-source/Wood061/Wood061_1K-JPG_Color.jpg",
+      "sha256": "0de1dc854fb175041f3f91067c88e8ff2ae1c7cfa2ff7e26105b1b2ba4ef2046",
+      "size": 1900618
+    },
+    {
+      "url": "https://ambientcg.com/get?file=Wood061_1K-JPG.zip",
+      "zip_member": "Wood061_1K-JPG_NormalGL.jpg",
+      "path": "tmp/insight-poc-source/Wood061/Wood061_1K-JPG_NormalGL.jpg",
+      "sha256": "31a36d5bb4058a07b70336b747f556514cb26821f084cfc4da522656ac0a8cd5",
+      "size": 2507124
+    },
+    {
+      "url": "https://ambientcg.com/get?file=Wood061_1K-JPG.zip",
+      "zip_member": "Wood061_1K-JPG_Roughness.jpg",
+      "path": "tmp/insight-poc-source/Wood061/Wood061_1K-JPG_Roughness.jpg",
+      "sha256": "0e8524d244bf364c08507bd604953a02c4ac5a59a8c12abaf287d7591f2f19b2",
+      "size": 784399
+    }
+  ],
+  "target": "pallet_wood",
+  "notes": "Closest to fresh sawn pallet timber: light, raw, unplaned. Plank alternatives (Planks016 etc.) are weathered grey with nails. Includes AO map. Slightly warm/pink; may desaturate toward pine yellow."
+}

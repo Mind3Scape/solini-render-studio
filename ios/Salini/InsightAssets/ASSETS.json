@@ -2,22 +2,248 @@
  "generated_by": "ios/tools/insight_poc/build_atelier_kit.py",
  "assets": [
   {
-   "asset": "car-factory-production-line-seated-forklift-driver-5efd32f9",
-   "title": "Seated Forklift Driver (Car Factory Production Line)",
-   "source": "https://3dassets.dev/assets/car-factory-production-line-seated-forklift-driver-5efd32f9",
+   "asset": "Cardboard002",
+   "source": "https://ambientcg.com/a/Cardboard002",
    "license": "CC0-1.0",
-   "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+   "license_url": "https://docs.ambientcg.com/license/",
    "authors": [
-    "3D Assets"
+    "ambientCG (Lennart Demes)"
    ],
-   "ai_generated": true,
+   "dimensions_note": "est. ~0.5 x 0.5 m (no published dimensions; fine vertical liner/flute lines)",
    "source_files": [
     {
-     "url": "https://cdn.3dassets.dev/assets/27863/v1/model.glb",
-     "sha256": "ba8df58c05a7c97a5e27a21f235291c77913cd565d64085f5fad2db8fc700332"
+     "url": "https://ambientcg.com/get?file=Cardboard002_1K-JPG.zip",
+     "file": "Cardboard002_1K-JPG_Color.jpg",
+     "sha256": "94443ec58d123a5bb99a54ae21beb53ce6a70247f52035688678625a31cbddde"
+    },
+    {
+     "url": "https://ambientcg.com/get?file=Cardboard002_1K-JPG.zip",
+     "file": "Cardboard002_1K-JPG_NormalGL.jpg",
+     "sha256": "29e8ff279deac531a5ca793fdde60fe1da36367eaca82fcab6832448d6a14f5a"
+    },
+    {
+     "url": "https://ambientcg.com/get?file=Cardboard002_1K-JPG.zip",
+     "file": "Cardboard002_1K-JPG_Roughness.jpg",
+     "sha256": "39ead79d0e19ec7470a6bf95dc69e268ddc4079160763db423d93ca9a1fae90e"
     }
    ],
-   "use": "bevelled and recoloured into the forklift (Forklift_Body / Forklift_Carriage)"
+   "use": "scanned CC0 PBR set: albedo normalised to the app's colour, roughness re-centred, normal as scanned, tiled to its real size into textures/gen_*"
+  },
+  {
+   "asset": "Concrete016",
+   "source": "https://ambientcg.com/a/Concrete016",
+   "license": "CC0-1.0",
+   "license_url": "https://docs.ambientcg.com/license/",
+   "authors": [
+    "ambientCG (Lennart Demes)"
+   ],
+   "dimensions_note": "est. ~2.0 x 2.0 m (ambientCG publishes no dimensions; cloud mottling suggests floor-scale capture)",
+   "source_files": [
+    {
+     "url": "https://ambientcg.com/get?file=Concrete016_1K-JPG.zip",
+     "file": "Concrete016_1K-JPG_Color.jpg",
+     "sha256": "8c874515553c3cd1078911db8a73a8d3faefc862729ab6d2fd79d65aefc4d9c2"
+    },
+    {
+     "url": "https://ambientcg.com/get?file=Concrete016_1K-JPG.zip",
+     "file": "Concrete016_1K-JPG_NormalGL.jpg",
+     "sha256": "9c4f4097806a0f7117404a00f4e6ddfb4ee94589d7949e6cbe54d5e421356a9c"
+    },
+    {
+     "url": "https://ambientcg.com/get?file=Concrete016_1K-JPG.zip",
+     "file": "Concrete016_1K-JPG_Roughness.jpg",
+     "sha256": "e9a22435de41aff7b122f1b086bab39ea8442eb583e0b22537c8eff7433fb6ea"
+    }
+   ],
+   "use": "scanned CC0 PBR set: albedo normalised to the app's colour, roughness re-centred, normal as scanned, tiled to its real size into textures/gen_*"
+  },
+  {
+   "asset": "Concrete034",
+   "source": "https://ambientcg.com/a/Concrete034",
+   "license": "CC0-1.0",
+   "license_url": "https://docs.ambientcg.com/license/",
+   "authors": [
+    "ambientCG (Lennart Demes)"
+   ],
+   "dimensions_note": "Published by ambientCG API (dimensionX/dimensionY in cm).",
+   "source_files": [
+    {
+     "url": "https://ambientcg.com/get?file=Concrete034_1K-JPG.zip",
+     "file": "Concrete034_1K-JPG_Color.jpg",
+     "sha256": "8ceb9186d990b31fce785e06fdc6974c160f1d27c43f6160266f164deba713aa"
+    },
+    {
+     "url": "https://ambientcg.com/get?file=Concrete034_1K-JPG.zip",
+     "file": "Concrete034_1K-JPG_NormalGL.jpg",
+     "sha256": "e509eb9dfa978e780fbebfd2acacc2ce158b5b7ced722ddc0759039dd51e18ca"
+    },
+    {
+     "url": "https://ambientcg.com/get?file=Concrete034_1K-JPG.zip",
+     "file": "Concrete034_1K-JPG_Roughness.jpg",
+     "sha256": "a4a9e39857a19afd23a778e5abf44fcdf6bd7f93918f1cf6878b41933e553511"
+    }
+   ],
+   "use": "scanned CC0 PBR set: albedo normalised to the app's colour, roughness re-centred, normal as scanned, tiled to its real size into textures/gen_*"
+  },
+  {
+   "asset": "Metal011",
+   "source": "https://ambientcg.com/a/Metal011",
+   "license": "CC0-1.0",
+   "license_url": "https://docs.ambientcg.com/license/",
+   "authors": [
+    "ambientCG (Lennart Demes)"
+   ],
+   "dimensions_note": "est. ~0.5 x 0.5 m (no published dimensions)",
+   "source_files": [
+    {
+     "url": "https://ambientcg.com/get?file=Metal011_1K-JPG.zip",
+     "file": "Metal011_1K-JPG_Color.jpg",
+     "sha256": "8e7823f54208e8765e4ceaf9221ccc475710cb80e6dfe39c89bca3ea9023aa6f"
+    },
+    {
+     "url": "https://ambientcg.com/get?file=Metal011_1K-JPG.zip",
+     "file": "Metal011_1K-JPG_Metalness.jpg",
+     "sha256": "843102638fa0a5bf897888868877efab8ccdc4cb84a48e57bdb52bfb30f5e714"
+    },
+    {
+     "url": "https://ambientcg.com/get?file=Metal011_1K-JPG.zip",
+     "file": "Metal011_1K-JPG_NormalGL.jpg",
+     "sha256": "e9f4e6eae2c860538f1fdd0ed88d06b606deb13e0a342a392c914130bc138249"
+    },
+    {
+     "url": "https://ambientcg.com/get?file=Metal011_1K-JPG.zip",
+     "file": "Metal011_1K-JPG_Roughness.jpg",
+     "sha256": "14e89c4d658bb67e1eca246bc404c37ea06a227aa7a877730d4d28827cb7fa7b"
+    }
+   ],
+   "use": "scanned CC0 PBR set: albedo normalised to the app's colour, roughness re-centred, normal as scanned, tiled to its real size into textures/gen_*"
+  },
+  {
+   "asset": "Metal027",
+   "source": "https://ambientcg.com/a/Metal027",
+   "license": "CC0-1.0",
+   "license_url": "https://docs.ambientcg.com/license/",
+   "authors": [
+    "ambientCG (Lennart Demes)"
+   ],
+   "dimensions_note": "est. ~0.5 x 0.5 m (no published dimensions; fine powder texture)",
+   "source_files": [
+    {
+     "url": "https://ambientcg.com/get?file=Metal027_1K-JPG.zip",
+     "file": "Metal027_1K-JPG_Color.jpg",
+     "sha256": "8e2e69e767b2692da211723ccb7def5f27b9c7712c6952bc45c526e2a5183ae0"
+    },
+    {
+     "url": "https://ambientcg.com/get?file=Metal027_1K-JPG.zip",
+     "file": "Metal027_1K-JPG_Metalness.jpg",
+     "sha256": "843102638fa0a5bf897888868877efab8ccdc4cb84a48e57bdb52bfb30f5e714"
+    },
+    {
+     "url": "https://ambientcg.com/get?file=Metal027_1K-JPG.zip",
+     "file": "Metal027_1K-JPG_NormalGL.jpg",
+     "sha256": "afbf8ca3df45111ac5543174582b6b98cb1bf154f7c7ee8f198720042b92d7c8"
+    },
+    {
+     "url": "https://ambientcg.com/get?file=Metal027_1K-JPG.zip",
+     "file": "Metal027_1K-JPG_Roughness.jpg",
+     "sha256": "8f01484981a8bf83199d4f4cb435a344294cd80cb4ee623cf8567a7726fb289e"
+    }
+   ],
+   "use": "scanned CC0 PBR set: albedo normalised to the app's colour, roughness re-centred, normal as scanned, tiled to its real size into textures/gen_*"
+  },
+  {
+   "asset": "Metal040",
+   "source": "https://ambientcg.com/a/Metal040",
+   "license": "CC0-1.0",
+   "license_url": "https://docs.ambientcg.com/license/",
+   "authors": [
+    "ambientCG (Lennart Demes)"
+   ],
+   "dimensions_note": "est. ~0.5 x 0.5 m (no published dimensions; spangle crystals ~1 cm)",
+   "source_files": [
+    {
+     "url": "https://ambientcg.com/get?file=Metal040_1K-JPG.zip",
+     "file": "Metal040_1K-JPG_Color.jpg",
+     "sha256": "54610404baed6b8deb8f8bf21f5ea0e8604cec6602f6a213055b7f39568de3ef"
+    },
+    {
+     "url": "https://ambientcg.com/get?file=Metal040_1K-JPG.zip",
+     "file": "Metal040_1K-JPG_Metalness.jpg",
+     "sha256": "4730d63928f08e81c952975b194895c6dc11a57b38751aa39bd45b0bc3f54468"
+    },
+    {
+     "url": "https://ambientcg.com/get?file=Metal040_1K-JPG.zip",
+     "file": "Metal040_1K-JPG_NormalGL.jpg",
+     "sha256": "56ba9664444880222bf08f88e0aa82f89b9401ac3b37262b4fe66cc3b2d0fa64"
+    },
+    {
+     "url": "https://ambientcg.com/get?file=Metal040_1K-JPG.zip",
+     "file": "Metal040_1K-JPG_Roughness.jpg",
+     "sha256": "f896773bfb135b0b51d2382483d4631cd9203716fe7ffacde6cf057ae718910b"
+    }
+   ],
+   "use": "scanned CC0 PBR set: albedo normalised to the app's colour, roughness re-centred, normal as scanned, tiled to its real size into textures/gen_*"
+  },
+  {
+   "asset": "Rubber004",
+   "source": "https://ambientcg.com/a/Rubber004",
+   "license": "CC0-1.0",
+   "license_url": "https://docs.ambientcg.com/license/",
+   "authors": [
+    "ambientCG (Lennart Demes)"
+   ],
+   "dimensions_note": "Published by ambientCG API (dimensionX/dimensionY in cm).",
+   "source_files": [
+    {
+     "url": "https://ambientcg.com/get?file=Rubber004_1K-JPG.zip",
+     "file": "Rubber004_1K-JPG_Color.jpg",
+     "sha256": "95f9182e8564db9a8c6510cd0c9e0656beec0e5a0212cc177e2abf8eb03820b9"
+    },
+    {
+     "url": "https://ambientcg.com/get?file=Rubber004_1K-JPG.zip",
+     "file": "Rubber004_1K-JPG_NormalGL.jpg",
+     "sha256": "a22ee35f51fa7bd971f703e8309b533420f965337c989f5e2cdfe1c822892d47"
+    },
+    {
+     "url": "https://ambientcg.com/get?file=Rubber004_1K-JPG.zip",
+     "file": "Rubber004_1K-JPG_Roughness.jpg",
+     "sha256": "fd8171577db5a593e981ebd3fe487515aea9d20be28e1a6d2cd1e5475eb13e69"
+    }
+   ],
+   "use": "scanned CC0 PBR set: albedo normalised to the app's colour, roughness re-centred, normal as scanned, tiled to its real size into textures/gen_*"
+  },
+  {
+   "asset": "Wood061",
+   "source": "https://ambientcg.com/a/Wood061",
+   "license": "CC0-1.0",
+   "license_url": "https://docs.ambientcg.com/license/",
+   "authors": [
+    "ambientCG (Lennart Demes)"
+   ],
+   "dimensions_note": "est. ~1.0 x 1.0 m (no published dimensions; grain runs horizontally)",
+   "source_files": [
+    {
+     "url": "https://ambientcg.com/get?file=Wood061_1K-JPG.zip",
+     "file": "Wood061_1K-JPG_AmbientOcclusion.jpg",
+     "sha256": "b383db0f64ab62eae98da82ac29135b92671fa9b609856ce1db8d0b29d0c8380"
+    },
+    {
+     "url": "https://ambientcg.com/get?file=Wood061_1K-JPG.zip",
+     "file": "Wood061_1K-JPG_Color.jpg",
+     "sha256": "0de1dc854fb175041f3f91067c88e8ff2ae1c7cfa2ff7e26105b1b2ba4ef2046"
+    },
+    {
+     "url": "https://ambientcg.com/get?file=Wood061_1K-JPG.zip",
+     "file": "Wood061_1K-JPG_NormalGL.jpg",
+     "sha256": "31a36d5bb4058a07b70336b747f556514cb26821f084cfc4da522656ac0a8cd5"
+    },
+    {
+     "url": "https://ambientcg.com/get?file=Wood061_1K-JPG.zip",
+     "file": "Wood061_1K-JPG_Roughness.jpg",
+     "sha256": "0e8524d244bf364c08507bd604953a02c4ac5a59a8c12abaf287d7591f2f19b2"
+    }
+   ],
+   "use": "scanned CC0 PBR set: albedo normalised to the app's colour, roughness re-centred, normal as scanned, tiled to its real size into textures/gen_*"
   },
   {
    "asset": "clean_asphalt",
@@ -276,24 +502,6 @@
    "use": "decimated geometry joined into atelier_kit.usdc; textures resized into textures/"
   },
   {
-   "asset": "parcel-depot-and-sorting-hall-parcel-depot-and-sorting-528c9054",
-   "title": "Counterbalance forklift with raising forks (Parcel Depot and Sorting Hall)",
-   "source": "https://3dassets.dev/assets/parcel-depot-and-sorting-hall-parcel-depot-and-sorting-528c9054",
-   "license": "CC0-1.0",
-   "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
-   "authors": [
-    "3D Assets"
-   ],
-   "ai_generated": true,
-   "source_files": [
-    {
-     "url": "https://cdn.3dassets.dev/assets/34814/v1/model.glb",
-     "sha256": "42aa755487dd5b166a16bf570168161d26906532bd8f061f458c50a23c4add32"
-    }
-   ],
-   "use": "bevelled and recoloured into the forklift (Forklift_Body / Forklift_Carriage)"
-  },
-  {
    "asset": "plastic_crate_01",
    "source": "https://polyhaven.com/a/plastic_crate_01",
    "license": "CC0-1.0",
@@ -444,28 +652,6 @@
    "authors": [],
    "source_files": [],
    "use": "decimated geometry joined into atelier_kit.usdc; textures resized into textures/"
-  },
-  {
-   "asset": "smooth_concrete_floor",
-   "source": "https://polyhaven.com/a/smooth_concrete_floor",
-   "license": "CC0-1.0",
-   "license_url": "https://polyhaven.com/license",
-   "authors": [],
-   "source_files": [
-    {
-     "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/smooth_concrete_floor/smooth_concrete_floor_nor_gl_1k.jpg",
-     "sha256": "588bdbcc16b8dfa2869a2c154c076a419abb8ed83284691c2dffdddfcf20cc0c"
-    },
-    {
-     "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/smooth_concrete_floor/smooth_concrete_floor_diff_1k.jpg",
-     "sha256": "079587ae48fb3e2bfb0d0f9209eb75dc26ee30e213403d96377a30f6f6955092"
-    },
-    {
-     "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/smooth_concrete_floor/smooth_concrete_floor_rough_1k.jpg",
-     "sha256": "89082ede1efd3a60fd600a49e381a5822c89ee3bf75456ad883b3057190042a5"
-    }
-   ],
-   "use": "tiled ground material"
   },
   {
    "asset": "steel_frame_shelves_01",

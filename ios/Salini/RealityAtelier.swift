@@ -33,6 +33,8 @@ final class RealityAtelierController: UIViewController, UIGestureRecognizerDeleg
   private var lighting: AtelierLighting = .day
   private var selected: AtelierSubject?
   private var demoTime: Double = 0
+  /// QA (`-shipping-atelier-speed`): slow-motion inspection of the handling.
+  private var speed: Double = 1
   private var paused = false
   private var panStart: SIMD3<Float>?
   private var pinchStart: Float = 0
@@ -89,7 +91,7 @@ final class RealityAtelierController: UIViewController, UIGestureRecognizerDeleg
     paused = UIAccessibility.isReduceMotionEnabled
     if let i = args.firstIndex(of: "-shipping-atelier-time"), i + 1 < args.count, let t = Double(args[i + 1]) {
       demoTime = t
-      paused = true
+      paused = !args.contains("-shipping-atelier-play")
     }
     if let i = args.firstIndex(of: "-reality-exposure"), i + 1 < args.count, let e = Float(args[i + 1]) {
       RealityAtelierScene.exposure = e
@@ -141,7 +143,34 @@ final class RealityAtelierController: UIViewController, UIGestureRecognizerDeleg
     }
   }
 
+  /// `-reality-perf`: load time and frame pacing (SceneEvents.Update intervals, the CPU time of
+  /// the per-frame pose) written to tmp/reality-perf.json after 60 s. Simulator numbers are
+  /// host-GPU numbers, not device FPS.
+  private var perf: (start: CFTimeInterval, loaded: Double, frames: [Double], apply: [Double])?
+  private func recordPerf(dt: Double, apply: Double) {
+    guard var p = perf else { return }
+    p.frames.append(dt)
+    p.apply.append(apply)
+    perf = p
+    guard p.frames.count >= 3600 || CACurrentMediaTime() - p.start > 75 else { return }
+    perf = nil
+    let f = p.frames.dropFirst(30).sorted(), a = p.apply.sorted()
+    func q(_ v: [Double], _ x: Double) -> Double { v.isEmpty ? 0 : v[min(v.count - 1, Int(Double(v.count) * x))] }
+    let report: [String: Any] = [
+      "load_seconds": p.loaded, "frames": f.count, "mean_frame_ms": f.reduce(0, +) / Double(max(1, f.count)) * 1000,
+      "p50_frame_ms": q(f, 0.5) * 1000, "p95_frame_ms": q(f, 0.95) * 1000, "p99_frame_ms": q(f, 0.99) * 1000,
+      "max_frame_ms": (f.last ?? 0) * 1000, "frames_over_25ms": f.filter { $0 > 0.025 }.count,
+      "apply_p50_ms": q(a, 0.5) * 1000, "apply_p99_ms": q(a, 0.99) * 1000,
+      "device": UIDevice.current.model, "system": UIDevice.current.systemVersion,
+      "simulator": ProcessInfo.processInfo.environment["SIMULATOR_DEVICE_NAME"] ?? "no",
+    ]
+    if let data = try? JSONSerialization.data(withJSONObject: report, options: [.prettyPrinted, .sortedKeys]) {
+      try? data.write(to: FileManager.default.temporaryDirectory.appendingPathComponent("reality-perf.json"))
+    }
+  }
+
   private func load() async {
+    let loadStart = CACurrentMediaTime()
     guard let folder = Bundle.main.url(forResource: "InsightAssets", withExtension: nil) else {
       cardTitle.text = "Ресурсы участка не найдены"
       return
@@ -160,6 +189,27 @@ final class RealityAtelierController: UIViewController, UIGestureRecognizerDeleg
       view.layoutIfNeeded()
       follow(.batch, animated: false)
       if args.contains("-shipping-atelier-night") { setLighting(.night) }
+      // QA: a reproducible camera — a zone (manual view) or a selected, followed subject.
+      if let i = args.firstIndex(of: "-reality-select"), i + 1 < args.count {
+        let subject: AtelierSubject? = ["batch": .batch, "forklift": .forklift, "truck": .truck][args[i + 1]]
+        if let subject { follow(subject, animated: false) }
+      }
+      if let i = args.firstIndex(of: "-reality-scale"), i + 1 < args.count, let v = Float(args[i + 1]) {
+        followScale = nil
+        scene.scale = v
+      }
+      if let i = args.firstIndex(of: "-reality-azimuth"), i + 1 < args.count, let v = Float(args[i + 1]) {
+        scene.azimuth = v
+      }
+      if let i = args.firstIndex(of: "-shipping-atelier-speed"), i + 1 < args.count, let v = Double(args[i + 1]) {
+        speed = max(0.05, min(4, v))
+      }
+      if let i = args.firstIndex(of: "-reality-zone"), i + 1 < args.count,
+        let zone = RealityAtelierScene.Zone(rawValue: args[i + 1])
+      {
+        show(zone, animated: false)
+      }
+      if args.contains("-reality-perf") { perf = (CACurrentMediaTime(), CACurrentMediaTime() - loadStart, [], []) }
       if args.contains("-reality-diagnostics") { makeDiagnostics(scene) }
       if view.window != nil { resume() }
       updateCard()
@@ -174,9 +224,11 @@ final class RealityAtelierController: UIViewController, UIGestureRecognizerDeleg
     if skipNextStep {
       skipNextStep = false
     } else if !paused {
-      demoTime += min(dt, 0.1)
+      demoTime += min(dt, 0.1) * speed
     }
+    let t0 = CACurrentMediaTime()
     scene.apply(scene.timeline.pose(at: demoTime))
+    if perf != nil { recordPerf(dt: dt, apply: CACurrentMediaTime() - t0) }
     track(scene, dt: Float(min(dt, 0.1)))
     updateCut(scene)
     let now = CACurrentMediaTime()

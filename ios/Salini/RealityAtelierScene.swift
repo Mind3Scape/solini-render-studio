@@ -67,7 +67,17 @@ final class RealityAtelierScene {
   // Movers (posed by `apply`).
   let forklift = Entity()
   private var carriage: Entity?
-  private var carriageBase: Float = 0
+  /// Model-local rest transforms (relative to `forklift` / `truck`): carriage, mast, wheels.
+  private var carriageRest = matrix_identity_float4x4
+  private var mast: Entity?
+  private var mastRest = matrix_identity_float4x4
+  private var forkWheels: [(entity: Entity, rest: simd_float4x4, radius: Float, steers: Bool)] = []
+  private var truckWheels: [(entity: Entity, rest: simd_float4x4, radius: Float)] = []
+  /// Soft contact shadows (movers are not in the bake): under the forklift, the current batch
+  /// (stays on the floor while it is carried, lighter with height), the loaded batches, the truck.
+  private var contact: (batch: Entity?, loaded: [Entity]) = (nil, [])
+  /// Mast tilt pivot in the forklift's frame (= MAST_PIVOT in the kit script).
+  static let mastPivot = SIMD3<Float>(-0.17, 0.30, 0)
   let batch = Entity()
   private(set) var loaded: [Entity] = []
   private(set) var truck: Entity?
@@ -95,7 +105,7 @@ final class RealityAtelierScene {
   static let fieldOfView: Float = 9
 
   /// Tone mapper exposure (EV) and the sun; tuned on the harness and iPhone screenshots.
-  static var exposure: Float = -1.5
+  static var exposure: Float = -1.25
   /// Night exposure relative to the day (SceneKit: +0.9 EV for the same night bake).
   static var nightExposureOffset: Float = 1.0
   static var sunLumens: Float = 1.2e8
@@ -174,7 +184,14 @@ final class RealityAtelierScene {
       root.addChild(forklift)
       forklift.addChild(fork, preservingWorldTransform: true)
       carriage = fork.findEntity(named: "Forklift_Carriage")
-      carriageBase = carriage?.position.y ?? 0
+      carriageRest = carriage?.transformMatrix(relativeTo: forklift) ?? matrix_identity_float4x4
+      mast = fork.findEntity(named: "Forklift_Mast")
+      mastRest = mast?.transformMatrix(relativeTo: forklift) ?? matrix_identity_float4x4
+      for (name, steers) in [("FL", false), ("FR", false), ("RL", true), ("RR", true)] {
+        guard let w = fork.findEntity(named: "Forklift_Wheel" + name) else { continue }
+        let b = w.visualBounds(relativeTo: forklift)
+        forkWheels.append((w, w.transformMatrix(relativeTo: forklift), b.extents.y / 2, steers))
+      }
       insideModels.append(forklift)
       insideUnbaked.append(forklift)
     }
@@ -204,11 +221,15 @@ final class RealityAtelierScene {
       truck = t
       t.name = "Truck"
       truckBase = t.position
+      for k in 0..<16 {
+        guard let w = t.findEntity(named: "Truck_Wheel_\(k)") else { continue }
+        truckWheels.append((w, w.transformMatrix(relativeTo: t), w.visualBounds(relativeTo: t).extents.y / 2))
+      }
       outsideModels.append(t)
       t.visit { e in
         guard let m = e.components[ModelComponent.self] else { return }
         for (i, material) in m.materials.enumerated() {
-          if let p = material as? PhysicallyBasedMaterial, ["M_TrailerRoof", "M_Curtain", "M_Trailer"].contains(p.name ?? "") {
+          if let p = material as? PhysicallyBasedMaterial, ["M_TrailerRoof", "M_Curtain", "M_Trailer", "M_Strap"].contains(p.name ?? "") {
             roofParts.append((e, i, p))
           }
         }
@@ -216,6 +237,23 @@ final class RealityAtelierScene {
     }
     for e in [forklift, batch, truck].compactMap({ $0 }) + loaded {
       e.generateCollisionShapes(recursive: true)
+    }
+    if let s = Self.contactShadow(width: 1.5, length: 2.7, strength: 0.55) {
+      s.position = SIMD3(-0.75, 0.006, 0)
+      forklift.addChild(s)
+    }
+    if let s = Self.contactShadow(width: 1.95, length: 1.15, strength: 0.6) {
+      root.addChild(s)
+      contact.batch = s
+    }
+    contact.loaded = loaded.compactMap { _ in
+      guard let s = Self.contactShadow(width: 1.95, length: 1.15, strength: 0.5) else { return nil }
+      root.addChild(s)
+      return s
+    }
+    if let truck, let s = Self.contactShadow(width: 2.9, length: 18.6, strength: 0.45) {
+      s.setPosition(SIMD3(layout.truck.x + 2.2, 0.008, layout.truck.z), relativeTo: root)
+      truck.addChild(s, preservingWorldTransform: true)
     }
     // Selection outline: a thin amber frame on the ground (scaled to the subject).
     var amber = UnlitMaterial(color: atelierHex(0xF2AC3D))
@@ -611,17 +649,32 @@ final class RealityAtelierScene {
     let floor = layout.floor
     forklift.position = SIMD3(p.forklift.x, floor, p.forklift.y)
     forklift.orientation = simd_quatf(angle: p.heading, axis: [0, 1, 0])
-    carriage?.position.y = carriageBase + p.fork
+    // Mast tilt about its pivot; the carriage (and a carried load) lift along the tilted mast.
+    let tilt = Self.about(Self.mastPivot, simd_quatf(angle: p.tilt, axis: [0, 0, 1]))
+    let lift = Self.translation([0, p.fork, 0])
+    mast?.setTransformMatrix(tilt * mastRest, relativeTo: forklift)
+    carriage?.setTransformMatrix(tilt * lift * carriageRest, relativeTo: forklift)
+    for w in forkWheels {
+      // Rolling about the axle (front-axle odometer; the rear wheels' longer arc in a turn is
+      // within a few per cent), the rear (steer) wheels also turn about the vertical.
+      let spin = simd_quatf(angle: -p.odometer / max(w.radius, 0.05), axis: [0, 0, 1])
+      let steer = simd_quatf(angle: w.steers ? p.steer : 0, axis: [0, 1, 0])
+      let c = SIMD3(w.rest.columns.3.x, w.rest.columns.3.y, w.rest.columns.3.z)
+      w.entity.setTransformMatrix(Self.about(c, steer * spin) * w.rest, relativeTo: forklift)
+    }
     switch p.batch {
     case .pickup(let opacity):
       batch.position = SIMD3(layout.pickup.x, floor, layout.pickup.y)
       batch.orientation = simd_quatf(angle: 0, axis: [0, 1, 0])
       batch.components.set(OpacityComponent(opacity: opacity))
     case .forks:
-      let fwd = SIMD3<Float>(cos(p.heading), 0, -sin(p.heading))
-      batch.position = SIMD3(p.forklift.x, floor, p.forklift.y) + fwd * AtelierTimeline.forkReach
-        + SIMD3(0, AtelierTimeline.lift(p.fork), 0)
-      batch.orientation = simd_quatf(angle: p.heading - .pi, axis: [0, 1, 0])
+      // Rigidly on the forks: the carriage's own transform chain (tilt · lift) with the pallet
+      // resting on the blades; it stands on the floor/deck once the forks are below its pockets.
+      let rest = Self.translation([AtelierTimeline.forkReach, -AtelierTimeline.emptyFork, 0])
+        * simd_float4x4(simd_quatf(angle: -.pi, axis: [0, 1, 0]))
+      var m = forklift.transformMatrix(relativeTo: root) * tilt * lift * rest
+      m.columns.3.y = max(m.columns.3.y, floor)
+      batch.setTransformMatrix(m, relativeTo: root)
       batch.components.set(OpacityComponent(opacity: 1))
     case .slot(let k):
       batch.position = SIMD3(layout.slots[k] + p.truckOffset, floor, layout.dockZ)
@@ -632,6 +685,30 @@ final class RealityAtelierScene {
       e.isEnabled = k < p.loaded
       e.position = SIMD3(layout.slots[k] + p.truckOffset, floor, layout.dockZ)
       e.components.set(OpacityComponent(opacity: p.truckOpacity))
+      if k < contact.loaded.count {
+        contact.loaded[k].isEnabled = e.isEnabled
+        contact.loaded[k].position = SIMD3(e.position.x, floor + 0.004, e.position.z)
+        contact.loaded[k].components.set(OpacityComponent(opacity: p.truckOpacity))
+      }
+    }
+    if let s = contact.batch {
+      // On the floor under the batch; lighter and wider as it rises.
+      let h = max(0, batch.position.y - floor)
+      s.position = SIMD3(batch.position.x, floor + 0.004, batch.position.z)
+      s.orientation = batch.orientation
+      s.scale = SIMD3(repeating: 1 + h * 0.6)
+      var o: Float = 1 / (1 + h * 4)
+      switch p.batch {
+      case .pickup(let a): o *= a
+      case .slot: o *= p.truckOpacity
+      case .forks: break
+      }
+      s.components.set(OpacityComponent(opacity: o))
+    }
+    for w in truckWheels {
+      let c = SIMD3(w.rest.columns.3.x, w.rest.columns.3.y, w.rest.columns.3.z)
+      let spin = simd_quatf(angle: -p.truckOffset / max(w.radius, 0.1), axis: [0, 0, 1])
+      w.entity.setTransformMatrix(Self.about(c, spin) * w.rest, relativeTo: truck)
     }
     if let truck {
       truck.position = truckBase + SIMD3(p.truckOffset, 0, 0)
@@ -639,6 +716,44 @@ final class RealityAtelierScene {
       truck.isEnabled = p.truckOpacity > 0.01
     }
     if let selected { placeSelection(selected) }
+  }
+
+  /// A soft rectangular contact shadow on the ground (unlit, alpha falloff, casts no shadow).
+  static func contactShadow(width: Float, length: Float, strength: Float) -> Entity? {
+    let n = 64
+    var px = [UInt8](repeating: 0, count: n * n * 4)
+    for y in 0..<n {
+      for x in 0..<n {
+        let u = abs((Float(x) + 0.5) / Float(n) * 2 - 1), v = abs((Float(y) + 0.5) / Float(n) * 2 - 1)
+        // Rounded-rectangle falloff: solid in the middle, smooth edge over the outer 45 %.
+        let d = pow(pow(max(0, (u - 0.55) / 0.45), 3) + pow(max(0, (v - 0.55) / 0.45), 3), 1 / 3.0)
+        let a = Float(strength) * pow(max(0, 1 - d), 1.6)
+        px[(y * n + x) * 4 + 3] = UInt8(min(255, a * 255))
+      }
+    }
+    guard let provider = CGDataProvider(data: Data(px) as CFData),
+      let image = CGImage(width: n, height: n, bitsPerComponent: 8, bitsPerPixel: 32, bytesPerRow: n * 4,
+                          space: CGColorSpaceCreateDeviceRGB(), bitmapInfo: CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedLast.rawValue),
+                          provider: provider, decode: nil, shouldInterpolate: true, intent: .defaultIntent),
+      let texture = try? TextureResource(image: image, options: .init(semantic: .color))
+    else { return nil }
+    var m = UnlitMaterial()
+    m.color = .init(tint: .white, texture: .init(texture))
+    m.blending = .transparent(opacity: .init(floatLiteral: 1))
+    let e = ModelEntity(mesh: .generatePlane(width: length, depth: width), materials: [m])
+    e.name = "ContactShadow"
+    e.components.set(DynamicLightShadowComponent(castsShadow: false))
+    return e
+  }
+
+  static func translation(_ v: SIMD3<Float>) -> simd_float4x4 {
+    var m = matrix_identity_float4x4
+    m.columns.3 = SIMD4(v, 1)
+    return m
+  }
+  /// A rotation about a point.
+  static func about(_ c: SIMD3<Float>, _ q: simd_quatf) -> simd_float4x4 {
+    translation(c) * simd_float4x4(q) * translation(-c)
   }
 
   // MARK: Selection
@@ -682,7 +797,7 @@ final class RealityAtelierScene {
   // MARK: Section cut
 
   private var roofParts: [(Entity, Int, PhysicallyBasedMaterial)] = []
-  /// The trailer body — roof sheet, walls and the drawn-back curtain — is shown as a faint ghost
+  /// The trailer body — roof sheet, walls and the drawn-back curtain with its straps — is shown as a faint ghost
   /// (bows, rails, posts, straps and the deck stay) so the followed batch inside the trailer is
   /// visible; the UI marks it «Разрез». Measured at t = 34 (slot 0 behind the curtain and the
   /// front wall): 31 visible batch pixels with the body, 20 646 with the cut (585×1266 frame).

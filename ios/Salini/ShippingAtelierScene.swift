@@ -155,6 +155,12 @@ struct AtelierPose: Equatable {
   var truck: AtelierTruckState
   var truckOffset: Float
   var truckOpacity: Float
+  /// Rear-wheel steering angle (rad), mast tilt back (rad), front-axle odometer (m, signed) and
+  /// signed speed (m/s) — wheels, mast and the carried load follow these.
+  var steer: Float = 0
+  var tilt: Float = 0
+  var odometer: Float = 0
+  var speed: Float = 0
   /// Batches standing in the truck right now (earlier ones plus this cycle's once placed).
   var inTruck: Int {
     if case .slot = batch { return loaded + 1 }
@@ -166,79 +172,175 @@ struct AtelierPose: Equatable {
 /// The deterministic demonstration: one cycle is a function of time, so the scene, the status
 /// card and the tests always agree, and pausing or speeding up never desynchronises them.
 struct AtelierTimeline {
-  static let period: Double = 48
+  // Vehicle and load geometry (the kit's forklift and batch; checked against the loaded meshes).
   static let forkReach: Float = 0.55
   /// Fork height with a batch (clears the floor, the dock lip and the trailer deck) and empty.
   static let carry: Float = 0.32
   static let emptyFork: Float = 0.05
-  /// Forklift envelope from the fork heel (the kit's compact forklift at 0.85 scale, collapsed mast).
-  static let bodyBack: Float = 1.75
+  /// Forklift envelope from the fork heel.
+  static let bodyBack: Float = 2.0
   static let forkLength: Float = 0.98
   static let halfWidth: Float = 0.68
   static let height: Float = 2.46
+  /// Front (drive) axle behind the fork heel, and the wheelbase to the rear (steer) axle.
+  static let frontAxle: Float = 0.45
+  static let wheelbase: Float = 1.25
+  /// Mast tilt back while carrying (rad): the load rests against the backrest.
+  static let carryTilt: Float = 0.05
   /// The batch: pallet 1.0 × 1.8 m with two crates.
   static let batchSize = SIMD3<Float>(1.0, 1.48, 1.8)
-  let layout: AtelierLayout
 
-  private struct Key {
-    var t: Double
-    var x: Float
-    var z: Float
-    var heading: Float
-    var fork: Float
+  /// Route shape: the waiting point behind the pickup (m), how far west of it the forklift
+  /// reverses out of the trailer (m, negative = west) and how far the two U-turns swing out.
+  static var route: (home: Float, reverseTo: Float, turnOut: Float, turnHome: Float) = (2.0, -1.0, 3.0, 2.2)
+
+  /// One cycle, in seconds. Phases (fixed windows; each drive's physical speed profile is fitted
+  /// into its window — see `drives` for the natural durations).
+  static let period: Double = 68
+  enum Phase {
+    static let approach: ClosedRange<Double> = 1.5...6.7
+    static let lift: ClosedRange<Double> = 6.7...9.3
+    static let backOut: ClosedRange<Double> = 9.8...13.4
+    static let toDock: ClosedRange<Double> = 13.9...37.9
+    static let lower: ClosedRange<Double> = 37.9...40.5
+    static let reverseOut: ClosedRange<Double> = 41.1...57.3
+    static let home: ClosedRange<Double> = 57.9...67.8
   }
 
-  private func keys(slot: Int) -> [Key] {
-    let p = layout.pickup
-    let z = layout.dockZ
-    let reach = Self.forkReach
-    let home = SIMD2<Float>(p.x + reach + 2.4, p.y)
-    let aisle = home.x + 0.15
-    let slotX = layout.slots[min(max(slot, 0), layout.slots.count - 1)]
-    let west = Float.pi, south = -Float.pi / 2, east: Float = 0, north = Float.pi / 2
-    let c = Self.carry
-    let e0 = Self.emptyFork
-    return [
-      Key(t: 0, x: home.x, z: home.y, heading: west, fork: e0),
-      Key(t: 4, x: home.x, z: home.y, heading: west, fork: e0),
-      Key(t: 8, x: p.x + reach, z: p.y, heading: west, fork: e0),
-      Key(t: 10, x: p.x + reach, z: p.y, heading: west, fork: c),
-      Key(t: 13.5, x: aisle, z: p.y, heading: west, fork: c),
-      Key(t: 15.5, x: aisle, z: p.y + 0.5, heading: south, fork: c),
-      Key(t: 19, x: aisle, z: z - 0.4, heading: south, fork: c),
-      Key(t: 21, x: aisle + 0.5, z: z, heading: east, fork: c),
-      Key(t: 24, x: layout.dockX - 0.4, z: z, heading: east, fork: c),
-      Key(t: 31, x: slotX - reach, z: z, heading: east, fork: c),
-      Key(t: 32.6, x: slotX - reach, z: z, heading: east, fork: 0),
-      Key(t: 33.4, x: slotX - reach, z: z, heading: east, fork: 0),
-      Key(t: 40, x: layout.dockX - 1.4, z: z, heading: east, fork: e0),
-      Key(t: 42, x: layout.dockX - 1.9, z: z - 0.5, heading: north, fork: e0),
-      Key(t: 45.5, x: aisle + 0.3, z: p.y + 0.4, heading: north * 1.5, fork: e0),
-      Key(t: 48, x: home.x, z: home.y, heading: west, fork: e0),
-    ]
+  let layout: AtelierLayout
+  let drives: [AtelierDrive]
+  /// Odometer (front axle) at the start of each drive.
+  private let odometerBase: [Float]
+  /// When the forklift's fork tips have left the trailer on the way out (the full truck may go).
+  let clearOfTrailer: Double
+
+  init(layout: AtelierLayout) {
+    self.layout = layout
+    let py = layout.pickup.y, z = layout.dockZ
+    let west = SIMD2<Float>(-1, 0), east = SIMD2<Float>(1, 0)
+    let a = Self.frontAxle, reach = Self.forkReach
+    // Heel positions → front-axle points (behind the heel along the heading).
+    let homeHeel = SIMD2(layout.pickup.x + reach + Self.route.home, py)
+    let pickHeel = SIMD2(layout.pickup.x + reach, py)
+    let backHeel = SIMD2(layout.pickup.x + reach + 2.1, py)
+    let homeAxle = homeHeel - west * a, pickAxle = pickHeel - west * a, backAxle = backHeel - west * a
+    func slotAxle(_ k: Int) -> SIMD2<Float> { SIMD2(layout.slots[k] - reach, z) - east * a }
+    let turnStart = backAxle, turnEnd = SIMD2(backAxle.x, z)
+    let u = Self.route.turnOut, w = Self.route.turnHome
+    let outAxle = SIMD2(homeAxle.x + Self.route.reverseTo, z)
+    let dock = layout.dockX - 1.0
+    var list: [AtelierDrive] = []
+    // 0 approach: forwards west to the pallet, creeping while the forks slide in.
+    let approach = AtelierPath([.line(homeAxle, pickAxle)])
+    list.append(AtelierDrive(approach, from: Phase.approach.lowerBound, to: Phase.approach.upperBound, cruise: 1.2,
+                             zones: [.init(range: (approach.length - 0.8)...approach.length, speed: 0.3)], align: .end))
+    // 1 back out with the load, straight.
+    list.append(AtelierDrive(AtelierPath([.line(pickAxle, backAxle)]), reverse: true,
+                             from: Phase.backOut.lowerBound, to: Phase.backOut.upperBound, cruise: 1.0, align: .start))
+    // 2…5 to the dock (one per slot): a U-turn to the east, through the dock, slow in the trailer.
+    for k in 0..<layout.slots.count {
+      let target = slotAxle(k)
+      let path = AtelierPath([AtelierPath.turn(turnStart, west, turnEnd, east, reach: u), .line(turnEnd, target)])
+      let inside = max(0, path.length - (target.x - dock))
+      list.append(AtelierDrive(path, from: Phase.toDock.lowerBound, to: Phase.toDock.upperBound, cruise: 2.0,
+                               zones: [.init(range: inside...path.length, speed: 1.2),
+                                       .init(range: max(0, path.length - 0.6)...path.length, speed: 0.25)], align: .end))
+    }
+    // 6…9 reverse out of the trailer (forks first slide out of the pallet slowly).
+    for k in 0..<layout.slots.count {
+      let path = AtelierPath([.line(slotAxle(k), outAxle)])
+      let inside = slotAxle(k).x - dock
+      list.append(AtelierDrive(path, reverse: true, from: Phase.reverseOut.lowerBound, to: Phase.reverseOut.upperBound,
+                               cruise: 1.8, zones: [.init(range: 0...0.9, speed: 0.3), .init(range: 0...max(0.9, inside), speed: 1.3)],
+                               align: .start))
+    }
+    // 10 home: a U-turn back to face the pickup.
+    list.append(AtelierDrive(AtelierPath([AtelierPath.turn(outAxle, east, homeAxle, west, reach: w)]),
+                             from: Phase.home.lowerBound, to: Phase.home.upperBound, cruise: 1.6, align: .start))
+    drives = list
+    var base: [Float] = []
+    var odo: Float = 0
+    for d in list {
+      base.append(odo)
+      odo += d.path.length
+    }
+    odometerBase = base
+    // The last load: tips out of the trailer (+0.1 m) — the truck may leave from then on.
+    let last = list[6 + layout.slots.count - 1]
+    var t = Phase.reverseOut.lowerBound
+    while t < Phase.reverseOut.upperBound {
+      let axle = last.path.sample(at: last.distance(at: t)).point
+      if axle.x + a + Self.forkLength < layout.trailerMin.x - 0.1 { break }
+      t += 0.05
+    }
+    clearOfTrailer = t
+  }
+
+  /// Which drive is active (or the last one finished) at a time in the cycle, for a slot.
+  private func drive(at t: Double, slot: Int) -> Int {
+    let n = layout.slots.count
+    if t < Phase.backOut.lowerBound { return 0 }
+    if t < Phase.toDock.lowerBound { return 1 }
+    if t < Phase.reverseOut.lowerBound { return 2 + slot }
+    if t < Phase.home.lowerBound { return 2 + n + slot }
+    return 2 + 2 * n
+  }
+
+  /// Fork height and mast tilt over the cycle: lift then tilt back at the pallet; untilt then
+  /// lower in the trailer; slide out at deck height, then raise to the travel height.
+  private func forks(at t: Double) -> (Float, Float) {
+    func smooth(_ x: Double) -> Float {
+      let u = Float(min(1, max(0, x)))
+      return u * u * (3 - 2 * u)
+    }
+    let e0 = Self.emptyFork, c = Self.carry, tilt = Self.carryTilt
+    let lift = Phase.lift, lower = Phase.lower
+    if t < lift.lowerBound { return (e0, 0) }
+    if t <= lift.upperBound {
+      let u = (t - lift.lowerBound) / (lift.upperBound - lift.lowerBound)
+      return (e0 + (c - e0) * smooth(u / 0.7), tilt * smooth((u - 0.6) / 0.4))
+    }
+    if t < lower.lowerBound { return (c, tilt) }
+    if t <= lower.upperBound {
+      let u = (t - lower.lowerBound) / (lower.upperBound - lower.lowerBound)
+      return (c * (1 - smooth((u - 0.3) / 0.7)), tilt * (1 - smooth(u / 0.3)))
+    }
+    return (0, 0)          // after the set-down: see `pose`, raised once the forks are out
+  }
+
+  /// Rear-wheel steering angle at a distance along a drive (rad, about the vehicle's vertical
+  /// axis): the turn centre lies on the front axle line, so a left turn forwards swings the rear
+  /// wheels to the right (negative).
+  static func steer(_ d: AtelierDrive, at s: Float) -> Float {
+    // The estimate is one-sided at the ends; a stopped vehicle starts and ends straight.
+    let k = d.path.sample(at: s).curvature * min(1, s / 0.1, (d.path.length - s) / 0.1)
+    return -atan(wheelbase * (d.reverse ? -k : k))
   }
 
   /// How far the truck drives out along the yard before it disappears into the haze.
   static let truckRun: Float = 38
 
-  /// After the fourth batch is placed (and the forklift is back in the hall) the truck pulls
-  /// away with its load; the next cycle an empty truck backs in by 14 s — the forklift only
-  /// reaches the dock at 24 s.
-  static func truck(at t: Double, slot: Int, cycle: Int, slots: Int) -> (AtelierTruckState, Float, Float) {
+  /// After the fourth batch is placed and the forklift has left the trailer the truck pulls away
+  /// with its load; the next cycle an empty truck backs in long before the forklift reaches the
+  /// dock.
+  func truck(at t: Double, slot: Int, cycle: Int) -> (AtelierTruckState, Float, Float) {
     func smooth(_ x: Double) -> Float {
       let u = Float(min(1, max(0, x)))
       return u * u * (3 - 2 * u)
     }
-    if slot == slots - 1 && t >= 40.5 {
-      let u = Float(min(1, (t - 40.5) / 7))
-      let fade = 1 - smooth((Double(u) - 0.55) / 0.45)
-      return (u < 1 ? .departing : .away, truckRun * u * u, fade)
+    let slots = layout.slots.count
+    let leave = clearOfTrailer + 0.6
+    if slot == slots - 1 && t >= leave {
+      let u = Float(min(1, (t - leave) / 10))
+      let fade = 1 - smooth((Double(u) - 0.6) / 0.4)
+      // Pull-away: gentle acceleration (distance ∝ u²), then fades into the haze.
+      return (u < 1 ? .departing : .away, Self.truckRun * u * u, fade)
     }
-    if slot == 0 && cycle > 0 && t < 14 {
-      if t < 3 { return (.away, truckRun, 0) }
-      let u = Float((t - 3) / 11)
+    if slot == 0 && cycle > 0 && t < 16 {
+      if t < 3 { return (.away, Self.truckRun, 0) }
+      let u = Float((t - 3) / 13)
       let ease = 1 - (1 - u) * (1 - u)
-      return (.arriving, truckRun * (1 - ease), smooth((t - 3) / 3))
+      return (.arriving, Self.truckRun * (1 - ease), smooth((t - 3) / 3))
     }
     return (.docked, 0, 1)
   }
@@ -250,12 +352,12 @@ struct AtelierTimeline {
 
   static func stage(at t: Double) -> AtelierStage {
     switch t {
-    case ..<4: return .waiting
-    case ..<8: return .approach
-    case ..<13.5: return .lifting
-    case ..<24: return .moving
-    case ..<31: return .loading
-    case ..<40: return .placed
+    case ..<Phase.approach.lowerBound: return .waiting
+    case ..<Phase.lift.lowerBound: return .approach
+    case ..<Phase.toDock.lowerBound: return .lifting
+    case ..<27: return .moving
+    case ..<Phase.lower.lowerBound: return .loading
+    case ..<Phase.reverseOut.lowerBound: return .placed
     default: return .returning
     }
   }
@@ -265,30 +367,52 @@ struct AtelierTimeline {
     let cycle = Int(total / Self.period)
     let t = total - Double(cycle) * Self.period
     let slot = cycle % layout.slots.count
-    let ks = keys(slot: slot)
-    var i = 0
-    while i < ks.count - 2 && ks[i + 1].t <= t { i += 1 }
-    let a = ks[i], b = ks[i + 1]
-    let raw = Float((t - a.t) / max(0.001, b.t - a.t))
-    let u = min(1, max(0, raw))
-    let e = u * u * (3 - 2 * u)
-    var dh = b.heading - a.heading
-    while dh > .pi { dh -= 2 * .pi }
-    while dh < -.pi { dh += 2 * .pi }
-    let pos = SIMD2<Float>(a.x + (b.x - a.x) * e, a.z + (b.z - a.z) * e)
+    let i = drive(at: t, slot: slot)
+    let d = drives[i]
+    let s = d.distance(at: t)
+    let sample = d.path.sample(at: s)
+    // Heading from the travel direction (reversed when backing up).
+    let dir = d.reverse ? -sample.tangent : sample.tangent
+    let heading = atan2(-dir.y, dir.x)
+    let heel = sample.point + dir * Self.frontAxle
+    var steer = Self.steer(d, at: s)
+    // Stopped between drives: the rear wheels turn (slowly) towards the next drive's first angle.
+    if t > d.end {
+      let n = layout.slots.count
+      let order = [0, 1, 2 + slot, 2 + n + slot, 2 + 2 * n]
+      let next = order.firstIndex(of: i).map { $0 + 1 < order.count ? order[$0 + 1] : 0 } ?? 0
+      let nextStart = next == 0 ? drives[0].start + Self.period : drives[next].start
+      let u = Float(min(1, max(0, (t - d.end) / max(0.1, nextStart - d.end))))
+      let e = u * u * (3 - 2 * u)
+      steer += (Self.steer(drives[next], at: 0) - steer) * e
+    }
+    let odometer = odometerBase[i] + s * (d.reverse ? -1 : 1)
+    var (fork, tilt) = forks(at: t)
+    if t >= Phase.lower.upperBound {
+      // Forks slide out of the pallet at deck height, then rise to the travel height.
+      let out: Float = i >= 2 + layout.slots.count && i < 2 + 2 * layout.slots.count ? s : (i == 2 + 2 * layout.slots.count ? 99 : 0)
+      let u = min(1, max(0, (out - 1.1) / 0.8))
+      fork = Self.emptyFork * u * u * (3 - 2 * u)
+      tilt = 0
+    }
     let batch: AtelierBatchPlace
-    if t < 8.0 {
+    if t < Phase.lift.lowerBound {
       batch = .pickup(opacity: Float(min(1, t / 1.2)))
-    } else if t < 32.6 {
+    } else if t < Phase.lower.upperBound {
       batch = .forks
     } else {
       batch = .slot(slot)
     }
-    let truck = Self.truck(at: t, slot: slot, cycle: cycle, slots: layout.slots.count)
-    return AtelierPose(
-      forklift: pos, heading: a.heading + dh * e, fork: a.fork + (b.fork - a.fork) * e,
-      stage: Self.stage(at: t), cycle: cycle, time: t, progress: t / Self.period, batch: batch,
-      loaded: slot, slot: slot, truck: truck.0, truckOffset: truck.1, truckOpacity: truck.2)
+    let truck = truck(at: t, slot: slot, cycle: cycle)
+    var pose = AtelierPose(
+      forklift: heel, heading: heading, fork: fork, stage: Self.stage(at: t), cycle: cycle, time: t,
+      progress: t / Self.period, batch: batch, loaded: slot, slot: slot, truck: truck.0, truckOffset: truck.1,
+      truckOpacity: truck.2)
+    pose.steer = steer
+    pose.tilt = tilt
+    pose.odometer = odometer
+    pose.speed = d.speed(at: t)
+    return pose
   }
 }
 
@@ -937,7 +1061,7 @@ final class AtelierMaterials {
     "M_TrailerRoof": Spec(color: 0xD9DCDE, rough: 0.5), "M_Grille": Spec(color: 0x15181B, rough: 0.4, metal: 0.5),
     "M_Headlight": Spec(color: 0xF2F2EE, rough: 0.1), "M_TailLight": Spec(color: 0x8A1C14, rough: 0.2),
     // Services: powder-coated cabinets (RAL 7035), blue water line.
-    "M_Cabinet": Spec(color: 0xD3D5D0, rough: 0.5, metal: 0.1), "M_PipeWater": Spec(color: 0x3F6D8C, rough: 0.38, metal: 0.3),
+    "M_Cabinet": Spec(color: 0xD3D5D0, rough: 0.5, metal: 0.1), "M_Strap": Spec(color: 0x2B3036, rough: 0.65), "M_PipeWater": Spec(color: 0x3F6D8C, rough: 0.38, metal: 0.3),
   ]
   /// Emission per material: colour, day intensity, night intensity.
   static let nightEmission: [String: (AtelierColor, CGFloat, CGFloat)] = [

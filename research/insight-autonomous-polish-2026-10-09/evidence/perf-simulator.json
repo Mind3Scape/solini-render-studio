@@ -1,0 +1,15 @@
+{
+  "apply_p50_ms" : 0.19474999862723053,
+  "apply_p99_ms" : 0.43129167170263827,
+  "device" : "iPhone",
+  "frames" : 3570,
+  "frames_over_25ms" : 2,
+  "load_seconds" : 3.1305619166669203,
+  "max_frame_ms" : 33.346790820360184,
+  "mean_frame_ms" : 16.676001157611609,
+  "p50_frame_ms" : 16.666624695062637,
+  "p95_frame_ms" : 16.727499663829803,
+  "p99_frame_ms" : 16.765249893069267,
+  "simulator" : "Salini — iOS 27",
+  "system" : "27.0"
+}

@@ -63,6 +63,7 @@
 		A8A3AAA247C5A742B2F740B7 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06B24C2D0832EF8D141B750A /* Profile.swift */; };
 		AC62A6C1BE86B01047A8D432 /* CollectionGallery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97971B66DFC9B7D96D9C8FFB /* CollectionGallery.swift */; };
 		ADACB609C5431007F2257197 /* greca.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4942620F24A4D8F0728613FA /* greca.jpg */; };
+		AE06F84BFCEFDF435DB48C5A /* AtelierMotion.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95F3E9480AE77DF068F0814 /* AtelierMotion.swift */; };
 		B05E098BB5A23A647FB95239 /* Aria-drawing.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CEF9612034EAAC3B2E8AFDEE /* Aria-drawing.pdf */; };
 		B0E3B2108E0D6230BD79EAA5 /* Catalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEBE649A6A1619D469DD965A /* Catalog.swift */; };
 		B5FD9ADCFDAAC468914F9F92 /* RealityAtelierScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE36A7414A56B3C7827CC603 /* RealityAtelierScene.swift */; };
@@ -161,6 +162,7 @@
 		AAF170DB4D3D010ACD2B57ED /* opera-start-v2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "opera-start-v2.png"; sourceTree = "<group>"; };
 		B002A96E28C44197F2418A95 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		B84ADB80CC317232BF921570 /* catalog.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = catalog.json; sourceTree = "<group>"; };
+		C95F3E9480AE77DF068F0814 /* AtelierMotion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AtelierMotion.swift; sourceTree = "<group>"; };
 		CBE7AB302AA433C80A3F4A14 /* MaterialStudioScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaterialStudioScene.swift; sourceTree = "<group>"; };
 		CC1EBD781C5BE290AC553C42 /* RealityAtelierTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealityAtelierTests.swift; sourceTree = "<group>"; };
 		CE36A7414A56B3C7827CC603 /* RealityAtelierScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealityAtelierScene.swift; sourceTree = "<group>"; };
@@ -267,6 +269,7 @@
 			children = (
 				50BF4C1CE6C2E47285FA6084 /* App.swift */,
 				1C21E6FCCD97876F706ADB2E /* Assets.xcassets */,
+				C95F3E9480AE77DF068F0814 /* AtelierMotion.swift */,
 				8B26B8F45807277463ABB395 /* CampusModel.swift */,
 				632403708ED41F88A65A300E /* CampusOverview.swift */,
 				EEBE649A6A1619D469DD965A /* Catalog.swift */,
@@ -450,6 +453,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				36D45DA9DCA6EE81DFF950EB /* App.swift in Sources */,
+				AE06F84BFCEFDF435DB48C5A /* AtelierMotion.swift in Sources */,
 				74EC55457697AA14155F9A3A /* CampusModel.swift in Sources */,
 				821FA71B237BBCDDCF147CA7 /* CampusOverview.swift in Sources */,
 				B0E3B2108E0D6230BD79EAA5 /* Catalog.swift in Sources */,

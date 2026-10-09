@@ -1,0 +1,101 @@
+{
+  "state": "ready_for_acceptance",
+  "date": "2026-10-09",
+  "owner": "Opus 5.5 (Claude Code)",
+  "baseline_commit": "a9b9cbb",
+  "brief_commit": "4c92a3f",
+  "summary": "Forklift handling rebuilt as path kinematics with a physical speed profile (no stop-and-go per key, no turning on the spot or sideways sliding, forks enter real pallet pockets, load rigidly on the carriage, wheels roll and steer, mast tilts); new procedural forklift, workers, tractor cab and spinning truck wheels; scanned CC0 materials; contact grounding; verified on the iOS simulator in day and night with matched cameras.",
+  "changed_files": [
+    "ios/Salini/AtelierMotion.swift (new): AtelierPath (lines + zero-end-curvature quintic Béziers, arclength, signed curvature), AtelierDrive (forward/backward speed profile: acceleration, lateral and steer-rate limits, slow zones; aligned or fitted into phase windows)",
+    "ios/Salini/ShippingAtelierScene.swift: AtelierTimeline rewritten (front-axle paths, 48→68 s cycle phases, rear-wheel steering, mast tilt, odometer, speed; truck departs 0.6 s after the forks clear the trailer); AtelierPose gains steer/tilt/odometer/speed; specs M_Cabinet/M_PipeWater/M_Strap, M_Frame graphite",
+    "ios/Salini/RealityAtelierScene.swift: mast/carriage/wheel transforms, load on the carriage chain (clamped to the floor), truck wheels spin with travel, contact shadows, trailer cutaway incl. curtain straps, exposure −1.25",
+    "ios/Salini/RealityAtelier.swift: QA launch args (-shipping-atelier-play, -shipping-atelier-speed, -reality-select, -reality-zone, -reality-scale, -reality-azimuth, -reality-perf frame-pacing report)",
+    "ios/tools/insight_poc/atelier_models.py (new): procedural forklift (separate mast pivot, carriage, tapered forks, four wheels), Skin-modifier workers (stand/inspect/walk/seated), tractor cab",
+    "ios/tools/insight_poc/build_atelier_kit.py: pallets with fork pockets, staging off the route, people v2, cab + wheel groups, origins/parents for moving parts, scanned materials (SCANS), provenance for ambientCG, facade lettering, straps material",
+    "ios/Salini/InsightAssets/* (kit16, 50 MB): USD kit, re-baked GI/AO, day+night probes, textures",
+    "ios/SaliniTests/ShippingAtelierTests.swift, RealityAtelierTests.swift: updated phases + new tests",
+    "ios/Salini.xcodeproj/project.pbxproj: xcodegen (adds AtelierMotion.swift)"
+  ],
+  "motion_diagnosis": [
+    "Baseline: piecewise smoothstep between keys → the forklift stopped at every key (speed 0 at 15 keys per cycle)",
+    "Heading interpolated separately from position → turning on the spot while translating (sideways crab), e.g. 13.5–15.5 s",
+    "Pallet stringers ran across the fork direction → forks passed through wood",
+    "Wheels/mast rigid; batch positioned independently from the carriage"
+  ],
+  "motion_measurements_timeline": {
+    "front_axle_lateral_slip_max_sin": 0.001,
+    "speed_max_m_s": 1.8,
+    "accel_max_m_s2": 0.88,
+    "rear_steer_max_deg": 57,
+    "steer_rate_max_deg_s": 49,
+    "yaw_rate_max_deg_s": 45,
+    "min_clearance_m": {
+      "crane_column": 0.44,
+      "wall_column": 0.51,
+      "east_wall": 0.6
+    },
+    "note": "Measured over 4 cycles at 10 Hz by the test harness; enforced in testDrivingIsKinematicallyConsistent / testRouteClearsTheHallObstacles"
+  },
+  "tests": {
+    "full_suite": "xcodebuild test, Salini simulator 1917B285 (iPhone 18 Pro, iOS 27): 137 tests, 0 failures, 238.0 s (log tmp/polish/logs/tests.log, not committed)",
+    "new": [
+      "testDrivingIsKinematicallyConsistent",
+      "testLoadIsHandledOnlyAtStandstill",
+      "testRouteClearsTheHallObstacles",
+      "testLoadIsRigidOnTheCarriageAndTheWheelsRoll"
+    ],
+    "release_build": "xcodebuild Release generic/platform=iOS CODE_SIGNING_ALLOWED=NO: BUILD SUCCEEDED (not archived/signed; build number unchanged)"
+  },
+  "performance_simulator": {
+    "apply_p50_ms": 0.19474999862723053,
+    "apply_p99_ms": 0.43129167170263827,
+    "device": "iPhone",
+    "frames": 3570,
+    "frames_over_25ms": 2,
+    "load_seconds": 3.1305619166669203,
+    "max_frame_ms": 33.346790820360184,
+    "mean_frame_ms": 16.67600115761161,
+    "p50_frame_ms": 16.666624695062637,
+    "p95_frame_ms": 16.727499663829803,
+    "p99_frame_ms": 16.765249893069267,
+    "simulator": "Salini — iOS 27",
+    "system": "27.0"
+  },
+  "performance_note": "Simulator frame pacing uses the Mac GPU: 60 fps steady, 2 frames >25 ms in 60 s; load 3.13 s from scene load start (app launch + navigation adds a few seconds). No physical-device FPS, thermal or memory measurement was possible here.",
+  "evidence": {
+    "compare_before_after": "research/insight-autonomous-polish-2026-10-09/evidence/compare/ (build 11 qa vs this pass, same launch states: day entry, QC day, QC night, site night, truck fit, cargo cutaway)",
+    "ios_after": "research/insight-autonomous-polish-2026-10-09/evidence/ios/ (+ site-day)",
+    "videos": {
+      "pickup-side.mp4": "real time, side view, approach → lift → back out → turn",
+      "pickup-side-slow.mp4": "0.33× speed, lift with mast tilt and reverse",
+      "pickup-close.mp4": "real time, following the forklift from approach to trailer entry",
+      "setdown.mp4": "real time, labelled cutaway, set-down and reverse out",
+      "setdown-slow.mp4": "0.33× set-down",
+      "loop-departure.mp4": "real time ~72 s, site view: 4th load, forklift out, loaded truck departs, new truck backs in, next pickup"
+    },
+    "motion_sheets": "research/insight-autonomous-polish-2026-10-09/evidence/motion-sheets/",
+    "perf": "research/insight-autonomous-polish-2026-10-09/evidence/perf-simulator.json",
+    "material_sources": "research/insight-autonomous-polish-2026-10-09/sources/ (ambientCG manifests with sha256)"
+  },
+  "sources_licenses": [
+    "ambientCG CC0 1.0 (docs.ambientcg.com/license): Concrete016, Concrete034, Metal027, Metal040, Metal011, Rubber004, Wood061, Cardboard002 — used; Plastic013A downloaded, not used",
+    "Poly Haven CC0 assets as before (ASSETS.json)",
+    "The 3dassets.dev forklift + driver GLBs are no longer used (replaced by our procedural model)"
+  ],
+  "decisions": [
+    "Procedural forklift instead of a downloaded model: needed separate mast/carriage/wheels with known pivots and exact envelope; CC0 options were low-poly or single meshes",
+    "Cycle 48 → 68 s: every drive keeps its natural physical profile instead of being compressed",
+    "Dock-1 staging batch at z 8.9 removed (it sat on the return turn)",
+    "Scanned albedo normalised to the app's art-directed colour (variation kept), roughness re-centred, normals as scanned — no baked lighting in albedo"
+  ],
+  "limitations": [
+    "Still far from the density of generated concepts 01/02 (whole-campus aerials): this is a bounded section; improvement is real but not reference parity",
+    "QC night frame changed little compared to build 11; the yard at night is very dark",
+    "Workers are static poses (not animated); skin-modifier figures are abstract, faceless",
+    "Rear wheels spin from the front-axle odometer (a few % error in tight turns)",
+    "Scanned sets have no published physical size except Rubber004/Concrete034; tile sizes estimated",
+    "Simulator only: no device FPS/thermal/memory; no TestFlight upload (expired credentials; build number unchanged)"
+  ],
+  "release_gaps": "Not archived/uploaded. Build 12 should follow Codex acceptance and credential renewal.",
+  "git": "see commit after this file"
+}

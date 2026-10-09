@@ -17,43 +17,127 @@ final class ShippingAtelierTests: XCTestCase {
     XCTAssertEqual(seen, AtelierStage.allCases)
   }
 
+  private typealias Phase = AtelierTimeline.Phase
+
   func testBatchWaitsRidesTheForksAndEndsInTheTruck() {
     if case .pickup = timeline.pose(at: 2).batch {} else { XCTFail("waits on the pickup square") }
-    XCTAssertEqual(timeline.pose(at: 18).batch, .forks)
-    XCTAssertEqual(timeline.pose(at: 36).batch, .slot(0))
+    XCTAssertEqual(timeline.pose(at: 20).batch, .forks)
+    XCTAssertEqual(timeline.pose(at: Phase.lower.upperBound + 0.5).batch, .slot(0))
     // While carried, the fork is raised; on the pickup and in the truck the fork is down.
-    XCTAssertGreaterThan(timeline.pose(at: 18).fork, 0.2)
+    XCTAssertGreaterThan(timeline.pose(at: 20).fork, 0.2)
     XCTAssertEqual(timeline.pose(at: 0).fork, AtelierTimeline.emptyFork, accuracy: 0.001)
-    XCTAssertEqual(timeline.pose(at: 33).fork, 0, accuracy: 0.001, "lowered onto the deck")
+    XCTAssertEqual(timeline.pose(at: Phase.lower.upperBound + 0.2).fork, 0, accuracy: 0.001, "lowered onto the deck")
   }
 
   func testForkliftPicksUpExactlyAtThePickupAndUnloadsAtTheSlot() {
     let layout = AtelierLayout()
-    let pick = timeline.pose(at: 9)
+    let pick = timeline.pose(at: Phase.lift.lowerBound + 1)
     let forward = SIMD2<Float>(cos(pick.heading), -sin(pick.heading))
     let forks = pick.forklift + forward * AtelierTimeline.forkReach
-    XCTAssertEqual(forks.x, layout.pickup.x, accuracy: 0.05)
-    XCTAssertEqual(forks.y, layout.pickup.y, accuracy: 0.05)
-    let drop = timeline.pose(at: 32)
-    XCTAssertEqual(drop.forklift.x + AtelierTimeline.forkReach, layout.slots[0], accuracy: 0.05)
-    XCTAssertEqual(drop.forklift.y, layout.dockZ, accuracy: 0.05)
+    XCTAssertEqual(forks.x, layout.pickup.x, accuracy: 0.01)
+    XCTAssertEqual(forks.y, layout.pickup.y, accuracy: 0.01)
+    let drop = timeline.pose(at: Phase.lower.lowerBound + 1)
+    XCTAssertEqual(drop.forklift.x + AtelierTimeline.forkReach, layout.slots[0], accuracy: 0.01)
+    XCTAssertEqual(drop.forklift.y, layout.dockZ, accuracy: 0.01)
+  }
+
+  /// The forklift drives like one: the front (drive) axle never slides sideways, heading
+  /// follows the path, speed, acceleration, yaw and the rear steering stay in a forklift's range.
+  func testDrivingIsKinematicallyConsistent() {
+    let dt = 0.1
+    var prev = timeline.pose(at: 0)
+    var prevSpeed: Float = 0
+    for k in 1...Int(AtelierTimeline.period * 4 / dt) {
+      let t = Double(k) * dt
+      let p = timeline.pose(at: t)
+      defer { prev = p }
+      let f0 = SIMD2<Float>(cos(prev.heading), -sin(prev.heading)), f1 = SIMD2<Float>(cos(p.heading), -sin(p.heading))
+      let d = (p.forklift - f1 * AtelierTimeline.frontAxle) - (prev.forklift - f0 * AtelierTimeline.frontAxle)
+      let speed = simd_length(d) / Float(dt)
+      defer { prevSpeed = speed }
+      if simd_length(d) > 0.01 {
+        let f = simd_normalize(f0 + f1)
+        XCTAssertLessThan(abs(d.x * f.y - d.y * f.x) / simd_length(d), 0.01, "front axle slides sideways at \(t)")
+      }
+      XCTAssertLessThanOrEqual(speed, 2.0, "speed at \(t)")
+      XCTAssertLessThanOrEqual(abs(speed - prevSpeed) / Float(dt), 1.0, "acceleration at \(t)")
+      XCTAssertLessThanOrEqual(abs(p.steer), 65 * .pi / 180, "steering angle at \(t)")
+      XCTAssertLessThanOrEqual(abs(p.steer - prev.steer) / Float(dt), 90 * .pi / 180, "steering rate at \(t)")
+      var dh = p.heading - prev.heading
+      while dh > .pi { dh -= 2 * .pi }
+      while dh < -.pi { dh += 2 * .pi }
+      XCTAssertLessThanOrEqual(abs(dh) / Float(dt), 60 * .pi / 180, "yaw rate at \(t)")
+    }
+  }
+
+  /// A load is lifted, tilted and lowered only while the forklift stands still; it sits still on
+  /// the pickup square until the forks rise and in the trailer once set down; the forks enter
+  /// the pallet straight, below its deck.
+  func testLoadIsHandledOnlyAtStandstill() {
+    var prev = timeline.pose(at: 0)
+    for k in 1...Int(AtelierTimeline.period * 4 * 30) {
+      let p = timeline.pose(at: Double(k) / 30)
+      defer { prev = p }
+      let loaded = p.batch == .forks || prev.batch == .forks
+      if loaded && (abs(p.fork - prev.fork) > 1e-5 || abs(p.tilt - prev.tilt) > 1e-5) {
+        XCTAssertLessThan(abs(p.speed), 0.01, "load moved on the mast while driving, t=\(p.time)")
+        XCTAssertLessThan(simd_distance(p.forklift, prev.forklift), 1e-4, "t=\(p.time)")
+      }
+      if case .pickup = p.batch, p.time > Phase.approach.lowerBound {
+        // Approach: forks under the deck, heel on the pallet's axis.
+        XCTAssertLessThanOrEqual(p.fork, AtelierTimeline.emptyFork + 1e-4)
+        XCTAssertEqual(p.forklift.y, AtelierLayout().pickup.y, accuracy: 0.002)
+      }
+    }
+  }
+
+  /// Every hall obstacle near the route (from the kit script) keeps ≥ 0.4 m from the forklift
+  /// and its load: columns, the east wall, the dock-1 staging, the packing area and the QC
+  /// station beside the pickup.
+  func testRouteClearsTheHallObstacles() {
+    let obstacles: [(String, SIMD2<Float>, SIMD2<Float>)] = [
+      ("crane column", SIMD2(9.05, 7.45), SIMD2(9.35, 7.75)), ("crane column east", SIMD2(13.45, 7.45), SIMD2(13.75, 7.75)),
+      ("wall column", SIMD2(13.43, 9.85), SIMD2(13.73, 10.15)), ("dock-1 staging", SIMD2(12.4, 5.8), SIMD2(13.4, 7.6)),
+      ("east wall", SIMD2(13.72, 8.0), SIMD2(14.0, 12.0)), ("east wall south", SIMD2(13.72, 15.0), SIMD2(14.0, 20.0)),
+      ("packing table", SIMD2(3.95, 8.9), SIMD2(5.95, 9.85)), ("racking", SIMD2(3.35, 10.9), SIMD2(4.55, 19.0)),
+      ("QC 04 frame", SIMD2(8.2, 7.6), SIMD2(8.3, 7.7)), ("QC 04 trolley", SIMD2(7.45, 7.18), SIMD2(8.05, 7.58)),
+    ]
+    for p in samples(cycles: 4) {
+      let f = SIMD2<Float>(cos(p.heading), -sin(p.heading)), side = SIMD2<Float>(-f.y, f.x)
+      var points: [SIMD2<Float>] = []
+      for a in stride(from: -AtelierTimeline.bodyBack, through: AtelierTimeline.forkLength, by: 0.1) {
+        for b in stride(from: -AtelierTimeline.halfWidth, through: AtelierTimeline.halfWidth, by: 0.1) { points.append(p.forklift + f * a + side * b) }
+      }
+      if p.batch == .forks {
+        let c = p.forklift + f * AtelierTimeline.forkReach
+        for a in stride(from: Float(-0.5), through: 0.5, by: 0.1) {
+          for b in stride(from: Float(-0.9), through: 0.9, by: 0.1) { points.append(c + f * a + side * b) }
+        }
+      }
+      for (name, lo, hi) in obstacles {
+        for q in points {
+          let dx = max(lo.x - q.x, 0, q.x - hi.x), dz = max(lo.y - q.y, 0, q.y - hi.y)
+          XCTAssertGreaterThanOrEqual((dx * dx + dz * dz).squareRoot(), 0.4, "\(name) at t=\(p.cycle):\(p.time)")
+        }
+      }
+    }
   }
 
   func testSlotsFillOneByOneAndTheFullTruckLeaves() {
     let p = AtelierTimeline.period
-    XCTAssertEqual(timeline.pose(at: p * 1 + 36).batch, .slot(1))
+    XCTAssertEqual(timeline.pose(at: p * 1 + Phase.lower.upperBound + 0.5).batch, .slot(1))
     XCTAssertEqual(timeline.pose(at: p * 2 + 10).loaded, 2)
     // The full truck really drives away with its four batches, an empty one backs in before
     // the forklift reaches the dock, and the card's count follows.
-    let leaving = timeline.pose(at: p * 3 + 45)
+    let leaving = timeline.pose(at: p * 3 + timeline.clearOfTrailer + 6)
     XCTAssertEqual(leaving.truck, .departing)
     XCTAssertGreaterThan(leaving.truckOffset, 5)
     XCTAssertEqual(leaving.inTruck, 4)
-    XCTAssertEqual(timeline.pose(at: p * 3 + 40).truckOffset, 0, "stays docked until the forklift is out")
+    XCTAssertEqual(timeline.pose(at: p * 3 + timeline.clearOfTrailer).truckOffset, 0, "stays docked until the forklift is out")
     XCTAssertEqual(timeline.pose(at: p * 4 + 1).truck, .away)
     XCTAssertEqual(timeline.pose(at: p * 4 + 1).loaded, 0, "a new truck starts empty")
     XCTAssertEqual(timeline.pose(at: p * 4 + 8).truck, .arriving)
-    let docked = timeline.pose(at: p * 4 + 14)
+    let docked = timeline.pose(at: p * 4 + 16.5)
     XCTAssertEqual(docked.truck, .docked)
     XCTAssertEqual(docked.truckOffset, 0)
     XCTAssertEqual(docked.truckOpacity, 1)
@@ -180,12 +264,12 @@ final class ShippingAtelierTests: XCTestCase {
   func testBatchIsCarriedUntilItIsSetDownInItsSlot() {
     let timeline = AtelierTimeline(layout: AtelierLayout())
     // Still on the forks while lowering; placed only once the forks are at the deck.
-    XCTAssertEqual(timeline.pose(at: 32.0).batch, .forks)
-    XCTAssertLessThan(AtelierTimeline.lift(timeline.pose(at: 32.59).fork), 0.01)
-    XCTAssertEqual(timeline.pose(at: 32.7).batch, .slot(0))
+    XCTAssertEqual(timeline.pose(at: Phase.lower.upperBound - 0.6).batch, .forks)
+    XCTAssertLessThan(AtelierTimeline.lift(timeline.pose(at: Phase.lower.upperBound - 0.01).fork), 0.01)
+    XCTAssertEqual(timeline.pose(at: Phase.lower.upperBound + 0.1).batch, .slot(0))
     // Picked up only once the forks start rising from under the pallet.
-    if case .pickup = timeline.pose(at: 7.9).batch {} else { XCTFail("still on the pickup square") }
-    XCTAssertEqual(AtelierTimeline.lift(timeline.pose(at: 8.0).fork), 0, accuracy: 0.001)
+    if case .pickup = timeline.pose(at: Phase.lift.lowerBound - 0.1).batch {} else { XCTFail("still on the pickup square") }
+    XCTAssertEqual(AtelierTimeline.lift(timeline.pose(at: Phase.lift.lowerBound).fork), 0, accuracy: 0.001)
   }
 
   /// The real kit: the loaded forklift (body, mast, carriage, driver) and batch fit the envelope

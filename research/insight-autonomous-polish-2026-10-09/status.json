@@ -1,12 +1,33 @@
 {
-  "state": "assigned",
-  "updated_at": "2026-10-09",
-  "completed": [],
-  "remaining": [
-    "Opus autonomous implementation and QA",
-    "Codex final acceptance",
-    "GitHub and TestFlight release after credentials renewed"
+  "state": "ready_for_acceptance",
+  "updated_at": "2026-10-09T11:00+07:00",
+  "owner": "Opus 5.5 (Claude Code)",
+  "completed": [
+    "Brief read; baseline a9b9cbb / brief 4c92a3f",
+    "Baseline review: references 01/02, qa-build11 iOS frames and 60 s motion clip",
+    "Motion diagnosis: per-key smoothstep stops at every key, turning on the spot with sideways sliding, rigid wheels, forks passing through pallet stringers",
+    "New path kinematics (AtelierMotion.swift): front-axle paths (lines + zero-end-curvature quintic Béziers), physical speed profile (accel, lateral, steer-rate, slow zones), rear-wheel steering, odometer, mast tilt",
+    "Timeline tests rewritten + 3 new (kinematic consistency, load handled at standstill, hall obstacle clearance ≥0.4 m): 12/12 pass on macOS harness",
+    "9 CC0 ambientCG scan sets downloaded with sha256 manifests (tmp/insight-poc-source)",
+    "Procedural compact counterbalance forklift (atelier_models.py): separate mast (tilt pivot), carriage with backrest and tapered forks, four wheels with rims/nuts; seated driver",
+    "Skin-modifier workers in 4 poses (stand/inspect/walk/seated), clean hems, hi-vis bands, hard hats; 7 in the section",
+    "Pallets with fork pockets (runners along the fork direction); dock-1 staging moved off the route",
+    "Tractor cab rebuilt (raked windscreen, fairing, doors, fenders, bumper lamps); truck wheels separate and spinning",
+    "Scanned CC0 materials applied to 25 kit materials with provenance in ASSETS.json",
+    "RealityKit: wheels roll/steer, mast tilts, load rigidly on the carriage chain, contact shadows for movers",
+    "iOS simulator build succeeded with kit14; first day entry frame inspected",
+    "Matched-camera iOS day/night captures, 6 recordings, simulator frame pacing; 137/137 tests; Release compile"
   ],
-  "evidence_paths": [],
-  "actual_blockers": []
+  "remaining": [
+    "Codex acceptance",
+    "Build 12 archive/upload after credentials renewal"
+  ],
+  "evidence_paths": [
+    "research/insight-autonomous-polish-2026-10-09/handoff.json",
+    "research/insight-autonomous-polish-2026-10-09/evidence/",
+    "research/insight-autonomous-polish-2026-10-09/sources/"
+  ],
+  "actual_blockers": [
+    "Xcode account credentials expired (upload only); device profiling unavailable"
+  ]
 }

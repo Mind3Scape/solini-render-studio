@@ -42,7 +42,7 @@ final class RealityAtelierTests: XCTestCase {
 
   func testPlacedBatchIsInsideTheTrailerAndTheFullTruckDrivesAway() async throws {
     let s = try await scene()
-    let placed = s.timeline.pose(at: 36)                    // first batch set down in slot 0
+    let placed = s.timeline.pose(at: AtelierTimeline.Phase.lower.upperBound + 0.5)   // first batch set down in slot 0
     s.apply(placed)
     let b = s.batch.visualBounds(relativeTo: nil)
     XCTAssertGreaterThanOrEqual(b.min.x, s.layout.trailerMin.x)
@@ -53,7 +53,7 @@ final class RealityAtelierTests: XCTestCase {
     XCTAssertEqual(b.min.y, s.layout.floor, accuracy: 0.03, "standing on the deck")
     let truck = try XCTUnwrap(s.truck)
     let docked = truck.position.x
-    let leaving = s.timeline.pose(at: AtelierTimeline.period * 3 + 45)
+    let leaving = s.timeline.pose(at: AtelierTimeline.period * 3 + s.timeline.clearOfTrailer + 6)
     s.apply(leaving)
     XCTAssertEqual(truck.position.x - docked, leaving.truckOffset, accuracy: 0.01)
     XCTAssertGreaterThan(leaving.truckOffset, 5)
@@ -90,9 +90,9 @@ final class RealityAtelierTests: XCTestCase {
   /// once the loaded truck has pulled out, the followed batch is the next one at the pickup.
   func testFollowTargetsStayOnTheSite() async throws {
     let s = try await scene()
-    s.apply(s.timeline.pose(at: AtelierTimeline.period * 3 + 45))
+    s.apply(s.timeline.pose(at: AtelierTimeline.period * 3 + s.timeline.clearOfTrailer + 6))
     XCTAssertLessThanOrEqual(s.followBounds(.truck).max.x, RealityAtelierScene.siteLimitX)
-    s.apply(s.timeline.pose(at: AtelierTimeline.period * 3 + 47.2))
+    s.apply(s.timeline.pose(at: AtelierTimeline.period * 3 + s.timeline.clearOfTrailer + 9.5))
     XCTAssertLessThan(s.pose.truckOpacity, 0.5)
     let c = s.followBounds(.batch).center
     XCTAssertEqual(c.x, s.layout.pickup.x, accuracy: 0.01)
@@ -111,7 +111,7 @@ final class RealityAtelierTests: XCTestCase {
   /// The roof is cut only while the batch is inside the docked trailer, and restored otherwise.
   func testTrailerCutOnlyWhileTheBatchIsInside() async throws {
     let s = try await scene()
-    s.apply(s.timeline.pose(at: 34))                        // set down in slot 0, under the roof
+    s.apply(s.timeline.pose(at: AtelierTimeline.Phase.lower.upperBound + 0.3))   // set down in slot 0, under the roof
     XCTAssertTrue(s.batchInTrailer)
     s.setTrailerCut(true)
     XCTAssertEqual(s.roofOpacity, RealityAtelierScene.cutOpacity, accuracy: 0.001)
@@ -119,7 +119,7 @@ final class RealityAtelierTests: XCTestCase {
     XCTAssertFalse(s.batchInTrailer)
     s.setTrailerCut(false)
     XCTAssertEqual(s.roofOpacity, 1)
-    s.apply(s.timeline.pose(at: AtelierTimeline.period * 3 + 44))   // the loaded truck is leaving
+    s.apply(s.timeline.pose(at: AtelierTimeline.period * 3 + s.timeline.clearOfTrailer + 3))   // the loaded truck is leaving
     XCTAssertFalse(s.batchInTrailer, "a moving truck keeps its roof")
   }
 
@@ -131,6 +131,43 @@ final class RealityAtelierTests: XCTestCase {
     XCTAssertFalse(s.report.contains { $0.contains("FAILED") || $0.contains("missing") }, "\(s.report)")
     await s.setLighting(.day)
     XCTAssertEqual(s.lighting, .day)
+  }
+
+  /// The carried batch rides rigidly on the carriage (same relative transform while driving,
+  /// turning and in the trailer), never below the floor; the wheels roll with the odometer and
+  /// the rear wheels steer in a turn; the mast tilts back with a load.
+  func testLoadIsRigidOnTheCarriageAndTheWheelsRoll() async throws {
+    let s = try await scene()
+    let carriage = try XCTUnwrap(s.forklift.findEntity(named: "Forklift_Carriage"))
+    let P = AtelierTimeline.Phase.self
+    var reference: simd_float4x4?
+    for t in [P.lift.upperBound + 0.5, P.backOut.lowerBound + 1.5, 20, 26, P.lower.lowerBound - 0.5] {
+      s.apply(s.timeline.pose(at: t))
+      let m = s.batch.transformMatrix(relativeTo: carriage)
+      if let r = reference {
+        for c in 0..<4 {
+          XCTAssertLessThan(simd_distance(m[c], r[c]), 0.002, "batch shifted on the forks at t=\(t)")
+        }
+      } else {
+        reference = m
+      }
+      XCTAssertGreaterThanOrEqual(s.batch.visualBounds(relativeTo: nil).min.y, s.layout.floor - 0.01)
+    }
+    let wheel = try XCTUnwrap(s.forklift.findEntity(named: "Forklift_WheelFL"))
+    let rear = try XCTUnwrap(s.forklift.findEntity(named: "Forklift_WheelRL"))
+    let mast = try XCTUnwrap(s.forklift.findEntity(named: "Forklift_Mast"))
+    s.apply(s.timeline.pose(at: P.approach.lowerBound))
+    let w0 = wheel.orientation(relativeTo: s.forklift), m0 = mast.orientation(relativeTo: s.forklift)
+    s.apply(s.timeline.pose(at: P.approach.lowerBound + 1.5))
+    XCTAssertGreaterThan(abs((w0.inverse * wheel.orientation(relativeTo: s.forklift)).angle), 0.05, "wheel rolls")
+    let rs = rear.orientation(relativeTo: s.forklift)
+    let turning = s.timeline.pose(at: 18)
+    XCTAssertGreaterThan(abs(turning.steer), 0.1)
+    s.apply(turning)
+    // Spin is about the axle (z), so the axle direction only changes by steering.
+    let axle = (rear.orientation(relativeTo: s.forklift) * rs.inverse).act([0, 0, 1])
+    XCTAssertEqual(asin(axle.x), turning.steer, accuracy: 0.02, "rear wheel steers by the pose's angle")
+    XCTAssertGreaterThan(abs((m0.inverse * mast.orientation(relativeTo: s.forklift)).angle), 0.03, "mast tilted back")
   }
 
   func testTappedChildrenResolveToTheirSubject() async throws {

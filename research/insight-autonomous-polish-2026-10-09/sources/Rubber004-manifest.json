@@ -1,0 +1,49 @@
+{
+  "asset": "Rubber004",
+  "source": "ambientcg",
+  "page_url": "https://ambientcg.com/a/Rubber004",
+  "license": "CC0-1.0",
+  "license_url": "https://docs.ambientcg.com/license/",
+  "authors": [
+    "ambientCG (Lennart Demes)"
+  ],
+  "creation_method": "Height field photogrammetry",
+  "dimensions_m": {
+    "width": 0.75,
+    "height": 0.75
+  },
+  "dimensions_note": "Published by ambientCG API (dimensionX/dimensionY in cm).",
+  "archive": {
+    "url": "https://ambientcg.com/get?file=Rubber004_1K-JPG.zip",
+    "size": 8419107,
+    "size_verified": true,
+    "sha256": "d8933e73c3b983892209bb143ca4bc13a48e4d55720ab12f6e6a303c96c84a31",
+    "md5": "not published by ambientCG API",
+    "deleted_after_extract": true
+  },
+  "files": [
+    {
+      "url": "https://ambientcg.com/get?file=Rubber004_1K-JPG.zip",
+      "zip_member": "Rubber004_1K-JPG_Color.jpg",
+      "path": "tmp/insight-poc-source/Rubber004/Rubber004_1K-JPG_Color.jpg",
+      "sha256": "95f9182e8564db9a8c6510cd0c9e0656beec0e5a0212cc177e2abf8eb03820b9",
+      "size": 1150755
+    },
+    {
+      "url": "https://ambientcg.com/get?file=Rubber004_1K-JPG.zip",
+      "zip_member": "Rubber004_1K-JPG_NormalGL.jpg",
+      "path": "tmp/insight-poc-source/Rubber004/Rubber004_1K-JPG_NormalGL.jpg",
+      "sha256": "a22ee35f51fa7bd971f703e8309b533420f965337c989f5e2cdfe1c822892d47",
+      "size": 2145653
+    },
+    {
+      "url": "https://ambientcg.com/get?file=Rubber004_1K-JPG.zip",
+      "zip_member": "Rubber004_1K-JPG_Roughness.jpg",
+      "path": "tmp/insight-poc-source/Rubber004/Rubber004_1K-JPG_Roughness.jpg",
+      "sha256": "fd8171577db5a593e981ebd3fe487515aea9d20be28e1a6d2cd1e5475eb13e69",
+      "size": 759617
+    }
+  ],
+  "target": "rubber",
+  "notes": "Finest/darkest of the ambientCG rubber scans (Rubber001-003 have visible light/blue granule flecks). Poly Haven rubber_tiles has tile seams. Good for tyres and mats."
+}

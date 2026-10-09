@@ -1,0 +1,53 @@
+{
+  "asset": "Metal027",
+  "source": "ambientcg",
+  "page_url": "https://ambientcg.com/a/Metal027",
+  "license": "CC0-1.0",
+  "license_url": "https://docs.ambientcg.com/license/",
+  "authors": [
+    "ambientCG (Lennart Demes)"
+  ],
+  "creation_method": "Height field photogrammetry",
+  "dimensions_m": null,
+  "dimensions_note": "est. ~0.5 x 0.5 m (no published dimensions; fine powder texture)",
+  "archive": {
+    "url": "https://ambientcg.com/get?file=Metal027_1K-JPG.zip",
+    "size": 6311401,
+    "size_verified": true,
+    "sha256": "12b2d9996d532cf8a31820d24f2ea83e3217b89da060c4fb29c3c5177535ac72",
+    "md5": "not published by ambientCG API",
+    "deleted_after_extract": true
+  },
+  "files": [
+    {
+      "url": "https://ambientcg.com/get?file=Metal027_1K-JPG.zip",
+      "zip_member": "Metal027_1K-JPG_Color.jpg",
+      "path": "tmp/insight-poc-source/Metal027/Metal027_1K-JPG_Color.jpg",
+      "sha256": "8e2e69e767b2692da211723ccb7def5f27b9c7712c6952bc45c526e2a5183ae0",
+      "size": 798155
+    },
+    {
+      "url": "https://ambientcg.com/get?file=Metal027_1K-JPG.zip",
+      "zip_member": "Metal027_1K-JPG_Metalness.jpg",
+      "path": "tmp/insight-poc-source/Metal027/Metal027_1K-JPG_Metalness.jpg",
+      "sha256": "843102638fa0a5bf897888868877efab8ccdc4cb84a48e57bdb52bfb30f5e714",
+      "size": 4257
+    },
+    {
+      "url": "https://ambientcg.com/get?file=Metal027_1K-JPG.zip",
+      "zip_member": "Metal027_1K-JPG_NormalGL.jpg",
+      "path": "tmp/insight-poc-source/Metal027/Metal027_1K-JPG_NormalGL.jpg",
+      "sha256": "afbf8ca3df45111ac5543174582b6b98cb1bf154f7c7ee8f198720042b92d7c8",
+      "size": 1367248
+    },
+    {
+      "url": "https://ambientcg.com/get?file=Metal027_1K-JPG.zip",
+      "zip_member": "Metal027_1K-JPG_Roughness.jpg",
+      "path": "tmp/insight-poc-source/Metal027/Metal027_1K-JPG_Roughness.jpg",
+      "sha256": "8f01484981a8bf83199d4f4cb435a344294cd80cb4ee623cf8567a7726fb289e",
+      "size": 572513
+    }
+  ],
+  "target": "painted_metal",
+  "notes": "Only clean powder-coated painted steel scan on ambientCG/Poly Haven (all PaintedMetal0xx are scratched/rusty). Albedo is dark; for coloured vehicle/column paint reuse the normal+roughness (orange-peel) and tint or replace base colour. Metalness map included (painted -> mostly 0)."
+}

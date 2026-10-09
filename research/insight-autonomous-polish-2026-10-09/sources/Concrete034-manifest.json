@@ -1,0 +1,49 @@
+{
+  "asset": "Concrete034",
+  "source": "ambientcg",
+  "page_url": "https://ambientcg.com/a/Concrete034",
+  "license": "CC0-1.0",
+  "license_url": "https://docs.ambientcg.com/license/",
+  "authors": [
+    "ambientCG (Lennart Demes)"
+  ],
+  "creation_method": "Height field photogrammetry",
+  "dimensions_m": {
+    "width": 1.1,
+    "height": 0.55
+  },
+  "dimensions_note": "Published by ambientCG API (dimensionX/dimensionY in cm).",
+  "archive": {
+    "url": "https://ambientcg.com/get?file=Concrete034_1K-JPG.zip",
+    "size": 3657575,
+    "size_verified": true,
+    "sha256": "5839d284d94ffb8d2a56df742ec522b13dd311c52dbd42b8fd33f0409ceedb81",
+    "md5": "not published by ambientCG API",
+    "deleted_after_extract": true
+  },
+  "files": [
+    {
+      "url": "https://ambientcg.com/get?file=Concrete034_1K-JPG.zip",
+      "zip_member": "Concrete034_1K-JPG_Color.jpg",
+      "path": "tmp/insight-poc-source/Concrete034/Concrete034_1K-JPG_Color.jpg",
+      "sha256": "8ceb9186d990b31fce785e06fdc6974c160f1d27c43f6160266f164deba713aa",
+      "size": 269501
+    },
+    {
+      "url": "https://ambientcg.com/get?file=Concrete034_1K-JPG.zip",
+      "zip_member": "Concrete034_1K-JPG_NormalGL.jpg",
+      "path": "tmp/insight-poc-source/Concrete034/Concrete034_1K-JPG_NormalGL.jpg",
+      "sha256": "e509eb9dfa978e780fbebfd2acacc2ce158b5b7ced722ddc0759039dd51e18ca",
+      "size": 821681
+    },
+    {
+      "url": "https://ambientcg.com/get?file=Concrete034_1K-JPG.zip",
+      "zip_member": "Concrete034_1K-JPG_Roughness.jpg",
+      "path": "tmp/insight-poc-source/Concrete034/Concrete034_1K-JPG_Roughness.jpg",
+      "sha256": "a4a9e39857a19afd23a778e5abf44fcdf6bd7f93918f1cf6878b41933e553511",
+      "size": 217708
+    }
+  ],
+  "target": "concrete_wall",
+  "notes": "Clean, light, fine-scale cast/plastered concrete suitable for plinths and precast wall panels; published dimensions 110 x 55 cm."
+}
