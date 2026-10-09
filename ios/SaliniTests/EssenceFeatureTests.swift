@@ -1,11 +1,10 @@
-import SceneKit
 import XCTest
 
 @testable import Salini
 
 /// The home material block «Камень изнутри»: the CTA hands the studio a form that really sells
-/// the chosen finish, selection and accessibility follow the finish, and the scene is honest
-/// (labelled schematic, static pose when motion is off).
+/// the chosen finish, selection and accessibility follow the finish, the six fragments ship and
+/// the illustration is labelled as such.
 @MainActor
 final class EssenceFeatureTests: XCTestCase {
   func testEveryFinishOpensAFormThatSellsIt() {
@@ -40,30 +39,28 @@ final class EssenceFeatureTests: XCTestCase {
     view.select(.senseGloss, animated: false)
     let stage = try XCTUnwrap(find(view, "essence.stage"))
     let text = stage.accessibilityLabel ?? ""
-    XCTAssertTrue(text.contains("схема"), text)
-    XCTAssertTrue(text.contains("Gelcoat 0,8"), text)
-    XCTAssertTrue(text.contains("условна"), text)
+    XCTAssertTrue(text.contains("визуализация"), text)
+    XCTAssertTrue(text.contains("Gelcoat"), text)
+    XCTAssertTrue(text.contains("условны"), text)
+    XCTAssertFalse(text.contains("боксит") || text.contains("мрамор "), text)
     XCTAssertEqual(stage.accessibilityValue, StudioFinish.senseGloss.title)
   }
 
-  func testSceneBuildsAndHoldsAStaticPoseWithoutMotion() {
-    let scene = EssenceScene()
-    let anchors = scene.anchors()
-    for key in ["stone", "coat", "core"] {
-      let p = try? XCTUnwrap(anchors[key])
-      XCTAssertNotNil(p, key)
-      if let p { XCTAssertTrue(p.x.isFinite && p.y.isFinite && p.z.isFinite, key) }
+  /// The six generated fragments ship in the bundle with transparency, matte / gloss pairs have
+  /// the same canvas, and the feature shows the illustrated stage.
+  func testAllSixFragmentsShipAndTheStageIsShown() throws {
+    let layers = EssenceLayers.manifest()
+    XCTAssertTrue(EssenceLayers.available(layers), "missing EssenceAssets in the bundle")
+    for name in ["essence-stone-mass", "essence-stone-fragment", "essence-sense-core-gloss", "essence-sense-core-matte",
+                 "essence-sense-cap-gloss", "essence-sense-cap-matte"] {
+      let image = try XCTUnwrap(EssenceLayers.image(name), name)
+      let alpha = image.cgImage?.alphaInfo ?? .none
+      XCTAssertTrue([.first, .last, .premultipliedFirst, .premultipliedLast].contains(alpha), "\(name) has no alpha")
     }
-    scene.pose(time: 3.7, opening: 1, emphasis: 1, motion: false)
-    let a = scene.anchors()
-    scene.pose(time: 11.2, opening: 1, emphasis: 1, motion: false)
-    let b = scene.anchors()
-    for (k, v) in a { XCTAssertEqual(simd_distance(v, b[k]!), 0, accuracy: 1e-5, "\(k) moved without motion") }
-    // Opening parts the halves: the cut (and its Gelcoat band) turns and moves into view.
-    scene.pose(time: 0, opening: 0, emphasis: 1, motion: false)
-    let closed = scene.anchors()["coat"]!
-    scene.pose(time: 0, opening: 1, emphasis: 1, motion: false)
-    XCTAssertGreaterThan(simd_distance(scene.anchors()["coat"]!, closed), 0.05)
+    for part in ["core", "cap"] {
+      XCTAssertEqual(EssenceLayers.image("essence-sense-\(part)-matte")?.size, EssenceLayers.image("essence-sense-\(part)-gloss")?.size)
+    }
+    XCTAssertTrue(EssenceFeatureView { _, _ in }.illustrated)
   }
 
   /// The manifest round-trips through JSON (the art-direction file format), keeps the six
