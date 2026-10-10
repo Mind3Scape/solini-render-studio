@@ -6,11 +6,20 @@ final class HomeController: ScrollController, UIScrollViewDelegate {
   private var materialChoice: StudioFinish?
   private var designerWorkspace: DesignerWorkspace?
   private var visible = false
+  private var renderedRole: Audience?
+  private var selectedGalleryIndex = 0
+  private var editorial: HomeEditorial?
   override var preferredStatusBarStyle: UIStatusBarStyle { .darkContent }
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     navigationController?.setNavigationBarHidden(true, animated: animated)
-    render()
+    if renderedRole != DemoStore.shared.role {
+      render()
+    } else if DemoStore.shared.role == .atelier {
+      reloadDesigner()
+    } else if DemoStore.shared.role == .partner {
+      render()
+    }
   }
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -34,6 +43,11 @@ final class HomeController: ScrollController, UIScrollViewDelegate {
     visible = false
     materials?.active = false
     gallery?.active = false
+    editorial?.photos.forEach { $0.active = false }
+  }
+  override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+    updateMaterialPlayback()
   }
   func scrollViewDidScroll(_ scrollView: UIScrollView) { updateMaterialPlayback() }
   private func updateMaterialPlayback() {
@@ -46,10 +60,11 @@ final class HomeController: ScrollController, UIScrollViewDelegate {
     if let gallery {
       let rect = gallery.convert(gallery.bounds, to: scroll)
       let intersection = rect.intersection(scroll.bounds)
-      gallery.active =
-        visible && DemoStore.shared.role == .home
+      let play = visible && DemoStore.shared.role == .home
         && !intersection.isNull && intersection.height > rect.height * 0.25
+      if gallery.active != play { gallery.active = play }
     }
+    editorial?.photos.forEach { $0.updateVisibility(in: scroll, visible: visible) }
   }
   private func openMaterials(_ form: StudioForm?, _ finish: StudioFinish) {
     MaterialStudioController.present(form: form, finish: finish, from: self)
@@ -65,10 +80,17 @@ final class HomeController: ScrollController, UIScrollViewDelegate {
   }
   private func render() {
     materialChoice = materials?.finish ?? materialChoice
+    selectedGalleryIndex = gallery?.selectedIndex ?? selectedGalleryIndex
     materials?.active = false
     gallery?.active = false
+    editorial?.photos.forEach { $0.active = false }
+    materials = nil
+    gallery = nil
+    editorial = nil
+    designerWorkspace = nil
     content.arrangedSubviews.forEach { $0.removeFromSuperview() }
     let role = DemoStore.shared.role
+    renderedRole = role
     let logo = UIImageView(
       image: UIImage(named: "salini-logo.png")?.withRenderingMode(.alwaysTemplate))
     logo.tintColor = Palette.ink
@@ -138,7 +160,6 @@ final class HomeController: ScrollController, UIScrollViewDelegate {
     updateMaterialPlayback()
   }
   private func buyer() {
-    let selected = gallery?.selectedIndex ?? 0
     let covers = CollectionGallery { [weak self] id in
       if id == "ninfea", let self {
         let info = UINavigationController(rootViewController: NinfeaInformationController())
@@ -146,45 +167,36 @@ final class HomeController: ScrollController, UIScrollViewDelegate {
         self.present(info, animated: true)
         return
       }
-      if let product = Product.all.first(where: { $0.id == id }) { self?.showProduct(product) }
+      if let productID = Catalog.legacyIds[id],
+         let product = Catalog.shared.products.first(where: { $0.id == productID }) {
+        self?.navigationController?.pushViewController(CatalogProductController(product), animated: true)
+      }
     }
     gallery = covers
+    covers.accessibilityIdentifier = "home.gallery"
     section(covers, top: 0, bottom: 0, inset: 16)
-    covers.select(selected, animated: false)
-    materialFeature()
-    let actions = stack(
-      [
-        ActionButton("Подобрать", icon: "slider.horizontal.3", prominent: true) { [weak self] in
-          self?.navigationController?.pushViewController(ChooseController(), animated: true)
-        },
-        ActionButton("Сравнить", icon: "rectangle.split.2x1") { [weak self] in
-          self?.navigationController?.pushViewController(CompareController(), animated: true)
-        },
-      ], axis: .horizontal, spacing: 10)
-    actions.distribution = .fillEqually
-    add(actions, inset: 20)
-    add(
-      workspaceAction(
-        "Почувствуйте объём", subtitle: "Вращайте оригинальную 3D-модель Greca",
-        icon: "cube.transparent"
-      ) { [weak self] in self?.present(ObjectViewerController(), animated: true) }, inset: 20)
-    let title = stack(
-      [
-        label("Избранные формы", 27, .semibold), UIView(),
-        label("01 — 04", 10, .medium, Palette.muted),
-      ], axis: .horizontal)
-    title.alignment = .center
-    add(title)
-    add(
-      horizontal(
-        Product.all.map { p in ProductTile(product: p) { [weak self] in self?.showProduct(p) } },
-        width: 260, height: 345), inset: 0)
-    add(
-      hero(
-        image: "interior", title: "В деталях —\nхарактер.", foot: "Внутри интерьера",
-        detail: "Коллекция Opera", height: 320
-      ) { [weak self] in self?.sheet(InspirationController()) }, inset: 20)
+    covers.select(selectedGalleryIndex, animated: false)
 
+    let journal = HomeEditorial(host: self)
+    journal.onScroll = { [weak self] in self?.updateMaterialPlayback() }
+    editorial = journal
+    section(journal.introduction(), top: 28, bottom: 24, inset: 24)
+    section(journal.categories(), top: 0, bottom: 12, inset: 0)
+    section(homeTextButton("Весь каталог", identifier: "home.catalog") { [weak journal] in
+      journal?.catalog()
+    }, top: 0, bottom: 6, inset: 24)
+
+    materialFeature()
+    section(journal.selection(), top: 0, bottom: 30, inset: 24)
+    section(journal.colour(), top: 0, bottom: 38, inset: 16)
+    section(stack([
+      eyebrow("КОЛЛЕКЦИИ SALINI"), label("Разные формы.\nОдна философия.", 32, .regular),
+    ], spacing: 11), top: 0, bottom: 22, inset: 24)
+    section(journal.collections(), top: 0, bottom: 38, inset: 0)
+    section(journal.production(), top: 0, bottom: 24, inset: 24)
+    section(journal.interior(), top: 0, bottom: 34, inset: 16)
+    section(journal.service(), top: 0, bottom: 30, inset: 24)
+    section(journal.footer(), top: 0, bottom: 8, inset: 24)
   }
   /// Designer home: the professional path for a client object (object → products and finishes →
   /// technical package → proposal), built from the saved projects only. See DesignerHome.swift.
@@ -284,86 +296,5 @@ final class HomeController: ScrollController, UIScrollViewDelegate {
       [eyebrow(name), label(value, 38, .medium), label(detail, 12, .regular, Palette.muted)],
       spacing: 7)
   }
-  private func hero(
-    image: String, title: String, foot: String, detail: String, height: CGFloat,
-    action: @escaping () -> Void
-  ) -> UIView {
-    let hero = UIView()
-    hero.height(height)
-    hero.rounded(30)
-    hero.pin(photo(image))
-    hero.pin(
-      GradientView(
-        colors: [.black.withAlphaComponent(0.22), .clear, .black.withAlphaComponent(0.7)],
-        locations: [0, 0.4, 1]))
-    let top = stack(
-      [
-        eyebrow("SALINI COLLECTION", color: .white.withAlphaComponent(0.8)),
-        label(title, 31, .medium, .white),
-      ], spacing: 13)
-    let b = ActionButton("", icon: "arrow.up.right", action: action)
-    b.configuration?.baseForegroundColor = .white
-    b.accessibilityLabel = "Открыть \(foot)"
-    b.widthAnchor.constraint(equalToConstant: 54).isActive = true
-    let bottom = stack(
-      [
-        stack(
-          [
-            label(foot, 32, .medium, .white),
-            label(detail, 12, .regular, .white.withAlphaComponent(0.75)),
-          ], spacing: 5), UIView(), b,
-      ], axis: .horizontal)
-    bottom.alignment = .center
-    for sub in [top, bottom] {
-      sub.translatesAutoresizingMaskIntoConstraints = false
-      hero.addSubview(sub)
-      sub.leadingAnchor.constraint(equalTo: hero.leadingAnchor, constant: 24).isActive = true
-      sub.trailingAnchor.constraint(equalTo: hero.trailingAnchor, constant: -22).isActive = true
-    }
-    top.topAnchor.constraint(equalTo: hero.topAnchor, constant: 25).isActive = true
-    bottom.bottomAnchor.constraint(equalTo: hero.bottomAnchor, constant: -24).isActive = true
-    return hero
-  }
-}
 
-final class ProductTile: UIView {
-  init(product: Product, action: @escaping () -> Void) {
-    super.init(frame: .zero)
-    backgroundColor = .white
-    rounded(24)
-    let image = photo(product.image, height: 235)
-    let info = stack(
-      [
-        eyebrow(product.category.uppercased()), label(product.name, 27, .regular),
-        label("от " + rubles(product.price), 13, .medium, Palette.muted),
-      ], spacing: 6
-    ).inset(18)
-    pin(stack([image, info], spacing: 0))
-    let tap = UIButton()
-    tap.accessibilityLabel = "\(product.name), от \(rubles(product.price))"
-    tap.accessibilityIdentifier = "product.\(product.id)"
-    pin(tap)
-    tap.addAction(UIAction { _ in action() }, for: .touchUpInside)
-  }
-  required init?(coder: NSCoder) { fatalError() }
-}
-final class InspirationController: ScrollController {
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    title = "В деталях — характер"
-    add(photo("interior", height: 380), inset: 0)
-    add(
-      stack([
-        eyebrow("ИНТЕРЬЕР SALINI"), label("Классика\nв деталях.", 34, .medium),
-        label(
-          "Камень, тёплый металл и архитектурная симметрия. Интерьер из галереи Salini.", 16,
-          .regular, Palette.muted),
-        ActionButton("Сохранить Opera Top в проект", icon: "plus", prominent: true) { [weak self] in
-          if let p = Product.all.first(where: { $0.id == "opera-top" }) {
-            DemoStore.shared.add(p, stone: false)
-            self?.message("Сохранено", "Opera Top добавлена в ваш проект.")
-          }
-        },
-      ]))
-  }
 }

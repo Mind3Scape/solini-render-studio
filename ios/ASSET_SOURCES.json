@@ -227,5 +227,19 @@
     "license": "CC0 1.0 (https://polyhaven.com/license)",
     "md5": "b056fea247bc84b81d2e0987d44c87d8",
     "usage": "Material studio image-based light; file unchanged in the bundle. At load the app turns it -48 degrees, dims walls (flags) and the floor below the horizon, and adds procedural strip softboxes (StudioLighting.swift)"
+  },
+  {
+    "asset": "designer-shilov.jpg",
+    "source_url": "https://cdn-salini.storage.yandexcloud.net/iblock/c41/f4mlpivp20oyiy7kcibtf3crmjhno82w/%D0%9C%D0%B0%D0%B9%D0%BA-%D0%A8%D0%B8%D0%BB%D0%BE%D0%B2.jpg",
+    "source_page": "https://salini-srl.com/about-company/",
+    "retrieved_on": "2026-10-10",
+    "usage": "Unmodified official designer portrait for the native Salini brand story."
+  },
+  {
+    "asset": "designer-manzoni.jpg",
+    "source_url": "https://cdn-salini.storage.yandexcloud.net/iblock/53c/l3znm2d11q4crmp2gmah00358x24ul0r/611%D1%85720%20%D0%9C%D0%B0%D1%83%D1%80%D0%B8%D1%86%D0%B8%D0%BE.jpg",
+    "source_page": "https://salini-srl.com/about-company/",
+    "retrieved_on": "2026-10-10",
+    "usage": "Unmodified official designer portrait for the native Salini brand story."
   }
 ]

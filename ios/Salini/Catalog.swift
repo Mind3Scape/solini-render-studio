@@ -32,9 +32,16 @@ final class CatalogController: UIViewController, UISearchResultsUpdating, UIColl
   private var filterButton: UIBarButtonItem!
   private let summary = UILabel()
   var initialCategory: String?
+  /// Editorial entry points open the ordinary, editable catalogue search.
+  var initialQuery: String?
   /// A filter to start from (for example from the material studio).
   var preset: CatalogFilter?
   var showsFavoritesOnly = false
+
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    navigationController?.setNavigationBarHidden(false, animated: animated)
+  }
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -43,6 +50,7 @@ final class CatalogController: UIViewController, UISearchResultsUpdating, UIColl
     view.backgroundColor = Palette.paper
     if let preset { filter = preset }
     if let initialCategory { filter.category = initialCategory }
+    searchController.searchBar.text = initialQuery
     searchController.searchResultsUpdater = self
     searchController.obscuresBackgroundDuringPresentation = false
     searchController.searchBar.placeholder = "Название, коллекция или артикул"

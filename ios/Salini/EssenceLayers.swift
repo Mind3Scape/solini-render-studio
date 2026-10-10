@@ -56,31 +56,31 @@ struct EssenceLabel: Codable, Equatable {
 }
 
 enum EssenceLayers {
-  /// Default art direction for the six generated fragments (ios/Salini/EssenceAssets): the chosen
-  /// material is the hero in the middle of the card, its loose piece flying past the card's top
-  /// edge; the other material waits smaller, higher and behind. Choosing swaps them with one
-  /// continuous focus move. Positions are in card units (see `EssenceLayer`).
+  /// A stable, diagonal pair: neither material retreats into a distant corner when selected.
+  /// Only the cut opens a few points; emphasis is a small change in scale and opacity.
   static let fallbackManifest: [EssenceLayer] = [
     EssenceLayer(id: "stone-mass", image: "essence-stone-mass", group: .stone,
-                 x: 0.46, y: 0.4, width: 0.84, rotation: -3,
-                 backX: 0.84, backY: 0.14, backWidth: 0.3, backRotation: 8,
-                 depth: 0.6, z: 2, lift: 0.05,
-                 labels: [EssenceLabel(key: "stone", x: 0.38, y: 0.42)]),
+                 x: 0.31, y: 0.56, width: 0.64, rotation: -3,
+                 backX: 0.29, backY: 0.56, backWidth: 0.60, backRotation: -3,
+                 depth: 0.6, z: 2, lift: 0.035,
+                 labels: [EssenceLabel(key: "stone", x: 0.40, y: 0.55)]),
     EssenceLayer(id: "stone-fragment", image: "essence-stone-fragment", group: .stone,
-                 x: 0.86, y: -0.06, width: 0.38, rotation: 14,
-                 backX: 0.66, backY: -0.1, backWidth: 0.16, backRotation: 22,
-                 closedDX: -0.28, closedDY: 0.32, closedRotation: -14, depth: 0.9, z: 3, lift: 0.22),
+                 x: 0.38, y: 0.17, width: 0.34, rotation: 5,
+                 backX: 0.35, backY: 0.18, backWidth: 0.32, backRotation: 5,
+                 closedDX: -0.024, closedDY: 0.04, closedRotation: -2,
+                 depth: 0.9, z: 3, lift: 0.065),
     EssenceLayer(id: "sense-core", image: "essence-sense-core-matte",
                  finishImages: ["senseMatte": "essence-sense-core-matte", "senseGloss": "essence-sense-core-gloss"],
-                 group: .sense, x: 0.52, y: 0.44, width: 0.8, rotation: 2,
-                 backX: 0.14, backY: 0.14, backWidth: 0.3, backRotation: -8,
-                 depth: 0.6, z: 2, lift: 0.05,
-                 labels: [EssenceLabel(key: "core", x: 0.4, y: 0.46), EssenceLabel(key: "coat", x: 0.86, y: 0.42, above: true)]),
+                 group: .sense, x: 0.76, y: 0.34, width: 0.58, rotation: 3,
+                 backX: 0.75, backY: 0.34, backWidth: 0.54, backRotation: 3,
+                 depth: 0.6, z: 2, lift: 0.035,
+                 labels: [EssenceLabel(key: "core", x: 0.50, y: 0.62), EssenceLabel(key: "coat", x: 0.70, y: 0.25, above: true)]),
     EssenceLayer(id: "sense-cap", image: "essence-sense-cap-matte",
                  finishImages: ["senseMatte": "essence-sense-cap-matte", "senseGloss": "essence-sense-cap-gloss"],
-                 group: .sense, x: 0.16, y: -0.06, width: 0.38, rotation: -12,
-                 backX: 0.34, backY: -0.1, backWidth: 0.16, backRotation: -20,
-                 closedDX: 0.3, closedDY: 0.34, closedRotation: 12, depth: 0.9, z: 3, lift: 0.22),
+                 group: .sense, x: 0.78, y: 0.025, width: 0.31, rotation: -6,
+                 backX: 0.78, backY: 0.035, backWidth: 0.29, backRotation: -6,
+                 closedDX: -0.012, closedDY: 0.045, closedRotation: 1.6,
+                 depth: 0.9, z: 3, lift: 0.065),
   ]
 
   /// The manifest in use: `EssenceLayers.json` from the bundle, else the default.
@@ -130,7 +130,7 @@ enum EssenceLayers {
 final class EssenceLayerStage: UIView {
   /// Margins of the stage around the card where fragments may fly (part of this view's bounds,
   /// never over the copy or neighbouring cards).
-  static let overflowTop: CGFloat = 84
+  static let overflowTop: CGFloat = 58
   static let overflowSide: CGFloat = 0
   static let cardInset: CGFloat = 0
   var onSelect: ((StudioFinish) -> Void)?
@@ -153,14 +153,16 @@ final class EssenceLayerStage: UIView {
   private var running = false
   private var opened = false
   // Animated state.
-  private var opening: CGFloat = 0
+  private(set) var opening: CGFloat = 0
   private var openStart: CFTimeInterval?
-  private var emphasis: CGFloat = 0
+  private(set) var emphasis: CGFloat = 0
   private var emphasisTarget: CGFloat = 0
-  private var clock: CFTimeInterval = 0
+  private(set) var clock: CFTimeInterval = 0
   private var lastTick: CFTimeInterval?
-  static let openDelay: CFTimeInterval = 0.3
-  static let openDuration: CFTimeInterval = 2.0
+  static let openDuration: CFTimeInterval = 1.65
+  private var scrollPosition: CGFloat = 0
+  private var motionBlend: CGFloat = 0
+  var isAnimating: Bool { link != nil }
   /// A soft elliptical contact shadow (radial falloff), drawn once and stretched per fragment.
   static let softShadow: UIImage = {
     let size = CGSize(width: 128, height: 128)
@@ -174,7 +176,7 @@ final class EssenceLayerStage: UIView {
 
   init(layers: [EssenceLayer]) {
     super.init(frame: .zero)
-    height(460)
+    height(396)
     card.layer.cornerRadius = 30
     card.layer.cornerCurve = .continuous
     card.clipsToBounds = true
@@ -192,6 +194,7 @@ final class EssenceLayerStage: UIView {
       let v = UIImageView(image: image)
       v.contentMode = .scaleAspectFit
       v.isAccessibilityElement = false
+      v.accessibilityIdentifier = "essence.fragment.\(spec.id)"
       v.layer.minificationFilter = .trilinear
       let s = UIImageView(image: Self.softShadow)
       s.isUserInteractionEnabled = false
@@ -233,9 +236,13 @@ final class EssenceLayerStage: UIView {
     let reduce = UIAccessibility.isReduceMotionEnabled
     if on && !opened {
       opened = true
-      if reduce { opening = 1 } else { openStart = nil }
+      if reduce { opening = 1 } else { openStart = clock }
     }
-    if reduce || !on { settle() }
+    if reduce {
+      settle()
+      motionBlend = 0
+      scrollPosition = 0
+    }
     if on && !reduce {
       if link == nil {
         let l = CADisplayLink(target: EssenceTicker(self), selector: #selector(EssenceTicker.tick(_:)))
@@ -271,10 +278,9 @@ final class EssenceLayerStage: UIView {
       }
     }
     apply()
-    UIView.animate(withDuration: animated ? 0.3 : 0) { self.updateCalloutAlpha() }
   }
 
-  /// Targets reached, no float (paused, offscreen, Reduce Motion).
+  /// Static accessible pose; ordinary offscreen pauses preserve their in-flight state.
   private func settle() {
     if opened { opening = 1 }
     openStart = nil
@@ -285,30 +291,37 @@ final class EssenceLayerStage: UIView {
     let now = link.targetTimestamp
     let dt = min(0.05, max(0, now - (lastTick ?? now)))
     lastTick = now
+    advance(by: dt)
+  }
+
+  /// Advances active time only. Pausing keeps the exact pose, including partial separation.
+  /// A shared entry point keeps bounded-motion and pause/resume checks independent of vsync.
+  func advance(by delta: CFTimeInterval) {
+    guard link != nil else { return }
+    let dt = min(0.05, max(0, delta))
     clock += dt
     if opened && opening < 1 {
-      if openStart == nil { openStart = clock + Self.openDelay }
       let u = max(0, min(1, (clock - (openStart ?? clock)) / Self.openDuration))
-      opening = u * u * u * (u * (u * 6 - 15) + 10)
+      opening = u * u * (3 - 2 * u)
     }
-    emphasis += (emphasisTarget - emphasis) * (1 - exp(-dt / 0.22))
+    emphasis += (emphasisTarget - emphasis) * (1 - exp(-dt / 0.32))
+    motionBlend += (1 - motionBlend) * (1 - exp(-dt / 0.45))
+    var target: CGFloat = 0
+    if let window {
+      let mid = convert(CGPoint(x: bounds.midX, y: bounds.midY), to: window).y
+      target = max(-1, min(1, (mid - window.bounds.midY) / max(1, window.bounds.height / 2)))
+    }
+    scrollPosition += (target - scrollPosition) * (1 - exp(-dt / 0.24))
     apply()
   }
 
   // MARK: Pose
 
-  /// Places every fragment: closed → rest by `opening`, the selected group forward by
-  /// `emphasis`, a slow float and a parallax from the stage's position on screen.
+  /// Keeps both materials in a stable pair, with local separation and bounded ambient motion.
   private func apply() {
     guard card.bounds.width > 0 else { return }
-    let w = card.bounds.width, h = card.bounds.height, origin = card.frame.origin
-    let motion = link != nil
-    // Scroll parallax: −1 (stage near the top of the window) … 1 (near the bottom).
-    var scroll: CGFloat = 0
-    if let window {
-      let mid = convert(CGPoint(x: bounds.midX, y: bounds.midY), to: window).y
-      scroll = max(-1, min(1, (mid - window.bounds.midY) / max(1, window.bounds.height / 2)))
-    }
+    let w = min(card.bounds.width, 440), h = card.bounds.height, origin = card.frame.origin
+    let artInset = (card.bounds.width - w) / 2
     let o = opening
     for p in pieces {
       let s = p.spec
@@ -318,19 +331,19 @@ final class EssenceLayerStage: UIView {
       func mix(_ hero: Double, _ back: Double?) -> Double { (back ?? hero) + (hero - (back ?? hero)) * f }
       let d = CGFloat(s.depth)
       let phase = CGFloat(abs(s.id.unicodeScalars.reduce(0) { $0 &* 31 &+ Int($1.value) } % 628)) / 100
-      let float: CGFloat = motion ? sin(CGFloat(clock) * 0.7 + phase) * (2 + 4 * d) : 0
-      let sway: CGFloat = motion ? sin(CGFloat(clock) * 0.37 + phase) * 1.2 : 0
-      // A loose piece rejoins its body while closed (only for the chosen material).
-      let closed = Double(1 - o) * f
-      let cx = origin.x + w * CGFloat(mix(s.x, s.backX) + s.closedDX * closed)
-      let cy = origin.y + h * CGFloat(mix(s.y, s.backY) + s.closedDY * closed) + float - scroll * 14 * d
+      let float = sin(CGFloat(clock) * 0.62 + phase) * (0.8 + 1.0 * d) * motionBlend
+      let sway = sin(CGFloat(clock) * 0.37 + phase) * 0.32 * motionBlend
+      // Both cuts open locally when the composition first appears.
+      let closed = Double(1 - o)
+      let cx = origin.x + artInset + w * CGFloat(mix(s.x, s.backX) + s.closedDX * closed)
+      let cy = origin.y + h * CGFloat(mix(s.y, s.backY) + s.closedDY * closed) + float - scrollPosition * 3 * d * motionBlend
       let width = w * CGFloat(mix(s.width, s.backWidth))
       let size = CGSize(width: width, height: width * p.aspect)
       let angle = CGFloat(mix(s.rotation, s.backRotation) + s.closedRotation * closed) * .pi / 180 + sway * .pi / 180
       p.view.bounds = CGRect(origin: .zero, size: size)
       p.view.center = CGPoint(x: cx, y: cy)
       p.view.transform = CGAffineTransform(rotationAngle: angle)
-      p.view.alpha = 0.72 + 0.28 * CGFloat(f)
+      p.view.alpha = 0.88 + 0.12 * CGFloat(f)
       p.view.layer.zPosition = CGFloat(s.z) + 10 * CGFloat(f)
       // Contact shadow on the card: below the fragment by its lift, wider and lighter when high.
       let lift = CGFloat(s.lift) * h
@@ -363,19 +376,19 @@ final class EssenceLayerStage: UIView {
     updateCalloutAlpha()
   }
   private func updateCalloutAlpha() {
-    let open = opening > 0.7
-    let sense = emphasisTarget > 0.5
-    callouts["stone"]?.alpha = open && !sense ? 1 : 0
-    callouts["core"]?.alpha = open && sense ? 1 : 0
-    callouts["coat"]?.alpha = open && sense ? 1 : 0
+    let reveal = max(0, min(1, opening / 0.8))
+    // Follow the actual focus transition, so labels never pop or name the previous material.
+    callouts["stone"]?.alpha = reveal * max(0, 1 - emphasis * 2)
+    callouts["core"]?.alpha = reveal * max(0, emphasis * 2 - 1)
+    callouts["coat"]?.alpha = reveal * max(0, emphasis * 2 - 1)
   }
 
   static func description(_ f: StudioFinish) -> String {
     let base = "Художественная визуализация состава. S-Stone — однородная минеральная масса. S-Sense — минеральное ядро под тонким слоем Gelcoat. Форма и толщина слоёв условны."
     switch f {
-    case .stoneMatte: return "\(base) Крупным планом S-Stone."
-    case .senseMatte: return "\(base) Крупным планом S-Sense, матовый Gelcoat."
-    case .senseGloss: return "\(base) Крупным планом S-Sense, глянцевый Gelcoat."
+    case .stoneMatte: return "\(base) Выбран S-Stone."
+    case .senseMatte: return "\(base) Выбран S-Sense, матовый Gelcoat."
+    case .senseGloss: return "\(base) Выбран S-Sense, глянцевый Gelcoat."
     }
   }
 

@@ -76,9 +76,10 @@ final class EssenceFeatureTests: XCTestCase {
     }
     let data = try JSONEncoder().encode(layers)
     XCTAssertEqual(try JSONDecoder().decode([EssenceLayer].self, from: data), layers)
-    // A loose piece of each material flies past the card's top edge (y < 0) in its hero pose.
-    XCTAssertTrue(layers.contains { $0.group == .stone && $0.y < 0 })
-    XCTAssertTrue(layers.contains { $0.group == .sense && $0.y < 0 })
+    // The paired composition reserves top space but opens cuts locally, not across the card.
+    for fragment in layers where fragment.closedDY != 0 {
+      XCTAssertLessThan(hypot(fragment.closedDX * 440, fragment.closedDY * 338), 24)
+    }
   }
 
   /// Only delivered images are shown; a missing finish variant falls back to one that exists.
@@ -96,9 +97,72 @@ final class EssenceFeatureTests: XCTestCase {
     view.setNeedsLayout()
     view.layoutIfNeeded()
     let r = view.animationBounds
-    XCTAssertGreaterThanOrEqual(r.height, 440)
+    XCTAssertGreaterThanOrEqual(r.height, 360)
     XCTAssertEqual(r.width, 342, accuracy: 0.5)
     XCTAssertTrue(view.bounds.contains(r))
+  }
+
+  func testFragmentsStayCloseDuringRevealAndFinishChanges() throws {
+    try XCTSkipIf(UIAccessibility.isReduceMotionEnabled, "Animation disabled by system accessibility")
+    let stage = EssenceLayerStage(layers: EssenceLayers.manifest())
+    stage.frame = CGRect(x: 0, y: 0, width: 362, height: 396)
+    stage.layoutIfNeeded()
+    let ids = EssenceLayers.manifest().map { "essence.fragment.\($0.id)" }
+    let views = try ids.map { try XCTUnwrap(find(stage, $0)) }
+    let initial = views.map(\.center)
+    stage.setRunning(true)
+    for _ in 0..<45 { stage.advance(by: 0.05) }
+    for (view, start) in zip(views, initial) {
+      XCTAssertLessThan(hypot(view.center.x - start.x, view.center.y - start.y), 25)
+    }
+    let beforeSelection = views.map(\.center)
+    let sizes = views.map { $0.bounds.width }
+    stage.show(.senseGloss, animated: true)
+    for _ in 0..<45 { stage.advance(by: 0.05) }
+    for (i, view) in views.enumerated() {
+      XCTAssertLessThan(hypot(view.center.x - beforeSelection[i].x, view.center.y - beforeSelection[i].y), 25)
+      XCTAssertTrue((0.85...1.15).contains(view.bounds.width / sizes[i]))
+    }
+    stage.setRunning(false)
+  }
+
+  func testPauseAndRepeatedVisibilityUpdatesPreserveAnimationProgress() throws {
+    try XCTSkipIf(UIAccessibility.isReduceMotionEnabled, "Animation disabled by system accessibility")
+    let stage = EssenceLayerStage(layers: EssenceLayers.manifest())
+    stage.frame = CGRect(x: 0, y: 0, width: 362, height: 396)
+    stage.layoutIfNeeded()
+    stage.setRunning(true)
+    stage.advance(by: 0.05)
+    XCTAssertGreaterThan(stage.opening, 0, "Motion starts on entry, without a delayed reveal")
+    for _ in 0..<10 { stage.advance(by: 0.05) }
+    let progress = stage.opening
+    let time = stage.clock
+    let fragment = try XCTUnwrap(find(stage, "essence.fragment.stone-fragment"))
+    let frame = fragment.frame
+    for _ in 0..<20 { stage.setRunning(true) }
+    XCTAssertEqual(stage.clock, time)
+    stage.setRunning(false)
+    stage.advance(by: 1)
+    XCTAssertFalse(stage.isAnimating)
+    XCTAssertEqual(stage.opening, progress)
+    XCTAssertEqual(stage.clock, time)
+    XCTAssertEqual(fragment.frame, frame, "Pausing must not jump to the final pose")
+    stage.setRunning(true)
+    XCTAssertEqual(fragment.frame, frame)
+    stage.advance(by: 0.05)
+    XCTAssertGreaterThan(stage.opening, progress)
+    stage.setRunning(false)
+  }
+
+  func testTabletUsesBoundedArtworkRatherThanScalingBeyondTheStage() throws {
+    let stage = EssenceLayerStage(layers: EssenceLayers.manifest())
+    stage.frame = CGRect(x: 0, y: 0, width: 1024, height: 396)
+    stage.layoutIfNeeded()
+    for layer in EssenceLayers.manifest() {
+      let fragment = try XCTUnwrap(find(stage, "essence.fragment.\(layer.id)"))
+      XCTAssertLessThanOrEqual(fragment.bounds.width, 440 * 0.64)
+      XCTAssertTrue(stage.bounds.insetBy(dx: -12, dy: -12).contains(fragment.frame), layer.id)
+    }
   }
 
   private func find(_ root: UIView, _ id: String) -> UIView? {

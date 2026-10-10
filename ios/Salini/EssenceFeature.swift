@@ -76,8 +76,8 @@ final class EssenceFeatureView: UIView {
     pin(body)
     select(.stoneMatte, animated: false)
     let center = NotificationCenter.default
-    observers.append(center.addObserver(forName: UIApplication.didEnterBackgroundNotification, object: nil, queue: .main) {
-      [weak self] _ in MainActor.assumeIsolated { self?.updatePlaying() }
+    observers.append(center.addObserver(forName: UIApplication.willResignActiveNotification, object: nil, queue: .main) {
+      [weak self] _ in MainActor.assumeIsolated { self?.stage?.setRunning(false) }
     })
     // Resume on didBecomeActive: at willEnterForeground the state can still read .background.
     observers.append(center.addObserver(forName: UIApplication.didBecomeActiveNotification, object: nil, queue: .main) {
@@ -115,7 +115,7 @@ final class EssenceFeatureView: UIView {
     updatePlaying()
   }
   private func updatePlaying() {
-    let visible = active && window != nil && UIApplication.shared.applicationState != .background
+    let visible = active && window != nil && UIApplication.shared.applicationState == .active
     stage?.setRunning(visible)
   }
 }

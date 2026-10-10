@@ -1088,7 +1088,7 @@ final class SaliniTests: XCTestCase {
     let screens: [UIViewController] =
       [
         HomeController(), CatalogController(), ProjectsController(), ProfileController(),
-        OwnerController(), MaterialsController(), InspirationController(),
+        OwnerController(), MaterialsController(), HomeStoryController(.interior), HomeStoryController(.brand),
         ResourcesController(), ChooseController(), CompareController(), StockController(),
         PartnerOrdersController(), CatalogFilterController(filter: CatalogFilter()) { _ in },
       ] + Product.all.compactMap { Catalog.shared.product($0.id).map { CatalogProductController($0) } }
