@@ -1,0 +1,7 @@
+native/build/
+native/build.log
+native/build-final.log
+native/*.xcodeproj/xcuserdata/
+preview.html
+motion-proof.mp4
+frame-*.png

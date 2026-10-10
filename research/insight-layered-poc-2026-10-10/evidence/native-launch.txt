@@ -1,0 +1,9 @@
+Salini 2.5D — native simulator launch, 2026-10-10
+Target only: Salini AR — QA / BC58C81F-D28D-4E26-A59E-F8689EED523F
+Bundle: design.salini.insight-lab
+Final arm64 iOS27 build: BUILD SUCCEEDED, exit0
+simctl install: exit0
+simctl launch: design.salini.insight-lab: 89815, exit0
+Separate bundle; installed released Salini was not replaced.
+Native UI observation: blocked by Computer Use app permission for Device Hub.
+This receipt proves build/install/process launch, not visual acceptance or frame rate.

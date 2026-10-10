@@ -1,0 +1,52 @@
+{
+  "date": "2026-10-10",
+  "purpose": "Isolated 2.5D animation experiment, not merged into the iOS app",
+  "assets": [
+    {
+      "file": "assets/carrier-empty.png",
+      "sha256": "b8cef407f5287ecd819e85687163d18f989776120e6deb7bd5c4818ee228c158",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "source": "OpenAI built-in image_gen, generated for this task",
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "assets/carrier-loaded.png",
+      "sha256": "0d19706c5c4554c8ede45ec8ffc91db83bab6c7329471adc7532e6cbf54a5716",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "source": "OpenAI built-in image_gen, generated for this task",
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "assets/workshop.png",
+      "sha256": "d35c9a309a023061dfd3eebe73e201692654590fa157faf8ee32bfa8c593de5e",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "mode": "RGB",
+      "source": "OpenAI built-in image_gen, generated for this task"
+    }
+  ],
+  "rejected_asset": {
+    "file": "exec-470599cb-d2e9-466d-9c02-e14b8bcc7b8a.png",
+    "reason": "Eight poses did not form a convincing alternating-foot gait. Excluded from the demo rather than moving a frozen figure."
+  },
+  "logo": {
+    "file": "assets/salini-logo.svg",
+    "source": "Existing official Salini wordmark from pages/assets; unchanged"
+  }
+}

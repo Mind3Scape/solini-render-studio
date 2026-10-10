@@ -1,0 +1,345 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		057FE24939B61F55A0E7DF44 /* workshop.png in Resources */ = {isa = PBXBuildFile; fileRef = 4155EFBE406DE0CDAD2FBE09 /* workshop.png */; };
+		0EC4F7AF2E5662C00A715A0A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 752EA9927D8631A79C313A61 /* Assets.xcassets */; };
+		28A62F96DA463D5A4B825D87 /* SaliniInsightLabApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FB5AFD7E95BBE2D3784F40 /* SaliniInsightLabApp.swift */; };
+		2A3F67BA812017D4200C2A23 /* carrier-loaded.png in Resources */ = {isa = PBXBuildFile; fileRef = F4313C6A63A4E7847FA91535 /* carrier-loaded.png */; };
+		2EE4B90C2DAF7234875988A7 /* salini-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C023CD5F121C94F85B4E2FE /* salini-logo.png */; };
+		43EC90B6736429753F5282D8 /* InsightMotion.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD446AF084D92020DF2C7372 /* InsightMotion.swift */; };
+		4B26334E37C919017EA7000E /* carrier-empty.png in Resources */ = {isa = PBXBuildFile; fileRef = 60BC02B478AF5A9A7DEBA564 /* carrier-empty.png */; };
+		AB5C6E9062FBF11083EEDEF4 /* MotionTimeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740A1DCD0AFF84101B9C0B90 /* MotionTimeline.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		18FB5AFD7E95BBE2D3784F40 /* SaliniInsightLabApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaliniInsightLabApp.swift; sourceTree = "<group>"; };
+		4155EFBE406DE0CDAD2FBE09 /* workshop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = workshop.png; sourceTree = "<group>"; };
+		60BC02B478AF5A9A7DEBA564 /* carrier-empty.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "carrier-empty.png"; sourceTree = "<group>"; };
+		6C023CD5F121C94F85B4E2FE /* salini-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "salini-logo.png"; sourceTree = "<group>"; };
+		740A1DCD0AFF84101B9C0B90 /* MotionTimeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionTimeline.swift; sourceTree = "<group>"; };
+		752EA9927D8631A79C313A61 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		9EEDABF254EC0EAE006D529B /* SaliniInsightLab.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = SaliniInsightLab.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F4313C6A63A4E7847FA91535 /* carrier-loaded.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "carrier-loaded.png"; sourceTree = "<group>"; };
+		FD446AF084D92020DF2C7372 /* InsightMotion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightMotion.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		1E8E0E40F1069442F74CE27B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9EEDABF254EC0EAE006D529B /* SaliniInsightLab.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		368AB27209A00ECD29DB84EC /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				60BC02B478AF5A9A7DEBA564 /* carrier-empty.png */,
+				F4313C6A63A4E7847FA91535 /* carrier-loaded.png */,
+				6C023CD5F121C94F85B4E2FE /* salini-logo.png */,
+				4155EFBE406DE0CDAD2FBE09 /* workshop.png */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		6B311C876C2A20B0028272C2 = {
+			isa = PBXGroup;
+			children = (
+				752EA9927D8631A79C313A61 /* Assets.xcassets */,
+				368AB27209A00ECD29DB84EC /* Resources */,
+				C0D4ADC7FD0329E68CDAC530 /* Sources */,
+				1E8E0E40F1069442F74CE27B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		C0D4ADC7FD0329E68CDAC530 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				FD446AF084D92020DF2C7372 /* InsightMotion.swift */,
+				740A1DCD0AFF84101B9C0B90 /* MotionTimeline.swift */,
+				18FB5AFD7E95BBE2D3784F40 /* SaliniInsightLabApp.swift */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		95543F4EBEE092664B7E7CBD /* SaliniInsightLab */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E08D56BC85138078477EF057 /* Build configuration list for PBXNativeTarget "SaliniInsightLab" */;
+			buildPhases = (
+				EAA8639176B0FD0526A6FA2A /* Sources */,
+				9FF175C1BCD77E5824FDD326 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SaliniInsightLab;
+			packageProductDependencies = (
+			);
+			productName = SaliniInsightLab;
+			productReference = 9EEDABF254EC0EAE006D529B /* SaliniInsightLab.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		DE68AE2F7E3BD69F5A545C2A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+				};
+			};
+			buildConfigurationList = D961987953B31B93767BCBE5 /* Build configuration list for PBXProject "SaliniInsightLab" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 6B311C876C2A20B0028272C2;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 1E8E0E40F1069442F74CE27B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				95543F4EBEE092664B7E7CBD /* SaliniInsightLab */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		9FF175C1BCD77E5824FDD326 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0EC4F7AF2E5662C00A715A0A /* Assets.xcassets in Resources */,
+				4B26334E37C919017EA7000E /* carrier-empty.png in Resources */,
+				2A3F67BA812017D4200C2A23 /* carrier-loaded.png in Resources */,
+				2EE4B90C2DAF7234875988A7 /* salini-logo.png in Resources */,
+				057FE24939B61F55A0E7DF44 /* workshop.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		EAA8639176B0FD0526A6FA2A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43EC90B6736429753F5282D8 /* InsightMotion.swift in Sources */,
+				AB5C6E9062FBF11083EEDEF4 /* MotionTimeline.swift in Sources */,
+				28A62F96DA463D5A4B825D87 /* SaliniInsightLabApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1387E3A63A899FA3D9788533 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_ALLOWED = NO;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		6FB013E1F133D7A160245833 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_ALLOWED = NO;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		81EBB40E0A99526D4F85F9F8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Salini 2.5D";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "design.salini.insight-lab";
+				PRODUCT_NAME = SaliniInsightLab;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		EAF5F905761CA7F0CE400509 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Salini 2.5D";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "design.salini.insight-lab";
+				PRODUCT_NAME = SaliniInsightLab;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D961987953B31B93767BCBE5 /* Build configuration list for PBXProject "SaliniInsightLab" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1387E3A63A899FA3D9788533 /* Debug */,
+				6FB013E1F133D7A160245833 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E08D56BC85138078477EF057 /* Build configuration list for PBXNativeTarget "SaliniInsightLab" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				81EBB40E0A99526D4F85F9F8 /* Debug */,
+				EAF5F905761CA7F0CE400509 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = DE68AE2F7E3BD69F5A545C2A /* Project object */;
+}
