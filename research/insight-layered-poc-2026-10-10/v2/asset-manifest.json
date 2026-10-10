@@ -1,0 +1,39 @@
+{
+  "assets": [
+    {
+      "file": "assets/architecture-base.png",
+      "size": [
+        1024,
+        1536
+      ],
+      "mode": "RGB",
+      "sha256": "896e23ad824dfea92ae4c1e845e321e2a65a3cf56810570706f362ef1bc9285b",
+      "source": "OpenAI built-in image_gen; prompts in prompts.json and master-prompt.txt"
+    },
+    {
+      "file": "assets/architecture-master.png",
+      "size": [
+        1024,
+        1536
+      ],
+      "mode": "RGB",
+      "sha256": "df70ac1cd58a6840b5539a74a14bc826c91f5f447d506b15dbef57d18a4ea6e8",
+      "source": "OpenAI built-in image_gen; prompts in prompts.json and master-prompt.txt"
+    },
+    {
+      "file": "assets/tow-tractor.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "sha256": "3c0d5631aa9d9456d114be93cac22414d0e7a78784d66cedd8b3d5b08aaec5d9",
+      "source": "OpenAI built-in image_gen; prompts in prompts.json and master-prompt.txt"
+    }
+  ],
+  "rejected": [
+    "Initial master: vehicle across road",
+    "Two full-canvas cutouts: unacceptable halo/haze"
+  ],
+  "accepted_sprite_note": "Regenerated from the oriented master as reference after extraction failed. Style/geometry are matched artistically, not exact pixel registration. No scripted background removal."
+}

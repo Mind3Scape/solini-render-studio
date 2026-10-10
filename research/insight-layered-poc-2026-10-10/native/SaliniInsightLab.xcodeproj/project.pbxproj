@@ -9,9 +9,11 @@
 /* Begin PBXBuildFile section */
 		057FE24939B61F55A0E7DF44 /* workshop.png in Resources */ = {isa = PBXBuildFile; fileRef = 4155EFBE406DE0CDAD2FBE09 /* workshop.png */; };
 		0EC4F7AF2E5662C00A715A0A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 752EA9927D8631A79C313A61 /* Assets.xcassets */; };
+		12BA8396416E82D5F34E859E /* architecture-base.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DDA0D419D5756717A2B30DE /* architecture-base.png */; };
 		28A62F96DA463D5A4B825D87 /* SaliniInsightLabApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FB5AFD7E95BBE2D3784F40 /* SaliniInsightLabApp.swift */; };
 		2A3F67BA812017D4200C2A23 /* carrier-loaded.png in Resources */ = {isa = PBXBuildFile; fileRef = F4313C6A63A4E7847FA91535 /* carrier-loaded.png */; };
 		2EE4B90C2DAF7234875988A7 /* salini-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C023CD5F121C94F85B4E2FE /* salini-logo.png */; };
+		390E168B31E6D3A9D8ED7900 /* tow-tractor.png in Resources */ = {isa = PBXBuildFile; fileRef = BD6B3750F29653AB4706CF2B /* tow-tractor.png */; };
 		43EC90B6736429753F5282D8 /* InsightMotion.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD446AF084D92020DF2C7372 /* InsightMotion.swift */; };
 		4B26334E37C919017EA7000E /* carrier-empty.png in Resources */ = {isa = PBXBuildFile; fileRef = 60BC02B478AF5A9A7DEBA564 /* carrier-empty.png */; };
 		AB5C6E9062FBF11083EEDEF4 /* MotionTimeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740A1DCD0AFF84101B9C0B90 /* MotionTimeline.swift */; };
@@ -19,12 +21,14 @@
 
 /* Begin PBXFileReference section */
 		18FB5AFD7E95BBE2D3784F40 /* SaliniInsightLabApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaliniInsightLabApp.swift; sourceTree = "<group>"; };
+		2DDA0D419D5756717A2B30DE /* architecture-base.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "architecture-base.png"; sourceTree = "<group>"; };
 		4155EFBE406DE0CDAD2FBE09 /* workshop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = workshop.png; sourceTree = "<group>"; };
 		60BC02B478AF5A9A7DEBA564 /* carrier-empty.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "carrier-empty.png"; sourceTree = "<group>"; };
 		6C023CD5F121C94F85B4E2FE /* salini-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "salini-logo.png"; sourceTree = "<group>"; };
 		740A1DCD0AFF84101B9C0B90 /* MotionTimeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionTimeline.swift; sourceTree = "<group>"; };
 		752EA9927D8631A79C313A61 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9EEDABF254EC0EAE006D529B /* SaliniInsightLab.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = SaliniInsightLab.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BD6B3750F29653AB4706CF2B /* tow-tractor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tow-tractor.png"; sourceTree = "<group>"; };
 		F4313C6A63A4E7847FA91535 /* carrier-loaded.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "carrier-loaded.png"; sourceTree = "<group>"; };
 		FD446AF084D92020DF2C7372 /* InsightMotion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightMotion.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -41,9 +45,11 @@
 		368AB27209A00ECD29DB84EC /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				2DDA0D419D5756717A2B30DE /* architecture-base.png */,
 				60BC02B478AF5A9A7DEBA564 /* carrier-empty.png */,
 				F4313C6A63A4E7847FA91535 /* carrier-loaded.png */,
 				6C023CD5F121C94F85B4E2FE /* salini-logo.png */,
+				BD6B3750F29653AB4706CF2B /* tow-tractor.png */,
 				4155EFBE406DE0CDAD2FBE09 /* workshop.png */,
 			);
 			path = Resources;
@@ -126,9 +132,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				0EC4F7AF2E5662C00A715A0A /* Assets.xcassets in Resources */,
+				12BA8396416E82D5F34E859E /* architecture-base.png in Resources */,
 				4B26334E37C919017EA7000E /* carrier-empty.png in Resources */,
 				2A3F67BA812017D4200C2A23 /* carrier-loaded.png in Resources */,
 				2EE4B90C2DAF7234875988A7 /* salini-logo.png in Resources */,
+				390E168B31E6D3A9D8ED7900 /* tow-tractor.png in Resources */,
 				057FE24939B61F55A0E7DF44 /* workshop.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

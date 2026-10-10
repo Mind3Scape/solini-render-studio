@@ -1,0 +1,45 @@
+{
+  "status": "Ready for user visual evaluation; browser checked, native build/install/launch complete, native UI not independently observed",
+  "reason": "v1 lost the accepted 01/02 distant architectural composition and looked like a cart layered over an ordinary interior",
+  "constraints": [
+    "fixed distant isometric view",
+    "small coherent cutaway quality/packing district",
+    "no large marketing headline over scene",
+    "vehicle and background originate from the same composed image",
+    "vehicle direction must align with actual road",
+    "no static human figures",
+    "no claim of measured real factory or exact product geometry"
+  ],
+  "user_approval": false,
+  "updated_at": "2026-10-10T12:52:18.132216+07:00",
+  "native": {
+    "bundle": "design.salini.insight-lab",
+    "simulator": "BC58C81F-D28D-4E26-A59E-F8689EED523F",
+    "build": "BUILD SUCCEEDED, exit0",
+    "timeline_checks": "PASS: road alignment, forward-only travel, smooth stop/loop joins, offscreen-only reset, bounded progress/stages; entire cycle sampled at120Hz",
+    "visual_acceptance": "Pending. Device Hub Computer Use permission was denied in prior turn and no new authorization was supplied. No alternate native UI capture attempted."
+  },
+  "browser": {
+    "url": "http://127.0.0.1:8795/v2/",
+    "viewports": [
+      "default",
+      "402x874"
+    ],
+    "checks": [
+      "overall composition and alpha compositing",
+      "pause confirmed at20.32s across observations",
+      "dispatch metric opens correct detail; action resumes at16s",
+      "zoom bounded100–110%",
+      "timeline seek12s",
+      "vehicle layer off/on",
+      "no automatic zoom or camera rotation"
+    ],
+    "evidence": "evidence/browser-iphone.jpg"
+  },
+  "limitations": [
+    "One small illustrative quality/dispatch district, not measured real premises",
+    "Product shapes and tow tractor are generated illustrations, not official Salini product geometry",
+    "One moving convoy; loading, human animation and full factory operation are not implemented",
+    "Physical device performance and native UI still need verification"
+  ]
+}

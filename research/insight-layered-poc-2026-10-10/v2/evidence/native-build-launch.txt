@@ -1,0 +1,9 @@
+2026-10-10 — Salini architectural 2.5D proof v2
+Build: arm64 / iphonesimulator27.0 / Debug / signing disabled
+xcodebuild: BUILD SUCCEEDED, exit0
+sh native/Checks/run.sh: PASS
+Simulator: Salini AR — QA / BC58C81F-D28D-4E26-A59E-F8689EED523F
+simctl install: exit0
+simctl launch: design.salini.insight-lab: 98344, exit0
+Native UI: unobserved; Device Hub permission previously denied.
+Browser QA is recorded separately and does not certify the native UI.

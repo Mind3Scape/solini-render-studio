@@ -1,0 +1,25 @@
+(() => {
+'use strict';
+const $=id=>document.getElementById(id), c=$('scene'),ctx=c.getContext('2d',{alpha:false});
+const W=1024,H=1536,D=40,vehicleSize=218,ax=.5,ay=960/1280;
+let time=6,playing=!matchMedia('(prefers-reduced-motion:reduce)').matches,last=0,zoom=1,targetZoom=1,selected='dispatch';
+let dims={w:1,h:1,dpr:1},tr={s:1,x:0,y:0};const images={};
+const ease=t=>{t=Math.max(0,Math.min(1,t));return t*t*t*(t*(t*6-15)+10)};
+function state(t){let x,stage;if(t<5){x=360;stage=0}else if(t<29){x=360+(1270-360)*ease((t-5)/24);stage=1}else if(t<31){x=1270;stage=2}else{x=-300+660*ease((t-31)/9);stage=0}return{x,y:1590-.5*x,stage}}
+const resize=()=>{const r=c.getBoundingClientRect();dims={w:r.width,h:r.height,dpr:Math.min(devicePixelRatio||1,2)};c.width=Math.round(r.width*dims.dpr);c.height=Math.round(r.height*dims.dpr)};new ResizeObserver(resize).observe(c);
+function pin(el,x,y){el.style.left=(tr.x+x*tr.s)+'px';el.style.top=(tr.y+y*tr.s)+'px';el.hidden=!$('labels').checked}
+function render(){let f=state(time);ctx.setTransform(dims.dpr,0,0,dims.dpr,0,0);ctx.fillStyle='#edf0f3';ctx.fillRect(0,0,dims.w,dims.h);let s=Math.min(dims.w/W,dims.h/H)*zoom;tr={s,x:(dims.w-W*s)/2,y:(dims.h-H*s)/2};ctx.save();ctx.translate(tr.x,tr.y);ctx.scale(s,s);ctx.drawImage(images.base,0,0,W,H);
+if($('vehicle').checked){ctx.save();ctx.translate(f.x,f.y);ctx.rotate(-.46);ctx.scale(1,.3);let g=ctx.createRadialGradient(0,0,10,0,0,95);g.addColorStop(0,'rgba(12,20,27,.30)');g.addColorStop(.7,'rgba(12,20,27,.12)');g.addColorStop(1,'rgba(12,20,27,0)');ctx.fillStyle=g;ctx.fillRect(-95,-95,190,190);ctx.restore();const x=f.x-vehicleSize*ax,y=f.y-vehicleSize*ay;ctx.drawImage(images.vehicle,x,y,vehicleSize,vehicleSize);
+if($('activity').checked){const scale=vehicleSize/1280;ctx.strokeStyle='rgba(200,207,213,.55)';ctx.lineWidth=.65;const angle=(f.x-360)/6;for(const [hx,hy] of [[356,1009],[674,866],[898,733],[1120,650]]){ctx.beginPath();for(let i=0;i<3;i++){let a=angle+i*Math.PI*2/3;ctx.moveTo(x+hx*scale,y+hy*scale);ctx.lineTo(x+hx*scale+2*Math.cos(a),y+hy*scale+3*Math.sin(a))}ctx.stroke()}
+const b=.35+.65*Math.pow((Math.sin(time*5)+1)/2,4);ctx.fillStyle=`rgba(255,210,92,${b})`;ctx.beginPath();ctx.ellipse(x+973*scale,y+213*scale,1.7,1,0,0,Math.PI*2);ctx.fill();}}
+ctx.restore();pin($('quality'),395,470);pin($('dispatch'),816,928);$('quality').classList.toggle('active',selected==='quality');$('dispatch').classList.toggle('active',selected==='dispatch');
+$('eyebrow').textContent=['ГОТОВО К ОТГРУЗКЕ','ПАРТИЯ В ПУТИ','ПЕРЕДАНО НА ОТГРУЗКУ'][f.stage];$('description').textContent=['Контроль пройден · 2 изделия','Внутренняя логистика · рейс 02','Следующая партия готовится к отправке'][f.stage];if(document.activeElement!==$('timeline'))$('timeline').value=time;$('scale').textContent=Math.round(targetZoom*100)+'%';$('in').disabled=targetZoom>=1.10;$('out').disabled=targetZoom<=1;c.dataset.time=time.toFixed(2);c.dataset.stage=f.stage;c.dataset.playing=playing;
+}
+function tick(now){const dt=last?Math.min((now-last)/1000,.06):0;last=now;if(playing&&!document.hidden&&!document.querySelector('dialog[open]'))time=(time+dt)%D;zoom+=(targetZoom-zoom)*(1-Math.exp(-dt*5));render();requestAnimationFrame(tick)}
+function playback(){ $('pause').textContent=playing?'Ⅱ':'▷';$('pause').setAttribute('aria-label',playing?'Приостановить':'Продолжить') }
+$('pause').onclick=()=>{playing=!playing;playback()};$('in').onclick=()=>targetZoom=Math.min(1.1,+(targetZoom+.05).toFixed(2));$('out').onclick=()=>targetZoom=Math.max(1,+(targetZoom-.05).toFixed(2));
+function details(zone){selected=zone;$('detailTitle').textContent=zone==='quality'?'Контроль качества':'Отгрузка · рейс 02';$('detailText').textContent=zone==='quality'?'12 изделий находятся на участке. Партия 024 прошла контроль и передаётся во внутреннюю логистику. Значения демонстрационные.':'Два упакованных изделия едут к отгрузке одним составом. Перевозка внутри предприятия показана в повторяющемся демонстрационном цикле.';$('details').showModal()}
+$('quality').onclick=$('qualityStat').onclick=()=>details('quality');$('dispatch').onclick=$('dispatchStat').onclick=$('routeStat').onclick=()=>details('dispatch');
+$('act').onclick=()=>{time=selected==='quality'?2:16;playing=true;playback();$('details').close()};$('layers').onclick=()=>$('settings').showModal();$('info').onclick=()=>{$('settings').showModal()};document.querySelectorAll('dialog .close').forEach(x=>x.onclick=()=>x.closest('dialog').close());document.querySelectorAll('dialog').forEach(x=>x.onclick=e=>{if(e.target===x)x.close()});$('timeline').oninput=e=>{time=+e.target.value;render()};$('restart').onclick=()=>{time=0;playing=true;playback();$('settings').close()};document.addEventListener('visibilitychange',()=>last=0);
+Promise.all([['base','architecture-base.png'],['vehicle','tow-tractor.png']].map(([key,file])=>new Promise((resolve,reject)=>{let im=new Image();im.onload=()=>{images[key]=im;resolve()};im.onerror=reject;im.src='assets/'+file}))).then(()=>{$('loading').remove();resize();playback();requestAnimationFrame(tick)}).catch(()=>{$('loading').textContent='Не удалось загрузить сцену'});
+})();

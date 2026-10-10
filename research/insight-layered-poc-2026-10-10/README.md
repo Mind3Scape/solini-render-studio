@@ -1,5 +1,7 @@
 # Salini Insight — fixed-camera 2.5D experiment
 
+**V1 rejected by the user on 10 October 2026.** Technical checks do not establish visual quality. The corrected architectural direction is available under [`v2/`](v2/README.md) on `codex/salini-insight-layered-v2`; the native lab now runs v2. The remaining v1 details below describe the rejected baseline.
+
 This is an isolated graphics alternative for David to assess before replacing any existing Insight implementation. It is not a new TestFlight release and does not change the shipping app.
 
 ## What is implemented
