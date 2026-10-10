@@ -1,0 +1,61 @@
+{
+  "verified_at": "2026-10-10T09:06:07.992246+07:00",
+  "app_id": "6819688748",
+  "bundle_id": "design.salini.experience",
+  "version": "1.0",
+  "build": "12",
+  "source_commit": "def568a65e8246093a6093ff9f07c2fdcd312bf7",
+  "branch": "codex/salini-room-ar",
+  "last_previously_pushed_commit": "51aee8511c69bfcb16493b4d17bf4a3a64e0f70e",
+  "github_verification": "Remote branch verified via git ls-remote on 2026-10-10: 51aee8511c69bfcb16493b4d17bf4a3a64e0f70e before this evidence commit.",
+  "upload": {
+    "status": "succeeded",
+    "at": "2026-10-09T16:08:15+07:00",
+    "reuploaded_this_turn": false
+  },
+  "processing": "complete",
+  "internal_testing": {
+    "group": "Salini Internal",
+    "status": "build12 attached; 1 install and 7 sessions observed in App Store Connect"
+  },
+  "external_testing": {
+    "group": "Salini Public Beta",
+    "group_id": "07b546aa-e790-426c-a158-1425ed2a808f",
+    "status": "Approved",
+    "build": "1.0 (12)",
+    "action": "Submitted prepared What to Test using Submit for Review; final group row explicitly shows Approved",
+    "automatically_notify_testers": true
+  },
+  "public_link": {
+    "url": "https://testflight.apple.com/join/mUb5H7bZ",
+    "enabled": true,
+    "criteria": null,
+    "custom_limit": null,
+    "anonymous_page_verified": true,
+    "result": "Join the Salini beta; View Salini Beta; View in TestFlight"
+  },
+  "metadata": {
+    "what_to_test": "Saved build12 Russian notes covering materials, AR and Insight",
+    "app_wide_beta_description": "Previous description remains; prepared replacement was not saved",
+    "app_wide_review_notes": "Previous notes remain; prepared replacement was not saved; build12 is nevertheless Approved"
+  },
+  "evidence": [
+    "public-approved.txt",
+    "public-approved.png",
+    "public-link-enabled.txt",
+    "public-invitation.txt",
+    "public-invitation.png"
+  ],
+  "evidence_limit": "Native Safari screenshot captured the transformed/minimized window and is not legible at full resolution; full accessibility tree preserves the exact build and approval row. Public invitation screenshot is legible.",
+  "physical_AR": "Not tested on a physical iPhone/iPad; simulator validation is not room tracking verification.",
+  "pending_repository_record": {
+    "status": "Included in the release confirmation commit; push verification recorded in completion message"
+  },
+  "automation": {
+    "id": "opus-salini-insight",
+    "requested_action": "delete after successful public release",
+    "result": "deleted successfully via Codex app automation_update",
+    "still_active": false,
+    "deleted_at": "2026-10-10T10:32:51.171320+07:00"
+  }
+}

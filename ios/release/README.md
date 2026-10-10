@@ -5,14 +5,14 @@ Source: `def568a65e8246093a6093ff9f07c2fdcd312bf7`, branch `codex/salini-room-ar
 
 The signed archive includes native room AR for 13 official models, the new animated **«Камень изнутри»** Home block with six generated fragments, and the accepted Insight loading/material improvements. Home selections carry into the existing full 3D studio.
 
-**Upload succeeded on 9 October 2026, 16:08:15 UTC+7**, after renewed account sign-in. Xcode returned `Upload succeeded` and `EXPORT SUCCEEDED`, exit0; Apple started processing. The earlier 12:05 credentials failure is preserved in the [upload receipt](build-12-upload-receipt.txt). Processing completion, internal testing and external review/group availability still require App Store Connect verification. Public build10 approval does not apply to build12.
+**Upload succeeded on 9 October 2026, 16:08:15 UTC+7**, after renewed account sign-in. Xcode returned `Upload succeeded` and `EXPORT SUCCEEDED`, exit0; Apple started processing. The earlier 12:05 credentials failure is preserved in the [upload receipt](build-12-upload-receipt.txt). **Distribution verified on 10 October 2026:** processing complete; build12 attached to Salini Internal; Salini Public Beta explicitly shows **1.0 (12) Approved**. The [public invitation](https://testflight.apple.com/join/mUb5H7bZ) is enabled and its anonymous landing page was verified. [Distribution proof](build-12-distribution-2026-10-10/distribution-status.json).
 
 - Final focused integration tests: **13 passed, 0 failed**, normal command exit0. Earlier AR+Insight full suite: **141 passed**, with a separately recorded post-test runner finalization interruption.
 - Signed archive verified; all195 audited assets verified. Six PNGs were losslessly re-encoded by Xcode; decoded pixels and alpha are identical.
 - [Home reveal in the running app](../../research/room-ar-2026-10-09/evidence/essence/home-reveal.mp4) · [Material selection](../../research/room-ar-2026-10-09/evidence/essence/home-selection.mp4).
 - [Validation and limits](build-12-validation.txt). Real room AR still requires physical-iPhone verification; simulator fallback is not a camera AR test.
 
-The archive is already uploaded: do not upload it again. Finish processing/group verification and external review in App Store Connect. Test notes and beta review notes for build12 are prepared in testflight-metadata.json. Browser sign-in is valid in Safari; native UI operations are currently interrupted by concurrent window switching. The user has been asked for a short uninterrupted App Store Connect window. Monitoring continues quietly until the UI is available.
+Build12 distribution is complete; do not upload or submit it again. Build-specific What to Test was saved. Prepared app-wide description/review-note replacements were not saved; the existing metadata remains. The obsolete `opus-salini-insight` monitor was deleted on 10 October 2026. The new [2.5D graphics lab](../../research/insight-layered-poc-2026-10-10/README.md) is a separate simulator experiment for user evaluation and is not part of build12.
 
 ---
 

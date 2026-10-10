@@ -1,0 +1,187 @@
+Window: "App Store Connect", App: Safari.
+0 standard window App Store Connect, ID: SafariWindow?IsSecure=true&UUID=3B326B32-58DD-4AC1-8D5D-A92E42D822B6, Secondary Actions: Raise
+	1 split group
+		2 splitter (disabled, settable, float) -1
+		3 tab group
+			4 scroll area
+				5 HTML content Description: App Store Connect, URL: appstoreconnect.apple.com/teams/f996ceec-f13b-41bf-8db6-b111750b62c7/apps/6819688748/testflight/groups/07b546aa-e790-426c-a158-1425ed2a808f/builds
+					6 container App Store Connect
+						7 heading 1
+							8 link Description: App Store Connect, Value: appstoreconnect.apple.com/
+						9 container Global
+							10 content list
+								11 link Apps, Value: appstoreconnect.apple.com/apps
+								12 link Xcode Cloud, Value: appstoreconnect.apple.com/teams/f996ceec-f13b-41bf-8db6-b111750b62c7/xcode-cloud
+								13 link Users and Access, Value: appstoreconnect.apple.com/access/users
+						14 button David Doronin Mariam Ashkhatoyan Account name menu
+					15 pop up button Apps menu, Salini, selected
+					16 container Apps
+						17 content list
+							18 link Distribution, Value: appstoreconnect.apple.com/apps/6819688748/distribution
+							19 link TestFlight, Value: appstoreconnect.apple.com/teams/f996ceec-f13b-41bf-8db6-b111750b62c7/apps/6819688748/testflight
+					20 container
+						21 container TestFlight
+							22 content list
+								23 container Builds
+									24 heading Builds, Value: 2
+										25 text Builds
+									26 content list
+										27 link iOS, Value: appstoreconnect.apple.com/teams/f996ceec-f13b-41bf-8db6-b111750b62c7/apps/6819688748/testflight/ios
+								28 container Feedback
+									29 heading Feedback, Value: 2
+										30 text Feedback
+									31 content list
+										32 link Crashes, Value: appstoreconnect.apple.com/teams/f996ceec-f13b-41bf-8db6-b111750b62c7/apps/6819688748/testflight/crashes
+										33 link Screenshots, Value: appstoreconnect.apple.com/teams/f996ceec-f13b-41bf-8db6-b111750b62c7/apps/6819688748/testflight/screenshots
+								34 container Testers INTERNAL TESTING EXTERNAL TESTING
+									35 heading Testers, Value: 2
+										36 text Testers
+									37 content list
+										38 link All, Value: appstoreconnect.apple.com/teams/f996ceec-f13b-41bf-8db6-b111750b62c7/apps/6819688748/testflight/testers
+									39 heading INTERNAL TESTING, Value: 3
+										40 text INTERNAL TESTING
+									41 button New Group
+									42 content list
+										43 container
+											44 link SI Salini Internal, Value: appstoreconnect.apple.com/teams/f996ceec-f13b-41bf-8db6-b111750b62c7/apps/6819688748/testflight/groups/43fc6896-fa24-4dfd-bcf1-d1036ca29e8c
+											45 button Delete
+									46 heading EXTERNAL TESTING, Value: 3
+										47 text EXTERNAL TESTING
+									48 button New Group
+									49 content list
+										50 container
+											51 link SP Salini Public Beta, Value: appstoreconnect.apple.com/teams/f996ceec-f13b-41bf-8db6-b111750b62c7/apps/6819688748/testflight/groups/07b546aa-e790-426c-a158-1425ed2a808f
+											52 button Delete
+								53 container Additional
+									54 heading Additional, Value: 2
+										55 text Additional
+									56 content list
+										57 link Test Information, Value: appstoreconnect.apple.com/teams/f996ceec-f13b-41bf-8db6-b111750b62c7/apps/6819688748/testflight/test-info
+										58 container About TestFlight Data
+											59 text About TestFlight Data
+						60 text Salini Public Beta
+						61 heading Salini Public Beta, Value: 2
+							62 text Salini Public Beta
+						63 text External Group ∙ 0 Testers ∙ 5 Builds
+						64 container Testers
+							65 link Testers
+								66 text Testers
+						67 container Builds
+							68 link Builds
+								69 text Builds
+						70 container Settings
+							71 link Settings
+								72 text Settings
+						73 heading Builds (5), Value: 3
+							74 text Builds (5)
+						75 button Add Build to Group
+						76 table (settable) Builds
+							77 row (selectable)
+								78 cell (settable)
+									79 button BUILD
+								80 cell (settable)
+									81 text STATUS
+								82 cell (settable)
+									83 text PLATFORM
+								84 cell (settable)
+									85 text SESSIONS
+								86 cell (settable)
+									87 text CRASHES
+								88 cell (settable) Actions
+							89 row (selectable) Build 1.0 (12)
+								90 cell (selectable, settable) Build 1.0 (12), Value: Build
+1.0 (12)
+								91 cell (selectable, settable) Approved
+Expires in 90 days
+								92 cell (selectable, settable) iOS
+								93 cell (selectable, settable) 7
+								94 cell (selectable, settable) –
+								95 cell (selectable, settable) Delete
+							96 row (selectable) Build 1.0 (10)
+								97 cell (selectable, settable) Build 1.0 (10), Value: Build
+1.0 (10)
+								98 cell (selectable, settable) Approved
+Expires in 89 days
+								99 cell (selectable, settable) iOS
+								100 cell (selectable, settable) 4
+								101 cell (selectable, settable) –
+								102 cell (selectable, settable) Delete
+							103 row (selectable) Build 1.0 (3)
+								104 cell (selectable, settable) Build 1.0 (3), Value: Build
+1.0 (3)
+								105 cell (selectable, settable) Approved
+Expires in 87 days
+								106 cell (selectable, settable) iOS
+								107 cell (selectable, settable) 4
+								108 cell (selectable, settable) –
+								109 cell (selectable, settable) Delete
+							110 row (selectable) Build 1.0 (2)
+								111 cell (selectable, settable) Build 1.0 (2), Value: Build
+1.0 (2)
+								112 cell (selectable, settable) Ready to Submit
+Expires in 87 days
+								113 cell (selectable, settable) iOS
+								114 cell (selectable, settable) 6
+								115 cell (selectable, settable) –
+								116 cell (selectable, settable) Delete
+							117 row (selectable) Build 1.0 (1)
+								118 cell (selectable, settable) Build 1.0 (1), Value: Build
+1.0 (1)
+								119 cell (selectable, settable) Ready to Submit
+Expires in 87 days
+								120 cell (selectable, settable) iOS
+								121 cell (selectable, settable) –
+								122 cell (selectable, settable) –
+								123 cell (selectable, settable) Delete
+					124 container
+						125 link App Store Connect, Value: appstoreconnect.apple.com/apps
+						126 container
+							127 text Copyright © 2026 Apple Inc. All rights reserved. |
+						128 container
+							129 link Terms of Service, Value: appstoreconnect.apple.com/WebObjects/iTunesConnect.woa/wa/termsOfService
+							130 text |
+						131 container
+							132 link Privacy Policy, Value: apple.com/legal/privacy
+							133 text |
+						134 link Contact Us, Value: appstoreconnect.apple.com/contact-us
+				135 scroll bar (settable, float) 0.3893443
+	136 toolbar
+		137 container Secondary Actions: Move previous, Move next, Remove from toolbar
+			138 button Description: show sidebar, Help: Show sidebar, ID: SidebarButton
+			139 menu button Description: Tab Group picker, ID: TabGroupPickerButton?TabGroup=
+		140 container BackForwardSegmentedControl
+			141 button Description: Go back, Help: Show the previous page, ID: BackButton
+			142 button (disabled) Description: Go forward, Help: Show the next page, ID: ForwardButton
+		143 button Description: AdGuard for Safari, Help: The extension “AdGuard for Safari” would like access to additional websites., Secondary Actions: Move previous, Move next, Remove from toolbar
+		144 button Description: AdBlock Pro, Help: The extension “8. Shortcut” would like access to additional websites., Secondary Actions: Move previous, Move next, Remove from toolbar
+		145 button Secondary Actions: Move previous, Move next, Remove from toolbar, Description: AdBlock Pro Video Extension
+
+Click the icon to toggle PiP mode.
+
+The toolbar icon is optional.
+To remove it, press CMD and drag it away.
+		146 container Secondary Actions: Move previous, Move next, Remove from toolbar
+			147 button Page Menu, ID: AssistantButton
+			148 button Add page to Reading List, ID: OneStepBookmarkingButton
+			149 text field (settable) Description: smart search field, ID: WEB_BROWSER_ADDRESS_AND_SEARCH_FIELD, Value: https://appstoreconnect.apple.com/teams/f996ceec-f13b-41bf-8db6-b111750b62c7/apps/6819688748/testflight/groups/07b546aa-e790-426c-a158-1425ed2a808f/builds
+			150 button Translation Available, ID: TranslationButton
+			151 button Reload this page, ID: ReloadButton
+		152 button Description: Share, ID: ShareButton, Secondary Actions: Move previous, Move next, Remove from toolbar
+		153 button Description: New Tab, ID: NewTabButton, Secondary Actions: Move previous, Move next, Remove from toolbar
+		154 button Description: Tab Overview, ID: TabOverviewButton, Secondary Actions: Move previous, Remove from toolbar
+	155 tab group Description: Tab bar, 1 tab, ID: TabBar?isSeparate=false
+		156 tab App Store Connect, Help: To interact with the items in this button, press Control-Option-Shift-Down Arrow., Value: on, ID: TabBarTab?isNarrow=false&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=true
+			157 image FaviconImageView
+			158 text Value: App Store Connect, ID: UnifiedTabBarButton._titleTextField
+	159 close button
+	160 full screen button Help: this button also has an action to zoom the window, Secondary Actions: zoom the window
+	161 minimize button
+162 menu bar
+	163 Safari
+	164 File
+	165 Edit
+	166 View, ID: SafariViewMenu
+	167 History
+	168 Bookmarks, ID: SafariBookmarksMenu
+	169 Window, ID: SafariWindowMenu
+	170 Help, ID: SafariHelpMenu

@@ -1,4 +1,4 @@
-Salini 1.0 (12) — upload attempt, not successful distribution
+Salini 1.0 (12) — upload history and confirmed public distribution
 Date: 2026-10-09, Asia/Bangkok (UTC+7)
 App Store Connect app: 6819688748
 Bundle: design.salini.experience
@@ -33,3 +33,13 @@ Uploaded Salini
 Exit code: 0.
 Upload confirmed. Processing started; processing completion, internal and external group states await UI verification.
 Same signed archive, no rebuild.
+
+DISTRIBUTION VERIFIED — 2026-10-10
+Processing complete. Build12 attached to Salini Internal (1 install, 7 sessions observed).
+Salini Public Beta explicitly shows Build 1.0 (12): Approved, expires in 90 days.
+Prepared build-specific What to Test saved during submission. Public link enabled:
+https://testflight.apple.com/join/mUb5H7bZ
+Anonymous public invitation verified. No second upload after successful retry.
+Evidence: build-12-distribution-2026-10-10/distribution-status.json and public-approved.txt.
+Obsolete opus-salini-insight automation deleted successfully on 2026-10-10.
+Physical-device AR room tracking remains unverified.
